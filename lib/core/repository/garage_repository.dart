@@ -8,4 +8,8 @@ class GarageRepository {
   Future<List<Garage>> getGarages() async {
     return await garageApi.getGarages();
   }
+
+  Future<Garage> getGarageInfo({required String id}) async {
+    return await garageApi.getGarageInfo(id: id);
+  }
 }
