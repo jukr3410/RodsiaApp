@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rodsiaapp/find_garage_feature/bloc/garage_bloc.dart';
 
-abstract class GarageList extends StatefulWidget {
+class GarageList extends StatefulWidget {
   @override
-  _GarageListState createGarageState() => _GarageListState();
+  _GarageListState createState() => _GarageListState();
 }
 
 class _GarageListState extends State<GarageList> {
