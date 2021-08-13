@@ -50,12 +50,12 @@ flutter:
   #   - images/a_dot_ham.jpeg
 
   assets:
-    - images/icon-findGarage-navbar.png
-    - images/icon-findProblem-navbar.png
-    - images/icon-home-navbar.png
-    - images/icon-notify-navbar.png
-    - images/icon-profile-navbar.png
-    
+    - image/icon-findGarage-navbar.png
+    - image/icon-findProblem-navbar.png
+    - image/icon-home-navbar.png
+    - image/icon-notify-navbar.png
+    - image/icon-profile-navbar.png
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see
