@@ -5,8 +5,8 @@ class GarageRepository {
   final GarageApi garageApi;
   GarageRepository({required this.garageApi});
 
-  Future<List<Garage>> getGarages() async {
-    return await garageApi.getGarages();
+  Future<List<Garage>> getGarages({required int page}) async {
+    return await garageApi.getGarages(page: page);
   }
 
   Future<Garage> getGarageInfo({required String id}) async {

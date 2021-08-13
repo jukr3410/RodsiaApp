@@ -5,24 +5,34 @@ abstract class GarageState {
   const GarageState();
 }
 
-class GarageInitialState extends GarageState {
-  const GarageInitialState();
+class GarageListInitialState extends GarageState {
+  const GarageListInitialState();
 }
 
-class GarageLoadingState extends GarageState {
+class GarageListLoadingState extends GarageState {
   final String message;
 
-  const GarageLoadingState({required this.message});
+  const GarageListLoadingState({required this.message});
 }
 
-class GarageSuccessState extends GarageState {
+class GarageListSuccessState extends GarageState {
   final List<Garage> garages;
+  final bool hasReachedMax;
 
-  const GarageSuccessState({required this.garages});
+  const GarageListSuccessState(
+      {required this.garages, required this.hasReachedMax});
+  GarageListSuccessState copyWith(
+      {required List<Garage> garages, required bool hasReachedMax}) {
+    return GarageListSuccessState(
+        garages: garages, hasReachedMax: hasReachedMax);
+  }
+
+  @override
+  List<Object> get props => [garages, hasReachedMax];
 }
 
-class GarageErrorState extends GarageState {
+class GarageListErrorState extends GarageState {
   final String error;
 
-  const GarageErrorState({required this.error});
+  const GarageListErrorState({required this.error});
 }

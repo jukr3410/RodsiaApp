@@ -13,21 +13,37 @@ part 'garage_state.dart';
 
 class GarageBloc extends Bloc<GarageEvent, GarageState> {
   final GarageRepository garagerRpository;
+  int page = 1;
 
-  GarageBloc({required this.garagerRpository}) : super(GarageInitialState());
+  GarageBloc({required this.garagerRpository})
+      : super(GarageListInitialState());
 
   @override
   Stream<GarageState> mapEventToState(
     GarageEvent event,
   ) async* {
-    if (event is GarageFetchEvent) {
+    final currentState = state;
+    if (event is GarageFetchEvent && !_hasReachedMax(currentState)) {
       try {
-        final garages = await garagerRpository.getGarages();
-        yield GarageSuccessState(garages: garages);
+        if (currentState is GarageListInitialState) {
+          yield GarageListLoadingState(message: mLoading);
+          final garages = await garagerRpository.getGarages(page: page);
+          yield GarageListSuccessState(garages: garages, hasReachedMax: false);
+          return;
+        }
+        if (currentState is GarageListSuccessState) {
+          final garages = await garagerRpository.getGarages(page: ++page);
+          yield garages.isEmpty
+              ? currentState.copyWith(garages: [], hasReachedMax: true)
+              : GarageListSuccessState(garages: garages, hasReachedMax: false);
+        }
       } catch (e) {
         print(e);
-        yield GarageErrorState(error: messageError);
+        yield GarageListErrorState(error: mError);
       }
     }
   }
+
+  bool _hasReachedMax(GarageState state) =>
+      state is GarageListSuccessState && state.hasReachedMax;
 }

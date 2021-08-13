@@ -13,13 +13,13 @@ class _GarageListState extends State<GarageList> {
     return Center(
       child: BlocConsumer<GarageBloc, GarageState>(
           builder: (context, garageState) {
-        if (garageState is GarageInitialState ||
-            garageState is GarageLoadingState) {
+        if (garageState is GarageListInitialState ||
+            garageState is GarageListLoadingState) {
           return CircularProgressIndicator();
         }
         return CircularProgressIndicator();
       }, listener: (context, garageState) {
-        if (garageState is GarageErrorState) {
+        if (garageState is GarageListErrorState) {
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text(garageState.error)));
         }

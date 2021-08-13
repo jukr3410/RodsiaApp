@@ -12,7 +12,8 @@ const bgColor = Color(0xF2F4F6);
 const defualtPadding = 20.0;
 
 // message, wording
-const messageError = "Service unvalidable, please try agian.";
+const mError = "Service unvalidable, please try agian.";
+const mLoading = "loading";
 
 // src string for set widget
 const tMessage = "messages";

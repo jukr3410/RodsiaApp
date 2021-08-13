@@ -14,9 +14,9 @@ class GarageApi {
 
   GarageApi({required this.httpClient});
 
-  Future<List<Garage>> getGarages() async {
+  Future<List<Garage>> getGarages({required int page}) async {
     List<Garage> garages = [];
-    final url = '$baseUrl/garages';
+    final url = '$baseUrl/garages?page=$page';
     final response = await httpClient.get(Uri.parse(url));
     if (response.statusCode != 200) {
       throw new Exception('There was a problem ${response.statusCode}');
