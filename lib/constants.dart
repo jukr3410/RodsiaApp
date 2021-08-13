@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:rodsiaapp/global_widgets/hexTocolor.dart';
 
 // color that use in app
 const textColorBlack = Color(0x38454C);
 const textColorWhite = Colors.white;
 const textColorRed = Color(0xDA5B49);
 
-const pramaryColor = Color(0xFECE2F);
+const primaryColor = Color(0xFECE2F);
 const bgColor = Color(0xF2F4F6);
 
 // margin, padding
