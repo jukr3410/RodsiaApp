@@ -8,6 +8,8 @@ const textColorRed = Color(0xDA5B49);
 
 const primaryColor = Color(0xFECE2F);
 const bgColor = Color(0xF2F4F6);
+const bgCodeColor = '#F2F4F6';
+const primaryCodeColor = '#FECE2F';
 
 // margin, padding
 const defualtPadding = 20.0;

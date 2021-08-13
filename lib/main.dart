@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rodsiaapp/find_garage_feature/widgets/homePage.dart';
+import 'package:rodsiaapp/global_widgets/hexTocolor.dart';
 import 'package:rodsiaapp/global_widgets/navigrationBar.dart';
 import 'constants.dart';
 
@@ -12,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         title: 'RodSia',
-        theme: ThemeData(primaryColor: Colors.white),
-        home: NavigrationBar());
+        theme: ThemeData(primaryColor: hexToColor("#FECE2F")),
+        home: homePage());
   }
 }
