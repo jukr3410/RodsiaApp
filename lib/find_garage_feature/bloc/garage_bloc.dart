@@ -4,8 +4,8 @@ import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
-import 'package:rodsiaapp/find_garage_feature/models/garage_model.dart';
-import 'package:rodsiaapp/find_garage_feature/repository/garage_repository.dart';
+import 'package:rodsiaapp/core/models/garage_model.dart';
+import 'package:rodsiaapp/core/repository/garage_repository.dart';
 
 part 'garage_event.dart';
 part 'garage_state.dart';
