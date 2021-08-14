@@ -50,7 +50,7 @@ class _NavigrationBarState extends State<NavigrationBar> {
                 onPressed: () {
                   updateTabSelection(0);
                   Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => homePage()));
+                      context, MaterialPageRoute(builder: (context) => HomePage()));
                 },
                 iconSize: 25.0,
                 icon: ImageIcon(
