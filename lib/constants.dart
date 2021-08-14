@@ -3,6 +3,7 @@ import 'package:rodsiaapp/global_widgets/hexTocolor.dart';
 
 // color that use in app
 const textColorBlack = Color(0x38454C);
+const codeColorBlack = "#38454C";
 const textColorWhite = Colors.white;
 const textColorRed = Color(0xDA5B49);
 

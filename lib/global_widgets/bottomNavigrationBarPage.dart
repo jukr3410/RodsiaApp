@@ -20,23 +20,25 @@ class _BottomNavigrationBarState extends State<BottomNavigrationBar> {
   List<Widget> _pageWidget = <Widget>[
     HomePage(),
     FindProblemPage(),
-    // FilterGarage(),
+    FilterGarage(),
     NotifyPage(),
     ProfilePage(),
   ];
-
   List<BottomNavigationBarItem> _menuBar = <BottomNavigationBarItem>[
     BottomNavigationBarItem(
         icon: ImageIcon(AssetImage("image/icon-home-navbar.png")),
         label: 'Home'),
     BottomNavigationBarItem(
-        icon: ImageIcon(AssetImage("image/icon-findProblem-navbar.png")),
+        icon: Container(
+          margin: EdgeInsets.only(right: 50),
+          child: ImageIcon(AssetImage("image/icon-findProblem-navbar.png")),
+        ),
         label: 'Find-problem'),
-    // BottomNavigationBarItem(
-    //     icon: ImageIcon(AssetImage("image/icon-findGarage-navbar.png")),
-    //     label: 'Find-garage'),
     BottomNavigationBarItem(
-        icon: ImageIcon(AssetImage("image/icon-notify-navbar.png")),
+        icon: Container(
+          margin: EdgeInsets.only(left: 50),
+          child: ImageIcon(AssetImage("image/icon-notify-navbar.png")),
+        ),
         label: 'Notify'),
     BottomNavigationBarItem(
         icon: ImageIcon(AssetImage("image/icon-profile-navbar.png")),
@@ -68,11 +70,12 @@ class _BottomNavigrationBarState extends State<BottomNavigrationBar> {
         items: _menuBar,
         currentIndex: _selectedIndex,
         // selectedItemColor: Theme.of(context).primaryColor,
-        unselectedItemColor: Colors.grey,
+        unselectedItemColor: Colors.grey.shade500,
         onTap: _onItemTapped,
         fixedColor: Colors.black,
         type: BottomNavigationBarType.fixed,
-        selectedIconTheme: IconThemeData(size: 27),
+        // selectedIconTheme: IconThemeData(size: 26),
+        selectedFontSize: 13,
         showUnselectedLabels: false,
         showSelectedLabels: false,
         unselectedIconTheme: IconThemeData(size: 24),
