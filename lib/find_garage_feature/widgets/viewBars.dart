@@ -36,16 +36,8 @@ class _ViewBarsState extends State<ViewBars>
             height: 55,
             decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(
-                  25.0,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Color.fromRGBO(0, 0, 0, 0.25),
-                    blurRadius: 4,
-                    offset: Offset(2, 4),
-                  )
-                ]),
+                borderRadius: borderRadiusHight,
+                boxShadow: [boxShadow]),
             child: TabBar(
               controller: _tabController,
               // give the indicator a decoration (color and border radius)

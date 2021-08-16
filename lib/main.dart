@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rodsiaapp/find_garage_feature/widgets/currentLocation.dart';
 import 'package:rodsiaapp/find_garage_feature/widgets/homePage.dart';
 import 'package:rodsiaapp/find_garage_feature/widgets/moreInfoGarageCard.dart';
 import 'package:rodsiaapp/global_widgets/hexTocolor.dart';
@@ -17,7 +18,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'RodSia',
       theme: ThemeData(primaryColor: hexToColor("#FECE2F")),
-      home: Scaffold(body: MoreInfoGarageCard()),
+      home: Scaffold(body: CurrentLocation()),
+
       // initialRoute: '/',
       // routes: {
       //   BottomNavigrationBar.routeName: (context) => BottomNavigrationBar()

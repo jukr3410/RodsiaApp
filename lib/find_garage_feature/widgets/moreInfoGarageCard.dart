@@ -16,17 +16,11 @@ class _MoreinfogarageCardState extends State<MoreInfoGarageCard> {
       appBar: AppBar(),
       body: Container(
           margin: EdgeInsets.only(bottom: 0, top: 20, right: 40, left: 40),
-          height: 120,
+          height: 110,
           decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color: Color.fromRGBO(0, 0, 0, 0.25),
-                  blurRadius: 4,
-                  offset: Offset(2, 4),
-                )
-              ]),
+              boxShadow: [boxShadow]),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -36,7 +30,7 @@ class _MoreinfogarageCardState extends State<MoreInfoGarageCard> {
                 child: Row(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(left: 15, right: 15),
+                      padding: const EdgeInsets.only(left: 10, right: 10),
                       child: ImageIcon(
                         AssetImage('image/icon-location.png'),
                         size: 32,
@@ -44,7 +38,10 @@ class _MoreinfogarageCardState extends State<MoreInfoGarageCard> {
                     ),
                     Flexible(
                         child: Padding(
-                      padding: const EdgeInsets.only(right: 15, bottom: 3,),
+                      padding: const EdgeInsets.only(
+                        right: 15,
+                        bottom: 10,
+                      ),
                       child: Text(
                         "123/456 ถนนสวะประยุทธ์ แขวงประวิตร เขตเหี้ยป้อม กรุงเทพมหานคร 10150",
                         maxLines: 2,
@@ -56,17 +53,23 @@ class _MoreinfogarageCardState extends State<MoreInfoGarageCard> {
                   ],
                 ),
               ),
-              TextButton(
-                onPressed: () {},
-                child: Text(
-                  "ดูรายละเอียดเพิ่มเติม",
-                  style: TextStyle(
-                      fontSize: 12, color: hexToColor(codeColorBlack)),
+              Container(
+                height: 33,
+                child: TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    "ดูรายละเอียดเพิ่มเติม",
+                    style: TextStyle(
+                        fontSize: 12, color: hexToColor(codeColorBlack)),
+                  ),
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          hexToColor(primaryCodeColor)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ))),
                 ),
-                style: TextButton.styleFrom(
-                    shape: const BeveledRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(5))),
-                    backgroundColor: hexToColor(primaryCodeColor)),
               )
             ],
           )),
