@@ -147,50 +147,62 @@ List getGarages() {
     Garage(
         name: "garage 1",
         phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-        email: "เปิด"),
+        email: "เปิด",
+        image: ''),
     Garage(
         name: "garage 2",
         phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-        email: "เปิด"),
+        email: "เปิด",
+        image: ''),
     Garage(
         name: "garage 3",
         phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-        email: "เปิด"),
+        email: "เปิด",
+        image: ''),
     Garage(
         name: "garage 4",
         phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-        email: "เปิด"),
+        email: "เปิด",
+        image: ''),
     Garage(
         name: "garage 1",
         phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-        email: "เปิด"),
+        email: "เปิด",
+        image: ''),
     Garage(
         name: "garage 2",
         phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-        email: "เปิด"),
+        email: "เปิด",
+        image: ''),
     Garage(
         name: "garage 3",
         phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-        email: "เปิด"),
+        email: "เปิด",
+        image: ''),
     Garage(
         name: "garage 4",
         phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-        email: "เปิด"),
+        email: "เปิด",
+        image: ''),
     Garage(
         name: "garage 1",
         phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-        email: "เปิด"),
+        email: "เปิด",
+        image: ''),
     Garage(
         name: "garage 2",
         phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-        email: "เปิด"),
+        email: "เปิด",
+        image: ''),
     Garage(
         name: "garage 3",
         phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-        email: "เปิด"),
+        email: "เปิด",
+        image: ''),
     Garage(
         name: "garage 4",
         phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-        email: "เปิด"),
+        email: "เปิด",
+        image: ''),
   ];
 }

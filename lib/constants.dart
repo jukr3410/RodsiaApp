@@ -25,7 +25,7 @@ const borderRadiusLow = BorderRadius.all(Radius.circular(5));
 const cardColor = Color;
 
 // margin, padding
-const defualtPadding = 16.0;
+const defualtPadding = 20.0;
 
 // message, wording
 const mError = "Service unvalidable, please try agian.";
