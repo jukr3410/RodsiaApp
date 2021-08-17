@@ -18,12 +18,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'RodSia',
       theme: ThemeData(primaryColor: hexToColor("#FECE2F")),
-      home: Scaffold(body: CurrentLocation()),
-
-      // initialRoute: '/',
-      // routes: {
-      //   BottomNavigrationBar.routeName: (context) => BottomNavigrationBar()
-      // },
+      //home: Scaffold(body: CurrentLocation()),
+      initialRoute: '/',
+      routes: {
+        BottomNavigrationBar.routeName: (context) => BottomNavigrationBar()
+      },
     );
   }
 }
