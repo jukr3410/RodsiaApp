@@ -56,30 +56,37 @@ class _BottomNavigrationBarState extends State<BottomNavigrationBar> {
     return Scaffold(
       body: _pageWidget.elementAt(_selectedIndex),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Container(
-          // padding: EdgeInsets.all(15.0),
-          child: ImageIcon(AssetImage("image/icon-findGarage-navbar.png"),
-              color: Colors.black, size: 40),
+      floatingActionButton: Container(
+        height: 60,
+        width: 60,
+        child: FloatingActionButton(
+          onPressed: () {},
+          child: Container(
+            // padding: EdgeInsets.all(15.0),
+            child: ImageIcon(AssetImage("image/icon-findGarage-navbar.png"),
+                color: Colors.black, size: 45),
+          ),
+          elevation: 4.0,
+          backgroundColor: Colors.grey.shade200,
         ),
-        elevation: 4.0,
-        backgroundColor: Colors.grey.shade200,
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: _menuBar,
-        currentIndex: _selectedIndex,
-        // selectedItemColor: Theme.of(context).primaryColor,
-        unselectedItemColor: Colors.grey.shade500,
-        onTap: _onItemTapped,
-        fixedColor: Colors.black,
-        type: BottomNavigationBarType.fixed,
-        // selectedIconTheme: IconThemeData(size: 26),
-        selectedFontSize: 13,
-        showUnselectedLabels: false,
-        showSelectedLabels: false,
-        unselectedIconTheme: IconThemeData(size: 24),
-        backgroundColor: hexToColor(primaryCodeColor),
+      bottomNavigationBar: Container(
+        height: 52,
+        child: BottomNavigationBar(
+          items: _menuBar,
+          currentIndex: _selectedIndex,
+          // selectedItemColor: Theme.of(context).primaryColor,
+          unselectedItemColor: Colors.grey.shade500,
+          onTap: _onItemTapped,
+          fixedColor: Colors.black,
+          type: BottomNavigationBarType.fixed,
+          // selectedIconTheme: IconThemeData(size: 26),
+          selectedFontSize: 13,
+          showUnselectedLabels: false,
+          showSelectedLabels: false,
+          unselectedIconTheme: IconThemeData(size: 24),
+          backgroundColor: hexToColor(primaryCodeColor),
+        ),
       ),
     );
   }

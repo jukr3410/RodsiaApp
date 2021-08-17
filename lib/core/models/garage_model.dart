@@ -7,8 +7,9 @@ class Garage {
   String name;
   String phone;
   String email;
+  String image;
 
-  Garage({required this.name, required this.phone, required this.email});
+  Garage({required this.name, required this.phone, required this.email, required this.image});
 
   factory Garage.fromJson(Map<String, dynamic> json) => _$GarageFromJson(json);
 
