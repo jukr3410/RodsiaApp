@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class GarageCard extends StatelessWidget {
+class GarageDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build

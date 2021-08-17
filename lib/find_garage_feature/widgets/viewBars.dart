@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rodsiaapp/find_garage_feature/widgets/garage_list.dart';
+import 'package:rodsiaapp/find_garage_feature/widgets/garageList.dart';
 import 'package:rodsiaapp/global_widgets/hexTocolor.dart';
 import 'package:rodsiaapp/constants.dart';
 
