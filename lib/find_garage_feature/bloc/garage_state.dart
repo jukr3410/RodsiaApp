@@ -1,21 +1,21 @@
 part of 'garage_bloc.dart';
 
 @immutable
-abstract class GarageState {
-  const GarageState();
+abstract class GarageListState {
+  const GarageListState();
 }
 
-class GarageListInitialState extends GarageState {
+class GarageListInitialState extends GarageListState {
   const GarageListInitialState();
 }
 
-class GarageListLoadingState extends GarageState {
+class GarageListLoadingState extends GarageListState {
   final String message;
 
   const GarageListLoadingState({required this.message});
 }
 
-class GarageListSuccessState extends GarageState {
+class GarageListSuccessState extends GarageListState {
   final List<Garage> garages;
   final bool hasReachedMax;
 
@@ -31,7 +31,7 @@ class GarageListSuccessState extends GarageState {
   List<Object> get props => [garages, hasReachedMax];
 }
 
-class GarageListErrorState extends GarageState {
+class GarageListErrorState extends GarageListState {
   final String error;
 
   const GarageListErrorState({required this.error});

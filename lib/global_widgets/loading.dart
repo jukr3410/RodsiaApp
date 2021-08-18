@@ -4,8 +4,7 @@ class LoadingProgress extends StatelessWidget {
   final double width;
   final double height;
 
-  const LoadingProgress(
-      {required Key key, required this.width, required this.height})
+  const LoadingProgress({Key? key, required this.width, required this.height})
       : super(key: key);
 
   @override

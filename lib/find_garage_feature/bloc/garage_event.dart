@@ -5,6 +5,6 @@ abstract class GarageEvent {
   const GarageEvent();
 }
 
-class GarageFetchEvent extends GarageEvent {
-  const GarageFetchEvent();
+class GarageListFetchEvent extends GarageEvent {
+  const GarageListFetchEvent();
 }

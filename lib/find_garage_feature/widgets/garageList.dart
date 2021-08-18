@@ -14,18 +14,31 @@ class GarageList extends StatefulWidget {
 }
 
 class _GarageListState extends State<GarageList> {
+  ScrollController scrollController = ScrollController();
+  late GarageListBloc _garageListBloc;
+  final scrollThreshold = 200;
+
   //mock
   late List garages;
   @override
   void initState() {
-    garages = getGarages();
     super.initState();
+    scrollController.addListener(_onScroll);
+    _garageListBloc = BlocProvider.of<GarageListBloc>(context);
+  }
+
+  void _onScroll() {
+    final maxScroll = scrollController.position.maxScrollExtent;
+    final currentScroll = scrollController.position.pixels;
+    if (maxScroll - currentScroll <= scrollThreshold) {
+      _garageListBloc.add(GarageListFetchEvent());
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: BlocConsumer<GarageBloc, GarageState>(
+      child: BlocConsumer<GarageListBloc, GarageListState>(
           builder: (context, garageState) {
         if (garageState is GarageListInitialState ||
             garageState is GarageListLoadingState) {
@@ -61,7 +74,7 @@ class _ListPageState extends State<GarageList> {
               minHeight: 80,
             ),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(5.0),
+              borderRadius: borderRadiusLow,
               child: Image.network(
                 'https://bestkru-thumbs.s3-ap-southeast-1.amazonaws.com/127399',
                 fit: BoxFit.cover,
@@ -144,53 +157,53 @@ class _ListPageState extends State<GarageList> {
 // Mock
 List getGarages() {
   return [
-    Garage(
-        name: "garage 1",
-        phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-        email: "เปิด"),
-    Garage(
-        name: "garage 2",
-        phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-        email: "เปิด"),
-    Garage(
-        name: "garage 3",
-        phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-        email: "เปิด"),
-    Garage(
-        name: "garage 4",
-        phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-        email: "เปิด"),
-    Garage(
-        name: "garage 1",
-        phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-        email: "เปิด"),
-    Garage(
-        name: "garage 2",
-        phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-        email: "เปิด"),
-    Garage(
-        name: "garage 3",
-        phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-        email: "เปิด"),
-    Garage(
-        name: "garage 4",
-        phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-        email: "เปิด"),
-    Garage(
-        name: "garage 1",
-        phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-        email: "เปิด"),
-    Garage(
-        name: "garage 2",
-        phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-        email: "เปิด"),
-    Garage(
-        name: "garage 3",
-        phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-        email: "เปิด"),
-    Garage(
-        name: "garage 4",
-        phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-        email: "เปิด"),
+    // Garage(
+    //     name: "garage 1",
+    //     phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
+    //     email: "เปิด"),
+    // Garage(
+    //     name: "garage 2",
+    //     phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
+    //     email: "เปิด"),
+    // Garage(
+    //     name: "garage 3",
+    //     phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
+    //     email: "เปิด"),
+    // Garage(
+    //     name: "garage 4",
+    //     phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
+    //     email: "เปิด"),
+    // Garage(
+    //     name: "garage 1",
+    //     phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
+    //     email: "เปิด"),
+    // Garage(
+    //     name: "garage 2",
+    //     phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
+    //     email: "เปิด"),
+    // Garage(
+    //     name: "garage 3",
+    //     phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
+    //     email: "เปิด"),
+    // Garage(
+    //     name: "garage 4",
+    //     phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
+    //     email: "เปิด"),
+    // Garage(
+    //     name: "garage 1",
+    //     phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
+    //     email: "เปิด"),
+    // Garage(
+    //     name: "garage 2",
+    //     phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
+    //     email: "เปิด"),
+    // Garage(
+    //     name: "garage 3",
+    //     phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
+    //     email: "เปิด"),
+    // Garage(
+    //     name: "garage 4",
+    //     phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
+    //     email: "เปิด"),
   ];
 }
