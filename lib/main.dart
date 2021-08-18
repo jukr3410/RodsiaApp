@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'RodSia',
-      theme: ThemeData(primaryColor: hexToColor("#FECE2F")),
+      theme: ThemeData(primaryColor: primaryColor),
       home: Scaffold(body: SearchPage()),
       // initialRoute: '/',
       // routes: {
