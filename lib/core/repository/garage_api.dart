@@ -28,6 +28,21 @@ class GarageApi {
     return garages;
   }
 
+  Future<List<Garage>> getByGaragesName(
+      {required int page, required String name}) async {
+    List<Garage> garages = [];
+    final url = '$baseUrl/garages-name/:$name?page=$page';
+    final response = await httpClient.get(Uri.parse(url));
+    if (response.statusCode != 200) {
+      throw new Exception('There was a problem ${response.statusCode}');
+    }
+    final decodedJson = jsonDecode(response.body) as List;
+    garages =
+        decodedJson.map((decodedJson) => Garage.fromJson(decodedJson)).toList();
+
+    return garages;
+  }
+
   Future<Garage> getGarageInfo({required String id}) async {
     final url = '$baseUrl/garage-id/$id';
     final response = await httpClient.get(Uri.parse(url));

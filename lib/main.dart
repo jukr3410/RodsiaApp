@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:rodsiaapp/find_garage_feature/widgets/currentLocation.dart';
 import 'package:rodsiaapp/find_garage_feature/widgets/homePage.dart';
 import 'package:rodsiaapp/find_garage_feature/widgets/moreInfoGarageCard.dart';
+import 'package:rodsiaapp/find_garage_feature/widgets/searchGaragePage.dart';
+import 'package:rodsiaapp/find_garage_feature/widgets/viewBars.dart';
 import 'package:rodsiaapp/global_widgets/hexTocolor.dart';
 import 'package:rodsiaapp/global_widgets/navigrationBar.dart';
 import 'package:rodsiaapp/global_widgets/bottomNavigrationBarPage.dart';
+import 'package:rodsiaapp/core/repository/garage_repository.dart';
 import 'constants.dart';
 
 void main() {
@@ -18,11 +21,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'RodSia',
       theme: ThemeData(primaryColor: hexToColor("#FECE2F")),
-      //home: Scaffold(body: CurrentLocation()),
-      initialRoute: '/',
-      routes: {
-        BottomNavigrationBar.routeName: (context) => BottomNavigrationBar()
-      },
+      home: Scaffold(body: SearchPage()),
+      // initialRoute: '/',
+      // routes: {
+      //   BottomNavigrationBar.routeName: (context) => BottomNavigrationBar()
+      // },
     );
   }
 }
