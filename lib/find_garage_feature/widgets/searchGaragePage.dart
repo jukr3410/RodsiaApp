@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rodsiaapp/constants.dart';
+import 'package:rodsiaapp/find_garage_feature/bloc/search_bloc.dart';
 import 'package:rodsiaapp/find_garage_feature/widgets/garageList.dart';
 import 'package:rodsiaapp/global_widgets/hexTocolor.dart';
 
@@ -40,7 +41,11 @@ class _SearchPageState extends State<SearchPage> {
                       margin: EdgeInsets.only(right: 20),
                       height: 30,
                       child: TextField(
-                        onSubmitted: (value) {},
+                        onSubmitted: (String value) {
+                          print(value);
+
+                          SearchFetchEvent(garageName: garageConTroller.text);
+                        },
                         autofocus: true,
                         controller: garageConTroller,
                         decoration: InputDecoration(
@@ -75,31 +80,23 @@ class _SearchPageState extends State<SearchPage> {
                     fontWeight: FontWeight.w500),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: Container(
-                child: ListView.builder(
+            Expanded(
+              child: ListView(
+                  children: ListTile.divideTiles(context: context, tiles: [
+                ListView.builder(
                     shrinkWrap: true,
                     itemCount: historySearch.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return Column(
-                        children: [
-                          ListTile(
+                      return Container(
+                        height: 30,
+                        child: ListTile(
                             title: Text(
-                              historySearch[index].toString(),
-                              style: TextStyle(fontSize: 14),
-                            ),
-                          ),
-                          Divider(
-                            height: 0,
-                            thickness: 1.5,
-                            indent: 15,
-                            endIndent: 15,
-                          )
-                        ],
+                          historySearch[index].toString(),
+                          style: TextStyle(fontSize: 14),
+                        )),
                       );
                     }),
-              ),
+              ]).toList()),
             ),
           ],
         ),
