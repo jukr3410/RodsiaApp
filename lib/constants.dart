@@ -31,6 +31,7 @@ const defualtPadding = 20.0;
 const mError = "Service unvalidable, please try agian.";
 const mNoGarages = "No Garages..";
 const mLoading = "loading";
+const mNotFound = "Not found!";
 
 // src string for set widget
 const tMessage = "messages";

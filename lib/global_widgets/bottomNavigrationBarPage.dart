@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/find_garage_feature/widgets/homePage.dart';
-import 'package:rodsiaapp/global_widgets/filterGarage.dart';
+import 'package:rodsiaapp/find_garage_feature/widgets/filterGarage.dart';
 import 'package:rodsiaapp/global_widgets/findProblemPage.dart';
 import 'package:rodsiaapp/global_widgets/hexTocolor.dart';
 import 'package:rodsiaapp/global_widgets/notifyPage.dart';
@@ -17,6 +17,7 @@ class BottomNavigrationBar extends StatefulWidget {
 
 class _BottomNavigrationBarState extends State<BottomNavigrationBar> {
   int _selectedIndex = 0;
+
   List<Widget> _pageWidget = <Widget>[
     HomePage(),
     FindProblemPage(),
@@ -56,20 +57,8 @@ class _BottomNavigrationBarState extends State<BottomNavigrationBar> {
     return Scaffold(
       body: _pageWidget.elementAt(_selectedIndex),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Container(
-        height: 60,
-        width: 60,
-        child: FloatingActionButton(
-          onPressed: () {},
-          child: Container(
-            // padding: EdgeInsets.all(15.0),
-            child: ImageIcon(AssetImage("image/icon-findGarage-navbar.png"),
-                color: Colors.black, size: 45),
-          ),
-          elevation: 4.0,
-          backgroundColor: Colors.grey.shade200,
-        ),
-      ),
+      floatingActionButton:
+          Container(height: 60, width: 60, child: FilterGarage()),
       bottomNavigationBar: Container(
         child: BottomNavigationBar(
           items: _menuBar,
@@ -85,6 +74,7 @@ class _BottomNavigrationBarState extends State<BottomNavigrationBar> {
           showSelectedLabels: false,
           unselectedIconTheme: IconThemeData(size: 24),
           backgroundColor: hexToColor(primaryCodeColor),
+          // backgroundColor: Color(0xFECE2F),
         ),
       ),
     );
