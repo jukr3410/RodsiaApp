@@ -1,8 +1,11 @@
 part of 'garage_bloc.dart';
 
 @immutable
-abstract class GarageListState {
+abstract class GarageListState extends Equatable {
   const GarageListState();
+
+  @override
+  List<Object> get props => [];
 }
 
 class GarageListInitialState extends GarageListState {
