@@ -2,8 +2,6 @@ class Garage {
   late String name;
   late String phone;
   late String email;
-  late String password;
-  late bool validatePhone;
   late Address address;
   late OpeningHour openingHour;
   late String logoImage;
@@ -13,8 +11,6 @@ class Garage {
       {required this.name,
       required this.phone,
       required this.email,
-      required this.password,
-      required this.validatePhone,
       required this.address,
       required this.openingHour,
       required this.logoImage,
@@ -24,8 +20,6 @@ class Garage {
     name = json['name'];
     phone = json['phone'];
     email = json['email'];
-    password = json['password'];
-    validatePhone = json['validatePhone'];
     address = (json['address'] != null
         ? new Address.fromJson(json['address'])
         : null)!;
@@ -41,8 +35,6 @@ class Garage {
     data['name'] = this.name;
     data['phone'] = this.phone;
     data['email'] = this.email;
-    data['password'] = this.password;
-    data['validatePhone'] = this.validatePhone;
     data['address'] = this.address.toJson();
     data['openingHour'] = this.openingHour.toJson();
     data['logo_image'] = this.logoImage;
