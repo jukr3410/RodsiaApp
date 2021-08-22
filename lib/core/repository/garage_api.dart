@@ -10,9 +10,9 @@ class GarageApi {
   // production api
   //final baseUrl = '';
 
-  final http.Client httpClient;
+  late final http.Client httpClient;
 
-  GarageApi({required this.httpClient});
+  //GarageApi({required this.httpClient});
 
   Future<List<Garage>> getGarages({required int page}) async {
     List<Garage> garages = [];
