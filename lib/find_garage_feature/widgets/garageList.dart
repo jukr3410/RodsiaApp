@@ -10,8 +10,8 @@ class GarageList extends StatefulWidget {
   @override
   _GarageListState createState() => _GarageListState();
 
-  //@override
-  //_ListPageState createState() => _ListPageState();
+  // @override
+  // _ListPageState createState() => _ListPageState();
 }
 
 class _GarageListState extends State<GarageList> {
@@ -129,60 +129,91 @@ class _GarageListState extends State<GarageList> {
   }
 
   _makeCardWidget(Garage garage) {
-    return Card(
-      elevation: 4.0,
-      margin: new EdgeInsets.symmetric(horizontal: 0.0, vertical: 4.0),
-      child: Container(
-        decoration: BoxDecoration(color: cardColor),
-        child: _makeListTile(garage),
-      ),
-    );
-  }
-
-  _makeListTile(Garage garage) {
-    return ListTile(
-      contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-      leading: ConstrainedBox(
-        constraints: BoxConstraints(
-          minWidth: 130,
-          minHeight: 80,
+    return GestureDetector(
+      child: Card(
+        elevation: 3,
+        margin: new EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        color: cardColor,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.33,
+              child: Image.network(
+                'https://bestkru-thumbs.s3-ap-southeast-1.amazonaws.com/127399',
+                fit: BoxFit.cover,
+              ),
+            ),
+            Flexible(
+                child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    garage.name,
+                    style: new TextStyle(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                        color: textColorBlack),
+                  ),
+                  Container(
+                      margin: new EdgeInsets.only(top: 8),
+                      child: Row(children: [
+                        Text(
+                          "distance: " + "12 km",
+                          style: new TextStyle(
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.normal,
+                              color: textColorBlack),
+                        ),
+                        Text(
+                          " | ",
+                          style: new TextStyle(
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.normal,
+                              color: Colors.black54),
+                        ),
+                        Icon(
+                          Icons.star,
+                          color: primaryColor,
+                          size: 20,
+                        ),
+                        Text(
+                          " " + "3.9",
+                          style: new TextStyle(
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.normal,
+                              color: textColorBlack),
+                        ),
+                      ])),
+                  Container(
+                    margin: new EdgeInsets.only(top: 4),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'close',
+                          style: TextStyle(
+                              fontSize: 14.0,
+                              fontWeight: FontWeight.normal,
+                              color: textColorRed),
+                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                        //   child: Icon(Icons.data_usage),
+                        // ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            )),
+          ],
         ),
-        child: ClipRRect(
-          borderRadius: borderRadiusLow,
-          child: Image.network(
-            'https://bestkru-thumbs.s3-ap-southeast-1.amazonaws.com/127399',
-            fit: BoxFit.cover,
-          ),
-        ),
       ),
-
-      //   //padding: EdgeInsets.only(right: 8.0),
-      // ),
-      title: Text(
-        garage.name,
-        style: TextStyle(
-            color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
-      ),
-
-      subtitle: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-              padding: EdgeInsets.only(left: 0.0, top: 8.0),
-              child: Text(garage.phone, style: TextStyle(color: Colors.black))),
-          Padding(
-              padding: EdgeInsets.only(left: 0.0, top: 4.0),
-              child: Text(garage.email, style: TextStyle(color: Colors.green))),
-        ],
-      ),
-      // trailing:
-      //     Icon(Icons.keyboard_arrow_right, color: Colors.black, size: 30.0),
-      // onTap: () {
-      //   Navigator.push(
-      //       context,
-      //       MaterialPageRoute(
-      //           builder: (context) => DetailPage(garage: garage)));
-      // },
+      onTap: () {},
     );
   }
 }
@@ -198,107 +229,122 @@ class _ListPageState extends State<GarageList> {
 
   @override
   Widget build(BuildContext context) {
-    ListTile makeListTile(Garage garage) => ListTile(
-          contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-          leading: ConstrainedBox(
-            constraints: BoxConstraints(
-              minWidth: 130,
-              minHeight: 80,
+    _makeCardInfo(Garage garages) {
+      return Padding(
+          padding: EdgeInsets.all(16),
+          child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Image.network(
+              'https://bestkru-thumbs.s3-ap-southeast-1.amazonaws.com/127399',
+              width: 56,
+              height: 56,
+              fit: BoxFit.cover,
             ),
-            child: ClipRRect(
-              borderRadius: borderRadiusLow,
-              child: Image.network(
-                'https://bestkru-thumbs.s3-ap-southeast-1.amazonaws.com/127399',
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-
-          // leading: Container(
-          //   height: 80.0,
-          //   width: 130.0,
-          //   decoration: BoxDecoration(
-          //     image: DecorationImage(
-          //       fit: BoxFit.cover,
-          //       image: NetworkImage(
-          //           'https://lh3.googleusercontent.com/iCWjvZ8RwFvdC47khW4QxeHvRpBACa242cumpyKf2fshsCaYfXTRe2_DpLUP97evWiIHD7Ku6WjbpDkd=w1080-h608-p-no-v0'),
-          //     ),
-          //   ),
-
-          //   //padding: EdgeInsets.only(right: 8.0),
-          // ),
-          title: Text(
-            garage.name,
-            style: TextStyle(
-                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
-          ),
-
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                  padding: EdgeInsets.only(left: 0.0, top: 8.0),
-                  child: Text(garage.phone,
-                      style: TextStyle(color: Colors.black))),
-              Padding(
-                  padding: EdgeInsets.only(left: 0.0, top: 4.0),
-                  child: Text(garage.email,
-                      style: TextStyle(color: Colors.green))),
-            ],
-          ),
-          // trailing:
-          //     Icon(Icons.keyboard_arrow_right, color: Colors.black, size: 30.0),
-          // onTap: () {
-          //   Navigator.push(
-          //       context,
-          //       MaterialPageRoute(
-          //           builder: (context) => DetailPage(garage: garage)));
-          // },
-        );
-
-    _makeCard(Garage garages) {
-      return Card(
-          margin: new EdgeInsets.symmetric(horizontal: 0.0, vertical: 4.0),
-          child: Container(
-              decoration: BoxDecoration(color: cardColor),
+            Expanded(
               child: Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Row(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Image.network(
-                          'https://bestkru-thumbs.s3-ap-southeast-1.amazonaws.com/127399',
-                          width: 56,
-                          height: 56,
-                          fit: BoxFit.cover,
-                        ),
+                        Text("Flutter Clutter", style: TextStyle(fontSize: 18)),
                         Expanded(
-                          child: Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 16),
-                              child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text("Flutter Clutter",
-                                        style: TextStyle(fontSize: 18)),
-                                    Expanded(
-                                        child: Text(
-                                      "Well this is a pretty long title. I guess this will exceed the available space",
-                                      overflow: TextOverflow.ellipsis,
-                                    ))
-                                  ])),
-                        ),
-                        Text("03.03.2020"),
-                      ]))));
+                            child: Text(
+                          "Well this is a pretty long title. I guess this will exceed the available space",
+                          overflow: TextOverflow.ellipsis,
+                        ))
+                      ])),
+            ),
+            Text("03.03.2020"),
+          ]));
     }
 
-    Card makeCard(Garage garage) => Card(
-          elevation: 4.0,
-          margin: new EdgeInsets.symmetric(horizontal: 0.0, vertical: 4.0),
-          child: Container(
-            decoration: BoxDecoration(color: cardColor),
-            child: makeListTile(garage),
+    _makeCard(Garage garage) {
+      return GestureDetector(
+        child: Card(
+          elevation: 3,
+          margin: new EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+          color: cardColor,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.33,
+                child: Image.network(
+                  'https://bestkru-thumbs.s3-ap-southeast-1.amazonaws.com/127399',
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Flexible(
+                  child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      garage.name,
+                      style: new TextStyle(
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold,
+                          color: textColorBlack),
+                    ),
+                    Container(
+                        margin: new EdgeInsets.only(top: 8),
+                        child: Row(children: [
+                          Text(
+                            "distance: " + "12 km",
+                            style: new TextStyle(
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.normal,
+                                color: textColorBlack),
+                          ),
+                          Text(
+                            " | ",
+                            style: new TextStyle(
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.black54),
+                          ),
+                          Icon(
+                            Icons.star,
+                            color: primaryColor,
+                            size: 20,
+                          ),
+                          Text(
+                            " " + "3.9",
+                            style: new TextStyle(
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.normal,
+                                color: textColorBlack),
+                          ),
+                        ])),
+                    Container(
+                      margin: new EdgeInsets.only(top: 4),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'close',
+                            style: TextStyle(
+                                fontSize: 14.0,
+                                fontWeight: FontWeight.normal,
+                                color: textColorRed),
+                          ),
+                          // Padding(
+                          //   padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                          //   child: Icon(Icons.data_usage),
+                          // ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              )),
+            ],
           ),
-        );
+        ),
+        onTap: () {},
+      );
+    }
 
     final makeBody = Container(
       decoration: BoxDecoration(
