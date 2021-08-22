@@ -71,7 +71,6 @@ class _BottomNavigrationBarState extends State<BottomNavigrationBar> {
         ),
       ),
       bottomNavigationBar: Container(
-        height: 52,
         child: BottomNavigationBar(
           items: _menuBar,
           currentIndex: _selectedIndex,

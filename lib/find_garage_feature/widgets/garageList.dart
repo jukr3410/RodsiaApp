@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:rodsiaapp/core/models/garage_model.dart';
 import 'package:rodsiaapp/find_garage_feature/bloc/garage_bloc.dart';
 
 import '../../constants.dart';
 
 class GarageList extends StatefulWidget {
-  // @override
-  // _GarageListState createState() => _GarageListState();
-
   @override
-  _ListPageState createState() => _ListPageState();
+  _GarageListState createState() => _GarageListState();
+
+  //@override
+  //_ListPageState createState() => _ListPageState();
 }
 
 class _GarageListState extends State<GarageList> {
@@ -19,7 +20,7 @@ class _GarageListState extends State<GarageList> {
   final scrollThreshold = 200;
 
   //mock
-  late List garages;
+  //late List garages;
   @override
   void initState() {
     super.initState();
@@ -38,19 +39,150 @@ class _GarageListState extends State<GarageList> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: BlocConsumer<GarageListBloc, GarageListState>(
+      child: BlocBuilder<GarageListBloc, GarageListState>(
           builder: (context, garageState) {
-        if (garageState is GarageListInitialState ||
-            garageState is GarageListLoadingState) {
-          return CircularProgressIndicator();
+        if (garageState is GarageListInitialState) {
+          return Center(child: CircularProgressIndicator());
+        }
+        if (garageState is GarageListErrorState) {
+          return Center(
+            child: Text(mError),
+          );
+        }
+        if (garageState is GarageListSuccessState) {
+          if (garageState.garages.isEmpty) {
+            return Center(
+              child: Text(mNoGarages),
+            );
+          }
+          return Scrollbar(
+              child: ListView.builder(
+                  scrollDirection: Axis.vertical,
+                  controller: scrollController,
+                  shrinkWrap: true,
+                  physics: BouncingScrollPhysics(),
+                  itemCount: garageState.hasReachedMax
+                      ? garageState.garages.length
+                      : garageState.garages.length + 1,
+                  itemBuilder: (BuildContext context, int index) {
+                    return index >= garageState.garages.length
+                        ? Shimmer.fromColors(
+                            child: ListView.builder(
+                              itemBuilder: (_, __) => Padding(
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Container(
+                                      width: 48.0,
+                                      height: 48.0,
+                                      color: Colors.white,
+                                    ),
+                                    const Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 8.0),
+                                    ),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Container(
+                                            width: double.infinity,
+                                            height: 8.0,
+                                            color: Colors.white,
+                                          ),
+                                          const Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 2.0),
+                                          ),
+                                          Container(
+                                            width: double.infinity,
+                                            height: 8.0,
+                                            color: Colors.white,
+                                          ),
+                                          const Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 2.0),
+                                          ),
+                                          Container(
+                                            width: 40.0,
+                                            height: 8.0,
+                                            color: Colors.white,
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              itemCount: 6,
+                            ),
+                            baseColor: Colors.grey.shade300,
+                            highlightColor: Colors.grey.shade100)
+                        : _makeCardWidget(garageState.garages[index]);
+                  }));
         }
         return CircularProgressIndicator();
-      }, listener: (context, garageState) {
-        if (garageState is GarageListErrorState) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text(garageState.error)));
-        }
       }),
+    );
+  }
+
+  _makeCardWidget(Garage garage) {
+    return Card(
+      elevation: 4.0,
+      margin: new EdgeInsets.symmetric(horizontal: 0.0, vertical: 4.0),
+      child: Container(
+        decoration: BoxDecoration(color: cardColor),
+        child: _makeListTile(garage),
+      ),
+    );
+  }
+
+  _makeListTile(Garage garage) {
+    return ListTile(
+      contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      leading: ConstrainedBox(
+        constraints: BoxConstraints(
+          minWidth: 130,
+          minHeight: 80,
+        ),
+        child: ClipRRect(
+          borderRadius: borderRadiusLow,
+          child: Image.network(
+            'https://bestkru-thumbs.s3-ap-southeast-1.amazonaws.com/127399',
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+
+      //   //padding: EdgeInsets.only(right: 8.0),
+      // ),
+      title: Text(
+        garage.name,
+        style: TextStyle(
+            color: Colors.black, fontWeight: FontWeight.bold, fontSize: 16),
+      ),
+
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+              padding: EdgeInsets.only(left: 0.0, top: 8.0),
+              child: Text(garage.phone, style: TextStyle(color: Colors.black))),
+          Padding(
+              padding: EdgeInsets.only(left: 0.0, top: 4.0),
+              child: Text(garage.email, style: TextStyle(color: Colors.green))),
+        ],
+      ),
+      // trailing:
+      //     Icon(Icons.keyboard_arrow_right, color: Colors.black, size: 30.0),
+      // onTap: () {
+      //   Navigator.push(
+      //       context,
+      //       MaterialPageRoute(
+      //           builder: (context) => DetailPage(garage: garage)));
+      // },
     );
   }
 }
@@ -124,11 +256,46 @@ class _ListPageState extends State<GarageList> {
           // },
         );
 
+    _makeCard(Garage garages) {
+      return Card(
+          margin: new EdgeInsets.symmetric(horizontal: 0.0, vertical: 4.0),
+          child: Container(
+              decoration: BoxDecoration(color: cardColor),
+              child: Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Image.network(
+                          'https://bestkru-thumbs.s3-ap-southeast-1.amazonaws.com/127399',
+                          width: 56,
+                          height: 56,
+                          fit: BoxFit.cover,
+                        ),
+                        Expanded(
+                          child: Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 16),
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Flutter Clutter",
+                                        style: TextStyle(fontSize: 18)),
+                                    Expanded(
+                                        child: Text(
+                                      "Well this is a pretty long title. I guess this will exceed the available space",
+                                      overflow: TextOverflow.ellipsis,
+                                    ))
+                                  ])),
+                        ),
+                        Text("03.03.2020"),
+                      ]))));
+    }
+
     Card makeCard(Garage garage) => Card(
           elevation: 4.0,
           margin: new EdgeInsets.symmetric(horizontal: 0.0, vertical: 4.0),
           child: Container(
-            decoration: BoxDecoration(color: Colors.white),
+            decoration: BoxDecoration(color: cardColor),
             child: makeListTile(garage),
           ),
         );
@@ -142,13 +309,13 @@ class _ListPageState extends State<GarageList> {
         shrinkWrap: true,
         itemCount: garages.length,
         itemBuilder: (BuildContext context, int index) {
-          return makeCard(garages[index]);
+          return _makeCard(garages[index]);
         },
       ),
     );
 
     return Scaffold(
-      backgroundColor: Colors.white70,
+      backgroundColor: bgColor,
       body: makeBody,
     );
   }
@@ -157,53 +324,89 @@ class _ListPageState extends State<GarageList> {
 // Mock
 List getGarages() {
   return [
-    // Garage(
-    //     name: "garage 1",
-    //     phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-    //     email: "เปิด"),
-    // Garage(
-    //     name: "garage 2",
-    //     phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-    //     email: "เปิด"),
-    // Garage(
-    //     name: "garage 3",
-    //     phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-    //     email: "เปิด"),
-    // Garage(
-    //     name: "garage 4",
-    //     phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-    //     email: "เปิด"),
-    // Garage(
-    //     name: "garage 1",
-    //     phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-    //     email: "เปิด"),
-    // Garage(
-    //     name: "garage 2",
-    //     phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-    //     email: "เปิด"),
-    // Garage(
-    //     name: "garage 3",
-    //     phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-    //     email: "เปิด"),
-    // Garage(
-    //     name: "garage 4",
-    //     phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-    //     email: "เปิด"),
-    // Garage(
-    //     name: "garage 1",
-    //     phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-    //     email: "เปิด"),
-    // Garage(
-    //     name: "garage 2",
-    //     phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-    //     email: "เปิด"),
-    // Garage(
-    //     name: "garage 3",
-    //     phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-    //     email: "เปิด"),
-    // Garage(
-    //     name: "garage 4",
-    //     phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-    //     email: "เปิด"),
+    Garage(
+      name: "garage 1",
+      phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
+      email: "เปิด",
+      image: [],
+      logoImage: '',
+      openingHour: OpeningHour(
+          f: Day(open: '', close: ''),
+          m: Day(open: '', close: ''),
+          sa: Day(open: '', close: ''),
+          su: Day(open: '', close: ''),
+          th: Day(open: '', close: ''),
+          tu: Day(open: '', close: ''),
+          w: Day(open: '', close: '')),
+      address: Address(
+          addressDesc: "addressDesc",
+          geolocation: Geolocation(
+            lat: "",
+            long: '',
+          )),
+    ),
+    Garage(
+      name: "garage 1",
+      phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
+      email: "เปิด",
+      image: [],
+      logoImage: '',
+      openingHour: OpeningHour(
+          f: Day(open: '', close: ''),
+          m: Day(open: '', close: ''),
+          sa: Day(open: '', close: ''),
+          su: Day(open: '', close: ''),
+          th: Day(open: '', close: ''),
+          tu: Day(open: '', close: ''),
+          w: Day(open: '', close: '')),
+      address: Address(
+          addressDesc: "addressDesc",
+          geolocation: Geolocation(
+            lat: "",
+            long: '',
+          )),
+    ),
+    Garage(
+      name: "garage 1",
+      phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
+      email: "เปิด",
+      image: [],
+      logoImage: '',
+      openingHour: OpeningHour(
+          f: Day(open: '', close: ''),
+          m: Day(open: '', close: ''),
+          sa: Day(open: '', close: ''),
+          su: Day(open: '', close: ''),
+          th: Day(open: '', close: ''),
+          tu: Day(open: '', close: ''),
+          w: Day(open: '', close: '')),
+      address: Address(
+          addressDesc: "addressDesc",
+          geolocation: Geolocation(
+            lat: "",
+            long: '',
+          )),
+    ),
+    Garage(
+      name: "garage 1",
+      phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
+      email: "เปิด",
+      image: [],
+      logoImage: '',
+      openingHour: OpeningHour(
+          f: Day(open: '', close: ''),
+          m: Day(open: '', close: ''),
+          sa: Day(open: '', close: ''),
+          su: Day(open: '', close: ''),
+          th: Day(open: '', close: ''),
+          tu: Day(open: '', close: ''),
+          w: Day(open: '', close: '')),
+      address: Address(
+          addressDesc: "addressDesc",
+          geolocation: Geolocation(
+            lat: "",
+            long: '',
+          )),
+    )
   ];
 }
