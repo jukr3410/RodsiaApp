@@ -34,6 +34,13 @@ const mLoading = "loading";
 const mNotFound = "Not found!";
 
 // src string for set widget
+const tOKThai = 'ตกลง';
+const tAlertRequestService = 'มีคนต้องการความช่วยเหลือ!';
+const tDeclineThai = 'ปฏิเสธิ';
+const tUpdateThai = 'อัพเดต';
+const tCancleThai = 'ยกเลิก';
+const tAcceptThai = 'ยอมรับ';
+const tYesThai = 'ใช้';
 const tMessage = "messages";
 const tEmail = "E-mail";
 const tPassword = "Password";

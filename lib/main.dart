@@ -10,6 +10,7 @@ import 'package:rodsiaapp/global_widgets/hexTocolor.dart';
 import 'package:rodsiaapp/global_widgets/navigrationBar.dart';
 import 'package:rodsiaapp/global_widgets/bottomNavigrationBarPage.dart';
 import 'package:rodsiaapp/core/repository/garage_repository.dart';
+import 'package:rodsiaapp/request_service_feature/widgets/garage/alertRequestService.dart';
 import 'constants.dart';
 
 void main() {
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
       title: 'RodSia',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: primaryColor),
-      home: Scaffold(body: new GarageList()),
+      home: Scaffold(body: new AlertRequestService()),
       // initialRoute: '/',
       // routes: {
       //   BottomNavigrationBar.routeName: (context) => BottomNavigrationBar()
