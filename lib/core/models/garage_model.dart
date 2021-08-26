@@ -18,6 +18,7 @@ class Garage {
     required this.phone,
     required this.email,
     required this.password,
+    required this.otp,
     required this.validatePhone,
     required this.createdAt,
     required this.updatedAt,
@@ -31,6 +32,7 @@ class Garage {
   String phone;
   String email;
   String password;
+  String otp;
   bool validatePhone;
   DateTime createdAt;
   DateTime updatedAt;
@@ -44,6 +46,7 @@ class Garage {
         phone: json["phone"],
         email: json["email"],
         password: json["password"],
+        otp: json["otp"],
         validatePhone: json["validatePhone"],
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
@@ -58,6 +61,7 @@ class Garage {
         "phone": phone,
         "email": email,
         "password": password,
+        "otp": otp,
         "validatePhone": validatePhone,
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
