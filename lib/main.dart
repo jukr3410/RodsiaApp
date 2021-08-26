@@ -11,6 +11,8 @@ import 'package:rodsiaapp/global_widgets/navigrationBar.dart';
 import 'package:rodsiaapp/global_widgets/bottomNavigrationBarPage.dart';
 import 'package:rodsiaapp/core/repository/garage_repository.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/garage/alertRequestService.dart';
+import 'package:rodsiaapp/request_service_feature/widgets/garage/barTrackingPage.dart';
+import 'package:rodsiaapp/request_service_feature/widgets/garage/trackingRequestPage.dart';
 import 'constants.dart';
 
 void main() {
@@ -26,7 +28,7 @@ class MyApp extends StatelessWidget {
       title: 'RodSia',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: primaryColor),
-      home: Scaffold(body: new AlertRequestService()),
+      home: Scaffold(body: new TrackingRequestPage()),
       // initialRoute: '/',
       // routes: {
       //   BottomNavigrationBar.routeName: (context) => BottomNavigrationBar()

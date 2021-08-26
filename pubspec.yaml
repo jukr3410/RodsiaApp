@@ -63,6 +63,9 @@ flutter:
     - image/icon-location.png
     - image/icon-backPage.png
     - image/icon-battery-service.png
+    - image/icon-phone.png
+    - image/icon-message.png
+    - image/icon-more.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see

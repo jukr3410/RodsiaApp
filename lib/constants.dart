@@ -25,7 +25,8 @@ const borderRadiusMedium = BorderRadius.all(Radius.circular(10));
 const borderRadiusLow = BorderRadius.all(Radius.circular(5));
 
 // margin, padding
-const defualtPadding = 20.0;
+const defualtPaddingMedium = 20.0;
+const defualtPaddingLow = 10.0;
 
 // message, wording
 const mError = "Service unvalidable, please try agian.";
@@ -44,3 +45,16 @@ const tYesThai = 'ใช้';
 const tMessage = "messages";
 const tEmail = "E-mail";
 const tPassword = "Password";
+const tNameGarageThai = "ชื่ออู๋:";
+const tNameUserThai = "ชื่อลูกค้า:";
+const tLocationThai = 'ตำแหน่ง:';
+const tProblemThai = 'ปัญหา:';
+
+//Tracking Status
+
+const trackingStatus = [
+  'กำลังเตรียมของ',
+  'กำลังเดินทาง',
+  'ถึงที่หมายแล้ว',
+  'งานเสร็จแล้ว'
+];
