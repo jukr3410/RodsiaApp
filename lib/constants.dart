@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:rodsiaapp/global_widgets/hexTocolor.dart';
 
+//api base url
+//dev localhost api
+final baseUrlConstant = "http://localhost:3000/api";
+
+// production api
+//final baseUrlConstant = '';
+
 // color that use in app
 const textColorBlack = Color(0xff38454C);
 const codeColorBlack = "#38454C";
