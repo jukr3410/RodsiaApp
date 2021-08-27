@@ -38,7 +38,7 @@ class Service {
         "_id": id,
         "name": name,
         "description": description,
-        "serviceType": serviceType.toJson(),
-        "garage": garage.toJson(),
+        "serviceType": serviceType.id,
+        "garage": garage.id,
       };
 }
