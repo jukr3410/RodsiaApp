@@ -71,7 +71,8 @@ class _SearchPageState extends State<SearchPage> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: defualtPadding, top: 20),
+              padding:
+                  const EdgeInsets.only(left: defualtPaddingMedium, top: 20),
               child: Text(
                 "การค้นหาล่าสุด",
                 style: TextStyle(

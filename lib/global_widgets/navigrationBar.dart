@@ -39,7 +39,7 @@ class _NavigrationBarState extends State<NavigrationBar> {
       ),
       bottomNavigationBar: BottomAppBar(
         child: Container(
-          margin: EdgeInsets.only(left: defualtPadding, right: defualtPadding),
+          margin: EdgeInsets.only(left: defualtPaddingMedium, right: defualtPaddingMedium),
           child: Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
