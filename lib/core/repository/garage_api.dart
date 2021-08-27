@@ -1,14 +1,11 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/garage_model.dart';
 
 class GarageApi {
-  //dev localhost api
-  final baseUrl = "http://localhost:3000/api";
-
-  // production api
-  //final baseUrl = '';
+  final baseUrl = baseUrlConstant;
 
   late final http.Client httpClient;
 

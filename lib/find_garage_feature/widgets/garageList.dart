@@ -16,66 +16,84 @@ class GarageList extends StatefulWidget {
 
 class _GarageListState extends State<GarageList> {
   ScrollController scrollController = ScrollController();
-  late GarageListBloc _garageListBloc;
+  late GarageListBloc _garageListBloc =
+      BlocProvider.of<GarageListBloc>(context);
   final scrollThreshold = 200;
+
+  final List<Garage> _garages = [];
 
   //mock
   //late List garages;
-  @override
-  void initState() {
-    super.initState();
-    scrollController.addListener(_onScroll);
-    _garageListBloc = BlocProvider.of<GarageListBloc>(context);
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   scrollController.addListener(_onScroll);
+  //   _garageListBloc = BlocProvider.of<GarageListBloc>(context);
+  // }
 
-  void _onScroll() {
-    final maxScroll = scrollController.position.maxScrollExtent;
-    final currentScroll = scrollController.position.pixels;
-    if (maxScroll - currentScroll <= scrollThreshold) {
-      _garageListBloc.add(GarageListFetchEvent());
-    }
-  }
+  // void _onScroll() {
+  //   final maxScroll = scrollController.position.maxScrollExtent;
+  //   final currentScroll = scrollController.position.pixels;
+  //   if (maxScroll - currentScroll <= scrollThreshold) {
+  //     _garageListBloc.add(GarageListFetchEvent());
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: BlocBuilder<GarageListBloc, GarageListState>(
-          builder: (context, garageState) {
-        if (garageState is GarageListInitialState) {
-          return Center(child: CircularProgressIndicator());
-        }
-        if (garageState is GarageListErrorState) {
-          return Center(
-              child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
-            child: _shimmer(),
-          ));
-        }
-        if (garageState is GarageListSuccessState) {
-          if (garageState.garages.isEmpty) {
-            return Center(
-              child: Text(mNoGarages),
-            );
-          }
-          return Scrollbar(
-              child: ListView.builder(
-                  scrollDirection: Axis.vertical,
-                  controller: scrollController,
-                  shrinkWrap: true,
-                  physics: BouncingScrollPhysics(),
-                  itemCount: garageState.hasReachedMax
-                      ? garageState.garages.length
-                      : garageState.garages.length + 1,
-                  itemBuilder: (BuildContext context, int index) {
-                    return index >= garageState.garages.length
-                        ? _shimmer()
-                        : _makeCardWidget(garageState.garages[index]);
-                  }));
-        }
-        return CircularProgressIndicator();
-      }),
-    );
+        child: BlocConsumer<GarageListBloc, GarageListState>(
+      listener: (context, garageState) {},
+      builder: (context, garageState) {
+        return _shimmer();
+      },
+    ));
   }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Center(
+  //     child: BlocBuilder<GarageListBloc, GarageListState>(
+  //         builder: (context, garageState) {
+  //       if (garageState is GarageListInitialState) {
+  //         return Center(
+  //             child: Padding(
+  //           padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
+  //           child: _shimmer(),
+  //         ));
+  //       }
+  //       if (garageState is GarageListErrorState) {
+  //         return Center(
+  //             child: Padding(
+  //           padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
+  //           child: Text(mError),
+  //         ));
+  //       }
+  //       if (garageState is GarageListSuccessState) {
+  //         if (garageState.garages.isEmpty) {
+  //           return Center(
+  //             child: Text(mNoGarages),
+  //           );
+  //         }
+  //         return Scrollbar(
+  //             child: ListView.builder(
+  //                 scrollDirection: Axis.vertical,
+  //                 controller: scrollController,
+  //                 shrinkWrap: true,
+  //                 physics: BouncingScrollPhysics(),
+  //                 itemCount: garageState.hasReachedMax
+  //                     ? garageState.garages.length
+  //                     : garageState.garages.length + 1,
+  //                 itemBuilder: (BuildContext context, int index) {
+  //                   return index >= garageState.garages.length
+  //                       ? _shimmer()
+  //                       : _makeCardWidget(garageState.garages[index]);
+  //                 }));
+  //       }
+  //       return CircularProgressIndicator();
+  //     }),
+  //   );
+  // }
 
   _makeCardWidget(Garage garage) {
     return GestureDetector(
@@ -373,91 +391,91 @@ class _GarageListState extends State<GarageList> {
 // }
 
 // Mock
-List getGarages() {
-  return [
-    Garage(
-      name: "garage 1",
-      phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-      email: "เปิด",
-      image: [],
-      logoImage: '',
-      openingHour: OpeningHour(
-          f: Day(open: '', close: ''),
-          m: Day(open: '', close: ''),
-          sa: Day(open: '', close: ''),
-          su: Day(open: '', close: ''),
-          th: Day(open: '', close: ''),
-          tu: Day(open: '', close: ''),
-          w: Day(open: '', close: '')),
-      address: Address(
-          addressDesc: "addressDesc",
-          geolocation: Geolocation(
-            lat: "",
-            long: '',
-          )),
-    ),
-    Garage(
-      name: "garage 1",
-      phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-      email: "เปิด",
-      image: [],
-      logoImage: '',
-      openingHour: OpeningHour(
-          f: Day(open: '', close: ''),
-          m: Day(open: '', close: ''),
-          sa: Day(open: '', close: ''),
-          su: Day(open: '', close: ''),
-          th: Day(open: '', close: ''),
-          tu: Day(open: '', close: ''),
-          w: Day(open: '', close: '')),
-      address: Address(
-          addressDesc: "addressDesc",
-          geolocation: Geolocation(
-            lat: "",
-            long: '',
-          )),
-    ),
-    Garage(
-      name: "garage 1",
-      phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-      email: "เปิด",
-      image: [],
-      logoImage: '',
-      openingHour: OpeningHour(
-          f: Day(open: '', close: ''),
-          m: Day(open: '', close: ''),
-          sa: Day(open: '', close: ''),
-          su: Day(open: '', close: ''),
-          th: Day(open: '', close: ''),
-          tu: Day(open: '', close: ''),
-          w: Day(open: '', close: '')),
-      address: Address(
-          addressDesc: "addressDesc",
-          geolocation: Geolocation(
-            lat: "",
-            long: '',
-          )),
-    ),
-    Garage(
-      name: "garage 1",
-      phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-      email: "เปิด",
-      image: [],
-      logoImage: '',
-      openingHour: OpeningHour(
-          f: Day(open: '', close: ''),
-          m: Day(open: '', close: ''),
-          sa: Day(open: '', close: ''),
-          su: Day(open: '', close: ''),
-          th: Day(open: '', close: ''),
-          tu: Day(open: '', close: ''),
-          w: Day(open: '', close: '')),
-      address: Address(
-          addressDesc: "addressDesc",
-          geolocation: Geolocation(
-            lat: "",
-            long: '',
-          )),
-    )
-  ];
-}
+// List getGarages() {
+//   return [
+//     Garage(
+//       name: "garage 1",
+//       phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
+//       email: "เปิด",
+//       image: [],
+//       logoImage: '',
+//       openingHour: OpeningHour(
+//           f: Day(open: '', close: ''),
+//           m: Day(open: '', close: ''),
+//           sa: Day(open: '', close: ''),
+//           su: Day(open: '', close: ''),
+//           th: Day(open: '', close: ''),
+//           tu: Day(open: '', close: ''),
+//           w: Day(open: '', close: '')),
+//       address: Address(
+//           addressDesc: "addressDesc",
+//           geolocation: Geolocation(
+//             lat: "",
+//             long: '',
+//           )),
+//     ),
+//     Garage(
+//       name: "garage 1",
+//       phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
+//       email: "เปิด",
+//       image: [],
+//       logoImage: '',
+//       openingHour: OpeningHour(
+//           f: Day(open: '', close: ''),
+//           m: Day(open: '', close: ''),
+//           sa: Day(open: '', close: ''),
+//           su: Day(open: '', close: ''),
+//           th: Day(open: '', close: ''),
+//           tu: Day(open: '', close: ''),
+//           w: Day(open: '', close: '')),
+//       address: Address(
+//           addressDesc: "addressDesc",
+//           geolocation: Geolocation(
+//             lat: "",
+//             long: '',
+//           )),
+//     ),
+//     Garage(
+//       name: "garage 1",
+//       phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
+//       email: "เปิด",
+//       image: [],
+//       logoImage: '',
+//       openingHour: OpeningHour(
+//           f: Day(open: '', close: ''),
+//           m: Day(open: '', close: ''),
+//           sa: Day(open: '', close: ''),
+//           su: Day(open: '', close: ''),
+//           th: Day(open: '', close: ''),
+//           tu: Day(open: '', close: ''),
+//           w: Day(open: '', close: '')),
+//       address: Address(
+//           addressDesc: "addressDesc",
+//           geolocation: Geolocation(
+//             lat: "",
+//             long: '',
+//           )),
+//     ),
+//     Garage(
+//       name: "garage 1",
+//       phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
+//       email: "เปิด",
+//       image: [],
+//       logoImage: '',
+//       openingHour: OpeningHour(
+//           f: Day(open: '', close: ''),
+//           m: Day(open: '', close: ''),
+//           sa: Day(open: '', close: ''),
+//           su: Day(open: '', close: ''),
+//           th: Day(open: '', close: ''),
+//           tu: Day(open: '', close: ''),
+//           w: Day(open: '', close: '')),
+//       address: Address(
+//           addressDesc: "addressDesc",
+//           geolocation: Geolocation(
+//             lat: "",
+//             long: '',
+//           )),
+//     )
+//   ];
+// }

@@ -1,144 +1,169 @@
+// To parse this JSON data, do
+//
+//     final user = userFromJson(jsonString);
+
+import 'dart:convert';
+
+Garage userFromJson(String str) => Garage.fromJson(json.decode(str));
+
+String userToJson(Garage data) => json.encode(data.toJson());
+
 class Garage {
-  late String name;
-  late String phone;
-  late String email;
-  late Address address;
-  late OpeningHour openingHour;
-  late String logoImage;
-  late List<String> image;
+  Garage({
+    required this.address,
+    required this.openingHour,
+    required this.images,
+    required this.id,
+    required this.name,
+    required this.phone,
+    required this.email,
+    required this.password,
+    required this.otp,
+    required this.validatePhone,
+    required this.createdAt,
+    required this.updatedAt,
+  });
 
-  Garage(
-      {required this.name,
-      required this.phone,
-      required this.email,
-      required this.address,
-      required this.openingHour,
-      required this.logoImage,
-      required this.image});
+  Address address;
+  OpeningHour openingHour;
+  List<dynamic> images;
+  String id;
+  String name;
+  String phone;
+  String email;
+  String password;
+  String otp;
+  bool validatePhone;
+  DateTime createdAt;
+  DateTime updatedAt;
 
-  Garage.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    phone = json['phone'];
-    email = json['email'];
-    address = (json['address'] != null
-        ? new Address.fromJson(json['address'])
-        : null)!;
-    openingHour = (json['openingHour'] != null
-        ? new OpeningHour.fromJson(json['openingHour'])
-        : null)!;
-    logoImage = json['logo_image'];
-    image = json['image'].cast<String>();
-  }
+  factory Garage.fromJson(Map<String, dynamic> json) => Garage(
+        address: Address.fromJson(json["address"]),
+        openingHour: OpeningHour.fromJson(json["openingHour"]),
+        images: List<dynamic>.from(json["images"].map((x) => x)),
+        id: json["_id"],
+        name: json["name"],
+        phone: json["phone"],
+        email: json["email"],
+        password: json["password"],
+        otp: json["otp"],
+        validatePhone: json["validatePhone"],
+        createdAt: DateTime.parse(json["createdAt"]),
+        updatedAt: DateTime.parse(json["updatedAt"]),
+      );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['phone'] = this.phone;
-    data['email'] = this.email;
-    data['address'] = this.address.toJson();
-    data['openingHour'] = this.openingHour.toJson();
-    data['logo_image'] = this.logoImage;
-    data['image'] = this.image;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "address": address.toJson(),
+        "openingHour": openingHour.toJson(),
+        "images": List<dynamic>.from(images.map((x) => x)),
+        "_id": id,
+        "name": name,
+        "phone": phone,
+        "email": email,
+        "password": password,
+        "otp": otp,
+        "validatePhone": validatePhone,
+        "createdAt": createdAt.toIso8601String(),
+        "updatedAt": updatedAt.toIso8601String(),
+      };
 }
 
 class Address {
-  late String addressDesc;
-  late Geolocation geolocation;
+  Address({
+    required this.geolocation,
+    required this.addressDesc,
+  });
 
-  Address({required this.addressDesc, required this.geolocation});
+  Geolocation geolocation;
+  String addressDesc;
 
-  Address.fromJson(Map<String, dynamic> json) {
-    addressDesc = json['addressDesc'];
-    geolocation = (json['geolocation'] != null
-        ? new Geolocation.fromJson(json['geolocation'])
-        : null)!;
-  }
+  factory Address.fromJson(Map<String, dynamic> json) => Address(
+        geolocation: Geolocation.fromJson(json["geolocation"]),
+        addressDesc: json["addressDesc"],
+      );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['addressDesc'] = this.addressDesc;
-    data['geolocation'] = this.geolocation.toJson();
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "geolocation": geolocation.toJson(),
+        "addressDesc": addressDesc,
+      };
 }
 
 class Geolocation {
-  late String lat;
-  late String long;
+  Geolocation({
+    required this.lat,
+    required this.long,
+  });
 
-  Geolocation({required this.lat, required this.long});
+  String lat;
+  String long;
 
-  Geolocation.fromJson(Map<String, dynamic> json) {
-    lat = json['lat'];
-    long = json['long'];
-  }
+  factory Geolocation.fromJson(Map<String, dynamic> json) => Geolocation(
+        lat: json["lat"],
+        long: json["long"],
+      );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['lat'] = this.lat;
-    data['long'] = this.long;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "lat": lat,
+        "long": long,
+      };
 }
 
 class OpeningHour {
-  late Day m;
-  late Day tu;
-  late Day w;
-  late Day th;
-  late Day f;
-  late Day sa;
-  late Day su;
+  OpeningHour({
+    required this.mo,
+    required this.tu,
+    required this.we,
+    required this.th,
+    required this.fr,
+    required this.sa,
+    required this.su,
+  });
 
-  OpeningHour(
-      {required this.m,
-      required this.tu,
-      required this.w,
-      required this.th,
-      required this.f,
-      required this.sa,
-      required this.su});
+  Day mo;
+  Day tu;
+  Day we;
+  Day th;
+  Day fr;
+  Day sa;
+  Day su;
 
-  OpeningHour.fromJson(Map<String, dynamic> json) {
-    m = (json['m'] != null ? new Day.fromJson(json['m']) : null)!;
-    tu = (json['tu'] != null ? new Day.fromJson(json['tu']) : null)!;
-    w = (json['w'] != null ? new Day.fromJson(json['w']) : null)!;
-    th = (json['th'] != null ? new Day.fromJson(json['th']) : null)!;
-    f = (json['f'] != null ? new Day.fromJson(json['f']) : null)!;
-    sa = (json['sa'] != null ? new Day.fromJson(json['sa']) : null)!;
-    su = (json['su'] != null ? new Day.fromJson(json['su']) : null)!;
-  }
+  factory OpeningHour.fromJson(Map<String, dynamic> json) => OpeningHour(
+        mo: Day.fromJson(json["mo"]),
+        tu: Day.fromJson(json["tu"]),
+        we: Day.fromJson(json["we"]),
+        th: Day.fromJson(json["th"]),
+        fr: Day.fromJson(json["fr"]),
+        sa: Day.fromJson(json["sa"]),
+        su: Day.fromJson(json["su"]),
+      );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['m'] = this.m.toJson();
-    data['tu'] = this.tu.toJson();
-    data['w'] = this.w.toJson();
-    data['th'] = this.th.toJson();
-    data['f'] = this.f.toJson();
-    data['sa'] = this.sa.toJson();
-    data['su'] = this.su.toJson();
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "mo": mo.toJson(),
+        "tu": tu.toJson(),
+        "we": we.toJson(),
+        "th": th.toJson(),
+        "fr": fr.toJson(),
+        "sa": sa.toJson(),
+        "su": su.toJson(),
+      };
 }
 
 class Day {
-  late String open;
-  late String close;
+  Day({
+    required this.open,
+    required this.close,
+  });
 
-  Day({required this.open, required this.close});
+  String open;
+  String close;
 
-  Day.fromJson(Map<String, dynamic> json) {
-    open = json['open'];
-    close = json['close'];
-  }
+  factory Day.fromJson(Map<String, dynamic> json) => Day(
+        open: json["open"],
+        close: json["close"],
+      );
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['open'] = this.open;
-    data['close'] = this.close;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "open": open,
+        "close": close,
+      };
 }
