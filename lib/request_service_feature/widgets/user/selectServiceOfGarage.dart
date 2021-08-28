@@ -50,7 +50,7 @@ class _SelectServiceOfGarageState extends State<SelectServiceOfGarage> {
           Padding(
             padding: const EdgeInsets.only(left: defualtPaddingLow),
             child: Text(
-              tServiceOfGarage,
+              tServiceOfGarageThai,
               style: TextStyle(fontSize: 17),
             ),
           ),
