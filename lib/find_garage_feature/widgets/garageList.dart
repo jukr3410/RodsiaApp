@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rodsiaapp/request_service_feature/widgets/user/selectServicePage.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:rodsiaapp/core/models/garage_model.dart';
 import 'package:rodsiaapp/find_garage_feature/bloc/garage_bloc.dart';
@@ -231,7 +232,12 @@ class _GarageListState extends State<GarageList> {
           ],
         ),
       ),
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => SelectServicePage(garageId: garage.id)));
+      },
     );
   }
 

@@ -4,7 +4,8 @@ import 'package:rodsiaapp/request_service_feature/widgets/user/infoGarageFormSel
 import 'package:rodsiaapp/request_service_feature/widgets/user/selectServiceOfGarage.dart';
 
 class SelectServicePage extends StatefulWidget {
-  SelectServicePage({Key? key}) : super(key: key);
+  final String garageId;
+  SelectServicePage({Key? key, required this.garageId}) : super(key: key);
 
   @override
   _SelectServicePageState createState() => _SelectServicePageState();
