@@ -20,18 +20,8 @@ class GarageListLoadingState extends GarageListState {
 
 class GarageListSuccessState extends GarageListState {
   final List<Garage> garages;
-  final bool hasReachedMax;
 
-  const GarageListSuccessState(
-      {required this.garages, required this.hasReachedMax});
-  GarageListSuccessState copyWith(
-      {required List<Garage> garages, required bool hasReachedMax}) {
-    return GarageListSuccessState(
-        garages: garages, hasReachedMax: hasReachedMax);
-  }
-
-  @override
-  List<Object> get props => [garages, hasReachedMax];
+  const GarageListSuccessState({required this.garages});
 }
 
 class GarageListErrorState extends GarageListState {

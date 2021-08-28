@@ -7,15 +7,16 @@ import 'package:rodsiaapp/core/models/garage_model.dart';
 class GarageApi {
   final baseUrl = baseUrlConstant;
 
-  late final http.Client httpClient;
+  //late final http.Client httpClient;
 
   //GarageApi({required this.httpClient});
 
   Future<List<Garage>> getGarages({required int page}) async {
     List<Garage> garages = [];
-    final url = '$baseUrl/garages?page=$page';
-    final response = await httpClient.get(Uri.parse(url));
+    final url = '$baseUrl/garages?page=$page&limit=5';
+    final response = await http.get(Uri.parse(url));
     if (response.statusCode != 200) {
+      print('Exception: ${response.statusCode}');
       throw new Exception('There was a problem ${response.statusCode}');
     }
     final decodedJson = jsonDecode(response.body) as List;
@@ -29,7 +30,7 @@ class GarageApi {
       {required int page, required String name}) async {
     List<Garage> garages = [];
     final url = '$baseUrl/garages-name/:$name?page=$page';
-    final response = await httpClient.get(Uri.parse(url));
+    final response = await http.get(Uri.parse(url));
     if (response.statusCode != 200) {
       throw new Exception('There was a problem ${response.statusCode}');
     }
@@ -42,7 +43,7 @@ class GarageApi {
 
   Future<Garage> getGarageInfo({required String id}) async {
     final url = '$baseUrl/garage-id/$id';
-    final response = await httpClient.get(Uri.parse(url));
+    final response = await http.get(Uri.parse(url));
     if (response.statusCode != 200) {
       throw new Exception('There was a problem ${response.statusCode}');
     }

@@ -33,11 +33,14 @@ dependencies:
   json_annotation: ^4.0.1
   shimmer: ^2.0.0
   flutter_spinkit: ^5.1.0
+  top_snackbar_flutter: ^1.0.0
+  flushbar: ^1.10.4
 
 dev_dependencies:
   build_runner: ^2.1.1
   flutter_test:
     sdk: flutter
+  mockito: ^5.0.15
   freezed: any
   json_serializable: ^4.1.3
 

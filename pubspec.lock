@@ -211,6 +211,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  flushbar:
+    dependency: "direct main"
+    description:
+      name: flushbar
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.10.4"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -368,6 +375,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  mockito:
+    dependency: "direct dev"
+    description:
+      name: mockito
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.0.15"
   nested:
     dependency: transitive
     description:
@@ -517,6 +531,13 @@ packages:
     dependency: transitive
     description:
       name: timing
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
+  top_snackbar_flutter:
+    dependency: "direct main"
+    description:
+      name: top_snackbar_flutter
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
