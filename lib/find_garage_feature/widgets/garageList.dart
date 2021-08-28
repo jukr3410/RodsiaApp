@@ -3,51 +3,102 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:rodsiaapp/core/models/garage_model.dart';
 import 'package:rodsiaapp/find_garage_feature/bloc/garage_bloc.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
+import 'package:getwidget/getwidget.dart';
 
 import '../../constants.dart';
 
 class GarageList extends StatefulWidget {
   @override
   _GarageListState createState() => _GarageListState();
-
-  // @override
-  // _ListPageState createState() => _ListPageState();
 }
 
 class _GarageListState extends State<GarageList> {
   ScrollController scrollController = ScrollController();
-  late GarageListBloc _garageListBloc =
-      BlocProvider.of<GarageListBloc>(context);
-  final scrollThreshold = 200;
+  late GarageListBloc _garageListBloc;
 
   final List<Garage> _garages = [];
 
-  //mock
-  //late List garages;
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   scrollController.addListener(_onScroll);
-  //   _garageListBloc = BlocProvider.of<GarageListBloc>(context);
-  // }
-
-  // void _onScroll() {
-  //   final maxScroll = scrollController.position.maxScrollExtent;
-  //   final currentScroll = scrollController.position.pixels;
-  //   if (maxScroll - currentScroll <= scrollThreshold) {
-  //     _garageListBloc.add(GarageListFetchEvent());
-  //   }
-  // }
+  @override
+  void initState() {
+    _garageListBloc = BlocProvider.of<GarageListBloc>(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: BlocConsumer<GarageListBloc, GarageListState>(
-      listener: (context, garageState) {},
-      builder: (context, garageState) {
-        return _shimmer();
-      },
-    ));
+    return Container(
+      child: BlocConsumer<GarageListBloc, GarageListState>(
+        listener: (context, garageState) {
+          if (garageState is GarageListLoadingState) {
+            // ScaffoldMessenger.of(context)
+            //     .showSnackBar(SnackBar(content: Text(garageState.message)));
+
+          } else if (garageState is GarageListSuccessState &&
+              garageState.garages.isEmpty) {
+            // ScaffoldMessenger.of(context)
+            //     .showSnackBar(SnackBar(content: Text('No more garages')));
+          } else if (garageState is GarageListErrorState) {
+            // ScaffoldMessenger.of(context)
+            //     .showSnackBar(SnackBar(content: Text(garageState.error)));
+
+            // showTopSnackBar(
+            //   context,
+            //   CustomSnackBar.error(
+            //     message: mError,
+            //   ),
+            // );
+            _garageListBloc.isFetching = false;
+          }
+          return;
+        },
+        builder: (context, garageState) {
+          if (garageState is GarageListInitialState ||
+              garageState is GarageListLoadingState && _garages.isEmpty) {
+            return Center(
+                child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
+              child: _shimmer(),
+            ));
+          } else if (garageState is GarageListSuccessState) {
+            _garages.addAll(garageState.garages);
+            _garageListBloc.isFetching = false;
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+          } else if (garageState is GarageListErrorState && _garages.isEmpty) {
+            return Center(
+                child: Column(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    _garageListBloc
+                      ..isFetching = true
+                      ..add(GarageListFetchEvent());
+                  },
+                  icon: Icon(Icons.refresh),
+                ),
+                const SizedBox(height: 15),
+                Text(garageState.error, textAlign: TextAlign.center),
+              ],
+            ));
+          }
+          return ListView.builder(
+            controller: scrollController
+              ..addListener(() {
+                if (scrollController.offset ==
+                        scrollController.position.maxScrollExtent &&
+                    !_garageListBloc.isFetching) {
+                  _garageListBloc
+                    ..isFetching = true
+                    ..add(GarageListFetchEvent());
+                }
+              }),
+            itemBuilder: (context, index) => _makeCardWidget(_garages[index]),
+            itemCount: _garages.length,
+          );
+        },
+      ),
+    );
   }
 
   // @override
@@ -193,8 +244,8 @@ class _GarageListState extends State<GarageList> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Container(
-                  width: 80.0,
-                  height: 80.0,
+                  width: 100.0,
+                  height: 100.0,
                   color: Colors.white,
                 ),
                 const Padding(
@@ -239,243 +290,10 @@ class _GarageListState extends State<GarageList> {
         baseColor: Colors.grey.shade300,
         highlightColor: Colors.grey.shade100);
   }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
+  }
 }
-
-// class _ListPageState extends State<GarageList> {
-//   late List garages;
-
-//   @override
-//   void initState() {
-//     garages = getGarages();
-//     super.initState();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     _makeCardInfo(Garage garages) {
-//       return Padding(
-//           padding: EdgeInsets.all(16),
-//           child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-//             Image.network(
-//               'https://bestkru-thumbs.s3-ap-southeast-1.amazonaws.com/127399',
-//               width: 56,
-//               height: 56,
-//               fit: BoxFit.cover,
-//             ),
-//             Expanded(
-//               child: Padding(
-//                   padding: EdgeInsets.symmetric(horizontal: 16),
-//                   child: Column(
-//                       crossAxisAlignment: CrossAxisAlignment.start,
-//                       children: [
-//                         Text("Flutter Clutter", style: TextStyle(fontSize: 18)),
-//                         Expanded(
-//                             child: Text(
-//                           "Well this is a pretty long title. I guess this will exceed the available space",
-//                           overflow: TextOverflow.ellipsis,
-//                         ))
-//                       ])),
-//             ),
-//             Text("03.03.2020"),
-//           ]));
-//     }
-
-//     _makeCard(Garage garage) {
-//       return GestureDetector(
-//         child: Card(
-//           elevation: 3,
-//           margin: new EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-//           color: cardColor,
-//           child: Row(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               SizedBox(
-//                 width: MediaQuery.of(context).size.width * 0.33,
-//                 child: Image.network(
-//                   'https://bestkru-thumbs.s3-ap-southeast-1.amazonaws.com/127399',
-//                   fit: BoxFit.cover,
-//                 ),
-//               ),
-//               Flexible(
-//                   child: Padding(
-//                 padding:
-//                     const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
-//                 child: Column(
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   children: [
-//                     Text(
-//                       garage.name,
-//                       style: new TextStyle(
-//                           fontSize: 18.0,
-//                           fontWeight: FontWeight.bold,
-//                           color: textColorBlack),
-//                     ),
-//                     Container(
-//                         margin: new EdgeInsets.only(top: 8),
-//                         child: Row(children: [
-//                           Text(
-//                             "distance: " + "12 km",
-//                             style: new TextStyle(
-//                                 fontSize: 14.0,
-//                                 fontWeight: FontWeight.normal,
-//                                 color: textColorBlack),
-//                           ),
-//                           Text(
-//                             " | ",
-//                             style: new TextStyle(
-//                                 fontSize: 14.0,
-//                                 fontWeight: FontWeight.normal,
-//                                 color: Colors.black54),
-//                           ),
-//                           Icon(
-//                             Icons.star,
-//                             color: primaryColor,
-//                             size: 20,
-//                           ),
-//                           Text(
-//                             " " + "3.9",
-//                             style: new TextStyle(
-//                                 fontSize: 14.0,
-//                                 fontWeight: FontWeight.normal,
-//                                 color: textColorBlack),
-//                           ),
-//                         ])),
-//                     Container(
-//                       margin: new EdgeInsets.only(top: 4),
-//                       child: Row(
-//                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                         children: [
-//                           Text(
-//                             'close',
-//                             style: TextStyle(
-//                                 fontSize: 14.0,
-//                                 fontWeight: FontWeight.normal,
-//                                 color: textColorRed),
-//                           ),
-//                           // Padding(
-//                           //   padding: const EdgeInsets.symmetric(horizontal: 0.0),
-//                           //   child: Icon(Icons.data_usage),
-//                           // ),
-//                         ],
-//                       ),
-//                     )
-//                   ],
-//                 ),
-//               )),
-//             ],
-//           ),
-//         ),
-//         onTap: () {},
-//       );
-//     }
-
-//     final makeBody = Container(
-//       decoration: BoxDecoration(
-//         color: Colors.white70,
-//       ),
-//       child: ListView.builder(
-//         scrollDirection: Axis.vertical,
-//         shrinkWrap: true,
-//         itemCount: garages.length,
-//         itemBuilder: (BuildContext context, int index) {
-//           return _makeCard(garages[index]);
-//         },
-//       ),
-//     );
-
-//     return Scaffold(
-//       backgroundColor: bgColor,
-//       body: makeBody,
-//     );
-//   }
-// }
-
-// Mock
-// List getGarages() {
-//   return [
-//     Garage(
-//       name: "garage 1",
-//       phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-//       email: "เปิด",
-//       image: [],
-//       logoImage: '',
-//       openingHour: OpeningHour(
-//           f: Day(open: '', close: ''),
-//           m: Day(open: '', close: ''),
-//           sa: Day(open: '', close: ''),
-//           su: Day(open: '', close: ''),
-//           th: Day(open: '', close: ''),
-//           tu: Day(open: '', close: ''),
-//           w: Day(open: '', close: '')),
-//       address: Address(
-//           addressDesc: "addressDesc",
-//           geolocation: Geolocation(
-//             lat: "",
-//             long: '',
-//           )),
-//     ),
-//     Garage(
-//       name: "garage 1",
-//       phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-//       email: "เปิด",
-//       image: [],
-//       logoImage: '',
-//       openingHour: OpeningHour(
-//           f: Day(open: '', close: ''),
-//           m: Day(open: '', close: ''),
-//           sa: Day(open: '', close: ''),
-//           su: Day(open: '', close: ''),
-//           th: Day(open: '', close: ''),
-//           tu: Day(open: '', close: ''),
-//           w: Day(open: '', close: '')),
-//       address: Address(
-//           addressDesc: "addressDesc",
-//           geolocation: Geolocation(
-//             lat: "",
-//             long: '',
-//           )),
-//     ),
-//     Garage(
-//       name: "garage 1",
-//       phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-//       email: "เปิด",
-//       image: [],
-//       logoImage: '',
-//       openingHour: OpeningHour(
-//           f: Day(open: '', close: ''),
-//           m: Day(open: '', close: ''),
-//           sa: Day(open: '', close: ''),
-//           su: Day(open: '', close: ''),
-//           th: Day(open: '', close: ''),
-//           tu: Day(open: '', close: ''),
-//           w: Day(open: '', close: '')),
-//       address: Address(
-//           addressDesc: "addressDesc",
-//           geolocation: Geolocation(
-//             lat: "",
-//             long: '',
-//           )),
-//     ),
-//     Garage(
-//       name: "garage 1",
-//       phone: "666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000",
-//       email: "เปิด",
-//       image: [],
-//       logoImage: '',
-//       openingHour: OpeningHour(
-//           f: Day(open: '', close: ''),
-//           m: Day(open: '', close: ''),
-//           sa: Day(open: '', close: ''),
-//           su: Day(open: '', close: ''),
-//           th: Day(open: '', close: ''),
-//           tu: Day(open: '', close: ''),
-//           w: Day(open: '', close: '')),
-//       address: Address(
-//           addressDesc: "addressDesc",
-//           geolocation: Geolocation(
-//             lat: "",
-//             long: '',
-//           )),
-//     )
-//   ];
-// }

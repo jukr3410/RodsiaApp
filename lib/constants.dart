@@ -40,9 +40,10 @@ const defualtPaddingLow = 10.0;
 
 // message, wording
 const mError = "Service unvalidable, please try agian.";
-const mNoGarages = "No Garages..";
+const mNoGarages = "no garages";
+const mNoMoreGarages = "no more garages";
 const mLoading = "loading";
-const mNotFound = "Not found!";
+const mNotFound = "not found!";
 
 // src string for set widget
 const tOKThai = 'ตกลง';
