@@ -5,7 +5,9 @@ import 'package:rodsiaapp/find_garage_feature/widgets/garageList.dart';
 import 'package:rodsiaapp/find_garage_feature/widgets/homePage.dart';
 import 'package:rodsiaapp/find_garage_feature/widgets/moreInfoGarageCard.dart';
 import 'package:rodsiaapp/find_garage_feature/widgets/searchGaragePage.dart';
+import 'package:rodsiaapp/find_garage_feature/widgets/test.dart';
 import 'package:rodsiaapp/find_garage_feature/widgets/viewBars.dart';
+import 'package:rodsiaapp/global_widgets/alertComfirmSuccess.dart';
 import 'package:rodsiaapp/global_widgets/hexTocolor.dart';
 import 'package:rodsiaapp/global_widgets/navigrationBar.dart';
 import 'package:rodsiaapp/global_widgets/bottomNavigrationBarPage.dart';
@@ -13,7 +15,10 @@ import 'package:rodsiaapp/core/repository/garage_repository.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/garage/alertRequestService.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/garage/barTrackingPage.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/garage/trackingRequestPage.dart';
+import 'package:rodsiaapp/request_service_feature/widgets/user/alertPopupCancleRequest.dart';
+import 'package:rodsiaapp/request_service_feature/widgets/user/cardWaitForGarage.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/user/selectServicePage.dart';
+import 'package:rodsiaapp/request_service_feature/widgets/user/waitForGaragePage.dart';
 import 'constants.dart';
 
 void main() {
@@ -29,7 +34,7 @@ class MyApp extends StatelessWidget {
       title: 'RodSia',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: primaryColor),
-      home: Scaffold(body: new SelectServicePage()),
+      home: Scaffold(body: new AlertComfirmSuccess()),
       // initialRoute: '/',
       // routes: {
       //   BottomNavigrationBar.routeName: (context) => BottomNavigrationBar()
