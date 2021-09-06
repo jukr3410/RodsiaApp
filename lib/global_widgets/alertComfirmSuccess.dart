@@ -15,7 +15,7 @@ class _AlertComfirmSuccessState extends State<AlertComfirmSuccess> {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        width: cardWidth,
+        width: cardWidthMedium,
         decoration: BoxDecoration(
           borderRadius: borderRadiusMedium,
           boxShadow: [boxShadow],

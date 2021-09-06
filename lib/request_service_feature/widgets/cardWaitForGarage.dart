@@ -3,7 +3,7 @@ import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:rodsiaapp/request_service_feature/widgets/user/alertPopupCancleRequest.dart';
+import 'package:rodsiaapp/request_service_feature/widgets/alertPopupCancleRequest.dart';
 
 class CardWaitForGarage extends StatefulWidget {
   CardWaitForGarage({Key? key}) : super(key: key);
@@ -21,7 +21,7 @@ class _CardWaitForGarageState extends State<CardWaitForGarage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            width: cardWidth,
+            width: cardWidthMedium,
             decoration: BoxDecoration(
               borderRadius: borderRadiusMedium,
               boxShadow: [boxShadow],

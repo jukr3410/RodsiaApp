@@ -1,7 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:rodsiaapp/global_widgets/alertGiveScore.dart';
 
 import 'package:rodsiaapp/global_widgets/bottomNavigrationBarPage.dart';
+import 'package:rodsiaapp/request_service_feature/widgets/trackingRequestPage.dart';
 
 import 'constants.dart';
 
@@ -18,13 +20,13 @@ class MyApp extends StatelessWidget {
       title: 'RodSia',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: primaryColor,
+        fontFamily: 'Kanit',
       ),
-      // home: Scaffold(body: new AlertComfirmSuccess()),
-      initialRoute: '/',
-      routes: {
-        BottomNavigrationBar.routeName: (context) => BottomNavigrationBar()
-      },
+      home: Scaffold(body: new AlertGiveScore()),
+      // initialRoute: '/',
+      // routes: {
+      //   BottomNavigrationBar.routeName: (context) => BottomNavigrationBar()
+      // },
     );
   }
 }

@@ -15,7 +15,7 @@ class _AlertPopupCancleReqState extends State<AlertPopupCancleReq> {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        width: cardWidth,
+        width: cardWidthMedium,
         decoration: BoxDecoration(
           borderRadius: borderRadiusMedium,
           boxShadow: [boxShadow],
@@ -45,8 +45,7 @@ class _AlertPopupCancleReqState extends State<AlertPopupCancleReq> {
                           Navigator.pop(context, 'OK');
                         },
                         child: Text(tOKThai),
-                        style:
-                            flatButtonStyle(primaryColor, textColorBlack),
+                        style: flatButtonStyle(primaryColor, textColorBlack),
                       )),
                   GFButton(
                     onPressed: () {

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:rodsiaapp/constants.dart';
-import 'package:rodsiaapp/request_service_feature/widgets/user/cardWaitForGarage.dart';
+import 'package:rodsiaapp/request_service_feature/widgets/cardWaitForGarage.dart';
 
 class WaitForGaragePage extends StatefulWidget {
   WaitForGaragePage({Key? key}) : super(key: key);

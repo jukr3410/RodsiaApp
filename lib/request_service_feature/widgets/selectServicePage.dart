@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:rodsiaapp/request_service_feature/widgets/user/buttonRequestService.dart';
-import 'package:rodsiaapp/request_service_feature/widgets/user/infoGarageFormSelect.dart';
-import 'package:rodsiaapp/request_service_feature/widgets/user/selectServiceOfGarage.dart';
+import 'package:rodsiaapp/request_service_feature/widgets/buttonRequestService.dart';
+import 'package:rodsiaapp/request_service_feature/widgets/infoGarageFormSelect.dart';
+import 'package:rodsiaapp/request_service_feature/widgets/selectServiceOfGarage.dart';
 
 class SelectServicePage extends StatefulWidget {
   final String garageId;

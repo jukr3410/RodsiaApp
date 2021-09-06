@@ -62,22 +62,30 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   assets:
-    - image/icon-findGarage-navbar.png
-    - image/icon-findProblem-navbar.png
-    - image/icon-home-navbar.png
-    - image/icon-notify-navbar.png
-    - image/icon-profile-navbar.png
-    - image/icon-mapView.png
-    - image/icon-listView.png
-    - image/icon-search.png
-    - image/icon-location.png
-    - image/icon-backPage.png
-    - image/icon-battery-service.png
-    - image/icon-phone.png
-    - image/icon-message.png
-    - image/icon-more.png
-    - image/icon-star.png
-    - image/image-garage-mockup.png
+    - assets/images/icon-findGarage-navbar.png
+    - assets/images/icon-findProblem-navbar.png
+    - assets/images/icon-home-navbar.png
+    - assets/images/icon-notify-navbar.png
+    - assets/images/icon-profile-navbar.png
+    - assets/images/icon-mapView.png
+    - assets/images/icon-listView.png
+    - assets/images/icon-search.png
+    - assets/images/icon-location.png
+    - assets/images/icon-backPage.png
+    - assets/images/icon-battery-service.png
+    - assets/images/icon-phone.png
+    - assets/images/icon-message.png
+    - assets/images/icon-more.png
+    - assets/images/icon-star.png
+    - assets/images/image-garage-mockup.png
+    - assets/images/icon-call.png
+    - assets/images/icon-profile2.png
+    - assets/images/icon-location-requestCard.png
+    - assets/images/icon-location2.png
+    - assets/images/icon-desc.png
+    - assets/images/icon-car.png
+    - assets/images/icon-message.png
+    - assets/images/icon-distance.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see
@@ -99,5 +107,9 @@ flutter:
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
+  fonts:
+    - family: Kanit     
+      fonts:
+        - asset: assets/fonts/Kanit-Regular.ttf  
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
