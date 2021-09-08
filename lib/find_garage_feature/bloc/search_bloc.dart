@@ -19,7 +19,6 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   Stream<SearchState> mapEventToState(
     SearchEvent event,
   ) async* {
-    final currentState = state;
     if (event is SearchFetchEvent) {
       try {
         final garages = await garageRepository.getByGaragesName(
