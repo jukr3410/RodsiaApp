@@ -4,15 +4,19 @@ import 'package:rodsiaapp/global_widgets/alertGiveScore.dart';
 
 import 'package:rodsiaapp/global_widgets/bottomNavigrationBarPage.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/trackingRequestPage.dart';
+import 'package:rodsiaapp/router.dart';
 
 import 'constants.dart';
 
 void main() {
   Bloc.observer = GarageBlocObserver();
-  runApp(MyApp());
+  runApp(RodSiaApp(router: AppRouter()));
 }
 
-class MyApp extends StatelessWidget {
+class RodSiaApp extends StatelessWidget {
+  final AppRouter router;
+
+  const RodSiaApp({Key? key, required this.router}) : super(key: key);
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

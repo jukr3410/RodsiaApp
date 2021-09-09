@@ -5,7 +5,7 @@ import 'package:rodsiaapp/find_garage_feature/widgets/filterGarage.dart';
 import 'package:rodsiaapp/global_widgets/findProblemPage.dart';
 import 'package:rodsiaapp/global_widgets/hexTocolor.dart';
 import 'package:rodsiaapp/global_widgets/notifyPage.dart';
-import 'package:rodsiaapp/global_widgets/profilePage.dart';
+import 'package:rodsiaapp/profile_feature/widgets/profilePage.dart';
 
 class BottomNavigrationBar extends StatefulWidget {
   BottomNavigrationBar({Key? key}) : super(key: key);
