@@ -39,6 +39,7 @@ dependencies:
   google_maps_flutter: ^2.0.8
   geolocator: ^7.0.3
   geocoding: ^2.0.1
+  intl: ^0.17.0
 
 
 dev_dependencies:
@@ -84,12 +85,14 @@ flutter:
     - assets/images/image-garage-mockup.png
     - assets/images/icon-call.png
     - assets/images/icon-profile2.png
+    - assets/images/icon-profile.png
     - assets/images/icon-location-requestCard.png
     - assets/images/icon-location2.png
     - assets/images/icon-desc.png
     - assets/images/icon-car.png
     - assets/images/icon-message.png
     - assets/images/icon-distance.png
+    - assets/images/icon-carTest.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see

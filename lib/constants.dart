@@ -21,6 +21,7 @@ const HISTORY_INFO_ROUTE = "/history_info";
 const MAIN_ROUTE = "/app";
 const TRACKING_REQUEST_ROUTE = "/app";
 const HOMEPAGE_ROUTE = "/homepage";
+const PROFILE_ROUTE = "/profile";
 
 // font size
 const fontSizeXl = 18.0;
@@ -39,6 +40,7 @@ const textColorRed = Color(0xffDA5B49);
 const primaryColor = Color(0xffFECE2F);
 const colorGray = Color(0xffC4C4C4);
 const bgColor = Color(0xffF2F4F6);
+const bgColorRed = Color(0xffDA5B49);
 const bgCodeColor = '#F2F4F6';
 const primaryCodeColor = '#FECE2F';
 
@@ -135,12 +137,19 @@ const tDeclineThai = 'ปฏิเสธิ';
 const tAddressThai = 'ที่อยู่: ';
 const tUpdateThai = 'อัพเดต';
 const tCancleThai = 'ยกเลิก';
+const tRemove = 'เอาออก';
+const tDelete = 'ลบ';
+const tEdit = 'แก้ไข';
 const tAcceptThai = 'ยอมรับ';
 const tSupportThai = 'ติดต่อซัพพอร์ท';
 const tYesThai = 'ใช้';
 const tMessage = "messages";
+const tAddCar = 'เพื่มรถยนตร์';
 const tEmail = "E-mail";
-const tPassword = "Password";
+const tBrand = 'ยี่ห้อ: ';
+const tModel = 'รุ้น: ';
+const tFuelType = 'เชื้อเพลิง: ';
+const tPassword = "Password: ";
 const tNameGarageThai = "ชื่ออู๋:";
 const tNameUserThai = "ชื่อลูกค้า:";
 const tLocationThai = 'ตำแหน่ง:';
@@ -156,4 +165,12 @@ const trackingStatus = [
   'กำลังเดินทาง',
   'ถึงที่หมายแล้ว',
   'งานเสร็จแล้ว'
+];
+
+//menus setting
+const menusSetting = [
+  'โปรไฟล์',
+  'ประวัติการใช้งาน',
+  'การตั้งค่า',
+  'ออกจากระบบ'
 ];
