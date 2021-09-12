@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:rodsiaapp/global_widgets/alertGiveScore.dart';
 
 import 'package:rodsiaapp/global_widgets/bottomNavigrationBarPage.dart';
+import 'package:rodsiaapp/profile_feature/widgets/add_car/selectVehiclePage.dart';
+import 'package:rodsiaapp/profile_feature/widgets/profilePage.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/trackingRequestPage.dart';
 import 'package:rodsiaapp/router.dart';
 
@@ -26,7 +28,7 @@ class RodSiaApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Kanit',
       ),
-      home: Scaffold(body: new AlertGiveScore()),
+      home: Scaffold(body: new SelectVehiclePage()),
       // initialRoute: '/',
       // routes: {
       //   BottomNavigrationBar.routeName: (context) => BottomNavigrationBar()

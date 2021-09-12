@@ -20,7 +20,7 @@ class _InfoCarCardState extends State<InfoCarCard> {
       height: 355,
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: trackingStatus.length,
+          itemCount: 4,
           itemBuilder: (context, index) {
             return Container(
               width: 300,

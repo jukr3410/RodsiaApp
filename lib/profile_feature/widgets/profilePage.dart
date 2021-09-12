@@ -4,6 +4,7 @@ import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/types/gf_button_type.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/user_model.dart';
+import 'package:rodsiaapp/profile_feature/widgets/add_car/selectVehiclePage.dart';
 import 'package:rodsiaapp/profile_feature/widgets/infoCarCard.dart';
 import 'package:rodsiaapp/profile_feature/widgets/infoProfile.dart';
 

@@ -93,6 +93,11 @@ flutter:
     - assets/images/icon-message.png
     - assets/images/icon-distance.png
     - assets/images/icon-carTest.png
+    - assets/images/icon-two-wheel.png
+    - assets/images/icon-three-wheel.png
+    - assets/images/icon-four-wheel.png
+    - assets/images/icon-heavy-wheel.png
+    - assets/images/icon-car-null.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see

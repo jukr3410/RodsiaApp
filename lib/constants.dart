@@ -147,7 +147,7 @@ const tMessage = "messages";
 const tAddCar = 'เพื่มรถยนตร์';
 const tEmail = "E-mail";
 const tBrand = 'ยี่ห้อ: ';
-const tModel = 'รุ้น: ';
+const tModel = 'รุ่น: ';
 const tFuelType = 'เชื้อเพลิง: ';
 const tPassword = "Password: ";
 const tNameGarageThai = "ชื่ออู๋:";
@@ -158,6 +158,11 @@ const tEstimateDuration = 'ระยะเวลาประมาณ:';
 const tGiveScore = 'ให้คะแนน';
 const tSend = 'ส่ง';
 const tNotAtMoment = 'ไม่ใช้ตอนนี้';
+const tSelectVehicleTypeCar = 'เลือกชนิดของรถยนตร์';
+const tSelectBrandCar = 'เลือกยี่ห้อของรถยนตร์';
+const tSelectModelCar = 'เลือกรุ่นของรถยนตร์';
+const tSelectYearModelCar = 'เลือกปี่ยี่ห้อของรถยนตร์';
+const tSelectFeulTypeCar = 'เลือกชนิดเชื้อเพลิงของรถยนตร์';
 
 //Tracking Status
 const trackingStatus = [
@@ -173,4 +178,13 @@ const menusSetting = [
   'ประวัติการใช้งาน',
   'การตั้งค่า',
   'ออกจากระบบ'
+];
+
+//vehicle type
+const vehicleType = [
+  'two-wheel',
+  'three-wheel',
+  'four-wheel',
+  'heavy-wheel',
+  'car-null'
 ];
