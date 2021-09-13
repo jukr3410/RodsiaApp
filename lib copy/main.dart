@@ -29,7 +29,6 @@ class RodSiaApp extends StatelessWidget {
         fontFamily: 'Kanit',
       ),
       home: Scaffold(body: new SelectVehiclePage()),
-      onGenerateRoute: router.generateRoute,
       // initialRoute: '/',
       // routes: {
       //   BottomNavigrationBar.routeName: (context) => BottomNavigrationBar()

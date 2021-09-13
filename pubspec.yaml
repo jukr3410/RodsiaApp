@@ -40,6 +40,7 @@ dependencies:
   geolocator: ^7.0.3
   geocoding: ^2.0.1
   intl: ^0.17.0
+  fswitch: ^1.1.2
 
 
 dev_dependencies:
@@ -98,6 +99,8 @@ flutter:
     - assets/images/icon-four-wheel.png
     - assets/images/icon-heavy-wheel.png
     - assets/images/icon-car-null.png
+    - assets/launcher/ic_launcher.png
+    
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see
