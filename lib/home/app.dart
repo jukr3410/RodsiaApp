@@ -6,7 +6,6 @@ import 'package:rodsiaapp/authentication/bloc/authentication_bloc.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/global_widgets/splash.dart';
 import 'package:rodsiaapp/home/appBar.dart';
-import 'package:rodsiaapp/login_feature/widgets/login.dart';
 
 class App extends StatelessWidget {
   var _duration = new Duration(seconds: 3);

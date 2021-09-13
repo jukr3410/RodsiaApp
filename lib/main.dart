@@ -28,7 +28,7 @@ class RodSiaApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Kanit',
       ),
-      home: Scaffold(body: new SelectVehiclePage()),
+      // home: Scaffold(body: new SelectVehiclePage()),
       onGenerateRoute: router.generateRoute,
       // initialRoute: '/',
       // routes: {
