@@ -4,12 +4,14 @@ import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/types/gf_button_type.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/user_model.dart';
-import 'package:rodsiaapp/profile_feature/widgets/add_car/selectVehiclePage.dart';
+import 'package:rodsiaapp/global_widgets/backPage.dart';
+
 import 'package:rodsiaapp/profile_feature/widgets/infoCarCard.dart';
 import 'package:rodsiaapp/profile_feature/widgets/infoProfile.dart';
 
 class ProfilePage extends StatefulWidget {
-  ProfilePage({Key? key}) : super(key: key);
+  final User user;
+  ProfilePage({Key? key, required this.user}) : super(key: key);
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -32,14 +34,22 @@ class _ProfilePageState extends State<ProfilePage> {
         backgroundColor: Colors.transparent,
         body: Column(
           children: [
-            SizedBox(
-              height: 70,
+            Container(
+              alignment: Alignment.centerLeft,
+              child: backPage(),
             ),
-            InfoProfile(),
             SizedBox(
-              height: 50,
+              height: 10,
             ),
-            InfoCarCard(),
+            InfoProfile(
+              user: widget.user,
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            InfoCarCard(
+              user: widget.user,
+            ),
             SizedBox(
               height: 20,
             ),
@@ -48,7 +58,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     shape: BoxShape.circle, color: textColorBlack),
                 child: IconButton(
                   icon: Icon(Icons.add),
-                  onPressed: () {},
+                  onPressed: () {
+                    navigatorToAddCar();
+                  },
                   color: primaryColor,
                 )),
             SizedBox(
@@ -59,5 +71,9 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       ),
     );
+  }
+
+  void navigatorToAddCar() {
+    Navigator.pushNamed(context, ADDCAR_CARTYPE_ROUTE, arguments: widget.user);
   }
 }

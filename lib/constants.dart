@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rodsiaapp/core/models/user_model.dart';
 import 'package:rodsiaapp/global_widgets/hexTocolor.dart';
 
 //api base url
@@ -22,6 +23,10 @@ const MAIN_ROUTE = "/app";
 const TRACKING_REQUEST_ROUTE = "/app";
 const HOMEPAGE_ROUTE = "/homepage";
 const PROFILE_ROUTE = "/profile";
+const ADDCAR_CARTYPE_ROUTE = "/addcar_cartype";
+const ADDCAR_BRANDMODELYEAR_ROUTE = "/addcar_brandmodelyear";
+const DELETECAR_ROUTE = "/delete_car";
+const EDITCAR_ROUTE = "/edit_car";
 
 // font size
 const fontSizeXl = 18.0;
@@ -145,11 +150,15 @@ const tSupportThai = 'ติดต่อซัพพอร์ท';
 const tYesThai = 'ใช้';
 const tMessage = "messages";
 const tAddCar = 'เพื่มรถยนตร์';
-const tEmail = "E-mail";
+const tEmail = "อิเมล";
 const tBrand = 'ยี่ห้อ: ';
+const tPhone = 'โทรศัพท์';
 const tModel = 'รุ่น: ';
+const tNext = 'ถัดไป';
+const tYearModel = 'ปี: ';
 const tFuelType = 'เชื้อเพลิง: ';
 const tPassword = "Password: ";
+const tSearch = 'ค้นหา';
 const tNameGarageThai = "ชื่ออู๋:";
 const tNameUserThai = "ชื่อลูกค้า:";
 const tLocationThai = 'ตำแหน่ง:';
@@ -186,5 +195,42 @@ const vehicleType = [
   'three-wheel',
   'four-wheel',
   'heavy-wheel',
-  'car-null'
 ];
+
+List<Car> mockUpCar = [
+  Car(
+      id: "1",
+      brand: 'Honda',
+      model: 'Civic',
+      type: 'four-wheel',
+      year: '2010',
+      fuelType: 'Gas'),
+  Car(
+      id: "2",
+      brand: 'Mazda',
+      model: '2',
+      type: 'four-wheel',
+      year: '2020',
+      fuelType: 'Desel'),
+  Car(
+      id: "3",
+      brand: 'Yamaha',
+      model: 'scoopy-i',
+      type: 'two-wheel',
+      year: '2013',
+      fuelType: 'Gasoho'),
+];
+DateTime mockupDateTime = DateTime(2017, 9, 7, 17, 30);
+User mockUpUser = User(
+    id: '1',
+    name: 'Juju Swing',
+    email: 'JuJuSwing@mail.com',
+    phone: '06155648451',
+    password: '1234',
+    otp: '1234',
+    validatePhone: true,
+    cars: mockUpCar,
+    createdAt: mockupDateTime,
+    updatedAt: mockupDateTime);
+
+final brandCar = ['Mazda', 'Honda', 'Yamaha', 'Toyota'];

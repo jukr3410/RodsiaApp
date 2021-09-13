@@ -1,26 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/dropdown/gf_dropdown.dart';
 import 'package:rodsiaapp/constants.dart';
-import 'package:rodsiaapp/profile_feature/widgets/add_car/selectVehicleTypeCard.dart';
+import 'package:rodsiaapp/core/models/user_model.dart';
+import 'package:rodsiaapp/profile_feature/widgets/add_car/SelectBrandModelYear.dart';
 import 'package:rodsiaapp/profile_feature/widgets/add_car/showInfoNewCar.dart';
 
-class SelectVehiclePage extends StatefulWidget {
-  SelectVehiclePage({Key? key}) : super(key: key);
+class SelectCarTypePage extends StatefulWidget {
+  final User user;
+  SelectCarTypePage({Key? key, required this.user}) : super(key: key);
 
   @override
-  _SelectVehiclePageState createState() => _SelectVehiclePageState();
+  _SelectCarTypePageState createState() => _SelectCarTypePageState();
 }
 
-class _SelectVehiclePageState extends State<SelectVehiclePage> {
-  int numTypeCar = 4;
+class _SelectCarTypePageState extends State<SelectCarTypePage> {
   String brand = tSelectBrandCar;
   String model = tSelectModelCar;
-  String yearModel = tSelectYearModelCar;
+  String yearModel = '';
   String fuelType = tSelectFeulTypeCar;
+
+  Car newCar = Car(
+      id: '',
+      brand: tSelectBrandCar,
+      model: tSelectModelCar,
+      type: 'car-null',
+      year: '',
+      fuelType: tSelectFeulTypeCar);
 
   void setStateCarType(int item) {
     setState(() {
-      numTypeCar = item;
+      newCar.type = vehicleType[item].toString();
+      print(newCar.type.toString());
     });
   }
 
@@ -62,15 +72,65 @@ class _SelectVehiclePageState extends State<SelectVehiclePage> {
       ),
       body: Column(
         children: [
-          _showInfoNewCar(),
-          _selectVehicleType(),
-          _selectDropdown(brand, brandCar),
-          _selectDropdown(model, brandCar),
-          _selectDropdown(brand, brandCar),
-          _selectDropdown(brand, brandCar),
+          Flexible(
+            flex: 4,
+            child: Column(
+              children: [
+                SizedBox(height: 20),
+                _showInfoNewCar(),
+              ],
+            ),
+          ),
+          Flexible(
+            flex: 3,
+            child: Column(
+              children: [
+                _selectVehicleType(),
+                SizedBox(
+                  height: 20,
+                ),
+                _buttonNext()
+              ],
+            ),
+          )
         ],
       ),
     );
+  }
+
+  Widget _buttonNext() {
+    return Container(
+      width: buttonWidthSmall,
+      height: buttonHeightSmall,
+      decoration: BoxDecoration(
+        color: primaryColor,
+        borderRadius: borderRadiusMedium,
+      ),
+      child: TextButton(
+          onPressed: () {
+            newCar.id = (widget.user.cars.length + 1).toString();
+            print(newCar.toJson());
+            navigatorToNextSelect();
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                tNext,
+                style: TextStyle(color: textColorBlack),
+              ),
+              Icon(
+                Icons.navigate_next,
+                color: textColorBlack,
+              )
+            ],
+          )),
+    );
+  }
+
+  void navigatorToNextSelect() {
+    Navigator.pushNamed(context, ADDCAR_BRANDMODELYEAR_ROUTE,
+        arguments: newCar);
   }
 
 // show info new car
@@ -80,7 +140,7 @@ class _SelectVehiclePageState extends State<SelectVehiclePage> {
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          borderRadius: borderRadiusLow,
+          borderRadius: borderRadiusMedium,
           boxShadow: [boxShadow],
           color: bgColor,
         ),
@@ -90,35 +150,35 @@ class _SelectVehiclePageState extends State<SelectVehiclePage> {
             Padding(
               padding: const EdgeInsets.only(
                 top: defualtPaddingLow,
-                left: defualtPaddingLow,
+                left: defualtPaddingMedium,
               ),
-              child: _infoTextOfNewCar(tBrand, brand),
+              child: _infoTextOfBrandNewCar(tBrand, newCar.brand),
             ),
             Image.asset(
-              tImageAsset(vehicleType[numTypeCar].toString()),
-              width: 130,
+              tImageAsset(newCar.type),
+              width: 180,
             ),
             Container(
               decoration: BoxDecoration(
-                  borderRadius: borderRadiusLowOnlyBottom, color: primaryColor),
+                  borderRadius: borderRadiusMediumOnlyBottom,
+                  color: primaryColor),
               width: double.infinity,
               child: Padding(
-                padding: const EdgeInsets.all(defualtPaddingLow),
+                padding: const EdgeInsets.only(
+                    left: defualtPaddingMedium,
+                    top: defualtPaddingLow,
+                    bottom: defualtPaddingLow),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Row(
                       children: [
-                        _infoTextOfNewCar(tModel, model),
-                        Text(yearModel,
-                            style: TextStyle(
-                              fontSize: fontSizeL,
-                              fontWeight: FontWeight.bold,
-                            ))
+                        _infoTextOfNewCar(tModel, newCar.model),
+                        _infoTextOfNewCar('', newCar.year),
                       ],
                     ),
-                    _infoTextOfNewCar(tFuelType, fuelType),
+                    _infoTextOfNewCar(tFuelType, newCar.fuelType),
                   ],
                 ),
               ),
@@ -126,6 +186,24 @@ class _SelectVehiclePageState extends State<SelectVehiclePage> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _infoTextOfBrandNewCar(String title, String info) {
+    return Row(
+      children: [
+        Text(
+          title,
+          style: TextStyle(fontSize: fontSizeXl),
+        ),
+        SizedBox(
+          width: 2,
+        ),
+        Text(
+          info,
+          style: TextStyle(fontSize: fontSizeXl),
+        )
+      ],
     );
   }
 
@@ -140,7 +218,6 @@ class _SelectVehiclePageState extends State<SelectVehiclePage> {
         ),
         Text(
           info,
-          style: TextStyle(),
         )
       ],
     );
@@ -164,10 +241,10 @@ class _SelectVehiclePageState extends State<SelectVehiclePage> {
 
   Widget _buttonIconType() {
     return GridView.count(
-      childAspectRatio: (2 / .8),
+      childAspectRatio: (2 / 1.1),
       crossAxisCount: 2,
       shrinkWrap: true,
-      children: List.generate(4, (index) {
+      children: List.generate(widget.user.cars.length + 1, (index) {
         return _listItemTypeCar(index);
       }),
     );
@@ -181,51 +258,16 @@ class _SelectVehiclePageState extends State<SelectVehiclePage> {
             children: [
               Image.asset(
                 tImageAsset(vehicleType[typeCar].toString()),
-                width: 50,
+                width: 80,
               ),
               Text(vehicleType[typeCar].toString())
             ],
           ),
           onPressed: () {
             setStateCarType(typeCar);
-            print(vehicleType[typeCar].toString());
           },
         ),
       ],
     );
   }
-
-// select brand
-
-  Widget _selectDropdown(String titleInfo, List<String> list) {
-    List<String> newList = ['', ...list];
-    return Container(
-      height: buttonHeightSmall,
-      width: buttonWidthMedium,
-      margin: EdgeInsets.all(defualtPaddingLow - 5),
-      child: DropdownButtonHideUnderline(
-        child: GFDropdown(
-          padding: const EdgeInsets.all(defualtPaddingLow),
-          borderRadius: borderRadiusLow,
-          border: const BorderSide(color: Colors.black12, width: 1),
-          dropdownButtonColor: bgColor,
-          value: titleInfo,
-          onChanged: (newValue) {
-            setState(() {
-              titleInfo = newValue.toString();
-              print(titleInfo);
-            });
-          },
-          items: newList
-              .map((value) => DropdownMenuItem(
-                    value: value,
-                    child: Text(value),
-                  ))
-              .toList(),
-        ),
-      ),
-    );
-  }
-
-  List<String> brandCar = ['Mazda', 'Honda', 'Yamaha', 'Toyota'];
 }

@@ -118,7 +118,7 @@ class _FilterGarageState extends State<FilterGarage> {
                                   color: hexToColor(primaryCodeColor),
                                   child: MaterialButton(
                                     onPressed: () {},
-                                    child: Text("ตกลง",
+                                    child: Text(tSearch,
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           color: hexToColor(codeColorBlack),
@@ -137,7 +137,7 @@ class _FilterGarageState extends State<FilterGarage> {
       },
       child: Container(
         // padding: EdgeInsets.all(15.0),
-        child: ImageIcon(AssetImage("image/icon-findGarage-navbar.png"),
+        child: ImageIcon(AssetImage(tImageAsset('findGarage-navbar')),
             color: Colors.black, size: 45),
       ),
       elevation: 4.0,

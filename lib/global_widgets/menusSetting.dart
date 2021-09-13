@@ -2,9 +2,11 @@ import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:rodsiaapp/constants.dart';
+import 'package:rodsiaapp/core/models/user_model.dart';
 
 class MenusSetting extends StatefulWidget {
-  MenusSetting({Key? key}) : super(key: key);
+  final User user;
+  MenusSetting({Key? key, required this.user}) : super(key: key);
 
   @override
   _MenusSettingState createState() => _MenusSettingState();
@@ -43,11 +45,11 @@ class _MenusSettingState extends State<MenusSetting> {
               ),
             ),
             SizedBox(
-              height: 10,
+              height: 5,
             ),
             Text(
-              'ทศภูมิ เกียรติดำรงพร',
-              style: TextStyle(fontSize: fontSizeL),
+              widget.user.name,
+              style: TextStyle(fontSize: fontSizeXl),
             ),
             Expanded(
               child: Padding(
@@ -89,7 +91,7 @@ class _MenusSettingState extends State<MenusSetting> {
           height: 35,
           child: TextButton(
             onPressed: () {
-              Navigator.pushNamed(context, route);
+              navigator(route);
             },
             child: (Text(
               name,
@@ -105,5 +107,9 @@ class _MenusSettingState extends State<MenusSetting> {
         ),
       ],
     );
+  }
+
+  void navigator(String route) {
+    Navigator.pushNamed(context, route, arguments: widget.user);
   }
 }

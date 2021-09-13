@@ -26,7 +26,8 @@ class App extends StatelessWidget {
 
       if (state is Authenticated) {
         Timer(_duration, () {
-          Navigator.pushReplacementNamed(context, MAIN_ROUTE);
+          Navigator.pushReplacementNamed(context, MAIN_ROUTE,
+              arguments: mockUpUser);
         });
       }
     });

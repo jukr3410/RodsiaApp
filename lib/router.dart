@@ -2,18 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rodsiaapp/authentication/bloc/authentication_bloc.dart';
 import 'package:rodsiaapp/constants.dart';
+import 'package:rodsiaapp/core/models/user_model.dart';
 import 'package:rodsiaapp/core/repository/garage_repository.dart';
+import 'package:rodsiaapp/global_widgets/bottomNavigrationBarPage.dart';
 import 'package:rodsiaapp/global_widgets/invalidRoute.dart';
 import 'package:rodsiaapp/home/app.dart';
 import 'package:rodsiaapp/home/appBar.dart';
 import 'package:rodsiaapp/home/bloc/home_bloc.dart';
 import 'package:rodsiaapp/login_feature%20copy/bloc/login_bloc.dart';
 import 'package:rodsiaapp/login_feature%20copy/widgets/login.dart';
+import 'package:rodsiaapp/profile_feature/widgets/ProfilePage.dart';
+import 'package:rodsiaapp/profile_feature/widgets/add_car/SelectBrandModelYear.dart';
+import 'package:rodsiaapp/profile_feature/widgets/add_car/selectCarTypePage.dart';
+import 'package:rodsiaapp/profile_feature/widgets/add_car/showInfoNewCar.dart';
 
-import 'package:rodsiaapp/profile_feature/widgets/profilePage.dart';
 import 'package:rodsiaapp/register_garage_feature/bloc/register_bloc.dart';
 import 'package:rodsiaapp/register_garage_feature/widgets/registerScreen.dart';
-import 'package:rodsiaapp/request_service_feature/widgets/trackingRequestPage.dart';
 
 class AppRouter {
   Route generateRoute(RouteSettings settings) {
@@ -28,10 +32,13 @@ class AppRouter {
                 child: App()));
 
       case MAIN_ROUTE:
+        User user = settings.arguments as User;
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                 create: (BuildContext context) => HomeBloc(),
-                child: CustomAppBar()));
+                child: CustomAppBar(
+                  user: user,
+                )));
 
       case LOGIN_ROUTE:
         return MaterialPageRoute(
@@ -46,8 +53,30 @@ class AppRouter {
                 create: (BuildContext context) => RegisterBloc(),
                 child: RegisterScreen()));
 
+      case HOMEPAGE_ROUTE:
+        User user = settings.arguments as User;
+        return MaterialPageRoute(
+            builder: (_) => BottomNavigrationBar(user: user));
+
       case PROFILE_ROUTE:
-        return MaterialPageRoute(builder: (_) => ProfilePage());
+        User user = settings.arguments as User;
+        return MaterialPageRoute(
+            builder: (_) => ProfilePage(
+                  user: user,
+                ));
+
+      case ADDCAR_CARTYPE_ROUTE:
+        User user = settings.arguments as User;
+        return MaterialPageRoute(
+            builder: (_) => SelectCarTypePage(
+                  user: user,
+                ));
+      case ADDCAR_BRANDMODELYEAR_ROUTE:
+        Car car = settings.arguments as Car;
+        return MaterialPageRoute(
+            builder: (_) => SelectBrandModelYear(
+                  car: car,
+                ));
 
       default:
         return MaterialPageRoute(builder: (_) => InvalidRouteScreen());

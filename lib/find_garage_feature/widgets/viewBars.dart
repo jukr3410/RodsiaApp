@@ -62,7 +62,7 @@ class _ViewBarsState extends State<ViewBars>
                         // first tab [you can add an icon using the icon property]
                         Tab(
                           icon: ImageIcon(
-                            AssetImage('image/icon-mapView.png'),
+                            AssetImage(tImageAsset('mapView')),
                             color: Colors.black,
                             size: 19,
                           ),
@@ -73,7 +73,7 @@ class _ViewBarsState extends State<ViewBars>
                         // second tab [you can add an icon using the icon property]
                         Tab(
                           icon: ImageIcon(
-                            AssetImage('image/icon-listView.png'),
+                            AssetImage(tImageAsset('listView')),
                             color: Colors.black,
                             size: 19,
                           ),
@@ -85,7 +85,7 @@ class _ViewBarsState extends State<ViewBars>
                   ),
                 ),
                 IconButton(
-                    icon: ImageIcon(AssetImage('image/icon-search.png')),
+                    icon: ImageIcon(AssetImage(tImageAsset('search'))),
                     onPressed: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {

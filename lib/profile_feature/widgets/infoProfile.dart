@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:rodsiaapp/constants.dart';
+import 'package:rodsiaapp/core/models/user_model.dart';
 
 class InfoProfile extends StatefulWidget {
-  InfoProfile({Key? key}) : super(key: key);
+  final User user;
+  InfoProfile({Key? key, required this.user}) : super(key: key);
 
   @override
   _InfoProfileState createState() => _InfoProfileState();
 }
 
 class _InfoProfileState extends State<InfoProfile> {
+  
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -66,7 +69,7 @@ class _InfoProfileState extends State<InfoProfile> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "ทศภูมิ เกียรติดำรงพร",
+                widget.user.name,
                 style: TextStyle(
                     fontSize: fontSizeXl, fontWeight: FontWeight.w600),
                 softWrap: true,
@@ -74,17 +77,17 @@ class _InfoProfileState extends State<InfoProfile> {
               ),
               Row(
                 children: [
-                  Text("โทรศัพท์: "),
+                  Text(tPhone + ': '),
                   Text(
-                    '061-635-1550',
+                    widget.user.phone,
                   )
                 ],
               ),
               Row(
                 children: [
-                  Text("อีเมล: "),
+                  Text(tEmail + ': '),
                   Text(
-                    'rodsia@kmutt.ac.th',
+                    widget.user.email,
                   )
                 ],
               )

@@ -29,7 +29,7 @@ class _SearchPageState extends State<SearchPage> {
                 children: [
                   IconButton(
                       icon: ImageIcon(
-                        AssetImage('image/icon-backPage.png'),
+                        AssetImage(tImageAsset('backPage')),
                         size: 14,
                       ),
                       color: Colors.black,

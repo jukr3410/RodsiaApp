@@ -13,7 +13,6 @@ class _CurrentLocationState extends State<CurrentLocation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
         body: Container(
           height: 42,
           width: 42,
@@ -24,7 +23,7 @@ class _CurrentLocationState extends State<CurrentLocation> {
           ),
           child: IconButton(
             icon: ImageIcon(
-              AssetImage("image/icon-location.png"),
+              AssetImage(tImageAsset('location')),
               size: 28,
             ),
             color: hexToColor(codeColorBlack),

@@ -32,7 +32,7 @@ class _MoreinfogarageCardState extends State<MoreInfoGarageCard> {
                     Padding(
                       padding: const EdgeInsets.only(left: 10, right: 10),
                       child: ImageIcon(
-                        AssetImage('image/icon-location.png'),
+                        AssetImage(tImageAsset('location')),
                         size: 32,
                       ),
                     ),
