@@ -117,7 +117,9 @@ class _FilterGarageState extends State<FilterGarage> {
                                   borderRadius: borderRadiusMedium,
                                   color: hexToColor(primaryCodeColor),
                                   child: MaterialButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
                                     child: Text(tSearch,
                                         textAlign: TextAlign.center,
                                         style: TextStyle(

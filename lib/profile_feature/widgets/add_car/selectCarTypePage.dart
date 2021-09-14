@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:getwidget/components/dropdown/gf_dropdown.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/user_model.dart';
-import 'package:rodsiaapp/profile_feature/widgets/add_car/SelectBrandModelYear.dart';
+import 'package:rodsiaapp/global_widgets/alertPleaseInputInfo.dart';
+import 'package:rodsiaapp/profile_feature/widgets/add_car/selectMoreChoice.dart';
 import 'package:rodsiaapp/profile_feature/widgets/add_car/showInfoNewCar.dart';
 
 class SelectCarTypePage extends StatefulWidget {
@@ -34,30 +35,6 @@ class _SelectCarTypePageState extends State<SelectCarTypePage> {
     });
   }
 
-  void setStateBrand(String item) {
-    setState(() {
-      brand = item;
-    });
-  }
-
-  void setStatemodel(String item) {
-    setState(() {
-      model = item;
-    });
-  }
-
-  void setStateYearModel(String item) {
-    setState(() {
-      yearModel = item;
-    });
-  }
-
-  void setStateFuelType(String item) {
-    setState(() {
-      fuelType = item;
-    });
-  }
-
   TextStyle styleTitleInfo = TextStyle(fontSize: fontSizeL);
 
   @override
@@ -73,24 +50,17 @@ class _SelectCarTypePageState extends State<SelectCarTypePage> {
       body: Column(
         children: [
           Flexible(
-            flex: 4,
+            flex: 6,
             child: Column(
               children: [
-                SizedBox(height: 20),
                 _showInfoNewCar(),
               ],
             ),
           ),
           Flexible(
-            flex: 3,
+            flex: 5,
             child: Column(
-              children: [
-                _selectVehicleType(),
-                SizedBox(
-                  height: 20,
-                ),
-                _buttonNext()
-              ],
+              children: [_selectVehicleType(), _buttonNext()],
             ),
           )
         ],
@@ -108,6 +78,9 @@ class _SelectCarTypePageState extends State<SelectCarTypePage> {
       ),
       child: TextButton(
           onPressed: () {
+            if (newCar.type == 'car-null') {
+              return _showDialog(context);
+            }
             newCar.id = (widget.user.cars.length + 1).toString();
             print(newCar.toJson());
             navigatorToNextSelect();
@@ -128,9 +101,17 @@ class _SelectCarTypePageState extends State<SelectCarTypePage> {
     );
   }
 
+  void _showDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertPleaseInputInfo();
+      },
+    );
+  }
+
   void navigatorToNextSelect() {
-    Navigator.pushNamed(context, ADDCAR_BRANDMODELYEAR_ROUTE,
-        arguments: newCar);
+    Navigator.pushNamed(context, ADDCAR_MORECHOICE_ROUTE, arguments: newCar);
   }
 
 // show info new car
@@ -241,10 +222,10 @@ class _SelectCarTypePageState extends State<SelectCarTypePage> {
 
   Widget _buttonIconType() {
     return GridView.count(
-      childAspectRatio: (2 / 1.1),
+      childAspectRatio: (2 / 0.9),
       crossAxisCount: 2,
       shrinkWrap: true,
-      children: List.generate(widget.user.cars.length + 1, (index) {
+      children: List.generate(vehicleType.length , (index) {
         return _listItemTypeCar(index);
       }),
     );
@@ -258,7 +239,7 @@ class _SelectCarTypePageState extends State<SelectCarTypePage> {
             children: [
               Image.asset(
                 tImageAsset(vehicleType[typeCar].toString()),
-                width: 80,
+                width: 50,
               ),
               Text(vehicleType[typeCar].toString())
             ],

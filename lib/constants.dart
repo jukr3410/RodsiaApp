@@ -24,7 +24,8 @@ const TRACKING_REQUEST_ROUTE = "/app";
 const HOMEPAGE_ROUTE = "/homepage";
 const PROFILE_ROUTE = "/profile";
 const ADDCAR_CARTYPE_ROUTE = "/addcar_cartype";
-const ADDCAR_BRANDMODELYEAR_ROUTE = "/addcar_brandmodelyear";
+const ADDCAR_MORECHOICE_ROUTE = "/addcar_brandmodelyear";
+const ADDCAR_SHOWINFO_NEWCAR_ROUTE = "/addcar_fueltype";
 const DELETECAR_ROUTE = "/delete_car";
 const EDITCAR_ROUTE = "/edit_car";
 
@@ -163,6 +164,7 @@ const tNameGarageThai = "ชื่ออู๋:";
 const tNameUserThai = "ชื่อลูกค้า:";
 const tLocationThai = 'ตำแหน่ง:';
 const tProblemThai = 'ปัญหา:';
+const tPlearInputInfo = 'คุณเพิ่มข้อมูลไม่ครบ!';
 const tEstimateDuration = 'ระยะเวลาประมาณ:';
 const tGiveScore = 'ให้คะแนน';
 const tSend = 'ส่ง';
@@ -170,8 +172,10 @@ const tNotAtMoment = 'ไม่ใช้ตอนนี้';
 const tSelectVehicleTypeCar = 'เลือกชนิดของรถยนตร์';
 const tSelectBrandCar = 'เลือกยี่ห้อของรถยนตร์';
 const tSelectModelCar = 'เลือกรุ่นของรถยนตร์';
+const tDeleteThisCar = 'ลบรถคันนี้';
 const tSelectYearModelCar = 'เลือกปี่ยี่ห้อของรถยนตร์';
 const tSelectFeulTypeCar = 'เลือกชนิดเชื้อเพลิงของรถยนตร์';
+const tInfoNewcar = 'ข้อมูลรถคันใหม่ของคุณ';
 
 //Tracking Status
 const trackingStatus = [
@@ -196,6 +200,8 @@ const vehicleType = [
   'four-wheel',
   'heavy-wheel',
 ];
+
+const fuelTypeCar = ['Prtrol', 'Diesel', 'Gas', 'Electic'];
 
 List<Car> mockUpCar = [
   Car(
@@ -223,8 +229,8 @@ List<Car> mockUpCar = [
 DateTime mockupDateTime = DateTime(2017, 9, 7, 17, 30);
 User mockUpUser = User(
     id: '1',
-    name: 'Juju Swing',
-    email: 'JuJuSwing@mail.com',
+    name: 'Jorge Dennel',
+    email: 'JorgeDennel@mail.com',
     phone: '06155648451',
     password: '1234',
     otp: '1234',
@@ -233,4 +239,21 @@ User mockUpUser = User(
     createdAt: mockupDateTime,
     updatedAt: mockupDateTime);
 
-final brandCar = ['Mazda', 'Honda', 'Yamaha', 'Toyota'];
+final brandCar = [
+  'Mazda',
+  'Honda',
+  'Yamaha',
+  'Toyota',
+];
+final modelCar = ['Civic', 'Jazz', 'Scoopy-I', 'Fg33', 'Kerry-2'];
+
+final yearModelCar = [
+  '2010',
+  '2012',
+  '2013',
+  '2014',
+  '2015',
+  '2016',
+  '2017',
+  '2018'
+];

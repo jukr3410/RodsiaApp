@@ -1,23 +1,30 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:getwidget/components/dropdown/gf_dropdown.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/user_model.dart';
+import 'package:rodsiaapp/global_widgets/alertPleaseInputInfo.dart';
 
-class SelectBrandModelYear extends StatefulWidget {
+class SelectFeulTypePage extends StatefulWidget {
   Car car;
-  SelectBrandModelYear({Key? key, required this.car}) : super(key: key);
+  SelectFeulTypePage({Key? key, required this.car}) : super(key: key);
 
   @override
-  _SelectBrandModelYearState createState() => _SelectBrandModelYearState();
+  _SelectFeulTypePageState createState() => _SelectFeulTypePageState();
 }
 
-class _SelectBrandModelYearState extends State<SelectBrandModelYear> {
+class _SelectFeulTypePageState extends State<SelectFeulTypePage> {
   String brand = tSelectBrandCar;
   String model = tSelectModelCar;
   String yearModel = '';
   String fuelType = tSelectFeulTypeCar;
+
+  void setStateCarType(int item) {
+    setState(() {
+      widget.car.fuelType = fuelTypeCar[item].toString();
+      print(widget.car.type.toString());
+    });
+  }
+
+  TextStyle styleTitleInfo = TextStyle(fontSize: fontSizeL);
 
   @override
   Widget build(BuildContext context) {
@@ -44,9 +51,7 @@ class _SelectBrandModelYearState extends State<SelectBrandModelYear> {
             flex: 4,
             child: Column(
               children: [
-                _selectDropdown(brand, brandCar),
-                // _selectDropdown(model, brandCar),
-                // _selectDropdown(brand, brandCar),
+                _selectVehicleType(),
                 SizedBox(
                   height: 20,
                 ),
@@ -68,7 +73,13 @@ class _SelectBrandModelYearState extends State<SelectBrandModelYear> {
         borderRadius: borderRadiusMedium,
       ),
       child: TextButton(
-          onPressed: () {},
+          onPressed: () {
+            if (widget.car.fuelType == fuelType) {
+              return _showDialog(context);
+            }
+            print(widget.car.toJson());
+            navigatorToNextSelect();
+          },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -83,6 +94,20 @@ class _SelectBrandModelYearState extends State<SelectBrandModelYear> {
             ],
           )),
     );
+  }
+
+  void _showDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertPleaseInputInfo();
+      },
+    );
+  }
+
+  void navigatorToNextSelect() {
+    Navigator.pushNamed(context, ADDCAR_MORECHOICE_ROUTE,
+        arguments: widget.car);
   }
 
 // show info new car
@@ -175,33 +200,51 @@ class _SelectBrandModelYearState extends State<SelectBrandModelYear> {
     );
   }
 
-  Widget _selectDropdown(String titleInfo, List<String> list) {
-    return Container(
-      height: buttonHeightSmall,
-      width: buttonWidthMedium,
-      margin: EdgeInsets.all(defualtPaddingLow - 5),
-      child: DropdownButtonHideUnderline(
-        child: GFDropdown(
-          padding: const EdgeInsets.all(defualtPaddingLow),
-          borderRadius: borderRadiusLow,
-          border: const BorderSide(color: Colors.black12, width: 1),
-          dropdownButtonColor: bgColor,
-          value: titleInfo,
-          onChanged: (newValue) {
-            setState(() {
-              titleInfo = newValue.toString();
-
-              print(titleInfo);
-            });
-          },
-          items: list.map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Text(value),
-            );
-          }).toList(),
-        ),
+// selec tVehicle Type
+  Widget _selectVehicleType() {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(tSelectFeulTypeCar, style: styleTitleInfo),
+          SizedBox(
+            height: 10,
+          ),
+          _buttonIconType()
+        ],
       ),
+    );
+  }
+
+  Widget _buttonIconType() {
+    return GridView.count(
+      childAspectRatio: (2 / 1.1),
+      crossAxisCount: 2,
+      shrinkWrap: true,
+      children: List.generate(fuelTypeCar.length, (index) {
+        return _listItemTypeCar(index);
+      }),
+    );
+  }
+
+  Widget _listItemTypeCar(int typeCar) {
+    return Column(
+      children: [
+        FlatButton(
+          child: Column(
+            children: [
+              Image.asset(
+                tImageAsset(fuelTypeCar[typeCar].toString()),
+                width: 80,
+              ),
+              Text(fuelTypeCar[typeCar].toString())
+            ],
+          ),
+          onPressed: () {
+            setStateCarType(typeCar);
+          },
+        ),
+      ],
     );
   }
 }

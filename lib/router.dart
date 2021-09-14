@@ -12,8 +12,9 @@ import 'package:rodsiaapp/home/bloc/home_bloc.dart';
 import 'package:rodsiaapp/login_feature%20copy/bloc/login_bloc.dart';
 import 'package:rodsiaapp/login_feature%20copy/widgets/login.dart';
 import 'package:rodsiaapp/profile_feature/widgets/ProfilePage.dart';
-import 'package:rodsiaapp/profile_feature/widgets/add_car/SelectBrandModelYear.dart';
+import 'package:rodsiaapp/profile_feature/widgets/add_car/selectMoreChoice.dart';
 import 'package:rodsiaapp/profile_feature/widgets/add_car/selectCarTypePage.dart';
+import 'package:rodsiaapp/profile_feature/widgets/add_car/selectFuelTypePage.dart';
 import 'package:rodsiaapp/profile_feature/widgets/add_car/showInfoNewCar.dart';
 
 import 'package:rodsiaapp/register_garage_feature/bloc/register_bloc.dart';
@@ -71,12 +72,21 @@ class AppRouter {
             builder: (_) => SelectCarTypePage(
                   user: user,
                 ));
-      case ADDCAR_BRANDMODELYEAR_ROUTE:
+
+      case ADDCAR_MORECHOICE_ROUTE:
         Car car = settings.arguments as Car;
         return MaterialPageRoute(
-            builder: (_) => SelectBrandModelYear(
+            builder: (_) => SelectMoreChoice(
                   car: car,
                 ));
+
+      case ADDCAR_SHOWINFO_NEWCAR_ROUTE:
+        Car car = settings.arguments as Car;
+        return MaterialPageRoute(builder: (_) => ShowInfoNewCar(car: car));
+
+      case EDITCAR_ROUTE:
+        Car car = settings.arguments as Car;
+        return MaterialPageRoute(builder: (_) => ShowInfoNewCar(car: car));
 
       default:
         return MaterialPageRoute(builder: (_) => InvalidRouteScreen());

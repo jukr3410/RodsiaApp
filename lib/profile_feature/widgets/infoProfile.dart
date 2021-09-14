@@ -40,8 +40,8 @@ class _InfoProfileState extends State<InfoProfile> {
                       ),
                     ),
                     Positioned(
-                        bottom: 5,
-                        right: 15,
+                        bottom: 7,
+                        right: 18,
                         child: Container(
                           height: 35,
                           width: 35,

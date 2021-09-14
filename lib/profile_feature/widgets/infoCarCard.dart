@@ -3,6 +3,8 @@ import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/user_model.dart';
+import 'package:rodsiaapp/global_widgets/alertPopupYesNo.dart';
+import 'package:rodsiaapp/profile_feature/widgets/ProfilePage.dart';
 
 class InfoCarCard extends StatefulWidget {
   final User user;
@@ -19,7 +21,7 @@ class _InfoCarCardState extends State<InfoCarCard> {
       padding: EdgeInsets.symmetric(
         horizontal: defualtPaddingMedium,
       ),
-      height: 440,
+      height: 360,
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemCount: widget.user.cars.length,
@@ -34,7 +36,7 @@ class _InfoCarCardState extends State<InfoCarCard> {
                   padding: const EdgeInsets.all(defualtPaddingMedium),
                   child: Container(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
                           'รถคันที่: ${_infoCar.id}',
@@ -44,7 +46,7 @@ class _InfoCarCardState extends State<InfoCarCard> {
                         Image.asset(
                           tImageAsset(_infoCar.type),
                           alignment: Alignment.center,
-                          width: 230,
+                          width: 150,
                         ),
                         Row(
                           children: [Text(tBrand), Text(_infoCar.brand)],
@@ -81,7 +83,9 @@ class _InfoCarCardState extends State<InfoCarCard> {
                               width: 5,
                             ),
                             GFButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  _navigateAndDisplayDelete(context, index);
+                                },
                                 type: GFButtonType.transparent,
                                 child: Text(
                                   tRemove,
@@ -101,11 +105,23 @@ class _InfoCarCardState extends State<InfoCarCard> {
     );
   }
 
-  void navigatorToEditCar(Car car, User user) {
-    Navigator.pushNamed(context, EDITCAR_ROUTE, arguments: [car, user]);
+  void _navigateAndDisplayDelete(BuildContext context, int index) async {
+    final result = await showDialog<String>(
+        context: context,
+        builder: (BuildContext context) =>
+            AlertPopupYesNo(title: tDeleteThisCar));
+    if (result == 'Ok') {
+      mockUpUser.cars.remove(mockUpCar[index]);
+
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (BuildContext context) =>
+                  ProfilePage(user: widget.user)));
+    }
   }
 
-  void navigatorToDelete(Car car, User user) {
-    Navigator.pushNamed(context, DELETECAR_ROUTE, arguments: [car, user]);
+  void navigatorToEdit(Car car, User user) {
+    Navigator.pushNamed(context, EDITCAR_ROUTE, arguments: [car, user]);
   }
 }

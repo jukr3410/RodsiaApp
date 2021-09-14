@@ -31,21 +31,24 @@ class _ProfilePageState extends State<ProfilePage> {
             Colors.yellow.shade50
           ])),
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: textColorBlack,
+        ),
         backgroundColor: Colors.transparent,
         body: Column(
           children: [
-            Container(
-              alignment: Alignment.centerLeft,
-              child: backPage(),
-            ),
+            // Container(
+            //   alignment: Alignment.centerLeft,
+            //   child: backPage(),
+            // ),
             SizedBox(
-              height: 10,
+              height: 20,
             ),
             InfoProfile(
               user: widget.user,
             ),
             SizedBox(
-              height: 30,
+              height: 20,
             ),
             InfoCarCard(
               user: widget.user,
