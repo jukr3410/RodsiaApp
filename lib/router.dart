@@ -20,6 +20,8 @@ import 'package:rodsiaapp/profile_feature/widgets/add_car/showInfoNewCar.dart';
 import 'package:rodsiaapp/register_garage_feature/bloc/register_bloc.dart';
 import 'package:rodsiaapp/register_garage_feature/widgets/registerScreen.dart';
 
+import 'core/models/car_model.dart';
+
 class AppRouter {
   Route generateRoute(RouteSettings settings) {
     print("Route: $settings");

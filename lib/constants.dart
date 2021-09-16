@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:rodsiaapp/core/models/user_model.dart';
 import 'package:rodsiaapp/global_widgets/hexTocolor.dart';
 
+import 'core/models/car_model.dart';
+
 //api base url
 //dev localhost api
 final baseUrlConstant = "http://localhost:3000/api";
@@ -235,9 +237,7 @@ User mockUpUser = User(
     password: '1234',
     otp: '1234',
     validatePhone: true,
-    cars: mockUpCar,
-    createdAt: mockupDateTime,
-    updatedAt: mockupDateTime);
+    cars: mockUpCar);
 
 final brandCar = [
   'Mazda',
