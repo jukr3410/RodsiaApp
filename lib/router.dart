@@ -52,7 +52,7 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                 create: (BuildContext context) => RegisterBloc(),
-                child: RegisterScreen()));
+                child: AddInfo()));
 
       case HOMEPAGE_ROUTE:
         User user = settings.arguments as User;
