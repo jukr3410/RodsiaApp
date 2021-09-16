@@ -1,19 +1,19 @@
 class Car {
   Car({
-    this.id,
-    this.brand,
-    this.model,
-    this.type,
-    this.year,
-    this.fuelType,
+    required this.id,
+    required this.brand,
+    required this.model,
+    required this.type,
+    required this.year,
+    required this.fuelType,
   });
 
-  String? id;
-  String? brand;
-  String? model;
-  String? type;
-  String? year;
-  String? fuelType;
+  String id;
+  String brand;
+  String model;
+  String type;
+  String year;
+  String fuelType;
 
   factory Car.fromJson(Map<String, dynamic> json) => Car(
         id: json["_id"],

@@ -12,24 +12,24 @@ String userToJson(User data) => json.encode(data.toJson());
 
 class User {
   User(
-      {this.id,
-      this.name,
-      this.email,
-      this.phone,
-      this.password,
-      this.otp,
-      this.validatePhone,
-      this.cars,
+      {required this.id,
+      required this.name,
+      required this.email,
+      required this.phone,
+      required this.password,
+      required this.otp,
+      required this.validatePhone,
+      required this.cars,
       this.profileImage});
 
-  String? id;
-  String? name;
-  String? email;
-  String? phone;
-  String? password;
-  String? otp;
-  bool? validatePhone;
-  List<Car>? cars;
+  String id;
+  String name;
+  String email;
+  String phone;
+  String password;
+  String otp;
+  bool validatePhone;
+  List<Car> cars;
   String? profileImage;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
@@ -51,6 +51,6 @@ class User {
         "password": password,
         "otp": otp,
         "validatePhone": validatePhone,
-        "cars": List<dynamic>.from(cars!.map((x) => x.toJson())),
+        "cars": List<dynamic>.from(cars.map((x) => x.toJson())),
       };
 }
