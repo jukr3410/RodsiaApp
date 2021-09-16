@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rodsiaapp/constants.dart';
 import 'package:sms_otp_auto_verify/sms_otp_auto_verify.dart';
 
 class Otp extends StatefulWidget {
@@ -106,7 +107,7 @@ class _OtpState extends State<Otp> {
                   ),
                   TextFieldPin(
                     filled: true,
-                    filledColor: hexToColor("#F7D07A"),
+                    filledColor: primaryColor,
                     codeLength: _otpCodeLength,
                     boxSize: 60,
                     filledAfterTextChange: true,
@@ -146,7 +147,7 @@ class _OtpState extends State<Otp> {
                       child: Text("Next",
                           style: GoogleFonts.alata(
                               textStyle: TextStyle(
-                                  color: hexToColor("#F7D07A"),
+                                  color: primaryColor,
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold)))),
                   SizedBox(
