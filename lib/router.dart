@@ -16,11 +16,9 @@ import 'package:rodsiaapp/profile_feature/widgets/add_car/selectMoreChoice.dart'
 import 'package:rodsiaapp/profile_feature/widgets/add_car/selectCarTypePage.dart';
 import 'package:rodsiaapp/profile_feature/widgets/add_car/selectFuelTypePage.dart';
 import 'package:rodsiaapp/profile_feature/widgets/add_car/showInfoNewCar.dart';
-
 import 'package:rodsiaapp/register_garage_feature/bloc/register_bloc.dart';
-import 'package:rodsiaapp/register_garage_feature/widgets/registerScreen.dart';
-
 import 'core/models/car_model.dart';
+import 'register_garage_feature/widgets/addInfo.dart';
 
 class AppRouter {
   Route generateRoute(RouteSettings settings) {
