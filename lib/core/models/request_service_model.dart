@@ -4,6 +4,7 @@
 
 import 'dart:convert';
 
+import 'car_model.dart';
 import 'geo_location_model.dart';
 import 'service_model.dart';
 import 'user_model.dart';
@@ -62,37 +63,5 @@ class RequestService {
         "geoLocationUser": geoLocationUser!.toJson(),
         "geoLocationGarage": geoLocationGarage!.toJson(),
         "image": image,
-      };
-}
-
-class Car {
-  Car({
-    this.brand,
-    this.model,
-    this.type,
-    this.year,
-    this.fuelType,
-  });
-
-  String? brand;
-  String? model;
-  String? type;
-  String? year;
-  String? fuelType;
-
-  factory Car.fromJson(Map<String, dynamic> json) => Car(
-        brand: json["brand"],
-        model: json["model"],
-        type: json["type"],
-        year: json["year"],
-        fuelType: json["fuelType"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "brand": brand,
-        "model": model,
-        "type": type,
-        "year": year,
-        "fuelType": fuelType,
       };
 }
