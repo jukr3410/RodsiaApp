@@ -13,6 +13,21 @@ class RequestServiceApi {
     'Accept': 'application/json'
   };
 
+  Future<bool> createRequestService(
+      {required RequestService requestService}) async {
+    logger.d('${requestService.toJson()}');
+    final msg = jsonEncode(requestService.toJson());
+    final url = '$baseUrl/request-services';
+    final response =
+        await http.post(Uri.parse(url), body: msg, headers: headers);
+    if (response.statusCode != 200) {
+      logger.e(response);
+      return false;
+      //throw new Exception('There was a problem ${response.statusCode}');
+    }
+    return true;
+  }
+
   Future<RequestService> getRequestService({required String id}) async {
     final url = '$baseUrl/request-services/$id';
     final response = await http.get(Uri.parse(url));
@@ -24,20 +39,5 @@ class RequestServiceApi {
     RequestService requestService = decodedJson;
 
     return requestService;
-  }
-
-  // ไปทำเส้น api ก่อน
-  Future<bool> updateGeoLocation(
-      {required String requestId, required GeoLocation geoLocation}) async {
-    final url = '$baseUrl';
-    final msg = jsonEncode({'geoLocationUser': geoLocation});
-    final response =
-        await http.patch(Uri.parse(url), body: msg, headers: headers);
-    if (response.statusCode != 200) {
-      logger.e(response);
-      return false;
-      //throw new Exception('There was a problem ${response.statusCode}');
-    }
-    return true;
   }
 }

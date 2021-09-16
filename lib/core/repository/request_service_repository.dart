@@ -17,10 +17,4 @@ class RequestServiceRepository {
   Future<RequestService> getRequestService({required String id}) async {
     return await requestServiceApi.getRequestService(id: id);
   }
-
-  Future<bool> updateGeoLocation(
-      {required String requestId, required GeoLocation geoLocation}) async {
-    return await requestServiceApi.updateGeoLocation(
-        requestId: requestId, geoLocation: geoLocation);
-  }
 }
