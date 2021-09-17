@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'geo_location_model.dart';
+
 Garage userFromJson(String str) => Garage.fromJson(json.decode(str));
 
 String userToJson(Garage data) => json.encode(data.toJson());
@@ -11,121 +13,80 @@ String userToJson(Garage data) => json.encode(data.toJson());
 class Garage {
   Garage({
     required this.address,
-    required this.openingHour,
+    this.openingHour,
     required this.images,
     required this.id,
     required this.name,
     required this.phone,
-    required this.email,
-    required this.password,
-    required this.otp,
-    required this.validatePhone,
-    required this.createdAt,
-    required this.updatedAt,
+    this.email,
   });
 
   Address address;
-  OpeningHour openingHour;
-  List<dynamic> images;
+  OpeningHour? openingHour;
+  List<String> images;
   String id;
   String name;
   String phone;
-  String email;
-  String password;
-  String otp;
-  bool validatePhone;
-  DateTime createdAt;
-  DateTime updatedAt;
+  String? email;
 
   factory Garage.fromJson(Map<String, dynamic> json) => Garage(
-        address: Address.fromJson(json["address"]),
-        openingHour: OpeningHour.fromJson(json["openingHour"]),
-        images: List<dynamic>.from(json["images"].map((x) => x)),
-        id: json["_id"],
-        name: json["name"],
-        phone: json["phone"],
-        email: json["email"],
-        password: json["password"],
-        otp: json["otp"],
-        validatePhone: json["validatePhone"],
-        createdAt: DateTime.parse(json["createdAt"]),
-        updatedAt: DateTime.parse(json["updatedAt"]),
-      );
+      address: Address.fromJson(json["address"]),
+      openingHour: OpeningHour.fromJson(json["openingHour"]),
+      images: List<String>.from(json["images"].map((x) => x)),
+      id: json["_id"],
+      name: json["name"],
+      phone: json["phone"],
+      email: json["email"]);
 
   Map<String, dynamic> toJson() => {
         "address": address.toJson(),
-        "openingHour": openingHour.toJson(),
+        "openingHour": openingHour!.toJson(),
         "images": List<dynamic>.from(images.map((x) => x)),
         "_id": id,
         "name": name,
         "phone": phone,
-        "email": email,
-        "password": password,
-        "otp": otp,
-        "validatePhone": validatePhone,
-        "createdAt": createdAt.toIso8601String(),
-        "updatedAt": updatedAt.toIso8601String(),
+        "email": email
       };
 }
 
 class Address {
   Address({
-    required this.geolocation,
-    required this.addressDesc,
+    required this.geoLocation,
+    this.addressDesc,
   });
 
-  Geolocation geolocation;
-  String addressDesc;
+  GeoLocation geoLocation;
+  String? addressDesc;
 
   factory Address.fromJson(Map<String, dynamic> json) => Address(
-        geolocation: Geolocation.fromJson(json["geolocation"]),
+        geoLocation: GeoLocation.fromJson(json["geoLocation"]),
         addressDesc: json["addressDesc"],
       );
 
   Map<String, dynamic> toJson() => {
-        "geolocation": geolocation.toJson(),
+        "geoLocation": geoLocation.toJson(),
         "addressDesc": addressDesc,
-      };
-}
-
-class Geolocation {
-  Geolocation({
-    required this.lat,
-    required this.long,
-  });
-
-  String lat;
-  String long;
-
-  factory Geolocation.fromJson(Map<String, dynamic> json) => Geolocation(
-        lat: json["lat"],
-        long: json["long"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "lat": lat,
-        "long": long,
       };
 }
 
 class OpeningHour {
   OpeningHour({
-    required this.mo,
-    required this.tu,
-    required this.we,
-    required this.th,
-    required this.fr,
-    required this.sa,
-    required this.su,
+    this.mo,
+    this.tu,
+    this.we,
+    this.th,
+    this.fr,
+    this.sa,
+    this.su,
   });
 
-  Day mo;
-  Day tu;
-  Day we;
-  Day th;
-  Day fr;
-  Day sa;
-  Day su;
+  Day? mo;
+  Day? tu;
+  Day? we;
+  Day? th;
+  Day? fr;
+  Day? sa;
+  Day? su;
 
   factory OpeningHour.fromJson(Map<String, dynamic> json) => OpeningHour(
         mo: Day.fromJson(json["mo"]),
@@ -138,13 +99,13 @@ class OpeningHour {
       );
 
   Map<String, dynamic> toJson() => {
-        "mo": mo.toJson(),
-        "tu": tu.toJson(),
-        "we": we.toJson(),
-        "th": th.toJson(),
-        "fr": fr.toJson(),
-        "sa": sa.toJson(),
-        "su": su.toJson(),
+        "mo": mo!.toJson(),
+        "tu": tu!.toJson(),
+        "we": we!.toJson(),
+        "th": th!.toJson(),
+        "fr": fr!.toJson(),
+        "sa": sa!.toJson(),
+        "su": su!.toJson(),
       };
 }
 

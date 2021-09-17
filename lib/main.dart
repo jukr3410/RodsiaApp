@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:rodsiaapp/global_widgets/alertGiveScore.dart';
 
 import 'package:rodsiaapp/global_widgets/bottomNavigrationBarPage.dart';
@@ -62,3 +63,7 @@ class GarageBlocObserver extends BlocObserver {
     super.onError(bloc, error, stackTrace);
   }
 }
+
+var logger = Logger(
+  printer: PrettyPrinter(),
+);
