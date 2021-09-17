@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:rodsiaapp/core/models/garage_model.dart';
+import 'package:rodsiaapp/core/models/user_model.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/buttonRequestService.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/infoGarageFormSelect.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/selectServiceOfGarage.dart';
 
 class SelectServicePage extends StatefulWidget {
-  final String garageId;
-  SelectServicePage({Key? key, required this.garageId}) : super(key: key);
+  final Garage garage;
+  SelectServicePage({Key? key, required this.garage}) : super(key: key);
 
   @override
   _SelectServicePageState createState() => _SelectServicePageState();

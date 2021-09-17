@@ -5,16 +5,17 @@ import 'package:getwidget/components/dropdown/gf_dropdown.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/user_model.dart';
 import 'package:rodsiaapp/global_widgets/alertPleaseInputInfo.dart';
+import 'package:rodsiaapp/profile_feature/widgets/edit_car/editCarModel.dart';
 
-class SelectMoreChoice extends StatefulWidget {
-  Car car;
-  SelectMoreChoice({Key? key, required this.car}) : super(key: key);
+class EditSelectMoreChoice extends StatefulWidget {
+  EditCarAndIndex editCar;
+  EditSelectMoreChoice({Key? key, required this.editCar}) : super(key: key);
 
   @override
-  _SelectMoreChoiceState createState() => _SelectMoreChoiceState();
+  _EditSelectMoreChoiceState createState() => _EditSelectMoreChoiceState();
 }
 
-class _SelectMoreChoiceState extends State<SelectMoreChoice> {
+class _EditSelectMoreChoiceState extends State<EditSelectMoreChoice> {
   String brand = tSelectBrandCar;
   String model = tSelectModelCar;
   String yearModel = '';
@@ -28,28 +29,28 @@ class _SelectMoreChoiceState extends State<SelectMoreChoice> {
   void setStateBrand(Object? item) {
     setState(() {
       valueBrand = item.toString();
-      widget.car.brand = item.toString();
+      widget.editCar.carNew.brand = item.toString();
     });
   }
 
   void setStateModel(Object? item) {
     setState(() {
       valueModel = item.toString();
-      widget.car.model = item.toString();
+      widget.editCar.carNew.model = item.toString();
     });
   }
 
   void setStateYear(Object? item) {
     setState(() {
       valueYear = item.toString();
-      widget.car.year = item.toString();
+      widget.editCar.carNew.year = item.toString();
     });
   }
 
   void setStateFuelType(Object? item) {
     setState(() {
       valueFuelType = item.toString();
-      widget.car.fuelType = item.toString();
+      widget.editCar.carNew.fuelType = item.toString();
     });
   }
 
@@ -59,7 +60,7 @@ class _SelectMoreChoiceState extends State<SelectMoreChoice> {
       appBar: AppBar(
         backgroundColor: primaryColor,
         title: Text(
-          tAddCar,
+          tEditCar + 'คันที่: ' + widget.editCar.carNew.id,
           style: TextStyle(color: textColorBlack),
         ),
       ),
@@ -103,14 +104,14 @@ class _SelectMoreChoiceState extends State<SelectMoreChoice> {
       ),
       child: TextButton(
           onPressed: () {
-            if (widget.car.brand == brand ||
-                widget.car.model == model ||
-                widget.car.year == yearModel ||
-                widget.car.fuelType == fuelType) {
+            if (widget.editCar.carNew.brand == brand ||
+                widget.editCar.carNew.model == model ||
+                widget.editCar.carNew.year == yearModel ||
+                widget.editCar.carNew.fuelType == fuelType) {
               return _showDialog(context);
             } else {
               navigatorToSelectFuelType();
-              print(widget.car.toJson());
+              print(widget.editCar.carNew.toJson());
             }
           },
           child: Row(
@@ -130,8 +131,11 @@ class _SelectMoreChoiceState extends State<SelectMoreChoice> {
   }
 
   void navigatorToSelectFuelType() {
-    Navigator.pushNamed(context, ADDCAR_SHOWINFO_NEWCAR_ROUTE,
-        arguments: widget.car);
+    Navigator.pushNamed(context, EDITCAR_SHOWINFO_ROUTE,
+        arguments: EditCarAndIndex(
+            carOld: widget.editCar.carOld,
+            carNew: widget.editCar.carNew,
+            indexCar: widget.editCar.indexCar));
   }
 
   void _showDialog(BuildContext context) {
@@ -162,10 +166,11 @@ class _SelectMoreChoiceState extends State<SelectMoreChoice> {
                 top: defualtPaddingLow,
                 left: defualtPaddingMedium,
               ),
-              child: _infoTextOfBrandNewCar(tBrand, widget.car.brand),
+              child:
+                  _infoTextOfBrandNewCar(tBrand, widget.editCar.carNew.brand),
             ),
             Image.asset(
-              tImageAsset(widget.car.type),
+              tImageAsset(widget.editCar.carNew.type),
               width: 180,
             ),
             Container(
@@ -184,11 +189,12 @@ class _SelectMoreChoiceState extends State<SelectMoreChoice> {
                   children: [
                     Row(
                       children: [
-                        _infoTextOfNewCar(tModel, widget.car.model),
-                        _infoTextOfNewCar('', widget.car.year),
+                        _infoTextOfNewCar(tModel, widget.editCar.carNew.model),
+                        _infoTextOfNewCar('', widget.editCar.carNew.year),
                       ],
                     ),
-                    _infoTextOfNewCar(tFuelType, widget.car.fuelType),
+                    _infoTextOfNewCar(
+                        tFuelType, widget.editCar.carNew.fuelType),
                   ],
                 ),
               ),

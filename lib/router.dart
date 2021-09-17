@@ -16,6 +16,10 @@ import 'package:rodsiaapp/profile_feature/widgets/add_car/selectMoreChoice.dart'
 import 'package:rodsiaapp/profile_feature/widgets/add_car/selectCarTypePage.dart';
 import 'package:rodsiaapp/profile_feature/widgets/add_car/selectFuelTypePage.dart';
 import 'package:rodsiaapp/profile_feature/widgets/add_car/showInfoNewCar.dart';
+import 'package:rodsiaapp/profile_feature/widgets/edit_car/editCarModel.dart';
+import 'package:rodsiaapp/profile_feature/widgets/edit_car/editSelectCarTypePage.dart';
+import 'package:rodsiaapp/profile_feature/widgets/edit_car/editSelectMoreChoicePage.dart';
+import 'package:rodsiaapp/profile_feature/widgets/edit_car/editShowInfoNewCar.dart';
 
 import 'package:rodsiaapp/register_garage_feature/bloc/register_bloc.dart';
 import 'package:rodsiaapp/register_garage_feature/widgets/registerScreen.dart';
@@ -84,9 +88,26 @@ class AppRouter {
         Car car = settings.arguments as Car;
         return MaterialPageRoute(builder: (_) => ShowInfoNewCar(car: car));
 
-      case EDITCAR_ROUTE:
-        Car car = settings.arguments as Car;
-        return MaterialPageRoute(builder: (_) => ShowInfoNewCar(car: car));
+      case EDITCAR_CARTYPE_ROUTE:
+        EditCarNoNewCar car = settings.arguments as EditCarNoNewCar;
+        return MaterialPageRoute(
+            builder: (_) => EditSelectCarTypePage(
+                  car: car,
+                ));
+
+      case EDITCAR_MORECHOICE_ROUTE:
+        EditCarAndIndex editCar = settings.arguments as EditCarAndIndex;
+        return MaterialPageRoute(
+            builder: (_) => EditSelectMoreChoice(
+                  editCar: editCar,
+                ));
+
+      case EDITCAR_SHOWINFO_ROUTE:
+        EditCarAndIndex editCar = settings.arguments as EditCarAndIndex;
+        return MaterialPageRoute(
+            builder: (_) => EditShowInfoNewCar(
+                  car: editCar,
+                ));
 
       default:
         return MaterialPageRoute(builder: (_) => InvalidRouteScreen());

@@ -24,10 +24,13 @@ const TRACKING_REQUEST_ROUTE = "/app";
 const HOMEPAGE_ROUTE = "/homepage";
 const PROFILE_ROUTE = "/profile";
 const ADDCAR_CARTYPE_ROUTE = "/addcar_cartype";
-const ADDCAR_MORECHOICE_ROUTE = "/addcar_brandmodelyear";
-const ADDCAR_SHOWINFO_NEWCAR_ROUTE = "/addcar_fueltype";
+const ADDCAR_MORECHOICE_ROUTE = "/addcar_morechoice";
+const ADDCAR_SHOWINFO_NEWCAR_ROUTE = "/addcar_showinfo";
 const DELETECAR_ROUTE = "/delete_car";
-const EDITCAR_ROUTE = "/edit_car";
+const EDITCAR_CARTYPE_ROUTE = "/edit_car";
+const EDITCAR_MORECHOICE_ROUTE = "/edit_morechoice";
+const EDITCAR_SHOWINFO_ROUTE = "/edit_showinfo";
+
 
 // font size
 const fontSizeXl = 18.0;
@@ -151,7 +154,7 @@ const tSupportThai = 'ติดต่อซัพพอร์ท';
 const tYesThai = 'ใช้';
 const tMessage = "messages";
 const tAddCar = 'เพื่มรถยนตร์';
-const tEmail = "อิเมล";
+const tEmail = "อีเมล";
 const tBrand = 'ยี่ห้อ: ';
 const tPhone = 'โทรศัพท์';
 const tModel = 'รุ่น: ';
@@ -172,10 +175,13 @@ const tNotAtMoment = 'ไม่ใช้ตอนนี้';
 const tSelectVehicleTypeCar = 'เลือกชนิดของรถยนตร์';
 const tSelectBrandCar = 'เลือกยี่ห้อของรถยนตร์';
 const tSelectModelCar = 'เลือกรุ่นของรถยนตร์';
+const tEditCar = 'แก้ไขรถยนตร์';
 const tDeleteThisCar = 'ลบรถคันนี้';
+const tEditThisCar = 'แก้ไขรถคันนี้';
 const tSelectYearModelCar = 'เลือกปี่ยี่ห้อของรถยนตร์';
 const tSelectFeulTypeCar = 'เลือกชนิดเชื้อเพลิงของรถยนตร์';
 const tInfoNewcar = 'ข้อมูลรถคันใหม่ของคุณ';
+const tInfoEditcar = 'ข้อมูลใหม่รถของคุณ';
 
 //Tracking Status
 const trackingStatus = [
