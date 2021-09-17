@@ -6,6 +6,7 @@ import 'package:rodsiaapp/core/models/car_model.dart';
 import 'package:rodsiaapp/core/models/user_model.dart';
 import 'package:rodsiaapp/global_widgets/alertPopupYesNo.dart';
 import 'package:rodsiaapp/profile_feature/widgets/ProfilePage.dart';
+import 'package:rodsiaapp/profile_feature/widgets/edit_car/editCarModel.dart';
 
 class InfoCarCard extends StatefulWidget {
   final User user;
@@ -40,7 +41,7 @@ class _InfoCarCardState extends State<InfoCarCard> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          'รถคันที่: ${_infoCar.id}',
+                          'รถคันที่: ${index + 1}',
                           style: TextStyle(fontSize: fontSizeXl),
                           textAlign: TextAlign.right,
                         ),
@@ -74,7 +75,9 @@ class _InfoCarCardState extends State<InfoCarCard> {
                                   color: primaryColor,
                                   borderRadius: borderRadiusMedium),
                               child: TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    _navigateAndDisplayEdit(context, index);
+                                  },
                                   child: Text(
                                     tEdit,
                                     style: TextStyle(color: textColorBlack),
@@ -114,15 +117,26 @@ class _InfoCarCardState extends State<InfoCarCard> {
     if (result == 'Ok') {
       mockUpUser.cars.remove(mockUpCar[index]);
 
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (BuildContext context) =>
-                  ProfilePage(user: widget.user)));
+      navigatorToDelete();
     }
   }
 
-  void navigatorToEdit(Car car, User user) {
-    Navigator.pushNamed(context, EDITCAR_ROUTE, arguments: [car, user]);
+  void _navigateAndDisplayEdit(BuildContext context, int index) async {
+    final result = await showDialog<String>(
+        context: context,
+        builder: (BuildContext context) =>
+            AlertPopupYesNo(title: tEditThisCar));
+    if (result == 'Ok') {
+      Navigator.pushNamed(context, EDITCAR_CARTYPE_ROUTE,
+          arguments: EditCarNoNewCar(
+              carOld: widget.user.cars[index], index: index + 1));
+    }
+  }
+
+  void navigatorToDelete() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (BuildContext context) => ProfilePage(user: widget.user)));
   }
 }

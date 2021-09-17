@@ -94,7 +94,8 @@ class _GarageListState extends State<GarageList> {
                     ..add(GarageListFetchEvent());
                 }
               }),
-            itemBuilder: (context, index) => _makeCardWidget(_garages[index]),
+            itemBuilder: (context, index) =>
+                _makeCardWidget(_garages[index], index),
             itemCount: _garages.length,
           );
         },
@@ -147,7 +148,7 @@ class _GarageListState extends State<GarageList> {
   //   );
   // }
 
-  _makeCardWidget(Garage garage) {
+  _makeCardWidget(Garage garage, int index) {
     return GestureDetector(
       child: Card(
         elevation: 3,
