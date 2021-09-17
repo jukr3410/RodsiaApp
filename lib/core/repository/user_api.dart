@@ -6,14 +6,14 @@ import 'package:rodsiaapp/core/models/user_model.dart';
 import '../../constants.dart';
 import '../../main.dart';
 
-class GarageApi {
+class UserApi {
   final baseUrl = baseUrlConstant;
   Map<String, String> headers = {
     'Content-type': 'application/json',
     'Accept': 'application/json'
   };
 
-  Future<User> getUser({required String id}) async {
+  Future<User> getUserInfo({required String id}) async {
     final url = '$baseUrl/users/$id';
     final response = await http.get(Uri.parse(url));
     if (response.statusCode != 200) {
@@ -39,17 +39,17 @@ class GarageApi {
   }
 
   // ไปทำเส้น api ก่อน
-  Future<bool> addCar({required String userId, required Car car}) async {
-    logger.d('${car.toJson()}');
-    final msg = jsonEncode(car.toJson());
-    final url = '$baseUrl/users/${userId}/add-car';
-    final response =
-        await http.post(Uri.parse(url), body: msg, headers: headers);
-    if (response.statusCode != 200) {
-      logger.e(response);
-      return false;
-      //throw new Exception('There was a problem ${response.statusCode}');
-    }
-    return true;
-  }
+  // Future<bool> updateCar({required User user}) async {
+  //   logger.d('${user.cars}');
+  //   final msg = jsonEncode(user.cars);
+  //   final url = '$baseUrl/users/${user.id}/update-car';
+  //   final response =
+  //       await http.post(Uri.parse(url), body: msg, headers: headers);
+  //   if (response.statusCode != 200) {
+  //     logger.e(response);
+  //     return false;
+  //     //throw new Exception('There was a problem ${response.statusCode}');
+  //   }
+  //   return true;
+  // }
 }

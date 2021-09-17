@@ -24,6 +24,8 @@ class GarageListSuccessState extends GarageListState {
   const GarageListSuccessState({required this.garages});
 }
 
+class GarageListEmptyState extends GarageListState {}
+
 class GarageListErrorState extends GarageListState {
   final String error;
 

@@ -71,22 +71,22 @@ class Address {
 
 class OpeningHour {
   OpeningHour({
-    this.mo,
-    this.tu,
-    this.we,
-    this.th,
-    this.fr,
-    this.sa,
-    this.su,
+    required this.mo,
+    required this.tu,
+    required this.we,
+    required this.th,
+    required this.fr,
+    required this.sa,
+    required this.su,
   });
 
-  Day? mo;
-  Day? tu;
-  Day? we;
-  Day? th;
-  Day? fr;
-  Day? sa;
-  Day? su;
+  Day mo;
+  Day tu;
+  Day we;
+  Day th;
+  Day fr;
+  Day sa;
+  Day su;
 
   factory OpeningHour.fromJson(Map<String, dynamic> json) => OpeningHour(
         mo: Day.fromJson(json["mo"]),
@@ -99,13 +99,13 @@ class OpeningHour {
       );
 
   Map<String, dynamic> toJson() => {
-        "mo": mo!.toJson(),
-        "tu": tu!.toJson(),
-        "we": we!.toJson(),
-        "th": th!.toJson(),
-        "fr": fr!.toJson(),
-        "sa": sa!.toJson(),
-        "su": su!.toJson(),
+        "mo": mo.toJson(),
+        "tu": tu.toJson(),
+        "we": we.toJson(),
+        "th": th.toJson(),
+        "fr": fr.toJson(),
+        "sa": sa.toJson(),
+        "su": su.toJson(),
       };
 }
 

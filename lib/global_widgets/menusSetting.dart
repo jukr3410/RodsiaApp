@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/user_model.dart';
@@ -69,10 +67,14 @@ class _MenusSettingState extends State<MenusSetting> {
                             ))),
                             child: Column(
                               children: [
-                                _TextButtonManus(menusSetting[0], PROFILE_ROUTE),
-                                _TextButtonManus(menusSetting[1], PROFILE_ROUTE),
-                                _TextButtonManus(menusSetting[2], PROFILE_ROUTE),
-                                _TextButtonManus(menusSetting[3], PROFILE_ROUTE),
+                                _TextButtonManus(
+                                    menusSetting[0], PROFILE_ROUTE),
+                                _TextButtonManus(
+                                    menusSetting[1], PROFILE_ROUTE),
+                                _TextButtonManus(
+                                    menusSetting[2], PROFILE_ROUTE),
+                                _TextButtonManus(
+                                    menusSetting[3], PROFILE_ROUTE),
                               ],
                             ))),
                   ),

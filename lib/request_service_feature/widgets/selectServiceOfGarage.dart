@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:rodsiaapp/constants.dart';
+import 'package:rodsiaapp/core/models/service_model.dart';
 import 'package:rodsiaapp/global_widgets/hexTocolor.dart';
 
 class SelectServiceOfGarage extends StatefulWidget {
-  SelectServiceOfGarage({Key? key}) : super(key: key);
+  List<Service> services;
+  SelectServiceOfGarage({Key? key, required this.services}) : super(key: key);
 
   @override
   _SelectServiceOfGarageState createState() => _SelectServiceOfGarageState();
@@ -82,8 +84,7 @@ class _SelectServiceOfGarageState extends State<SelectServiceOfGarage> {
             style: TextStyle(fontSize: 12),
             decoration: InputDecoration(
               border: OutlineInputBorder(),
-              helperText:
-                  'เช่น ยางรั่ว, ยางระเบิด, เบรคไม่อยู่, สตาร์ทไม่ติด',
+              helperText: 'เช่น ยางรั่ว, ยางระเบิด, เบรคไม่อยู่, สตาร์ทไม่ติด',
               helperStyle: TextStyle(fontSize: 10),
               hintText:
                   'รายละเอียดเพิ่มเติม(ไม่จำเป็น) เช่น ยางรั่ว, ยางระเบิด, เบรคไม่อยู่, สตาร์ทไม่ติด',

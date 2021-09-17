@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/rating/gf_rating.dart';
 import 'package:rodsiaapp/constants.dart';
+import 'package:rodsiaapp/core/models/garage_model.dart';
 import 'package:rodsiaapp/global_widgets/hexTocolor.dart';
 
 class InfoGarageFormSelect extends StatefulWidget {
-  InfoGarageFormSelect({Key? key}) : super(key: key);
+  Garage garage;
+  InfoGarageFormSelect({Key? key, required this.garage}) : super(key: key);
 
   @override
   _InfoGarageFormSelectState createState() => _InfoGarageFormSelectState();

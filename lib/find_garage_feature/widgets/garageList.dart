@@ -44,12 +44,12 @@ class _GarageListState extends State<GarageList> {
             // ScaffoldMessenger.of(context)
             //     .showSnackBar(SnackBar(content: Text(garageState.error)));
 
-            // showTopSnackBar(
-            //   context,
-            //   CustomSnackBar.error(
-            //     message: mError,
-            //   ),
-            // );
+            showTopSnackBar(
+              context,
+              CustomSnackBar.error(
+                message: mError,
+              ),
+            );
             _garageListBloc.isFetching = false;
           }
           return;
@@ -159,7 +159,7 @@ class _GarageListState extends State<GarageList> {
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.33,
               child: Image.network(
-                'https://lh3.googleusercontent.com/proxy/M1bExeai3pECeetmu9auKaghGXk09UkKuWFGBQBJqneYdwokSJS1Mn_Dxtm_c304IPM1c3IR-okUEMfOljuC22h5NcohGJqKCwM2J4iqnv_-C9u9pGu8Eqd9mcqrB7MooXgfthk',
+                'https://lh3.googleusercontent.com/proxy/HTH0IG4ZBVgbeslCOsM6m8M9fSqMQMneKTWO18A1cEIVVv94V2Kb7tODE4ZsaA9x5jPXAqqAxg0ovu-oQ7JLcIU5',
                 fit: BoxFit.cover,
               ),
             ),
@@ -233,10 +233,7 @@ class _GarageListState extends State<GarageList> {
         ),
       ),
       onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => SelectServicePage(garageId: garage.id)));
+        navigateToGarageInfo(garage.id);
       },
     );
   }
@@ -295,6 +292,11 @@ class _GarageListState extends State<GarageList> {
         ),
         baseColor: Colors.grey.shade300,
         highlightColor: Colors.grey.shade100);
+  }
+
+  void navigateToGarageInfo(String garageId) {
+    Navigator.pushNamed(context, GARAGE_INFO_ROUTE,
+        arguments: {'garageId': garageId});
   }
 
   @override

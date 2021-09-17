@@ -13,7 +13,7 @@ class GarageApi {
 
   Future<List<Garage>> getGarages({required int page}) async {
     List<Garage> garages = [];
-    final url = '$baseUrl/garages?page=$page&limit=5';
+    final url = '$baseUrl/garages?page=$page&limit=10';
     final response = await http.get(Uri.parse(url));
     if (response.statusCode != 200) {
       print('Exception: ${response.statusCode}');

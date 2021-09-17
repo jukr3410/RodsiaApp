@@ -10,6 +10,7 @@ final baseUrlConstant = "http://localhost:3000/api";
 
 // production api
 //final baseUrlConstant = '';
+
 // router path
 const LOGIN_ROUTE = "/login";
 const ADD_NUMBER_ROUTE = "/add_number";
@@ -30,6 +31,7 @@ const ADDCAR_MORECHOICE_ROUTE = "/addcar_brandmodelyear";
 const ADDCAR_SHOWINFO_NEWCAR_ROUTE = "/addcar_fueltype";
 const DELETECAR_ROUTE = "/delete_car";
 const EDITCAR_ROUTE = "/edit_car";
+const GARAGE_INFO_ROUTE = "/garage_info";
 
 // font size
 const fontSizeXl = 18.0;

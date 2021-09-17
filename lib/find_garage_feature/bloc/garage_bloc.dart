@@ -5,6 +5,7 @@ import 'package:meta/meta.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/garage_model.dart';
 import 'package:rodsiaapp/core/repository/garage_repository.dart';
+import 'package:rodsiaapp/main.dart';
 
 part 'garage_event.dart';
 part 'garage_state.dart';
@@ -30,10 +31,10 @@ class GarageListBloc extends Bloc<GarageListEvent, GarageListState> {
           yield GarageListSuccessState(garages: garages);
           page++;
         } else {
-          yield GarageListErrorState(error: mNoMoreGarages);
+          yield GarageListEmptyState();
         }
       } catch (e) {
-        print(e);
+        logger.e(e);
         yield GarageListErrorState(error: mError);
       }
     }

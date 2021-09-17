@@ -4,6 +4,7 @@ import 'package:rodsiaapp/authentication/bloc/authentication_bloc.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/user_model.dart';
 import 'package:rodsiaapp/core/repository/garage_repository.dart';
+import 'package:rodsiaapp/core/repository/service_repository.dart';
 import 'package:rodsiaapp/global_widgets/bottomNavigrationBarPage.dart';
 import 'package:rodsiaapp/global_widgets/invalidRoute.dart';
 import 'package:rodsiaapp/home/app.dart';
@@ -17,8 +18,11 @@ import 'package:rodsiaapp/profile_feature/widgets/add_car/selectCarTypePage.dart
 import 'package:rodsiaapp/profile_feature/widgets/add_car/selectFuelTypePage.dart';
 import 'package:rodsiaapp/profile_feature/widgets/add_car/showInfoNewCar.dart';
 import 'package:rodsiaapp/register_garage_feature/bloc/register_bloc.dart';
+import 'package:rodsiaapp/request_service_feature/bloc/garage_info_bloc.dart';
+import 'package:rodsiaapp/request_service_feature/widgets/infoGarageFormSelect.dart';
 import 'core/models/car_model.dart';
 import 'register_garage_feature/widgets/addInfo.dart';
+import 'request_service_feature/widgets/selectServicePage.dart';
 
 class AppRouter {
   Route generateRoute(RouteSettings settings) {
@@ -87,6 +91,17 @@ class AppRouter {
       case EDITCAR_ROUTE:
         Car car = settings.arguments as Car;
         return MaterialPageRoute(builder: (_) => ShowInfoNewCar(car: car));
+
+      case GARAGE_INFO_ROUTE:
+        String garageId = settings.arguments as String;
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                create: (BuildContext context) => GarageInfoBloc(
+                    garageRepository: GarageRepository(),
+                    serviceRepository: ServiceRepository()),
+                child: SelectServicePage(
+                  garageId: garageId,
+                )));
 
       default:
         return MaterialPageRoute(builder: (_) => InvalidRouteScreen());
