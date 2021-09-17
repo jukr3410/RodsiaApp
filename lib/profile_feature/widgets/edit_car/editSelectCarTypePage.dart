@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:getwidget/components/dropdown/gf_dropdown.dart';
 
 import 'package:rodsiaapp/constants.dart';
+import 'package:rodsiaapp/core/models/car_model.dart';
 import 'package:rodsiaapp/core/models/user_model.dart';
 import 'package:rodsiaapp/global_widgets/alertPleaseInputInfo.dart';
 import 'package:rodsiaapp/profile_feature/widgets/add_car/selectMoreChoice.dart';

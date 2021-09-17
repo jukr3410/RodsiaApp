@@ -1,6 +1,6 @@
 class Car {
   Car({
-    this.id,
+    required this.id,
     required this.brand,
     required this.model,
     required this.type,
@@ -8,7 +8,7 @@ class Car {
     required this.fuelType,
   });
 
-  String? id;
+  String id;
   String brand;
   String model;
   String type;

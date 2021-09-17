@@ -1,4 +1,5 @@
 import 'package:http/http.dart';
+import 'package:rodsiaapp/core/models/car_model.dart';
 import 'package:rodsiaapp/core/models/user_model.dart';
 
 class EditCarAndIndex {
