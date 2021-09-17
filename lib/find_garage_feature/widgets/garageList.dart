@@ -159,7 +159,7 @@ class _GarageListState extends State<GarageList> {
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.33,
               child: Image.network(
-                'https://bestkru-thumbs.s3-ap-southeast-1.amazonaws.com/127399',
+                'https://lh3.googleusercontent.com/proxy/M1bExeai3pECeetmu9auKaghGXk09UkKuWFGBQBJqneYdwokSJS1Mn_Dxtm_c304IPM1c3IR-okUEMfOljuC22h5NcohGJqKCwM2J4iqnv_-C9u9pGu8Eqd9mcqrB7MooXgfthk',
                 fit: BoxFit.cover,
               ),
             ),
