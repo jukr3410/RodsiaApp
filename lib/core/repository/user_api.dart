@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:rodsiaapp/core/dao/user_dao.dart';
 import 'package:rodsiaapp/core/models/car_model.dart';
 import 'package:rodsiaapp/core/models/user_model.dart';
 import '../../constants.dart';
@@ -12,6 +13,8 @@ class UserApi {
     'Content-type': 'application/json',
     'Accept': 'application/json'
   };
+
+  final userDao = UserDao();
 
   Future<User> getUserInfo({required String id}) async {
     final url = '$baseUrl/users/$id';
@@ -52,4 +55,5 @@ class UserApi {
   //   }
   //   return true;
   // }
+
 }

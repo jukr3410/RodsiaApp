@@ -9,8 +9,8 @@ abstract class RegisterState extends Equatable {
 
 class RegisterInitial extends RegisterState {}
 
-class RegisterError extends RegisterState {
-  final String error;
+class RegisterError extends RegisterState {}
 
-  RegisterError({required this.error});
-}
+class RegisterLoading extends RegisterState {}
+
+class RegisterSuccess extends RegisterState {}

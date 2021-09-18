@@ -10,8 +10,6 @@ import 'package:rodsiaapp/global_widgets/invalidRoute.dart';
 import 'package:rodsiaapp/home/app.dart';
 import 'package:rodsiaapp/home/appBar.dart';
 import 'package:rodsiaapp/home/bloc/home_bloc.dart';
-import 'package:rodsiaapp/login_feature%20copy/bloc/login_bloc.dart';
-import 'package:rodsiaapp/login_feature%20copy/widgets/login.dart';
 import 'package:rodsiaapp/profile_feature/widgets/ProfilePage.dart';
 import 'package:rodsiaapp/profile_feature/widgets/add_car/selectMoreChoice.dart';
 import 'package:rodsiaapp/profile_feature/widgets/add_car/selectCarTypePage.dart';
@@ -21,12 +19,16 @@ import 'package:rodsiaapp/profile_feature/widgets/edit_car/editCarModel.dart';
 import 'package:rodsiaapp/profile_feature/widgets/edit_car/editSelectCarTypePage.dart';
 import 'package:rodsiaapp/profile_feature/widgets/edit_car/editSelectMoreChoicePage.dart';
 import 'package:rodsiaapp/profile_feature/widgets/edit_car/editShowInfoNewCar.dart';
-
-import 'package:rodsiaapp/register_garage_feature/bloc/register_bloc.dart';
 import 'package:rodsiaapp/request_service_feature/bloc/garage_info_bloc.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/infoGarageFormSelect.dart';
 import 'core/models/car_model.dart';
-import 'register_garage_feature/widgets/addInfo.dart';
+import 'core/repository/user_repository.dart';
+import 'login_feature/bloc/login_bloc.dart';
+import 'login_feature/widgets/login.dart';
+import 'register_user_feature/bloc/register_bloc.dart';
+import 'register_user_feature/widgets/addInfo.dart';
+import 'register_user_feature/widgets/addNumber.dart';
+import 'register_user_feature/widgets/otp.dart';
 import 'request_service_feature/widgets/selectServicePage.dart';
 
 class AppRouter {
@@ -37,7 +39,7 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                 create: (BuildContext context) =>
-                    AuthenticationBloc(garageRepository: GarageRepository())
+                    AuthenticationBloc(userRepository: UserRepository())
                       ..add(AppStarted()),
                 child: App()));
 
@@ -53,9 +55,24 @@ class AppRouter {
       case LOGIN_ROUTE:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
-                  create: (BuildContext context) => LoginBloc(),
+                  create: (BuildContext context) => LoginBloc(
+                      userRepository: UserRepository(),
+                      authenticationBloc:
+                          AuthenticationBloc(userRepository: UserRepository())),
                   child: LoginScreen(),
                 ));
+
+      case ADD_NUMBER_ROUTE:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                create: (BuildContext context) => RegisterBloc(),
+                child: AddNumber()));
+
+      case OTP_ROUTE:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                create: (BuildContext context) => RegisterBloc(),
+                child: Otp()));
 
       case REGISTER_ROUTE:
         return MaterialPageRoute(
@@ -66,7 +83,10 @@ class AppRouter {
       case HOMEPAGE_ROUTE:
         User user = settings.arguments as User;
         return MaterialPageRoute(
-            builder: (_) => BottomNavigrationBar(user: user));
+            builder: (_) => BlocProvider(
+                create: (BuildContext context) =>
+                    AuthenticationBloc(userRepository: UserRepository()),
+                child: BottomNavigrationBar(user: user)));
 
       case PROFILE_ROUTE:
         User user = settings.arguments as User;

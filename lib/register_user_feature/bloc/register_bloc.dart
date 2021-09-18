@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:rodsiaapp/core/models/user_model.dart';
 
 part 'register_event.dart';
 part 'register_state.dart';

@@ -126,6 +126,7 @@ const mNoGarages = "no garages";
 const mNoMoreGarages = "no more garages";
 const mLoading = "loading";
 const mNotFound = "not found!";
+const mErrorInputPhone = 'โืปดระบุเบอร์โทรศัพท์';
 
 // src string for set widget
 String tImageAsset(String imageName) {
@@ -165,7 +166,7 @@ const tModel = 'รุ่น: ';
 const tNext = 'ถัดไป';
 const tYearModel = 'ปี: ';
 const tFuelType = 'เชื้อเพลิง: ';
-const tPassword = "Password: ";
+const tPassword = "รหัสผ่าน: ";
 const tSearch = 'ค้นหา';
 const tNameGarageThai = "ชื่ออู๋:";
 const tNameUserThai = "ชื่อลูกค้า:";
@@ -186,6 +187,9 @@ const tSelectYearModelCar = 'เลือกปี่ยี่ห้อของ
 const tSelectFeulTypeCar = 'เลือกชนิดเชื้อเพลิงของรถยนตร์';
 const tInfoNewcar = 'ข้อมูลรถคันใหม่ของคุณ';
 const tInfoEditcar = 'ข้อมูลใหม่รถของคุณ';
+const tRegistration = 'สร้างบัญชี';
+const tAppName = 'รถเสีย';
+const tLogin = 'เข้าสู่ระบบ';
 
 //Tracking Status
 const trackingStatus = [

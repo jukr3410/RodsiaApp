@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:rodsiaapp/constants.dart';
 
 import 'otp.dart';
 
@@ -21,7 +22,15 @@ class _AddNumberState extends State<AddNumber> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.orange.shade100,
+      appBar: AppBar(
+        backgroundColor: primaryColor,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios, color: textColorBlack),
+          onPressed: () => navigateBackToAddPhone(),
+        ),
+      ),
+      backgroundColor: primaryColor,
       resizeToAvoidBottomInset: false,
       body: Container(
         alignment: Alignment.center,
@@ -32,19 +41,19 @@ class _AddNumberState extends State<AddNumber> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image(
-                  image: AssetImage('image/logo.png'),
-                  height: 125,
+                Image.asset(
+                  'assets/launcher/ic_launcher.png',
+                  height: 200,
                 ),
                 Padding(
                   padding:
-                      const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
-                  child: Text(
-                    "RodSiaApp",
-                    style: GoogleFonts.alata(
-                        textStyle:
-                            TextStyle(color: Colors.white, fontSize: 40)),
-                  ),
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                  // child: Text(
+                  //   "RodSiaApp",
+                  //   style: GoogleFonts.alata(
+                  //       textStyle:
+                  //           TextStyle(color: Colors.white, fontSize: 40)),
+                  // ),
                 ),
                 Padding(
                   padding:
@@ -52,16 +61,16 @@ class _AddNumberState extends State<AddNumber> {
                   child: Column(
                     // crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 5, horizontal: 40),
-                        child: Text(
-                          "Mobile",
-                          style: GoogleFonts.alata(
-                              textStyle:
-                                  TextStyle(color: Colors.white, fontSize: 15)),
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.symmetric(
+                      //       vertical: 5, horizontal: 40),
+                      //   child: Text(
+                      //     tPhone,
+                      //     style: GoogleFonts.alata(
+                      //         textStyle: TextStyle(
+                      //             color: textColorBlack, fontSize: fontSizeL)),
+                      //   ),
+                      // ),
                       Form(
                         key: _form,
                         child: TextFormField(
@@ -70,40 +79,39 @@ class _AddNumberState extends State<AddNumber> {
                             textAlign: TextAlign.center,
                             style: GoogleFonts.alata(
                                 textStyle: TextStyle(
-                                    color: Colors.white, fontSize: 20)),
+                                    color: textColorBlack, fontSize: 20)),
                             inputFormatters: [
-                              MaskedInputFormatter('(###)-###-####'),
+                              MaskedInputFormatter('###-###-####'),
                             ],
                             decoration: InputDecoration(
-                              prefixIcon: Icon(Icons.phone_android),
+                              prefixIcon: Icon(
+                                Icons.phone_android,
+                                color: textColorBlack,
+                              ),
                               filled: true,
-                              fillColor: hexToColor("#F7D07A"),
+                              fillColor: Colors.white,
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
                                   borderSide: BorderSide.none),
                               hintText: 'Enter moblie number',
                               hintStyle: GoogleFonts.alata(
                                   textStyle: TextStyle(
-                                      color: Colors.white, fontSize: 20)),
+                                      color: textColorBlack, fontSize: 20)),
                             ),
                             validator: MultiValidator([
-                              RequiredValidator(
-                                  errorText: "Please, input phone number."),
-                              MinLengthValidator(14,
+                              RequiredValidator(errorText: mErrorInputPhone),
+                              MinLengthValidator(1,
                                   errorText:
                                       "Phone should be atleast 10 number."),
                             ])),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 50,
                       ),
                       TextButton(
                           onPressed: () {
                             if (_form.currentState!.validate()) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Otp()));
+                              navigateToOtp();
                             }
                           },
                           style: TextButton.styleFrom(
@@ -112,14 +120,14 @@ class _AddNumberState extends State<AddNumber> {
                             shape: StadiumBorder(),
                             padding: EdgeInsets.only(
                                 left: 137, right: 137, top: 20, bottom: 20),
-                            primary: Colors.orange.shade100,
-                            backgroundColor: Colors.white,
+                            primary: textColorBlack,
+                            backgroundColor: textColorBlack,
                             onSurface: Colors.black,
                           ),
-                          child: Text("Next",
+                          child: Text(tNext,
                               style: GoogleFonts.alata(
                                 textStyle: TextStyle(
-                                    color: hexToColor("#F7D07A"),
+                                    color: textColorWhite,
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold),
                               ))),
@@ -131,10 +139,9 @@ class _AddNumberState extends State<AddNumber> {
                             textAlign: TextAlign.center,
                             style: GoogleFonts.alata(
                               textStyle: TextStyle(
-                                color: Colors.white,
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                              ),
+                                  color: textColorBlack,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.normal),
                             )),
                       )
                     ],
@@ -146,5 +153,13 @@ class _AddNumberState extends State<AddNumber> {
         ),
       ),
     );
+  }
+
+  void navigateToOtp() {
+    Navigator.pushNamed(context, OTP_ROUTE);
+  }
+
+  void navigateBackToAddPhone() {
+    Navigator.of(context).pop();
   }
 }
