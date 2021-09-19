@@ -37,7 +37,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       logger.d('userDB: {$userDB.phone}');
 
       authenticationBloc.add(LoggedIn(userDB: userDB));
-      yield LoginInitial();
+      //yield LoginInitial();
+      yield LoginSuccess();
     } catch (error) {
       yield LoginFaliure(error: error.toString());
     }

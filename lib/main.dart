@@ -1,14 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'package:rodsiaapp/global_widgets/alertGiveScore.dart';
-import 'package:rodsiaapp/global_widgets/alertSelectCar.dart';
-
-import 'package:rodsiaapp/global_widgets/bottomNavigrationBarPage.dart';
-import 'package:rodsiaapp/profile_feature/widgets/add_car/selectCarTypePage.dart';
-import 'package:rodsiaapp/profile_feature/widgets/ProfilePage.dart';
-import 'package:rodsiaapp/request_service_feature/widgets/requestDetailAndGiveStarPage.dart';
-import 'package:rodsiaapp/request_service_feature/widgets/trackingRequestPage.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:rodsiaapp/router.dart';
 
 import 'constants.dart';
@@ -25,6 +18,7 @@ class RodSiaApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    _checkPermission();
     return MaterialApp(
       title: 'RodSia',
       debugShowCheckedModeBanner: false,
@@ -70,3 +64,22 @@ class GarageBlocObserver extends BlocObserver {
 var logger = Logger(
   printer: PrettyPrinter(),
 );
+
+Future<void> _checkPermission() async {
+  final serviceStatus = await Permission.locationWhenInUse.serviceStatus;
+  final isGpsOn = serviceStatus == ServiceStatus.enabled;
+  if (!isGpsOn) {
+    print('Turn on location services before requesting permission.');
+    return;
+  }
+
+  final status = await Permission.locationWhenInUse.request();
+  if (status == PermissionStatus.granted) {
+    print('Permission granted');
+  } else if (status == PermissionStatus.denied) {
+    print('Permission denied. Show a dialog and again ask for the permission');
+  } else if (status == PermissionStatus.permanentlyDenied) {
+    print('Take the user to the settings page.');
+    await openAppSettings();
+  }
+}

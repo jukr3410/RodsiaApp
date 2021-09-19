@@ -5,6 +5,7 @@ import 'package:flutter_multi_formatter/formatters/masked_input_formatter.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rodsiaapp/authentication/bloc/authentication_bloc.dart';
 import 'package:rodsiaapp/login_feature/bloc/login_bloc.dart';
 import 'package:rodsiaapp/register_user_feature/widgets/otp.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
@@ -47,9 +48,11 @@ class _LoginScreenState extends State<LoginScreen> {
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.CENTER,
               timeInSecForIosWeb: 1,
-              backgroundColor: Colors.red,
-              textColor: Colors.white,
+              backgroundColor: Colors.white,
+              textColor: textColorBlack,
               fontSize: 16.0);
+        } else if (state is LoginSuccess) {
+          navigateToMain();
         }
       },
       builder: (context, state) {
@@ -183,7 +186,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               //navigateToMain();
                               if (state is! LoginLoading) {
                                 _onLoginButtonPressed();
-                              } else {}
+                              } else {
+                                null;
+                              }
                             }
                           },
                           style: TextButton.styleFrom(

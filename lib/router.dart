@@ -25,6 +25,7 @@ import 'core/models/car_model.dart';
 import 'core/repository/user_repository.dart';
 import 'login_feature/bloc/login_bloc.dart';
 import 'login_feature/widgets/login.dart';
+import 'profile_feature/bloc/profile_bloc.dart';
 import 'register_user_feature/bloc/register_bloc.dart';
 import 'register_user_feature/widgets/addInfo.dart';
 import 'register_user_feature/widgets/addNumber.dart';
@@ -46,19 +47,33 @@ class AppRouter {
       case MAIN_ROUTE:
         User user = settings.arguments as User;
         return MaterialPageRoute(
-            builder: (_) => BlocProvider(
-                create: (BuildContext context) => HomeBloc(),
-                child: CustomAppBar(
-                  user: user,
-                )));
+            builder: (_) => MultiBlocProvider(
+                    providers: [
+                      BlocProvider(
+                          create: (BuildContext context) => AuthenticationBloc(
+                              userRepository: UserRepository())),
+                      BlocProvider(
+                        create: (BuildContext context) => HomeBloc(),
+                      ),
+                      BlocProvider(
+                        create: (BuildContext context) =>
+                            ProfileBloc(userRepository: UserRepository()),
+                      ),
+                    ],
+                    child: CustomAppBar(
+                      user: user,
+                    )));
 
       case LOGIN_ROUTE:
         return MaterialPageRoute(
-            builder: (_) => BlocProvider(
-                  create: (BuildContext context) => LoginBloc(
-                      userRepository: UserRepository(),
-                      authenticationBloc:
-                          AuthenticationBloc(userRepository: UserRepository())),
+            builder: (_) => MultiBlocProvider(
+                  providers: [
+                    BlocProvider<LoginBloc>(
+                        create: (BuildContext context) => LoginBloc(
+                            userRepository: UserRepository(),
+                            authenticationBloc: AuthenticationBloc(
+                                userRepository: UserRepository()))),
+                  ],
                   child: LoginScreen(),
                 ));
 
@@ -83,10 +98,18 @@ class AppRouter {
       case HOMEPAGE_ROUTE:
         User user = settings.arguments as User;
         return MaterialPageRoute(
-            builder: (_) => BlocProvider(
-                create: (BuildContext context) =>
-                    AuthenticationBloc(userRepository: UserRepository()),
-                child: BottomNavigrationBar(user: user)));
+            builder: (_) => MultiBlocProvider(providers: [
+                  BlocProvider(
+                      create: (BuildContext context) =>
+                          AuthenticationBloc(userRepository: UserRepository())),
+                  BlocProvider(
+                    create: (BuildContext context) => HomeBloc(),
+                  ),
+                  BlocProvider(
+                    create: (BuildContext context) =>
+                        ProfileBloc(userRepository: UserRepository()),
+                  ),
+                ], child: BottomNavigrationBar(user: user)));
 
       case PROFILE_ROUTE:
         User user = settings.arguments as User;

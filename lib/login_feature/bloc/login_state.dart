@@ -11,6 +11,8 @@ class LoginInitial extends LoginState {}
 
 class LoginLoading extends LoginState {}
 
+class LoginSuccess extends LoginState {}
+
 class LoginFaliure extends LoginState {
   final String error;
 
