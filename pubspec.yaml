@@ -60,6 +60,7 @@ dependencies:
   uuid: ^3.0.4
   sqflite: ^2.0.0+4
   path_provider: ^2.0.0
+  direct_select: ^2.0.0
 
 
 dev_dependencies:
