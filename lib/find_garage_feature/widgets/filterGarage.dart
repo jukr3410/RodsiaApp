@@ -109,7 +109,7 @@ class _FilterGarageState extends State<FilterGarage> {
                             ),
                             Padding(
                               padding: EdgeInsets.only(
-                                  bottom: 20, left: 20, right: 20, top: 40),
+                                  bottom: 10, left: 20, right: 20, top: 40),
                               child: Container(
                                 height: 50,
                                 width: double.infinity,
