@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/request_service_feature/bloc/garage_info_bloc.dart';
-import 'package:rodsiaapp/core/models/garage_model.dart';
-import 'package:rodsiaapp/core/models/user_model.dart';
-import 'package:rodsiaapp/request_service_feature/widgets/buttonRequestService.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/infoGarageFormSelect.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/selectServiceOfGarage.dart';
 
@@ -34,11 +31,7 @@ class _SelectServicePageState extends State<SelectServicePage> {
           // TODO: implement listener
         },
         builder: (context, state) {
-          if (state is GarageInfoInitial || state is GarageInfoLoading) {
-            return Center(
-              child: Text(mLoading),
-            );
-          } else if (state is GarageLoadSuccess) {
+          if (state is GarageLoadSuccess) {
             return Column(children: [
               InfoGarageFormSelect(garage: state.garage),
               SizedBox(
@@ -47,10 +40,6 @@ class _SelectServicePageState extends State<SelectServicePage> {
               SelectServiceOfGarage(
                 services: state.services,
               ),
-              SizedBox(
-                height: 20,
-              ),
-              ButtonRequestService()
             ]);
           }
           return Center(

@@ -134,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ),
                                 TextFormField(
                                     // maxLength: 25,
-                                    keyboardType: TextInputType.name,
+                                    keyboardType: TextInputType.text,
                                     autofocus: true,
                                     obscureText: true,
                                     textAlign: TextAlign.start,
@@ -170,7 +170,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           errorText: "Please, input password."),
                                       MinLengthValidator(8,
                                           errorText:
-                                              "Phone should be atleast 10 number."),
+                                              "Please, input password aleast 8 charector."),
                                     ])),
                                 SizedBox(
                                   height: 30,

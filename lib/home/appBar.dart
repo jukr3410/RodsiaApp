@@ -17,14 +17,11 @@ class CustomAppBar extends StatefulWidget {
 class _CustomAppBarState extends State<CustomAppBar> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-          child: TextButton(
-        child: Text('Start'),
-        onPressed: () {
-          navigateToHomePage();
-        },
-      )),
+    return SafeArea(
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        bottomNavigationBar: BottomNavigrationBar(user: widget.user),
+      ),
     );
   }
 

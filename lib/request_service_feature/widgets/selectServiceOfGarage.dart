@@ -21,11 +21,12 @@ class _SelectServiceOfGarageState extends State<SelectServiceOfGarage> {
     'รถลาก': false,
     // 'รถยก': false,
   };
+  Map<String, bool> test = {};
 
   var holder_1 = [];
 
   getItems() {
-    List.forEach((key, value) {
+    test.forEach((key, value) {
       if (value == true) {
         holder_1.add(key);
       }
@@ -41,6 +42,9 @@ class _SelectServiceOfGarageState extends State<SelectServiceOfGarage> {
 
   @override
   Widget build(BuildContext context) {
+    for (var i = 0; i <= widget.services.length - 1; i++) {
+      test[widget.services[i].toString()] = false;
+    }
     return Padding(
       padding: const EdgeInsets.only(
         left: defualtPaddingHight,
@@ -58,7 +62,7 @@ class _SelectServiceOfGarageState extends State<SelectServiceOfGarage> {
           ),
           ListView(
             shrinkWrap: true,
-            children: List.keys.map((String key) {
+            children: test.keys.map((String key) {
               return Container(
                 height: 35,
                 child: new CheckboxListTile(
@@ -89,6 +93,18 @@ class _SelectServiceOfGarageState extends State<SelectServiceOfGarage> {
               hintText:
                   'รายละเอียดเพิ่มเติม(ไม่จำเป็น) เช่น ยางรั่ว, ยางระเบิด, เบรคไม่อยู่, สตาร์ทไม่ติด',
               labelText: 'รายละเอียดเพิ่มเติม',
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            width: buttonWidthMedium,
+            height: buttonHeightMedium,
+            child: TextButton(
+              onPressed: () {},
+              style: flatButtonStyle(primaryColor, textColorBlack),
+              child: Text(tRequestServiceThai),
             ),
           )
         ],
