@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/selectServicePage.dart';
@@ -103,51 +104,6 @@ class _GarageListState extends State<GarageList> {
     );
   }
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Center(
-  //     child: BlocBuilder<GarageListBloc, GarageListState>(
-  //         builder: (context, garageState) {
-  //       if (garageState is GarageListInitialState) {
-  //         return Center(
-  //             child: Padding(
-  //           padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
-  //           child: _shimmer(),
-  //         ));
-  //       }
-  //       if (garageState is GarageListErrorState) {
-  //         return Center(
-  //             child: Padding(
-  //           padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
-  //           child: Text(mError),
-  //         ));
-  //       }
-  //       if (garageState is GarageListSuccessState) {
-  //         if (garageState.garages.isEmpty) {
-  //           return Center(
-  //             child: Text(mNoGarages),
-  //           );
-  //         }
-  //         return Scrollbar(
-  //             child: ListView.builder(
-  //                 scrollDirection: Axis.vertical,
-  //                 controller: scrollController,
-  //                 shrinkWrap: true,
-  //                 physics: BouncingScrollPhysics(),
-  //                 itemCount: garageState.hasReachedMax
-  //                     ? garageState.garages.length
-  //                     : garageState.garages.length + 1,
-  //                 itemBuilder: (BuildContext context, int index) {
-  //                   return index >= garageState.garages.length
-  //                       ? _shimmer()
-  //                       : _makeCardWidget(garageState.garages[index]);
-  //                 }));
-  //       }
-  //       return CircularProgressIndicator();
-  //     }),
-  //   );
-  // }
-
   _makeCardWidget(Garage garage, int index) {
     return GestureDetector(
       child: Card(
@@ -158,12 +114,27 @@ class _GarageListState extends State<GarageList> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              width: MediaQuery.of(context).size.width * 0.33,
-              child: Image.network(
-                'https://lh3.googleusercontent.com/proxy/HTH0IG4ZBVgbeslCOsM6m8M9fSqMQMneKTWO18A1cEIVVv94V2Kb7tODE4ZsaA9x5jPXAqqAxg0ovu-oQ7JLcIU5',
-                fit: BoxFit.cover,
-              ),
-            ),
+                width: MediaQuery.of(context).size.width * 0.33,
+                child: Image.network(
+                  'https://bestkru-thumbs.s3-ap-southeast-1.amazonaws.com/127401',
+                  fit: BoxFit.cover,
+                )
+                //     CachedNetworkImage(
+                //   imageUrl:
+                //       "https://bestkru-thumbs.s3-ap-southeast-1.amazonaws.com/127399",
+                //   imageBuilder: (context, imageProvider) => Container(
+                //     decoration: BoxDecoration(
+                //       image: DecorationImage(
+                //           image: imageProvider,
+                //           fit: BoxFit.cover,
+                //           colorFilter:
+                //               ColorFilter.mode(Colors.red, BlendMode.colorBurn)),
+                //     ),
+                //   ),
+                //   placeholder: (context, url) => CircularProgressIndicator(),
+                //   errorWidget: (context, url, error) => Icon(Icons.error),
+                // ),
+                ),
             Flexible(
                 child: Padding(
               padding:

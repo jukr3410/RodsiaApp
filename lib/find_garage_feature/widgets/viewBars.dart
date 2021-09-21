@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rodsiaapp/find_garage_feature/widgets/garageList.dart';
 import 'package:rodsiaapp/find_garage_feature/widgets/garageListDisplay.dart';
+import 'package:rodsiaapp/find_garage_feature/widgets/mapView.dart';
 import 'package:rodsiaapp/find_garage_feature/widgets/searchGaragePage.dart';
 import 'package:rodsiaapp/global_widgets/hexTocolor.dart';
 import 'package:rodsiaapp/constants.dart';
@@ -99,15 +100,7 @@ class _ViewBarsState extends State<ViewBars>
                 controller: _tabController,
                 children: [
                   // first tab bar view widget
-                  Center(
-                    child: Text(
-                      'Map view',
-                      style: TextStyle(
-                        fontSize: 25,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
+                  Scaffold(body: MapView()),
 
                   // second tab bar view widget
                   // Center(

@@ -33,15 +33,15 @@ class User {
   String? profileImage;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-        id: json["_id"],
-        name: json["name"],
-        email: json["email"],
-        phone: json["phone"],
-        password: json["password"],
-        otp: json["otp"],
-        validatePhone: json["validatePhone"],
-        cars: List<Car>.from(json["cars"].map((x) => Car.fromJson(x))),
-      );
+      id: json["_id"],
+      name: json["name"],
+      email: json["email"],
+      phone: json["phone"],
+      password: json["password"],
+      otp: json["otp"],
+      validatePhone: json["validatePhone"],
+      cars: List<Car>.from(json["cars"].map((x) => Car.fromJson(x))),
+      profileImage: json["profileImage"]);
 
   Map<String, dynamic> toJson() => {
         "_id": id,
@@ -52,5 +52,6 @@ class User {
         "otp": otp,
         "validatePhone": validatePhone,
         "cars": List<Car>.from(cars.map((x) => x.toJson())),
+        "profileImage": profileImage
       };
 }

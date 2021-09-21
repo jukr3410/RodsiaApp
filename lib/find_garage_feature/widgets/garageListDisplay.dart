@@ -8,12 +8,8 @@ class DisplayGarageList extends StatelessWidget {
   late final GarageRepository garageRepository;
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) =>
-            GarageListBloc(garagerRepository: GarageRepository())
-              ..add(GarageListFetchEvent()),
-        child: Scaffold(
-          body: GarageList(),
-        ));
+    return Scaffold(
+      body: GarageList(),
+    );
   }
 }

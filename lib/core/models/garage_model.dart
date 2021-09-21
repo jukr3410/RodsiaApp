@@ -15,6 +15,7 @@ class Garage {
     required this.address,
     this.openingHour,
     required this.images,
+    this.logoImage,
     required this.id,
     required this.name,
     required this.phone,
@@ -24,6 +25,7 @@ class Garage {
   Address address;
   OpeningHour? openingHour;
   List<String> images;
+  String? logoImage;
   String id;
   String name;
   String phone;
@@ -33,6 +35,7 @@ class Garage {
       address: Address.fromJson(json["address"]),
       openingHour: OpeningHour.fromJson(json["openingHour"]),
       images: List<String>.from(json["images"].map((x) => x)),
+      logoImage: json["logoImage"],
       id: json["_id"],
       name: json["name"],
       phone: json["phone"],
@@ -42,6 +45,7 @@ class Garage {
         "address": address.toJson(),
         "openingHour": openingHour!.toJson(),
         "images": List<dynamic>.from(images.map((x) => x)),
+        "logoImage": logoImage,
         "_id": id,
         "name": name,
         "phone": phone,

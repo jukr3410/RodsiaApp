@@ -5,6 +5,7 @@ import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/user_model.dart';
 import 'package:rodsiaapp/core/repository/garage_repository.dart';
 import 'package:rodsiaapp/core/repository/service_repository.dart';
+import 'package:rodsiaapp/find_garage_feature/widgets/garageList.dart';
 import 'package:rodsiaapp/global_widgets/bottomNavigrationBarPage.dart';
 import 'package:rodsiaapp/global_widgets/invalidRoute.dart';
 import 'package:rodsiaapp/home/app.dart';
@@ -23,6 +24,7 @@ import 'package:rodsiaapp/request_service_feature/bloc/garage_info_bloc.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/infoGarageFormSelect.dart';
 import 'core/models/car_model.dart';
 import 'core/repository/user_repository.dart';
+import 'find_garage_feature/bloc/garage_bloc.dart';
 import 'login_feature/bloc/login_bloc.dart';
 import 'login_feature/widgets/login.dart';
 import 'profile_feature/bloc/profile_bloc.dart';
@@ -109,6 +111,12 @@ class AppRouter {
                     create: (BuildContext context) =>
                         ProfileBloc(userRepository: UserRepository()),
                   ),
+                  BlocProvider(
+                    create: (context) =>
+                        GarageListBloc(garagerRepository: GarageRepository())
+                          ..add(GarageListFetchEvent()),
+                    child: GarageList(),
+                  )
                 ], child: BottomNavigrationBar(user: user)));
 
       case PROFILE_ROUTE:
