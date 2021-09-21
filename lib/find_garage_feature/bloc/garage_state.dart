@@ -31,3 +31,19 @@ class GarageListErrorState extends GarageListState {
 
   const GarageListErrorState({required this.error});
 }
+
+class MapLoading extends GarageListState {}
+
+class CurrentLocationSuccess extends GarageListState {
+  final Position position;
+
+  const CurrentLocationSuccess({required this.position});
+
+  @override
+  List<Object> get props => [position];
+
+  @override
+  String toString() => 'CurrentLocationSuccess {position: $position}';
+}
+
+class MapError extends GarageListState {}

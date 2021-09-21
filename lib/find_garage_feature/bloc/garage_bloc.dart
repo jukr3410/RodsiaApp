@@ -1,10 +1,13 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:meta/meta.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/garage_model.dart';
 import 'package:rodsiaapp/core/repository/garage_repository.dart';
+import 'package:rodsiaapp/core/services/geo_location_service.dart';
+import 'package:rodsiaapp/core/services/marker.dart';
 import 'package:rodsiaapp/main.dart';
 
 part 'garage_event.dart';
@@ -12,6 +15,8 @@ part 'garage_state.dart';
 
 class GarageListBloc extends Bloc<GarageListEvent, GarageListState> {
   final GarageRepository garagerRepository;
+  final geoService = GeoLocatorService();
+  final markerService = MarkerService();
   int page = 1;
 
   bool isFetching = false;
@@ -37,6 +42,19 @@ class GarageListBloc extends Bloc<GarageListEvent, GarageListState> {
         logger.e(e);
         yield GarageListErrorState(error: mError);
       }
+    } else if (event is GetCurrentLocation) {
+      yield* _mapGetCurrentLocationToStat();
+    }
+  }
+
+  Stream<GarageListState> _mapGetCurrentLocationToStat() async* {
+    try {
+      yield MapLoading();
+      final position = await geoService.getLocation();
+      yield CurrentLocationSuccess(position: position);
+    } catch (e) {
+      logger.e(e);
+      yield MapError();
     }
   }
 }

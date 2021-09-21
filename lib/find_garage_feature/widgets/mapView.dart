@@ -8,6 +8,8 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:rodsiaapp/constants.dart';
+import 'package:rodsiaapp/core/services/geo_location_service.dart';
+import 'package:rodsiaapp/core/services/marker.dart';
 import 'package:rodsiaapp/find_garage_feature/bloc/garage_bloc.dart';
 
 import '../../secrets.dart';
@@ -20,8 +22,12 @@ class MapView extends StatefulWidget {
 class _MapViewState extends State<MapView> {
   CameraPosition _initialLocation = CameraPosition(target: LatLng(0.0, 0.0));
   late GoogleMapController _mapController;
+  late GarageListBloc _garageListBloc;
 
-  late Position _currentPosition;
+  late Position currentPosition;
+
+  final geoService = GeoLocatorService();
+  final markerService = MarkerService();
 
   Set<Marker> markers = {};
 
@@ -33,6 +39,9 @@ class _MapViewState extends State<MapView> {
   void initState() {
     super.initState();
     _getCurrentLocation();
+    _garageListBloc = BlocProvider.of<GarageListBloc>(context)
+      ..add(GetCurrentLocation())
+      ..add(GarageListFetchEvent());
   }
 
   @override
@@ -46,20 +55,59 @@ class _MapViewState extends State<MapView> {
         key: _scaffoldKey,
         body: BlocConsumer<GarageListBloc, GarageListState>(
           listener: (context, state) {
-            // TODO: implement listener
+            if (state is CurrentLocationSuccess) {
+              currentPosition = state.position;
+            }
           },
           builder: (context, state) {
+            if (state is GarageListInitialState || state is MapLoading) {
+              return Center(
+                  child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+                child: CircularProgressIndicator(),
+              ));
+            } else if (state is MapError) {
+              return Center(
+                  child: Column(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      _garageListBloc..add(GetCurrentLocation());
+                    },
+                    icon: Icon(Icons.refresh),
+                  ),
+                  const SizedBox(height: 15),
+                  Text(mError, textAlign: TextAlign.center),
+                ],
+              ));
+            }
             return Stack(
               children: <Widget>[
                 // Map View
+                // GoogleMap(
+                //   markers: Set<Marker>.from(markers),
+                //   initialCameraPosition: _initialLocation,
+                //   myLocationEnabled: true,
+                //   myLocationButtonEnabled: false,
+                //   mapType: MapType.normal,
+                //   zoomGesturesEnabled: true,
+                //   zoomControlsEnabled: false,
+                //   onMapCreated: (GoogleMapController controller) {
+                //     _mapController = controller;
+                //   },
+                // ),
+
                 GoogleMap(
-                  markers: Set<Marker>.from(markers),
-                  initialCameraPosition: _initialLocation,
+                  initialCameraPosition: CameraPosition(
+                      target: LatLng(
+                          currentPosition.latitude, currentPosition.longitude),
+                      zoom: 16.0),
                   myLocationEnabled: true,
                   myLocationButtonEnabled: false,
                   mapType: MapType.normal,
+                  //myLocationButtonEnabled: false,
                   zoomGesturesEnabled: true,
-                  zoomControlsEnabled: false,
+                  markers: Set<Marker>.of(markers),
                   onMapCreated: (GoogleMapController controller) {
                     _mapController = controller;
                   },
@@ -225,8 +273,8 @@ class _MapViewState extends State<MapView> {
                                 CameraUpdate.newCameraPosition(
                                   CameraPosition(
                                     target: LatLng(
-                                      _currentPosition.latitude,
-                                      _currentPosition.longitude,
+                                      currentPosition.latitude,
+                                      currentPosition.longitude,
                                     ),
                                     zoom: 18.0,
                                   ),
@@ -252,8 +300,8 @@ class _MapViewState extends State<MapView> {
     await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((Position position) async {
       setState(() {
-        _currentPosition = position;
-        print('CURRENT POS: $_currentPosition');
+        currentPosition = position;
+        print('CURRENT POS: $currentPosition');
         _mapController.animateCamera(
           CameraUpdate.newCameraPosition(
             CameraPosition(

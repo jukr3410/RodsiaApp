@@ -6,6 +6,8 @@ import 'package:rodsiaapp/find_garage_feature/widgets/searchGaragePage.dart';
 import 'package:rodsiaapp/global_widgets/hexTocolor.dart';
 import 'package:rodsiaapp/constants.dart';
 
+import 'mapViewDisplay.dart';
+
 class ViewBars extends StatefulWidget {
   ViewBars({Key? key}) : super(key: key);
 
@@ -100,7 +102,7 @@ class _ViewBarsState extends State<ViewBars>
                 controller: _tabController,
                 children: [
                   // first tab bar view widget
-                  Scaffold(body: MapView()),
+                  Center(child: DisplayMapView()),
 
                   // second tab bar view widget
                   // Center(

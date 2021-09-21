@@ -45,6 +45,7 @@ class _SelectServiceOfGarageState extends State<SelectServiceOfGarage> {
     for (var i = 0; i <= widget.services.length - 1; i++) {
       test[widget.services[i].toString()] = false;
     }
+
     return Padding(
       padding: const EdgeInsets.only(
         left: defualtPaddingHight,
@@ -63,21 +64,20 @@ class _SelectServiceOfGarageState extends State<SelectServiceOfGarage> {
           ListView(
             shrinkWrap: true,
             children: test.keys.map((String key) {
-              return Container(
-                height: 35,
-                child: new CheckboxListTile(
-                  controlAffinity: ListTileControlAffinity.leading,
-                  title: new Text(key),
-                  value: List[key],
-                  activeColor: hexToColor(primaryCodeColor),
-                  checkColor: Colors.white,
-                  onChanged: (bool? value) {
-                    setState(() {
-                      List[key] = value!;
-                    });
-                  },
-                ),
-              );
+              return Container(height: 35, child: Text('service list')
+                  // new CheckboxListTile(
+                  //   controlAffinity: ListTileControlAffinity.leading,
+                  //   title: new Text(key),
+                  //   value: List[key],
+                  //   activeColor: hexToColor(primaryCodeColor),
+                  //   checkColor: Colors.white,
+                  //   onChanged: (bool? value) {
+                  //     setState(() {
+                  //       List[key] = value!;
+                  //     });
+                  //   },
+                  // ),
+                  );
             }).toList(),
           ),
           SizedBox(

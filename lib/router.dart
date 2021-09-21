@@ -6,6 +6,7 @@ import 'package:rodsiaapp/core/models/user_model.dart';
 import 'package:rodsiaapp/core/repository/garage_repository.dart';
 import 'package:rodsiaapp/core/repository/service_repository.dart';
 import 'package:rodsiaapp/find_garage_feature/widgets/garageList.dart';
+import 'package:rodsiaapp/find_garage_feature/widgets/mapView.dart';
 import 'package:rodsiaapp/global_widgets/bottomNavigrationBarPage.dart';
 import 'package:rodsiaapp/global_widgets/invalidRoute.dart';
 import 'package:rodsiaapp/home/app.dart';
@@ -111,12 +112,6 @@ class AppRouter {
                     create: (BuildContext context) =>
                         ProfileBloc(userRepository: UserRepository()),
                   ),
-                  BlocProvider(
-                    create: (context) =>
-                        GarageListBloc(garagerRepository: GarageRepository())
-                          ..add(GarageListFetchEvent()),
-                    child: GarageList(),
-                  )
                 ], child: BottomNavigrationBar(user: user)));
 
       case PROFILE_ROUTE:
@@ -166,7 +161,8 @@ class AppRouter {
                 ));
 
       case GARAGE_INFO_ROUTE:
-        String garageId = settings.arguments as String;
+        Map args = settings.arguments as Map;
+        String garageId = args['garageId'];
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                 create: (BuildContext context) => GarageInfoBloc(
