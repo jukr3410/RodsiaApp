@@ -8,10 +8,15 @@ import 'package:rodsiaapp/main.dart';
 class ServiceApi {
   final baseUrl = baseUrlConstant;
 
+  Map<String, String> headers = {
+    'Content-type': 'application/json',
+    'Accept': 'application/json'
+  };
+
   Future<List<Service>> getServiceByGarage({required String garageId}) async {
     List<Service> services = [];
     final url = '$baseUrl/garage/$garageId/services';
-    final response = await http.get(Uri.parse(url));
+    final response = await http.get(Uri.parse(url), headers: headers);
     if (response.statusCode != 200) {
       logger.e(response);
       throw new Exception('There was a problem ${response.statusCode}');
