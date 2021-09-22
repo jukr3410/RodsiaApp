@@ -22,8 +22,15 @@ import 'package:rodsiaapp/profile_feature/widgets/edit_car/editSelectCarTypePage
 import 'package:rodsiaapp/profile_feature/widgets/edit_car/editSelectMoreChoicePage.dart';
 import 'package:rodsiaapp/profile_feature/widgets/edit_car/editShowInfoNewCar.dart';
 import 'package:rodsiaapp/request_service_feature/bloc/garage_info_bloc.dart';
+import 'package:rodsiaapp/request_service_feature/bloc/request_service_bloc.dart';
+import 'package:rodsiaapp/request_service_feature/widgets/ConfirmRequestService.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/infoGarageFormSelect.dart';
+import 'package:rodsiaapp/request_service_feature/widgets/trackingRequestPage.dart';
+import 'package:rodsiaapp/request_service_feature/widgets/waitForGaragePage.dart';
 import 'core/models/car_model.dart';
+import 'core/models/request_service_model.dart';
+import 'core/models/service_model.dart';
+import 'core/repository/request_service_repository.dart';
 import 'core/repository/user_repository.dart';
 import 'find_garage_feature/bloc/garage_bloc.dart';
 import 'login_feature/bloc/login_bloc.dart';
@@ -171,6 +178,36 @@ class AppRouter {
                 child: SelectServicePage(
                   garageId: garageId,
                 )));
+
+      case CONFIRM_REQUEST_ROUTE:
+        Map args = settings.arguments as Map;
+        Service service = args['service'];
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                create: (BuildContext context) => RequestServiceBloc(
+                    requestServiceRepository: RequestServiceRepository()),
+                child: ConfirmRequestService(
+                  service: service,
+                )));
+
+      case WAITING_REQUEST_ROUTE:
+        Map args = settings.arguments as Map;
+        String requestServiceId = args['requestServiceId'] as String;
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                create: (BuildContext context) => RequestServiceBloc(
+                    requestServiceRepository: RequestServiceRepository()),
+                child: WaitForGaragePage(requestServiceId: requestServiceId)));
+
+      case TRACKING_REQUEST_ROUTE:
+        Map args = settings.arguments as Map;
+        String requestServiceId = args['requestServiceId'] as String;
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                create: (BuildContext context) => RequestServiceBloc(
+                    requestServiceRepository: RequestServiceRepository()),
+                child:
+                    TrackingRequestPage(requestServiceId: requestServiceId)));
 
       default:
         return MaterialPageRoute(builder: (_) => InvalidRouteScreen());

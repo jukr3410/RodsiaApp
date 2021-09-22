@@ -8,10 +8,30 @@ abstract class RequestServiceEvent extends Equatable {
 }
 
 class CreateRequestService extends RequestServiceEvent {
-  final RequestService requestService;
+  final RequestServiceAdd requestServiceAdd;
 
-  const CreateRequestService(this.requestService);
+  const CreateRequestService({required this.requestServiceAdd});
 
   @override
-  String toString() => 'GarageLoadInfo {garageId: $requestService}';
+  String toString() =>
+      'CreateRequestService {requestService: $requestServiceAdd}';
+}
+
+class CancelRequestService extends RequestServiceEvent {
+  final String requestServiceId;
+
+  const CancelRequestService({required this.requestServiceId});
+
+  @override
+  String toString() =>
+      'CancelRequestService {requestService: $requestServiceId}';
+}
+
+class LoadRequestService extends RequestServiceEvent {
+  final String requestServiceId;
+
+  const LoadRequestService({required this.requestServiceId});
+
+  @override
+  String toString() => 'LoadRequestService {requestService: $requestServiceId}';
 }

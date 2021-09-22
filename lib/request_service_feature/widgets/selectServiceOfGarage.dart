@@ -102,7 +102,9 @@ class _SelectServiceOfGarageState extends State<SelectServiceOfGarage> {
             width: buttonWidthMedium,
             height: buttonHeightMedium,
             child: TextButton(
-              onPressed: () {},
+              onPressed: () {
+                navigateToConfirmRequest();
+              },
               style: flatButtonStyle(primaryColor, textColorBlack),
               child: Text(tRequestServiceThai),
             ),
@@ -110,5 +112,10 @@ class _SelectServiceOfGarageState extends State<SelectServiceOfGarage> {
         ],
       ),
     );
+  }
+
+  navigateToConfirmRequest() {
+    Navigator.pushNamed(context, CONFIRM_REQUEST_ROUTE,
+        arguments: {'garage': null});
   }
 }

@@ -5,7 +5,9 @@ import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/trackingRequestCard.dart';
 
 class TrackingRequestPage extends StatefulWidget {
-  TrackingRequestPage({Key? key}) : super(key: key);
+  String requestServiceId;
+  TrackingRequestPage({Key? key, required this.requestServiceId})
+      : super(key: key);
 
   @override
   _TrackingRequestPageState createState() => _TrackingRequestPageState();

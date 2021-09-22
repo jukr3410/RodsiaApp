@@ -23,7 +23,6 @@ const EDIT_SERVICE_ROUTE = "/edit_service";
 const HISTORY_ROUTE = "/history";
 const HISTORY_INFO_ROUTE = "/history_info";
 const MAIN_ROUTE = "/app";
-const TRACKING_REQUEST_ROUTE = "/app";
 const HOMEPAGE_ROUTE = "/homepage";
 const PROFILE_ROUTE = "/profile";
 const ADDCAR_CARTYPE_ROUTE = "/addcar_cartype";
@@ -32,6 +31,9 @@ const ADDCAR_SHOWINFO_NEWCAR_ROUTE = "/addcar_showinfo";
 const DELETECAR_ROUTE = "/delete_car";
 const EDITCAR_ROUTE = "/edit_car";
 const GARAGE_INFO_ROUTE = "/garage_info";
+const CONFIRM_REQUEST_ROUTE = "/confirm_request";
+const WAITING_REQUEST_ROUTE = "/waiting_request";
+const TRACKING_REQUEST_ROUTE = "/tracking_request";
 const EDITCAR_CARTYPE_ROUTE = "/edit_car";
 const EDITCAR_MORECHOICE_ROUTE = "/edit_morechoice";
 const EDITCAR_SHOWINFO_ROUTE = "/edit_showinfo";
@@ -125,11 +127,11 @@ const defualtPaddingHight = 30.0;
 const defualtPaddingLow = 10.0;
 
 // message, wording
-const mError = "Service unvalidable, please try agian.";
-const mNoGarages = "no garages";
-const mNoMoreGarages = "no more garages";
-const mLoading = "loading";
-const mNotFound = "not found!";
+const mError = "บริการขัดข้อง โปรดลองอีกครั้ง";
+const mNoGarages = "ไม่พบร้านให้บริการ";
+const mNoMoreGarages = "สิ้นสุดรายการ";
+const mLoading = "กำลังโหลด";
+const mNotFound = "ไม่พบ";
 const mErrorInputPhone = 'โืปดระบุเบอร์โทรศัพท์';
 
 // src string for set widget
@@ -148,9 +150,10 @@ const tConfirmSuccessThai = 'ยืนยันเสร็จสิ้นกา
 const tServiceOfGarageThai = 'บริการของร้าน';
 const tCallbackForMoreInfo = 'ติดต่อกลับเพื่อสอบถามรายละเอียด';
 const tYouWantCancleThai = 'ท่านต้องการยกเลิกหรือไม่';
-const tWaitForGarageThai = 'กำลังรออู่ติดต่อกลับเพื่อสอบถามรายละเอียดเพิ่มเติม';
+const tWaitForGarageThai = 'ยืนยันคำขอ รอตอบรับ';
 const tAlertRequestService = 'มีคนต้องการความช่วยเหลือ!';
 const tRequestServiceThai = 'ขอบริการตอนนี้';
+const tConfirm = 'ยืนยัน';
 const tDeclineThai = 'ปฏิเสธิ';
 const tAddressThai = 'ที่อยู่: ';
 const tUpdateThai = 'อัพเดต';
