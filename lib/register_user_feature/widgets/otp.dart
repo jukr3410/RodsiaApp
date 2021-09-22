@@ -73,130 +73,145 @@ class _OtpState extends State<Otp> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: primaryColor,
-        elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: textColorBlack),
-          onPressed: () => navigateBackToAddPhone(),
+    return Container(
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+            Colors.yellow.shade800,
+            Colors.yellow.shade400,
+            Colors.yellow.shade50
+          ])),
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: textColorBlack,
         ),
-      ),
-      backgroundColor: primaryColor,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/launcher/ic_launcher.png',
-              height: 200,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-              // child: Text(
-              //   "RodSiaApp",
-              //   style: GoogleFonts.alata(
-              //       textStyle: TextStyle(color: Colors.white, fontSize: 40)),
-              // ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 30),
-              child: Column(
-                children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
-                    child: Text(
-                      "ระบุ OTP",
-                      style: GoogleFonts.alata(
-                          textStyle: TextStyle(
-                              color: textColorBlack, fontSize: fontSizeL)),
-                    ),
+        backgroundColor: Colors.transparent,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    borderRadius: borderRadiusHight, boxShadow: [boxShadow]),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(25),
+                  child: Image.asset(
+                    'assets/launcher/ic_launcher.png',
+                    height: 200,
                   ),
-                  TextFieldPin(
-                    filled: true,
-                    filledColor: textColorWhite,
-                    codeLength: _otpCodeLength,
-                    boxSize: 60,
-                    filledAfterTextChange: true,
-                    textStyle: TextStyle(fontSize: 35, color: Colors.white),
-                    borderStyeAfterTextChange: UnderlineInputBorder(
-                        borderRadius: BorderRadius.circular(10)),
-                    borderStyle: OutlineInputBorder(
-                        borderSide: BorderSide.none,
-                        borderRadius: BorderRadius.circular(10)),
-                    onOtpCallback: (code, isAutofill) =>
-                        _onOtpCallBack(code, isAutofill),
-                  ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  // onOtpCallback: (code, isAutofill) =>
-                  //     _onOtpCallBack(code, isAutofill),
-                  TextButton(
-                      onPressed: () {
-                        // if (_form.currentState.validate()) {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => RegisterUser()));
-                        // }
-                        navigateToAddInfo();
-                      },
-                      style: TextButton.styleFrom(
-                        elevation: 2,
-                        shadowColor: Colors.black,
-                        shape: StadiumBorder(),
-                        padding: EdgeInsets.only(
-                            left: 137, right: 137, top: 20, bottom: 20),
-                        primary: Colors.orange.shade100,
-                        backgroundColor: textColorBlack,
-                        onSurface: Colors.black,
-                      ),
-                      child: Text(tNext,
-                          style: GoogleFonts.alata(
-                              textStyle: TextStyle(
-                                  color: textColorWhite,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold)))),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Text("ส่งอีกครั้ง",
-                      style: GoogleFonts.alata(
-                          textStyle: TextStyle(
-                        color: textColorBlack,
-                        fontSize: fontSizeL,
-                        shadows: [
-                          Shadow(
-                            blurRadius: 15.0,
-                            color: Colors.blueGrey,
-                            offset: Offset(2.0, 2.0),
-                          ),
-                        ],
-                        fontWeight: FontWeight.normal,
-                      ))),
-                  // SizedBox(
-                  //   height: 40,
-                  // ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 30, horizontal: 40),
-                    child: Text(
-                        "By continuing, you agree to RodSiaApp’s Terms of Use and confirm that you have read our Privacy Policy",
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.alata(
-                          textStyle: TextStyle(
-                            color: textColorBlack,
-                            fontSize: 12,
-                            fontWeight: FontWeight.normal,
-                          ),
-                        )),
-                  )
-                ],
+                ),
               ),
-            )
-          ],
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+                // child: Text(
+                //   "RodSiaApp",
+                //   style: GoogleFonts.alata(
+                //       textStyle: TextStyle(color: Colors.white, fontSize: 40)),
+                // ),
+              ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 0, horizontal: 30),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 0),
+                      child: Text(
+                        "ระบุ OTP",
+                        style: GoogleFonts.alata(
+                            textStyle: TextStyle(
+                                color: textColorBlack, fontSize: fontSizeL)),
+                      ),
+                    ),
+                    TextFieldPin(
+                      filled: true,
+                      filledColor: textColorWhite,
+                      codeLength: _otpCodeLength,
+                      boxSize: 60,
+                      filledAfterTextChange: true,
+                      textStyle: TextStyle(fontSize: 35, color: Colors.white),
+                      borderStyeAfterTextChange: UnderlineInputBorder(
+                          borderRadius: BorderRadius.circular(10)),
+                      borderStyle: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          borderRadius: BorderRadius.circular(10)),
+                      onOtpCallback: (code, isAutofill) =>
+                          _onOtpCallBack(code, isAutofill),
+                    ),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    // onOtpCallback: (code, isAutofill) =>
+                    //     _onOtpCallBack(code, isAutofill),
+                    TextButton(
+                        onPressed: () {
+                          // if (_form.currentState.validate()) {
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) => RegisterUser()));
+                          // }
+                          navigateToAddInfo();
+                        },
+                        style: TextButton.styleFrom(
+                          elevation: 2,
+                          shadowColor: Colors.black,
+                          shape: StadiumBorder(),
+                          padding: EdgeInsets.only(
+                              left: 137, right: 137, top: 20, bottom: 20),
+                          primary: Colors.orange.shade100,
+                          backgroundColor: textColorBlack,
+                          onSurface: Colors.black,
+                        ),
+                        child: Text(tNext,
+                            style: GoogleFonts.alata(
+                                textStyle: TextStyle(
+                                    color: textColorWhite,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold)))),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text("ส่งอีกครั้ง",
+                        style: GoogleFonts.alata(
+                            textStyle: TextStyle(
+                          color: textColorBlack,
+                          fontSize: fontSizeL,
+                          shadows: [
+                            Shadow(
+                              blurRadius: 15.0,
+                              color: Colors.blueGrey,
+                              offset: Offset(2.0, 2.0),
+                            ),
+                          ],
+                          fontWeight: FontWeight.normal,
+                        ))),
+                    // SizedBox(
+                    //   height: 40,
+                    // ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 30, horizontal: 40),
+                      child: Text(
+                          "By continuing, you agree to RodSiaApp’s Terms of Use and confirm that you have read our Privacy Policy",
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.alata(
+                            textStyle: TextStyle(
+                              color: textColorBlack,
+                              fontSize: 12,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          )),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
