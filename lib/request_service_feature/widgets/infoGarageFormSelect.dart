@@ -17,7 +17,7 @@ class _InfoGarageFormSelectState extends State<InfoGarageFormSelect> {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        Image(image: AssetImage('image/image-garage-mockup.png')),
+        // Image(image: AssetImage('image/image-garage-mockup.png')),
         Container(
           margin: EdgeInsets.only(
             top: 120,
@@ -45,9 +45,9 @@ class _InfoGarageFormSelectState extends State<InfoGarageFormSelect> {
                 Row(
                   children: [
                     Text('Rating: '),
-                    Image(
-                      image: AssetImage('image/icon-star.png'),
-                    ),
+                    // Image(
+                    //   image: AssetImage('image/icon-star.png'),
+                    // ),
                     SizedBox(
                       width: 5,
                     ),

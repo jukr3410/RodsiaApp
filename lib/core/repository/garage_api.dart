@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/garage_model.dart';
+import 'package:rodsiaapp/main.dart';
 
 class GarageApi {
   final baseUrl = baseUrlConstant;
@@ -42,13 +43,14 @@ class GarageApi {
   }
 
   Future<Garage> getGarageInfo({required String id}) async {
-    final url = '$baseUrl/garage-id/$id';
+    final url = '$baseUrl/garages-id/$id';
     final response = await http.get(Uri.parse(url));
     if (response.statusCode != 200) {
       throw new Exception('There was a problem ${response.statusCode}');
     }
     final decodedJson = jsonDecode(response.body);
-    Garage garage = decodedJson;
+    logger.d(decodedJson);
+    Garage garage = Garage.fromJson(decodedJson);
 
     return garage;
   }

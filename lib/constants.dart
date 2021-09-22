@@ -57,6 +57,10 @@ const bgColorRed = Color(0xffDA5B49);
 const bgCodeColor = '#F2F4F6';
 const primaryCodeColor = '#FECE2F';
 
+const iconColorBlack = Color(0xff38454C);
+const iconColorWhite = Colors.white;
+const iconColorRed = Color(0xffDA5B49);
+
 const cardColor = Colors.white;
 
 // color status
@@ -146,7 +150,7 @@ const tCallbackForMoreInfo = 'ติดต่อกลับเพื่อส�
 const tYouWantCancleThai = 'ท่านต้องการยกเลิกหรือไม่';
 const tWaitForGarageThai = 'กำลังรออู่ติดต่อกลับเพื่อสอบถามรายละเอียดเพิ่มเติม';
 const tAlertRequestService = 'มีคนต้องการความช่วยเหลือ!';
-const tRequestServiceThai = 'รับให้บริการเลย';
+const tRequestServiceThai = 'ขอบริการตอนนี้';
 const tDeclineThai = 'ปฏิเสธิ';
 const tAddressThai = 'ที่อยู่: ';
 const tUpdateThai = 'อัพเดต';

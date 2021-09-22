@@ -8,7 +8,11 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:rodsiaapp/constants.dart';
+import 'package:rodsiaapp/core/models/garage_model.dart';
+import 'package:rodsiaapp/core/services/geo_location_service.dart';
+import 'package:rodsiaapp/core/services/marker.dart';
 import 'package:rodsiaapp/find_garage_feature/bloc/garage_bloc.dart';
+import 'package:rodsiaapp/main.dart';
 
 import '../../secrets.dart';
 
@@ -20,19 +24,40 @@ class MapView extends StatefulWidget {
 class _MapViewState extends State<MapView> {
   CameraPosition _initialLocation = CameraPosition(target: LatLng(0.0, 0.0));
   late GoogleMapController _mapController;
+  late GarageListBloc _garageListBloc;
 
-  late Position _currentPosition;
+  late Position currentPosition;
 
-  Set<Marker> markers = {};
+  final geoService = GeoLocatorService();
+  final markerService = MarkerService();
 
-  List<LatLng> polylineCoordinates = [];
+  final List<Garage> _garages = [];
+  List<Marker> markers = <Marker>[];
 
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  BitmapDescriptor? customIcon1;
+
+  Garage? _garage;
 
   @override
   void initState() {
     super.initState();
-    _getCurrentLocation();
+    _garageListBloc = BlocProvider.of<GarageListBloc>(context)
+      ..add(GetCurrentLocation())
+      ..add(GarageListFetchEvent());
+  }
+
+  createMarker(context) {
+    if (customIcon1 == null) {
+      ImageConfiguration configuration = createLocalImageConfiguration(context);
+
+      BitmapDescriptor.fromAssetImage(
+              configuration, 'assets/images/car-repair.png')
+          .then((icon) {
+        setState(() {
+          customIcon1 = icon;
+        });
+      });
+    }
   }
 
   @override
@@ -42,24 +67,66 @@ class _MapViewState extends State<MapView> {
     return Container(
       height: height,
       width: width,
-      child: Scaffold(
-        key: _scaffoldKey,
-        body: BlocConsumer<GarageListBloc, GarageListState>(
-          listener: (context, state) {
-            // TODO: implement listener
-          },
-          builder: (context, state) {
+      child: BlocConsumer<GarageListBloc, GarageListState>(
+        listener: (context, state) {
+          if (state is CurrentLocationSuccess) {
+            currentPosition = state.position;
+          }
+        },
+        builder: (context, state) {
+          if (state is GarageListInitialState ||
+              state is GarageListLoadingState ||
+              state is MapLoading) {
+            createMarker(context);
+            return Center(
+                child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+              child: CircularProgressIndicator(),
+            ));
+          } else if (state is MapError) {
+            return Center(
+                child: Column(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    _garageListBloc..add(GetCurrentLocation());
+                  },
+                  icon: Icon(Icons.refresh),
+                ),
+                const SizedBox(height: 15),
+                Text(mError, textAlign: TextAlign.center),
+              ],
+            ));
+          } else if (state is GarageListSuccessState) {
+            _garages.addAll(state.garages);
+            markers = getMarkers(_garages, customIcon1!);
             return Stack(
               children: <Widget>[
                 // Map View
+                // GoogleMap(
+                //   markers: Set<Marker>.from(markers),
+                //   initialCameraPosition: _initialLocation,
+                //   myLocationEnabled: true,
+                //   myLocationButtonEnabled: false,
+                //   mapType: MapType.normal,
+                //   zoomGesturesEnabled: true,
+                //   zoomControlsEnabled: false,
+                //   onMapCreated: (GoogleMapController controller) {
+                //     _mapController = controller;
+                //   },
+                // ),
+
                 GoogleMap(
-                  markers: Set<Marker>.from(markers),
-                  initialCameraPosition: _initialLocation,
+                  initialCameraPosition: CameraPosition(
+                      target: LatLng(
+                          currentPosition.latitude, currentPosition.longitude),
+                      zoom: 14.0),
                   myLocationEnabled: true,
                   myLocationButtonEnabled: false,
                   mapType: MapType.normal,
+                  //myLocationButtonEnabled: false,
                   zoomGesturesEnabled: true,
-                  zoomControlsEnabled: false,
+                  markers: Set<Marker>.of(markers),
                   onMapCreated: (GoogleMapController controller) {
                     _mapController = controller;
                   },
@@ -115,6 +182,7 @@ class _MapViewState extends State<MapView> {
                   ),
                 )),
                 // Show more Info
+
                 SafeArea(
                   child: Align(
                     alignment: Alignment.topCenter,
@@ -157,13 +225,17 @@ class _MapViewState extends State<MapView> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              "ร้าน ซ่อม คอม",
+                                              _garage != null
+                                                  ? _garage!.name
+                                                  : "",
                                               style: TextStyle(
                                                   fontSize: fontSizeXl,
                                                   color: textColorBlack),
                                             ),
                                             Text(
-                                              "123/456 ถนนสวะประยุทธ์ แขวงประวิตร เขตเหี้ยป้อม กรุงเทพมหานคร 10150",
+                                              _garage != null
+                                                  ? _garage!.phone
+                                                  : "",
                                               maxLines: 2,
                                               softWrap: true,
                                               style: TextStyle(
@@ -179,7 +251,11 @@ class _MapViewState extends State<MapView> {
                                 Container(
                                   height: 40,
                                   child: TextButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      if (_garage != null) {
+                                        navigateToGarageInfo(_garage!.id);
+                                      } else {}
+                                    },
                                     child: Text(
                                       "รายละเอียดเพิ่มเติม",
                                       style: TextStyle(
@@ -225,10 +301,10 @@ class _MapViewState extends State<MapView> {
                                 CameraUpdate.newCameraPosition(
                                   CameraPosition(
                                     target: LatLng(
-                                      _currentPosition.latitude,
-                                      _currentPosition.longitude,
+                                      currentPosition.latitude,
+                                      currentPosition.longitude,
                                     ),
-                                    zoom: 18.0,
+                                    zoom: 14.0,
                                   ),
                                 ),
                               );
@@ -241,30 +317,64 @@ class _MapViewState extends State<MapView> {
                 ),
               ],
             );
-          },
-        ),
+          }
+          return Center(
+              child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+            child: CircularProgressIndicator(),
+          ));
+        },
       ),
     );
   }
 
-  // Method for retrieving the current location
-  _getCurrentLocation() async {
-    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
-        .then((Position position) async {
-      setState(() {
-        _currentPosition = position;
-        print('CURRENT POS: $_currentPosition');
-        _mapController.animateCamera(
-          CameraUpdate.newCameraPosition(
-            CameraPosition(
-              target: LatLng(position.latitude, position.longitude),
-              zoom: 18.0,
-            ),
-          ),
-        );
-      });
-    }).catchError((e) {
-      print(e);
+  List<Marker> getMarkers(List<Garage> garages, BitmapDescriptor icon) {
+    var markers = <Marker>[];
+
+    garages.forEach((garage) {
+      logger.d(
+          "garage: ${garage.id}, lat: ${garage.address.geoLocation.lat}, long: ${garage.address.geoLocation.long}");
+      Marker marker = Marker(
+          markerId: MarkerId(garage.name),
+          draggable: false,
+          icon: icon,
+          infoWindow: InfoWindow(title: garage.name),
+          onTap: () {
+            _garage = garage;
+            logger.d("Marker Tap garageId: ${_garage!.id}");
+          },
+          position: LatLng(double.parse(garage.address.geoLocation.lat),
+              double.parse(garage.address.geoLocation.long)));
+
+      markers.add(marker);
     });
+
+    return markers;
   }
+
+  void navigateToGarageInfo(String garageId) {
+    Navigator.pushNamed(context, GARAGE_INFO_ROUTE,
+        arguments: {'garageId': garageId});
+  }
+
+  // Method for retrieving the current location
+  // _getCurrentLocation() async {
+  //   await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+  //       .then((Position position) async {
+  //     setState(() {
+  //       currentPosition = position;
+  //       print('CURRENT POS: $currentPosition');
+  //       _mapController.animateCamera(
+  //         CameraUpdate.newCameraPosition(
+  //           CameraPosition(
+  //             target: LatLng(position.latitude, position.longitude),
+  //             zoom: 16.0,
+  //           ),
+  //         ),
+  //       );
+  //     });
+  //   }).catchError((e) {
+  //     print(e);
+  //   });
+  // }
 }

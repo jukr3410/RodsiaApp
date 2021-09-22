@@ -10,3 +10,5 @@ abstract class GarageListEvent {
 class GarageListFetchEvent extends GarageListEvent {
   const GarageListFetchEvent();
 }
+
+class GetCurrentLocation extends GarageListEvent {}

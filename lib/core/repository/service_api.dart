@@ -17,6 +17,7 @@ class ServiceApi {
       throw new Exception('There was a problem ${response.statusCode}');
     }
     final decodedJson = jsonDecode(response.body) as List;
+    logger.d("services: $decodedJson");
     services = decodedJson
         .map((decodedJson) => Service.fromJson(decodedJson))
         .toList();

@@ -26,6 +26,7 @@ class _SelectServicePageState extends State<SelectServicePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: setAppBar(),
       body: BlocConsumer<GarageInfoBloc, GarageInfoState>(
         listener: (context, state) {
           // TODO: implement listener
@@ -33,20 +34,57 @@ class _SelectServicePageState extends State<SelectServicePage> {
         builder: (context, state) {
           if (state is GarageLoadSuccess) {
             return Column(children: [
-              InfoGarageFormSelect(garage: state.garage),
+              Flexible(
+                flex: 1,
+                child: InfoGarageFormSelect(garage: state.garage),
+              ),
               SizedBox(
                 height: 30,
               ),
-              SelectServiceOfGarage(
-                services: state.services,
-              ),
+              Flexible(
+                flex: 1,
+                child: SelectServiceOfGarage(
+                  services: state.services,
+                ),
+              )
             ]);
           }
           return Center(
-            child: Text(mLoading),
+            child: CircularProgressIndicator(),
           );
         },
       ),
     );
+  }
+
+  setAppBar() {
+    return AppBar(
+      backgroundColor: primaryColor,
+      centerTitle: true,
+      // title: Text(
+      //   tAddService,
+      //   style: TextStyle(color: textColorBlack, fontSize: fontSizeSemiLarge),
+      // ),
+      leading: IconButton(
+        icon: Icon(
+          Icons.arrow_back,
+          color: iconColorBlack,
+        ),
+        onPressed: () {
+          navigateToGarageList();
+        },
+      ),
+      actions: [
+        // IconButton(
+        //   icon: Icon(Icons.add, color: iconColorBlack),
+        //   onPressed: () {},
+        //   iconSize: 30.0,
+        // ),
+      ],
+    );
+  }
+
+  navigateToGarageList() {
+    Navigator.pop(context);
   }
 }
