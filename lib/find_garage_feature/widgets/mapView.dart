@@ -12,6 +12,7 @@ import 'package:rodsiaapp/core/models/garage_model.dart';
 import 'package:rodsiaapp/core/services/geo_location_service.dart';
 import 'package:rodsiaapp/core/services/marker.dart';
 import 'package:rodsiaapp/find_garage_feature/bloc/garage_bloc.dart';
+import 'package:rodsiaapp/main.dart';
 
 import '../../secrets.dart';
 
@@ -35,7 +36,7 @@ class _MapViewState extends State<MapView> {
 
   BitmapDescriptor? customIcon1;
 
-  Garage? garage;
+  Garage? _garage;
 
   @override
   void initState() {
@@ -98,7 +99,7 @@ class _MapViewState extends State<MapView> {
             ));
           } else if (state is GarageListSuccessState) {
             _garages.addAll(state.garages);
-            markers = markerService.getMarkers(_garages, customIcon1!);
+            markers = getMarkers(_garages, customIcon1!);
             return Stack(
               children: <Widget>[
                 // Map View
@@ -181,6 +182,7 @@ class _MapViewState extends State<MapView> {
                   ),
                 )),
                 // Show more Info
+
                 SafeArea(
                   child: Align(
                     alignment: Alignment.topCenter,
@@ -223,13 +225,17 @@ class _MapViewState extends State<MapView> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              "ร้าน ซ่อม คอม",
+                                              _garage != null
+                                                  ? _garage!.name
+                                                  : "",
                                               style: TextStyle(
                                                   fontSize: fontSizeXl,
                                                   color: textColorBlack),
                                             ),
                                             Text(
-                                              "123/456 ถนนสวะประยุทธ์ แขวงประวิตร เขตเหี้ยป้อม กรุงเทพมหานคร 10150",
+                                              _garage != null
+                                                  ? _garage!.phone
+                                                  : "",
                                               maxLines: 2,
                                               softWrap: true,
                                               style: TextStyle(
@@ -246,7 +252,9 @@ class _MapViewState extends State<MapView> {
                                   height: 40,
                                   child: TextButton(
                                     onPressed: () {
-                                      //navigateToGarageInfo(garageId);
+                                      if (_garage != null) {
+                                        navigateToGarageInfo(_garage!.id);
+                                      } else {}
                                     },
                                     child: Text(
                                       "รายละเอียดเพิ่มเติม",
@@ -318,6 +326,30 @@ class _MapViewState extends State<MapView> {
         },
       ),
     );
+  }
+
+  List<Marker> getMarkers(List<Garage> garages, BitmapDescriptor icon) {
+    var markers = <Marker>[];
+
+    garages.forEach((garage) {
+      logger.d(
+          "garage: ${garage.id}, lat: ${garage.address.geoLocation.lat}, long: ${garage.address.geoLocation.long}");
+      Marker marker = Marker(
+          markerId: MarkerId(garage.name),
+          draggable: false,
+          icon: icon,
+          infoWindow: InfoWindow(title: garage.name),
+          onTap: () {
+            _garage = garage;
+            logger.d("Marker Tap garageId: ${_garage!.id}");
+          },
+          position: LatLng(double.parse(garage.address.geoLocation.lat),
+              double.parse(garage.address.geoLocation.long)));
+
+      markers.add(marker);
+    });
+
+    return markers;
   }
 
   void navigateToGarageInfo(String garageId) {
