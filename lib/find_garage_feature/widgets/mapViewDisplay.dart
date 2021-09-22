@@ -11,8 +11,7 @@ class DisplayMapView extends StatelessWidget {
     return Scaffold(
       body: BlocProvider(
         create: (context) =>
-            GarageListBloc(garagerRepository: GarageRepository())
-              ..add(GarageListFetchEvent()),
+            GarageListBloc(garagerRepository: GarageRepository()),
         child: MapView(),
       ),
     );

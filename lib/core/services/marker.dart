@@ -4,35 +4,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:rodsiaapp/core/models/garage_model.dart';
+import 'package:rodsiaapp/main.dart';
 
 class MarkerService {
-  Future<List<Marker>> getMarkers(List<Garage> garages) async {
+  List<Marker> getMarkers(List<Garage> garages, BitmapDescriptor icon) {
     var markers = <Marker>[];
-    final Uint8List markerIcon =
-        await getBytesFromAsset('assets/images/car-repair.png', 100);
 
     garages.forEach((garage) {
+      logger.d(
+          "garage: ${garage.id}, lat: ${garage.address.geoLocation.lat}, long: ${garage.address.geoLocation.long}");
       Marker marker = Marker(
           markerId: MarkerId(garage.name),
           draggable: false,
-          icon: BitmapDescriptor.fromBytes(markerIcon),
-          infoWindow: InfoWindow(title: garage.name, snippet: garage.phone),
-          position: LatLng(double.parse('garage.address.geoLocation.lat'),
-              double.parse('garage.address.geoLocation.long')));
+          icon: icon,
+          infoWindow: InfoWindow(title: garage.name),
+          onTap: () {
+            logger.d("Tab location: ${garage.id}");
+          },
+          position: LatLng(double.parse(garage.address.geoLocation.lat),
+              double.parse(garage.address.geoLocation.long)));
 
       markers.add(marker);
     });
 
     return markers;
-  }
-
-  Future<Uint8List> getBytesFromAsset(String path, int width) async {
-    ByteData data = await rootBundle.load(path);
-    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
-        targetWidth: width);
-    ui.FrameInfo fi = await codec.getNextFrame();
-    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
-        .buffer
-        .asUint8List();
   }
 }

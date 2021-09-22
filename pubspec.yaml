@@ -128,6 +128,8 @@ flutter:
     - assets/images/icon-car-null.png
     - assets/images/icon-more-navbar.png
     - assets/launcher/ic_launcher.png
+    - assets/images/car-repair.png
+
     
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

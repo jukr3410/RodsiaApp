@@ -8,6 +8,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:rodsiaapp/constants.dart';
+import 'package:rodsiaapp/core/models/garage_model.dart';
 import 'package:rodsiaapp/core/services/geo_location_service.dart';
 import 'package:rodsiaapp/core/services/marker.dart';
 import 'package:rodsiaapp/find_garage_feature/bloc/garage_bloc.dart';
@@ -29,19 +30,33 @@ class _MapViewState extends State<MapView> {
   final geoService = GeoLocatorService();
   final markerService = MarkerService();
 
-  Set<Marker> markers = {};
+  final List<Garage> _garages = [];
+  List<Marker> markers = <Marker>[];
 
-  List<LatLng> polylineCoordinates = [];
+  BitmapDescriptor? customIcon1;
 
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  Garage? garage;
 
   @override
   void initState() {
     super.initState();
-    _getCurrentLocation();
     _garageListBloc = BlocProvider.of<GarageListBloc>(context)
       ..add(GetCurrentLocation())
       ..add(GarageListFetchEvent());
+  }
+
+  createMarker(context) {
+    if (customIcon1 == null) {
+      ImageConfiguration configuration = createLocalImageConfiguration(context);
+
+      BitmapDescriptor.fromAssetImage(
+              configuration, 'assets/images/car-repair.png')
+          .then((icon) {
+        setState(() {
+          customIcon1 = icon;
+        });
+      });
+    }
   }
 
   @override
@@ -51,36 +66,39 @@ class _MapViewState extends State<MapView> {
     return Container(
       height: height,
       width: width,
-      child: Scaffold(
-        key: _scaffoldKey,
-        body: BlocConsumer<GarageListBloc, GarageListState>(
-          listener: (context, state) {
-            if (state is CurrentLocationSuccess) {
-              currentPosition = state.position;
-            }
-          },
-          builder: (context, state) {
-            if (state is GarageListInitialState || state is MapLoading) {
-              return Center(
-                  child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-                child: CircularProgressIndicator(),
-              ));
-            } else if (state is MapError) {
-              return Center(
-                  child: Column(
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      _garageListBloc..add(GetCurrentLocation());
-                    },
-                    icon: Icon(Icons.refresh),
-                  ),
-                  const SizedBox(height: 15),
-                  Text(mError, textAlign: TextAlign.center),
-                ],
-              ));
-            }
+      child: BlocConsumer<GarageListBloc, GarageListState>(
+        listener: (context, state) {
+          if (state is CurrentLocationSuccess) {
+            currentPosition = state.position;
+          }
+        },
+        builder: (context, state) {
+          if (state is GarageListInitialState ||
+              state is GarageListLoadingState ||
+              state is MapLoading) {
+            createMarker(context);
+            return Center(
+                child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+              child: CircularProgressIndicator(),
+            ));
+          } else if (state is MapError) {
+            return Center(
+                child: Column(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    _garageListBloc..add(GetCurrentLocation());
+                  },
+                  icon: Icon(Icons.refresh),
+                ),
+                const SizedBox(height: 15),
+                Text(mError, textAlign: TextAlign.center),
+              ],
+            ));
+          } else if (state is GarageListSuccessState) {
+            _garages.addAll(state.garages);
+            markers = markerService.getMarkers(_garages, customIcon1!);
             return Stack(
               children: <Widget>[
                 // Map View
@@ -101,7 +119,7 @@ class _MapViewState extends State<MapView> {
                   initialCameraPosition: CameraPosition(
                       target: LatLng(
                           currentPosition.latitude, currentPosition.longitude),
-                      zoom: 16.0),
+                      zoom: 14.0),
                   myLocationEnabled: true,
                   myLocationButtonEnabled: false,
                   mapType: MapType.normal,
@@ -227,7 +245,9 @@ class _MapViewState extends State<MapView> {
                                 Container(
                                   height: 40,
                                   child: TextButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      //navigateToGarageInfo(garageId);
+                                    },
                                     child: Text(
                                       "รายละเอียดเพิ่มเติม",
                                       style: TextStyle(
@@ -276,7 +296,7 @@ class _MapViewState extends State<MapView> {
                                       currentPosition.latitude,
                                       currentPosition.longitude,
                                     ),
-                                    zoom: 18.0,
+                                    zoom: 14.0,
                                   ),
                                 ),
                               );
@@ -289,30 +309,40 @@ class _MapViewState extends State<MapView> {
                 ),
               ],
             );
-          },
-        ),
+          }
+          return Center(
+              child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+            child: CircularProgressIndicator(),
+          ));
+        },
       ),
     );
   }
 
-  // Method for retrieving the current location
-  _getCurrentLocation() async {
-    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
-        .then((Position position) async {
-      setState(() {
-        currentPosition = position;
-        print('CURRENT POS: $currentPosition');
-        _mapController.animateCamera(
-          CameraUpdate.newCameraPosition(
-            CameraPosition(
-              target: LatLng(position.latitude, position.longitude),
-              zoom: 18.0,
-            ),
-          ),
-        );
-      });
-    }).catchError((e) {
-      print(e);
-    });
+  void navigateToGarageInfo(String garageId) {
+    Navigator.pushNamed(context, GARAGE_INFO_ROUTE,
+        arguments: {'garageId': garageId});
   }
+
+  // Method for retrieving the current location
+  // _getCurrentLocation() async {
+  //   await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+  //       .then((Position position) async {
+  //     setState(() {
+  //       currentPosition = position;
+  //       print('CURRENT POS: $currentPosition');
+  //       _mapController.animateCamera(
+  //         CameraUpdate.newCameraPosition(
+  //           CameraPosition(
+  //             target: LatLng(position.latitude, position.longitude),
+  //             zoom: 16.0,
+  //           ),
+  //         ),
+  //       );
+  //     });
+  //   }).catchError((e) {
+  //     print(e);
+  //   });
+  // }
 }
