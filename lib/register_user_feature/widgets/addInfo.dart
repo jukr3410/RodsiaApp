@@ -77,7 +77,7 @@ class _AddInfoState extends State<AddInfo> {
                                   ),
 
                                   border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(30),
+                                      borderRadius: borderRadiusMedium,
                                       borderSide: BorderSide.none),
                                   hintText: "ชื่อ",
                                   hintStyle: GoogleFonts.alata(
@@ -113,7 +113,7 @@ class _AddInfoState extends State<AddInfo> {
                                   fillColor: Colors.white,
                                   alignLabelWithHint: true,
                                   border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(30),
+                                      borderRadius: borderRadiusMedium,
                                       borderSide: BorderSide.none),
                                   hintText: tEmail,
                                   hintStyle: GoogleFonts.alata(
@@ -152,7 +152,7 @@ class _AddInfoState extends State<AddInfo> {
                                   fillColor: Colors.white,
                                   alignLabelWithHint: true,
                                   border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(30),
+                                      borderRadius: borderRadiusMedium,
                                       borderSide: BorderSide.none),
                                   hintText: tPassword,
                                   hintStyle: GoogleFonts.alata(
