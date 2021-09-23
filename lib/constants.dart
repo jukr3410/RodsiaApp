@@ -38,6 +38,8 @@ const REQUEST_COMPLETE_ROUTE = "/complete_request";
 const EDITCAR_CARTYPE_ROUTE = "/edit_car";
 const EDITCAR_MORECHOICE_ROUTE = "/edit_morechoice";
 const EDITCAR_SHOWINFO_ROUTE = "/edit_showinfo";
+const SHOWINFO_BEFOREREQ_ROUTE = '/showinfo_befor_request';
+
 // font size
 const fontSizeXl = 18.0;
 const fontSizeL = 16.0;
@@ -178,6 +180,7 @@ const tSearch = 'ค้นหา';
 const tNameGarageThai = "ชื่ออู๋:";
 const tNameUserThai = "ชื่อลูกค้า:";
 const tLocationThai = 'ตำแหน่ง:';
+const tLocationCurrent = 'ตำแหน่งปัจจุบัน';
 const tProblemThai = 'ปัญหา:';
 const tPlearInputInfo = 'คุณเพิ่มข้อมูลไม่ครบ!';
 const tEstimateDuration = 'ระยะเวลาประมาณ:';
@@ -198,6 +201,7 @@ const tInfoEditcar = 'ข้อมูลใหม่รถของคุณ';
 const tRegistration = 'สร้างบัญชี';
 const tAppName = 'รถเสีย';
 const tLogin = 'เข้าสู่ระบบ';
+const tRecapOrder = 'สรุปรายการ';
 
 //Tracking Status
 const trackingStatus = [

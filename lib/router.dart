@@ -16,7 +16,6 @@ import 'package:rodsiaapp/home/bloc/home_bloc.dart';
 import 'package:rodsiaapp/profile_feature/widgets/ProfilePage.dart';
 import 'package:rodsiaapp/profile_feature/widgets/add_car/selectMoreChoice.dart';
 import 'package:rodsiaapp/profile_feature/widgets/add_car/selectCarTypePage.dart';
-import 'package:rodsiaapp/profile_feature/widgets/add_car/selectFuelTypePage.dart';
 import 'package:rodsiaapp/profile_feature/widgets/add_car/showInfoNewCar.dart';
 import 'package:rodsiaapp/profile_feature/widgets/edit_car/editCarModel.dart';
 import 'package:rodsiaapp/profile_feature/widgets/edit_car/editSelectCarTypePage.dart';
@@ -27,6 +26,7 @@ import 'package:rodsiaapp/request_service_feature/bloc/request_service_bloc.dart
 import 'package:rodsiaapp/request_service_feature/widgets/ConfirmRequestService.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/infoGarageFormSelect.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/requestDetailAndGiveStarPage.dart';
+import 'package:rodsiaapp/request_service_feature/widgets/selectCarAndRecapBeforeReq.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/trackingRequestPage.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/waitForGaragePage.dart';
 import 'core/models/car_model.dart';
@@ -222,6 +222,8 @@ class AppRouter {
                   requestServiceId: requestServiceId,
                 )));
 
+      case SHOWINFO_BEFOREREQ_ROUTE:
+        return MaterialPageRoute(builder: (_) => SelectCarAndRecapBeforeReq());
       default:
         return MaterialPageRoute(builder: (_) => InvalidRouteScreen());
     }

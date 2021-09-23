@@ -6,6 +6,7 @@ import 'package:rodsiaapp/core/models/user_model.dart';
 import 'package:rodsiaapp/global_widgets/alertPleaseInputInfo.dart';
 import 'package:rodsiaapp/profile_feature/widgets/add_car/selectMoreChoice.dart';
 import 'package:rodsiaapp/profile_feature/widgets/add_car/showInfoNewCar.dart';
+import 'package:rodsiaapp/profile_feature/widgets/showInfoCarCard.dart';
 
 class SelectCarTypePage extends StatefulWidget {
   final User user;
@@ -54,7 +55,7 @@ class _SelectCarTypePageState extends State<SelectCarTypePage> {
             flex: 6,
             child: Column(
               children: [
-                _showInfoNewCar(),
+                ShowInfoCarCard(car: newCar),
               ],
             ),
           ),
@@ -119,96 +120,6 @@ class _SelectCarTypePageState extends State<SelectCarTypePage> {
 
   void navigatorToNextSelect() {
     Navigator.pushNamed(context, ADDCAR_MORECHOICE_ROUTE, arguments: newCar);
-  }
-
-// show info new car
-  Widget _showInfoNewCar() {
-    return Padding(
-      padding: const EdgeInsets.all(defualtPaddingMedium),
-      child: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          borderRadius: borderRadiusMedium,
-          boxShadow: [boxShadow],
-          color: bgColor,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                top: defualtPaddingLow,
-                left: defualtPaddingMedium,
-              ),
-              child: _infoTextOfBrandNewCar(tBrand, newCar.brand),
-            ),
-            Image.asset(
-              tImageAsset(newCar.type),
-              width: 180,
-            ),
-            Container(
-              decoration: BoxDecoration(
-                  borderRadius: borderRadiusMediumOnlyBottom,
-                  color: primaryColor),
-              width: double.infinity,
-              child: Padding(
-                padding: const EdgeInsets.only(
-                    left: defualtPaddingMedium,
-                    top: defualtPaddingLow,
-                    bottom: defualtPaddingLow),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Row(
-                      children: [
-                        _infoTextOfNewCar(tModel, newCar.model),
-                        _infoTextOfNewCar('', newCar.year),
-                      ],
-                    ),
-                    _infoTextOfNewCar(tFuelType, newCar.fuelType),
-                  ],
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _infoTextOfBrandNewCar(String title, String info) {
-    return Row(
-      children: [
-        Text(
-          title,
-          style: TextStyle(fontSize: fontSizeXl),
-        ),
-        SizedBox(
-          width: 2,
-        ),
-        Text(
-          info,
-          style: TextStyle(fontSize: fontSizeXl),
-        )
-      ],
-    );
-  }
-
-  Widget _infoTextOfNewCar(String title, String info) {
-    return Row(
-      children: [
-        Text(
-          title,
-        ),
-        SizedBox(
-          width: 2,
-        ),
-        Text(
-          info,
-        )
-      ],
-    );
   }
 
 // selec tVehicle Type

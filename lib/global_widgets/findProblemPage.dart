@@ -18,7 +18,12 @@ class _FindProblemPageState extends State<FindProblemPage> {
               onPressed: () {
                 Navigator.pushNamed(context, GARAGE_INFO_ROUTE);
               },
-              child: Text('InfoGarageFomeSelect'))
+              child: Text('InfoGarageFomeSelect')),
+          TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, SHOWINFO_BEFOREREQ_ROUTE);
+              },
+              child: Text('SelectCarAndRecapBeforeReq'))
         ],
       ),
     );

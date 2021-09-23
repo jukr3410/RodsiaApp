@@ -106,7 +106,7 @@ class _SelectServiceOfGarageState extends State<SelectServiceOfGarage> {
                 navigateToConfirmRequest();
               },
               style: flatButtonStyle(primaryColor, textColorBlack),
-              child: Text(tRequestServiceThai),
+              child: Text(tNext),
             ),
           )
         ],

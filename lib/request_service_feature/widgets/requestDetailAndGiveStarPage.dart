@@ -165,20 +165,30 @@ class _DetailAndGiveStarPageState extends State<DetailAndGiveStarPage> {
                       ),
                     )),
                 SizedBox(height: 20),
-                Container(
-                  height: buttonHeightSmall + 5,
-                  width: buttonWidthLarge,
-                  child: TextButton(
-                    onPressed: () {},
-                    child: Text(tSend),
-                    style: flatButtonStyle(primaryColor, textColorBlack),
+                Expanded(
+                  child: Align(
+                    alignment: FractionalOffset.bottomCenter,
+                    child: Column(
+                      children: [
+                        Container(
+                          height: buttonHeightSmall + 5,
+                          width: buttonWidthLarge,
+                          child: TextButton(
+                            onPressed: () {},
+                            child: Text(tSend),
+                            style:
+                                flatButtonStyle(primaryColor, textColorBlack),
+                          ),
+                        ),
+                        GFButton(
+                          onPressed: () {},
+                          child: Text(tBackToHomePage),
+                          color: textColorBlack,
+                          type: GFButtonType.transparent,
+                        )
+                      ],
+                    ),
                   ),
-                ),
-                GFButton(
-                  onPressed: () {},
-                  child: Text(tBackToHomePage),
-                  color: textColorBlack,
-                  type: GFButtonType.transparent,
                 )
               ],
             ),

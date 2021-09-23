@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:getwidget/components/dropdown/gf_dropdown.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/car_model.dart';
-import 'package:rodsiaapp/core/models/user_model.dart';
 import 'package:rodsiaapp/global_widgets/alertPleaseInputInfo.dart';
+import 'package:rodsiaapp/profile_feature/widgets/showInfoCarCard.dart';
 
 class SelectMoreChoice extends StatefulWidget {
   Car car;
@@ -14,11 +14,6 @@ class SelectMoreChoice extends StatefulWidget {
 }
 
 class _SelectMoreChoiceState extends State<SelectMoreChoice> {
-  String brand = tSelectBrandCar;
-  String model = tSelectModelCar;
-  String yearModel = '';
-  String fuelType = tSelectFeulTypeCar;
-
   String? valueBrand;
   String? valueModel;
   String? valueYear;
@@ -68,7 +63,9 @@ class _SelectMoreChoiceState extends State<SelectMoreChoice> {
             flex: 5,
             child: Column(
               children: [
-                _showInfoNewCar(),
+                ShowInfoCarCard(
+                  car: widget.car,
+                ),
               ],
             ),
           ),
@@ -102,13 +99,13 @@ class _SelectMoreChoiceState extends State<SelectMoreChoice> {
       ),
       child: TextButton(
           onPressed: () {
-            if (widget.car.brand == brand ||
-                widget.car.model == model ||
-                widget.car.year == yearModel ||
-                widget.car.fuelType == fuelType) {
+            if (widget.car.brand == tSelectBrandCar ||
+                widget.car.model == tSelectModelCar ||
+                widget.car.year == '' ||
+                widget.car.fuelType == tSelectFeulTypeCar) {
               return _showDialog(context);
             } else {
-              navigatorToSelectFuelType();
+              navigatorToSelectMoreChoice();
               print(widget.car.toJson());
             }
           },
@@ -128,7 +125,7 @@ class _SelectMoreChoiceState extends State<SelectMoreChoice> {
     );
   }
 
-  void navigatorToSelectFuelType() {
+  void navigatorToSelectMoreChoice() {
     Navigator.pushNamed(context, ADDCAR_SHOWINFO_NEWCAR_ROUTE,
         arguments: widget.car);
   }
@@ -139,96 +136,6 @@ class _SelectMoreChoiceState extends State<SelectMoreChoice> {
       builder: (BuildContext context) {
         return AlertPleaseInputInfo();
       },
-    );
-  }
-
-// show info new car
-  Widget _showInfoNewCar() {
-    return Padding(
-      padding: const EdgeInsets.all(defualtPaddingMedium),
-      child: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          borderRadius: borderRadiusMedium,
-          boxShadow: [boxShadow],
-          color: bgColor,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                top: defualtPaddingLow,
-                left: defualtPaddingMedium,
-              ),
-              child: _infoTextOfBrandNewCar(tBrand, widget.car.brand),
-            ),
-            Image.asset(
-              tImageAsset(widget.car.type),
-              width: 180,
-            ),
-            Container(
-              decoration: BoxDecoration(
-                  borderRadius: borderRadiusMediumOnlyBottom,
-                  color: primaryColor),
-              width: double.infinity,
-              child: Padding(
-                padding: const EdgeInsets.only(
-                    left: defualtPaddingMedium,
-                    top: defualtPaddingLow,
-                    bottom: defualtPaddingLow),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Row(
-                      children: [
-                        _infoTextOfNewCar(tModel, widget.car.model),
-                        _infoTextOfNewCar('', widget.car.year),
-                      ],
-                    ),
-                    _infoTextOfNewCar(tFuelType, widget.car.fuelType),
-                  ],
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _infoTextOfBrandNewCar(String title, String info) {
-    return Row(
-      children: [
-        Text(
-          title,
-          style: TextStyle(fontSize: fontSizeXl),
-        ),
-        SizedBox(
-          width: 2,
-        ),
-        Text(
-          info,
-          style: TextStyle(fontSize: fontSizeXl),
-        )
-      ],
-    );
-  }
-
-  Widget _infoTextOfNewCar(String title, String info) {
-    return Row(
-      children: [
-        Text(
-          title,
-        ),
-        SizedBox(
-          width: 2,
-        ),
-        Text(
-          info,
-        )
-      ],
     );
   }
 

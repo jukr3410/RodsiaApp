@@ -26,6 +26,7 @@ class _SelectServicePageState extends State<SelectServicePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: setAppBar(),
       body: BlocConsumer<GarageInfoBloc, GarageInfoState>(
         listener: (context, state) {
