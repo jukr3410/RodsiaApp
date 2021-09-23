@@ -49,9 +49,9 @@ class GarageApi {
       throw new Exception('There was a problem ${response.statusCode}');
     }
     final decodedJson = jsonDecode(response.body);
-    logger.d(decodedJson);
-    Garage garage = Garage.fromJson(decodedJson);
 
+    Garage garage = Garage.fromJson(decodedJson);
+    logger.d(garage);
     return garage;
   }
 }

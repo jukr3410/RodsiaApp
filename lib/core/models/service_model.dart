@@ -17,14 +17,14 @@ class Service {
     required this.name,
     this.description,
     required this.serviceType,
-    required this.garage,
+    this.garage,
   });
 
   String id;
   String name;
   String? description;
   ServiceType serviceType;
-  Garage garage;
+  Garage? garage;
 
   factory Service.fromJson(Map<String, dynamic> json) => Service(
         id: json["_id"],
@@ -39,6 +39,6 @@ class Service {
         "name": name,
         "description": description,
         "serviceType": serviceType.id,
-        "garage": garage.id,
+        "garage": garage!.id,
       };
 }

@@ -33,7 +33,7 @@ class _CardWaitForGarageState extends State<CardWaitForGarage> {
                 children: [
                   Text(
                     tWaitForGarageThai,
-                    style: TextStyle(fontSize: 12),
+                    style: TextStyle(fontSize: fontSizeM),
                   ),
                   SizedBox(
                     height: defualtPaddingMedium,

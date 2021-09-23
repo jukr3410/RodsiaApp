@@ -1,4 +1,5 @@
 import 'package:rodsiaapp/core/models/geo_location_model.dart';
+import 'package:rodsiaapp/core/models/request_service_add_model.dart';
 import 'package:rodsiaapp/core/models/request_service_model.dart';
 
 import 'request_service_api.dart';
@@ -14,13 +15,13 @@ class RequestServiceRepository {
     return _requestServiceRepository;
   }
 
-  Future<RequestService> getRequestService({required String id}) async {
+  Future<RequestServiceAdd> getRequestService({required String id}) async {
     return await requestServiceApi.getRequestService(id: id);
   }
 
-  Future<bool> createRequestService(
-      {required RequestService requestService}) async {
+  Future<String> createRequestService(
+      {required RequestServiceAdd requestServiceAdd}) async {
     return await requestServiceApi.createRequestService(
-        requestService: requestService);
+        requestServiceAdd: requestServiceAdd);
   }
 }
