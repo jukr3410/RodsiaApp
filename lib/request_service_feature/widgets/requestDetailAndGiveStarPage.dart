@@ -6,7 +6,9 @@ import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/global_widgets/hexTocolor.dart';
 
 class DetailAndGiveStarPage extends StatefulWidget {
-  DetailAndGiveStarPage({Key? key}) : super(key: key);
+  String requestServiceId;
+  DetailAndGiveStarPage({Key? key, required this.requestServiceId})
+      : super(key: key);
 
   @override
   _DetailAndGiveStarPageState createState() => _DetailAndGiveStarPageState();

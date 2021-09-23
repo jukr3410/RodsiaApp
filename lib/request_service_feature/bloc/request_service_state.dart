@@ -12,16 +12,16 @@ class RequestServiceInitial extends RequestServiceState {}
 class RequestServiceLoading extends RequestServiceState {}
 
 class RequestServiceLoadSuccess extends RequestServiceState {
-  final RequestServiceAdd requestService;
+  final RequestServiceAdd requestServiceAdd;
 
-  const RequestServiceLoadSuccess({required this.requestService});
+  const RequestServiceLoadSuccess({required this.requestServiceAdd});
 
   @override
-  List<Object> get props => [requestService];
+  List<Object> get props => [requestServiceAdd];
 
   @override
   String toString() =>
-      'RequestServiceLoadSuccess { requestService: ${requestService} }';
+      'RequestServiceLoadSuccess { requestService: ${requestServiceAdd} }';
 }
 
 class RequestServiceError extends RequestServiceState {}
@@ -46,3 +46,7 @@ class CreateRequestServiceError extends RequestServiceState {}
 class RequestServiceWaiting extends RequestServiceState {}
 
 class RequestServiceGarageConfirmed extends RequestServiceState {}
+
+class RequestServiceInService extends RequestServiceState {}
+
+class RequestServiceComleted extends RequestServiceState {}

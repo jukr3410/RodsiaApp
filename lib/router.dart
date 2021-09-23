@@ -25,6 +25,7 @@ import 'package:rodsiaapp/request_service_feature/bloc/garage_info_bloc.dart';
 import 'package:rodsiaapp/request_service_feature/bloc/request_service_bloc.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/ConfirmRequestService.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/infoGarageFormSelect.dart';
+import 'package:rodsiaapp/request_service_feature/widgets/requestDetailAndGiveStarPage.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/trackingRequestPage.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/waitForGaragePage.dart';
 import 'core/models/car_model.dart';
@@ -208,6 +209,17 @@ class AppRouter {
                     requestServiceRepository: RequestServiceRepository()),
                 child:
                     TrackingRequestPage(requestServiceId: requestServiceId)));
+
+      case REQUEST_COMPLETE_ROUTE:
+        Map args = settings.arguments as Map;
+        String requestServiceId = args['requestServiceId'] as String;
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                create: (BuildContext context) => RequestServiceBloc(
+                    requestServiceRepository: RequestServiceRepository()),
+                child: DetailAndGiveStarPage(
+                  requestServiceId: requestServiceId,
+                )));
 
       default:
         return MaterialPageRoute(builder: (_) => InvalidRouteScreen());

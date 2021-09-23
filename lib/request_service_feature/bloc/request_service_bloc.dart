@@ -21,6 +21,9 @@ class RequestServiceBloc
   RequestServiceBloc({required this.requestServiceRepository})
       : super(RequestServiceInitial());
 
+  bool _isNotConfirmed = true;
+  bool _isNotCompleted = true;
+
   @override
   Stream<RequestServiceState> mapEventToState(
     RequestServiceEvent event,
@@ -29,6 +32,8 @@ class RequestServiceBloc
       yield* _mapCreateRequestServiceToState(event);
     } else if (event is LoadRequestService) {
       yield* _mapLoadRequestServiceToState(event);
+    } else if (event is TrackingRequestService) {
+      yield* _mapTrackingServiceToState(event);
     } else if (event is RequestServiceInitial) {
       yield RequestServiceInitial();
     }
@@ -52,17 +57,41 @@ class RequestServiceBloc
       LoadRequestService event) async* {
     try {
       yield RequestServiceLoading();
-      while (true) {
+      while (_isNotConfirmed) {
         await Future.delayed(Duration(milliseconds: 500));
         final requestService = await this
             .requestServiceRepository
             .getRequestService(id: event.requestServiceId);
         logger.d("GarageConfirm: ${requestService.confirmRequest}");
-        yield RequestServiceLoadSuccess(requestService: requestService);
+        yield RequestServiceLoadSuccess(requestServiceAdd: requestService);
         if (requestService.confirmRequest == false) {
           yield RequestServiceWaiting();
         } else {
+          _isNotConfirmed = false;
           yield RequestServiceGarageConfirmed();
+        }
+      }
+    } catch (e) {
+      yield RequestServiceError();
+    }
+  }
+
+  Stream<RequestServiceState> _mapTrackingServiceToState(
+      TrackingRequestService event) async* {
+    try {
+      yield RequestServiceLoading();
+      while (_isNotCompleted) {
+        await Future.delayed(Duration(milliseconds: 1000));
+        final requestService = await this
+            .requestServiceRepository
+            .getRequestService(id: event.requestServiceId);
+        logger.d("GarageConfirm: ${requestService.confirmRequest}");
+        yield RequestServiceLoadSuccess(requestServiceAdd: requestService);
+        if (requestService.status != "เสร็จสิ้น") {
+          yield RequestServiceInService();
+        } else {
+          _isNotConfirmed = false;
+          yield RequestServiceComleted();
         }
       }
     } catch (e) {

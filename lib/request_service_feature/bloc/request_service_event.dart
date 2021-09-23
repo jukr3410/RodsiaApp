@@ -35,3 +35,12 @@ class LoadRequestService extends RequestServiceEvent {
   @override
   String toString() => 'LoadRequestService {requestService: $requestServiceId}';
 }
+
+class TrackingRequestService extends RequestServiceEvent {
+  final String requestServiceId;
+
+  const TrackingRequestService({required this.requestServiceId});
+
+  @override
+  String toString() => 'LoadRequestService {requestService: $requestServiceId}';
+}

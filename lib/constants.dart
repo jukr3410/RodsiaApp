@@ -34,6 +34,7 @@ const GARAGE_INFO_ROUTE = "/garage_info";
 const CONFIRM_REQUEST_ROUTE = "/confirm_request";
 const WAITING_REQUEST_ROUTE = "/waiting_request";
 const TRACKING_REQUEST_ROUTE = "/tracking_request";
+const REQUEST_COMPLETE_ROUTE = "/complete_request";
 const EDITCAR_CARTYPE_ROUTE = "/edit_car";
 const EDITCAR_MORECHOICE_ROUTE = "/edit_morechoice";
 const EDITCAR_SHOWINFO_ROUTE = "/edit_showinfo";

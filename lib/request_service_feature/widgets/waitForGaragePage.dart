@@ -37,6 +37,7 @@ class _WaitForGaragePageState extends State<WaitForGaragePage> {
         if (state is RequestServiceGarageConfirmed) {
           showTopSnackBar(
               context, CustomSnackBar.success(message: "ร้านกดยืนยันแล้ว"));
+          navigateToTrackingRequest(widget.requestServiceId);
         }
       },
       builder: (context, state) {
