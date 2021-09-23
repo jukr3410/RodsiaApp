@@ -35,7 +35,6 @@ const GARAGE_INFO_ROUTE = "/garage_info";
 const EDITCAR_CARTYPE_ROUTE = "/edit_car";
 const EDITCAR_MORECHOICE_ROUTE = "/edit_morechoice";
 const EDITCAR_SHOWINFO_ROUTE = "/edit_showinfo";
-
 // font size
 const fontSizeXl = 18.0;
 const fontSizeL = 16.0;
@@ -273,4 +272,20 @@ final yearModelCar = [
   '2016',
   '2017',
   '2018'
+];
+List<String> serviceType = [
+  'fuel',
+  'battery',
+  'break',
+  'tire',
+  'rickshaw',
+  'engine-oil'
+];
+List<String> serviceTypeName = [
+  'น้ำมัน',
+  'แบตเตอรี่',
+  'เบรค',
+  'ยางรถ',
+  'รถลาก',
+  'น้ำมันเครื่อง'
 ];

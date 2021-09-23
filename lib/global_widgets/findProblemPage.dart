@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rodsiaapp/constants.dart';
 
 class FindProblemPage extends StatefulWidget {
   FindProblemPage({Key? key}) : super(key: key);
@@ -10,8 +11,16 @@ class FindProblemPage extends StatefulWidget {
 class _FindProblemPageState extends State<FindProblemPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-       child: null,
+    return Center(
+      child: Column(
+        children: [
+          TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, GARAGE_INFO_ROUTE);
+              },
+              child: Text('InfoGarageFomeSelect'))
+        ],
+      ),
     );
   }
 }

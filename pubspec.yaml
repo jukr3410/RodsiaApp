@@ -129,6 +129,12 @@ flutter:
     - assets/images/icon-more-navbar.png
     - assets/launcher/ic_launcher.png
     - assets/images/car-repair.png
+    - assets/images/icon-break.png
+    - assets/images/icon-fuel.png
+    - assets/images/icon-engine-oil.png
+    - assets/images/icon-rickshaw.png
+    - assets/images/icon-tire.png
+    - assets/images/icon-battery.png
 
     
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -61,7 +61,13 @@ class _SelectCarTypePageState extends State<SelectCarTypePage> {
           Flexible(
             flex: 5,
             child: Column(
-              children: [_selectVehicleType(), _buttonNext()],
+              children: [
+                _selectVehicleType(),
+                SizedBox(
+                  height: 10,
+                ),
+                _buttonNext()
+              ],
             ),
           )
         ],
@@ -213,7 +219,7 @@ class _SelectCarTypePageState extends State<SelectCarTypePage> {
         children: [
           Text(tSelectVehicleTypeCar, style: styleTitleInfo),
           SizedBox(
-            height: 10,
+            height: 20,
           ),
           _buttonIconType()
         ],
@@ -236,14 +242,22 @@ class _SelectCarTypePageState extends State<SelectCarTypePage> {
     return Column(
       children: [
         FlatButton(
-          child: Column(
-            children: [
-              Image.asset(
-                tImageAsset(vehicleType[typeCar].toString()),
-                width: 50,
-              ),
-              Text(vehicleType[typeCar].toString())
-            ],
+          color: newCar.type == vehicleType[typeCar]
+              ? primaryColor
+              : Colors.transparent,
+          shape: new RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(defualtPaddingLow)),
+          child: Padding(
+            padding: const EdgeInsets.all(5),
+            child: Column(
+              children: [
+                Image.asset(
+                  tImageAsset(vehicleType[typeCar].toString()),
+                  width: 50,
+                ),
+                Text(vehicleType[typeCar].toString())
+              ],
+            ),
           ),
           onPressed: () {
             setStateCarType(typeCar);

@@ -56,204 +56,222 @@ class _LoginScreenState extends State<LoginScreen> {
         }
       },
       builder: (context, state) {
-        return Scaffold(
-          backgroundColor: primaryColor,
-          resizeToAvoidBottomInset: false,
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'assets/launcher/ic_launcher.png',
-                  height: 200,
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
-                  // child: Text(
-                  //   tRegistration,
-                  //   style: GoogleFonts.alata(
-                  //       textStyle: TextStyle(color: textColorBlack, fontSize: 30)),
-                  // ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 0, horizontal: 30),
-                  child: Column(
-                    // crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Column(
-                        children: [
-                          Form(
-                            key: _form,
-                            child: Column(
-                              children: [
-                                TextFormField(
-                                    // maxLength: 25,
-                                    keyboardType: TextInputType.number,
-                                    autofocus: true,
-                                    textAlign: TextAlign.start,
-                                    style: GoogleFonts.alata(
-                                        textStyle: TextStyle(
-                                            color: textColorBlack,
-                                            fontSize: fontSizeXl)),
-                                    inputFormatters: [
-                                      MaskedInputFormatter('###-###-####')
-                                    ],
-                                    decoration: InputDecoration(
-                                      // icon: Icon(Icons.phone_android),
-                                      filled: true,
-                                      fillColor: Colors.white,
-                                      alignLabelWithHint: true,
-                                      prefixIcon: Icon(
-                                        Icons.phone_android,
-                                        color: textColorBlack,
-                                      ),
+        return Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                Colors.yellow.shade800,
+                Colors.yellow.shade400,
+                Colors.yellow.shade50
+              ])),
+          child: Scaffold(
+            backgroundColor: Colors.transparent,
+            resizeToAvoidBottomInset: false,
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: borderRadiusHight,
+                        boxShadow: [boxShadow]),
+                    child: ClipRRect(
+                      borderRadius: borderRadiusMedium,
+                      child: Image.asset(
+                        'assets/launcher/ic_launcher.png',
+                        height: 200,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 30, horizontal: 30),
+                    // child: Text(
+                    //   tRegistration,
+                    //   style: GoogleFonts.alata(
+                    //       textStyle: TextStyle(color: textColorBlack, fontSize: 30)),
+                    // ),
+                  ),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 0, horizontal: 30),
+                    child: Column(
+                      // crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          children: [
+                            Form(
+                              key: _form,
+                              child: Column(
+                                children: [
+                                  TextFormField(
+                                      // maxLength: 25,
+                                      keyboardType: TextInputType.number,
+                                      autofocus: true,
+                                      textAlign: TextAlign.start,
+                                      style: GoogleFonts.alata(
+                                          textStyle: TextStyle(
+                                              color: textColorBlack,
+                                              fontSize: fontSizeXl)),
+                                      inputFormatters: [
+                                        MaskedInputFormatter('###-###-####')
+                                      ],
+                                      decoration: InputDecoration(
+                                        // icon: Icon(Icons.phone_android),
+                                        filled: true,
+                                        fillColor: Colors.white,
+                                        alignLabelWithHint: true,
+                                        prefixIcon: Icon(
+                                          Icons.phone_android,
+                                          color: textColorBlack,
+                                        ),
 
-                                      border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                          borderSide: BorderSide.none),
-                                      hintText: tPhone,
-                                      hintStyle: GoogleFonts.alata(
-                                          textStyle: TextStyle(
-                                              color: textColorBlack,
-                                              fontSize: 15)),
-                                    ),
-                                    controller: phoneController,
-                                    validator: MultiValidator([
-                                      RequiredValidator(
-                                          errorText:
-                                              "Please, input phone number."),
-                                      MinLengthValidator(10,
-                                          errorText:
-                                              "Phone should be atleast 10 number."),
-                                    ])),
-                                SizedBox(
-                                  height: 20,
-                                ),
-                                TextFormField(
-                                    // maxLength: 25,
-                                    keyboardType: TextInputType.text,
-                                    autofocus: true,
-                                    obscureText: true,
-                                    textAlign: TextAlign.start,
-                                    style: GoogleFonts.alata(
-                                        textStyle: TextStyle(
-                                            color: textColorBlack,
-                                            fontSize: fontSizeXl)),
-                                    inputFormatters: [
-                                      //MaskedInputFormatter('(###)-###-####')
-                                    ],
-                                    decoration: InputDecoration(
-                                      // icon: Icon(Icons.phone_android),
-                                      filled: true,
-                                      prefixIcon: Icon(
-                                        Icons.security_rounded,
-                                        color: textColorBlack,
+                                        border: OutlineInputBorder(
+                                            borderRadius: borderRadiusMedium,
+                                            borderSide: BorderSide.none),
+                                        hintText: tPhone,
+                                        hintStyle: GoogleFonts.alata(
+                                            textStyle: TextStyle(
+                                                color: textColorBlack,
+                                                fontSize: 15)),
                                       ),
-                                      fillColor: Colors.white,
-                                      alignLabelWithHint: true,
-                                      border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                          borderSide: BorderSide.none),
-                                      hintText: tPassword,
-                                      hintStyle: GoogleFonts.alata(
+                                      controller: phoneController,
+                                      validator: MultiValidator([
+                                        RequiredValidator(
+                                            errorText:
+                                                "Please, input phone number."),
+                                        MinLengthValidator(10,
+                                            errorText:
+                                                "Phone should be atleast 10 number."),
+                                      ])),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  TextFormField(
+                                      // maxLength: 25,
+                                      keyboardType: TextInputType.text,
+                                      autofocus: true,
+                                      obscureText: true,
+                                      textAlign: TextAlign.start,
+                                      style: GoogleFonts.alata(
                                           textStyle: TextStyle(
                                               color: textColorBlack,
-                                              fontSize: 15)),
-                                    ),
-                                    controller: passwordController,
-                                    validator: MultiValidator([
-                                      RequiredValidator(
-                                          errorText: "Please, input password."),
-                                      MinLengthValidator(8,
-                                          errorText:
-                                              "Please, input password aleast 8 charector."),
-                                    ])),
-                                SizedBox(
-                                  height: 30,
+                                              fontSize: fontSizeXl)),
+                                      inputFormatters: [
+                                        //MaskedInputFormatter('(###)-###-####')
+                                      ],
+                                      decoration: InputDecoration(
+                                        // icon: Icon(Icons.phone_android),
+                                        filled: true,
+                                        prefixIcon: Icon(
+                                          Icons.security_rounded,
+                                          color: textColorBlack,
+                                        ),
+                                        fillColor: Colors.white,
+                                        alignLabelWithHint: true,
+                                        border: OutlineInputBorder(
+                                            borderRadius: borderRadiusMedium,
+                                            borderSide: BorderSide.none),
+                                        hintText: tPassword,
+                                        hintStyle: GoogleFonts.alata(
+                                            textStyle: TextStyle(
+                                                color: textColorBlack,
+                                                fontSize: 15)),
+                                      ),
+                                      controller: passwordController,
+                                      validator: MultiValidator([
+                                        RequiredValidator(
+                                            errorText:
+                                                "Please, input password."),
+                                        MinLengthValidator(8,
+                                            errorText:
+                                                "Please, input password aleast 8 charector."),
+                                      ])),
+                                  SizedBox(
+                                    height: 30,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        TextButton(
+                            onPressed: () {
+                              if (_form.currentState!.validate()) {
+                                //navigateToMain();
+                                if (state is! LoginLoading) {
+                                  _onLoginButtonPressed();
+                                } else {
+                                  null;
+                                }
+                              }
+                            },
+                            style: TextButton.styleFrom(
+                              elevation: 2,
+                              shadowColor: Colors.black,
+                              shape: StadiumBorder(),
+                              padding: EdgeInsets.only(
+                                  left: 110, right: 110, top: 20, bottom: 20),
+                              primary: textColorBlack,
+                              backgroundColor: textColorBlack,
+                              onSurface: Colors.black,
+                            ),
+                            child: Text(tLogin,
+                                style: GoogleFonts.alata(
+                                  textStyle: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold),
+                                ))),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            navigateToAddNumber();
+                          },
+                          child: Text(
+                            tRegistration,
+                            style: GoogleFonts.alata(
+                                textStyle: TextStyle(
+                              color: textColorBlack,
+                              fontSize: fontSizeL,
+                              shadows: [
+                                Shadow(
+                                  blurRadius: 15.0,
+                                  color: Colors.blueGrey,
+                                  offset: Offset(2.0, 2.0),
                                 ),
                               ],
-                            ),
+                              fontWeight: FontWeight.normal,
+                            )),
                           ),
-                        ],
-                      ),
-                      TextButton(
-                          onPressed: () {
-                            if (_form.currentState!.validate()) {
-                              //navigateToMain();
-                              if (state is! LoginLoading) {
-                                _onLoginButtonPressed();
-                              } else {
-                                null;
-                              }
-                            }
-                          },
-                          style: TextButton.styleFrom(
-                            elevation: 2,
-                            shadowColor: Colors.black,
-                            shape: StadiumBorder(),
-                            padding: EdgeInsets.only(
-                                left: 110, right: 110, top: 20, bottom: 20),
-                            primary: textColorBlack,
-                            backgroundColor: textColorBlack,
-                            onSurface: Colors.black,
-                          ),
-                          child: Text(tLogin,
+                        ),
+                        // SizedBox(
+                        //   height: 40,
+                        // ),
+
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 40),
+                          child: Text(
+                              "By continuing, you agree to RodSiaApp’s Terms of Use   and confirm that you have read our Privacy Policy",
+                              textAlign: TextAlign.center,
                               style: GoogleFonts.alata(
                                 textStyle: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold),
-                              ))),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          navigateToAddNumber();
-                        },
-                        child: Text(
-                          tRegistration,
-                          style: GoogleFonts.alata(
-                              textStyle: TextStyle(
-                            color: textColorBlack,
-                            fontSize: fontSizeL,
-                            shadows: [
-                              Shadow(
-                                blurRadius: 15.0,
-                                color: Colors.blueGrey,
-                                offset: Offset(2.0, 2.0),
-                              ),
-                            ],
-                            fontWeight: FontWeight.normal,
-                          )),
-                        ),
-                      ),
-                      // SizedBox(
-                      //   height: 40,
-                      // ),
-
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 20, horizontal: 40),
-                        child: Text(
-                            "By continuing, you agree to RodSiaApp’s Terms of Use   and confirm that you have read our Privacy Policy",
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.alata(
-                              textStyle: TextStyle(
-                                color: textColorBlack,
-                                fontSize: 12,
-                                fontWeight: FontWeight.normal,
-                              ),
-                            )),
-                      )
-                    ],
-                  ),
-                )
-              ],
+                                  color: textColorBlack,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              )),
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         );
