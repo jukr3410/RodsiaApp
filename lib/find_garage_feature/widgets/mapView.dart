@@ -340,8 +340,9 @@ class _MapViewState extends State<MapView> {
           icon: icon,
           infoWindow: InfoWindow(title: garage.name),
           onTap: () {
-            _garage = garage;
+            //_garage = garage;
             logger.d("Marker Tap garageId: ${_garage!.id}");
+            _garageListBloc..add(ShowGarageInfo(garage: garage));
           },
           position: LatLng(double.parse(garage.address.geoLocation.lat),
               double.parse(garage.address.geoLocation.long)));

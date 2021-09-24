@@ -47,3 +47,5 @@ class CurrentLocationSuccess extends GarageListState {
 }
 
 class MapError extends GarageListState {}
+
+class ShowShowGarageInfoSuccessextends extends GarageListState {}

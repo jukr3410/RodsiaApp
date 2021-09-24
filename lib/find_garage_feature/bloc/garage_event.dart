@@ -12,3 +12,12 @@ class GarageListFetchEvent extends GarageListEvent {
 }
 
 class GetCurrentLocation extends GarageListEvent {}
+
+class ShowGarageInfo extends GarageListEvent {
+  final Garage garage;
+
+  const ShowGarageInfo({required this.garage});
+
+  @override
+  String toString() => 'ShowGarageInfo {garage: $garage}';
+}
