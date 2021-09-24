@@ -90,7 +90,7 @@ class RequestServiceBloc
         if (requestService.status != "เสร็จสิ้น") {
           yield RequestServiceInService();
         } else {
-          _isNotConfirmed = false;
+          _isNotCompleted = false;
           yield RequestServiceComleted();
         }
       }

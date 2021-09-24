@@ -44,6 +44,7 @@ class _WaitForGaragePageState extends State<WaitForGaragePage> {
         //if (state is RequestServiceWaiting) {
         return Scaffold(
           appBar: AppBar(
+            automaticallyImplyLeading: false,
             backgroundColor: bgColor,
             title: Container(
               alignment: Alignment.centerRight,
@@ -72,5 +73,8 @@ class _WaitForGaragePageState extends State<WaitForGaragePage> {
         arguments: {'requestServiceId': requestServiceId});
   }
 
-  cancelRequestService() {}
+  cancelRequestService(requestServiceId) {
+    _requestServiceBloc
+      ..add(CancelRequestService(requestServiceId: requestServiceId));
+  }
 }

@@ -43,11 +43,13 @@ class GarageListBloc extends Bloc<GarageListEvent, GarageListState> {
         yield GarageListErrorState(error: mError);
       }
     } else if (event is GetCurrentLocation) {
-      yield* _mapGetCurrentLocationToStat();
+      yield* _mapGetCurrentLocationToState();
+    } else if (event is ShowGarageInfo) {
+      yield* _mapShowGarageInfoToState(event);
     }
   }
 
-  Stream<GarageListState> _mapGetCurrentLocationToStat() async* {
+  Stream<GarageListState> _mapGetCurrentLocationToState() async* {
     try {
       yield MapLoading();
       final position = await geoService.getLocation();
@@ -56,5 +58,10 @@ class GarageListBloc extends Bloc<GarageListEvent, GarageListState> {
       logger.e(e);
       yield MapError();
     }
+  }
+
+  Stream<GarageListState> _mapShowGarageInfoToState(
+      ShowGarageInfo event) async* {
+    yield ShowGarageInfoSuccess(garage: event.garage);
   }
 }

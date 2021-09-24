@@ -14,6 +14,7 @@ String requestAddToJson(RequestServiceAdd data) => json.encode(data.toJson());
 
 class RequestServiceAdd {
   RequestServiceAdd({
+    this.id,
     required this.user,
     required this.service,
     required this.geoLocationUser,
@@ -24,6 +25,7 @@ class RequestServiceAdd {
     required this.car,
   });
 
+  String? id;
   String user;
   String service;
   GeoLocation geoLocationUser;
@@ -35,6 +37,7 @@ class RequestServiceAdd {
 
   factory RequestServiceAdd.fromJson(Map<String, dynamic> json) =>
       RequestServiceAdd(
+        id: json["_id"],
         user: json["user"],
         service: json["service"],
         geoLocationUser: GeoLocation.fromJson(json["geoLocationUser"]),

@@ -23,6 +23,7 @@ class _DetailAndGiveStarPageState extends State<DetailAndGiveStarPage> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: primaryColor,
+        automaticallyImplyLeading: false,
         title: Container(
           alignment: Alignment.centerRight,
           child: GFButton(
@@ -181,7 +182,9 @@ class _DetailAndGiveStarPageState extends State<DetailAndGiveStarPage> {
                           ),
                         ),
                         GFButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            navigateToHome();
+                          },
                           child: Text(tBackToHomePage),
                           color: textColorBlack,
                           type: GFButtonType.transparent,
@@ -196,5 +199,9 @@ class _DetailAndGiveStarPageState extends State<DetailAndGiveStarPage> {
         ),
       ),
     );
+  }
+
+  navigateToHome() {
+    Navigator.pushReplacementNamed(context, HOMEPAGE_ROUTE);
   }
 }

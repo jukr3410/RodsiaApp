@@ -39,6 +39,7 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
       appBar: AppBar(
         centerTitle: false,
         backgroundColor: primaryColor,
+        automaticallyImplyLeading: false,
         title: Container(
           alignment: Alignment.centerRight,
           child: GFButton(
@@ -61,6 +62,8 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
         listener: (context, state) {
           if (state is RequestServiceLoadSuccess) {
             _requestServiceAdd = state.requestServiceAdd;
+          } else if (state is RequestServiceComleted) {
+            navigateToRequestComplated(_requestServiceAdd.id);
           }
         },
         builder: (context, state) {
@@ -134,8 +137,8 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
     );
   }
 
-  navigateToRequestComplated(String requestServiceId) {
-    Navigator.pushNamed(context, REQUEST_COMPLETE_ROUTE,
+  navigateToRequestComplated(String? requestServiceId) {
+    Navigator.pushReplacementNamed(context, REQUEST_COMPLETE_ROUTE,
         arguments: {'requestServiceId': requestServiceId});
   }
 }

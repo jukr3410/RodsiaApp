@@ -36,8 +36,6 @@ class _MapViewState extends State<MapView> {
 
   BitmapDescriptor? customIcon1;
 
-  Garage? _garage;
-
   @override
   void initState() {
     super.initState();
@@ -71,6 +69,9 @@ class _MapViewState extends State<MapView> {
         listener: (context, state) {
           if (state is CurrentLocationSuccess) {
             currentPosition = state.position;
+          } else if (state is GarageListSuccessState) {
+            _garages.addAll(state.garages);
+            markers = getMarkers(_garages, customIcon1!);
           }
         },
         builder: (context, state) {
@@ -83,7 +84,7 @@ class _MapViewState extends State<MapView> {
               padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
               child: CircularProgressIndicator(),
             ));
-          } else if (state is MapError) {
+          } else if (state is MapError || state is GarageListErrorState) {
             return Center(
                 child: Column(
               children: [
@@ -97,9 +98,7 @@ class _MapViewState extends State<MapView> {
                 Text(mError, textAlign: TextAlign.center),
               ],
             ));
-          } else if (state is GarageListSuccessState) {
-            _garages.addAll(state.garages);
-            markers = getMarkers(_garages, customIcon1!);
+          } else if (state is! GarageListErrorState) {
             return Stack(
               children: <Widget>[
                 // Map View
@@ -198,83 +197,88 @@ class _MapViewState extends State<MapView> {
                         width: width * 0.9,
                         child: Padding(
                             padding: const EdgeInsets.only(top: 10.0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Row(
+                            child: BlocBuilder<GarageListBloc, GarageListState>(
+                              builder: (context, state) {
+                                if (state is ShowGarageInfoSuccess) {
+                                  return Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 10, right: 10),
-                                        child: Icon(
-                                          Icons.store_outlined,
-                                          size: 32,
-                                        ),
-                                      ),
-                                      Flexible(
-                                          child: Padding(
-                                        padding: const EdgeInsets.only(
-                                          right: 15,
-                                          bottom: 10,
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Row(
                                           children: [
-                                            Text(
-                                              _garage != null
-                                                  ? _garage!.name
-                                                  : "",
-                                              style: TextStyle(
-                                                  fontSize: fontSizeXl,
-                                                  color: textColorBlack),
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 10, right: 10),
+                                              child: Icon(
+                                                Icons.store_outlined,
+                                                size: 32,
+                                              ),
                                             ),
-                                            Text(
-                                              _garage != null
-                                                  ? _garage!.phone
-                                                  : "",
-                                              maxLines: 2,
-                                              softWrap: true,
-                                              style: TextStyle(
-                                                  fontSize: 14,
-                                                  color: textColorBlack),
-                                            ),
+                                            Flexible(
+                                                child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                right: 15,
+                                                bottom: 10,
+                                              ),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    state.garage.name,
+                                                    style: TextStyle(
+                                                        fontSize: fontSizeXl,
+                                                        color: textColorBlack),
+                                                  ),
+                                                  Text(
+                                                    state.garage.phone,
+                                                    maxLines: 2,
+                                                    softWrap: true,
+                                                    style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: textColorBlack),
+                                                  ),
+                                                ],
+                                              ),
+                                            )),
                                           ],
                                         ),
-                                      )),
+                                      ),
+                                      Container(
+                                        height: 40,
+                                        child: TextButton(
+                                          onPressed: () {
+                                            if (state.garage != null) {
+                                              navigateToGarageInfo(
+                                                  state.garage.id);
+                                            } else {}
+                                          },
+                                          child: Text(
+                                            "รายละเอียดเพิ่มเติม",
+                                            style: TextStyle(
+                                                fontSize: fontSizeM,
+                                                color: textColorBlack),
+                                          ),
+                                          style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all<
+                                                      Color>(primaryColor),
+                                              shape: MaterialStateProperty.all<
+                                                      RoundedRectangleBorder>(
+                                                  RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                              ))),
+                                        ),
+                                      )
                                     ],
-                                  ),
-                                ),
-                                Container(
-                                  height: 40,
-                                  child: TextButton(
-                                    onPressed: () {
-                                      if (_garage != null) {
-                                        navigateToGarageInfo(_garage!.id);
-                                      } else {}
-                                    },
-                                    child: Text(
-                                      "รายละเอียดเพิ่มเติม",
-                                      style: TextStyle(
-                                          fontSize: fontSizeM,
-                                          color: textColorBlack),
-                                    ),
-                                    style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all<Color>(
-                                                primaryColor),
-                                        shape: MaterialStateProperty.all<
-                                                RoundedRectangleBorder>(
-                                            RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ))),
-                                  ),
-                                )
-                              ],
+                                  );
+                                }
+                                return Text("เลือกร้านให้บริการ");
+                              },
                             )),
                       ),
                     ),
@@ -341,8 +345,8 @@ class _MapViewState extends State<MapView> {
           infoWindow: InfoWindow(title: garage.name),
           onTap: () {
             //_garage = garage;
-            logger.d("Marker Tap garageId: ${_garage!.id}");
-            _garageListBloc..add(ShowGarageInfo(garage: garage));
+            logger.d("Marker Tap garageId: ${garage.id}");
+            _garageListBloc.add(ShowGarageInfo(garage: garage));
           },
           position: LatLng(double.parse(garage.address.geoLocation.lat),
               double.parse(garage.address.geoLocation.long)));

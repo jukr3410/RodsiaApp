@@ -48,4 +48,11 @@ class CurrentLocationSuccess extends GarageListState {
 
 class MapError extends GarageListState {}
 
-class ShowShowGarageInfoSuccessextends extends GarageListState {}
+class ShowGarageInfoSuccess extends GarageListState {
+  final Garage garage;
+
+  const ShowGarageInfoSuccess({required this.garage});
+
+  @override
+  String toString() => 'ShowGarageInfoSuccess {garage: ${garage.id}}';
+}
