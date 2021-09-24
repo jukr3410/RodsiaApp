@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/getwidget.dart';
@@ -23,6 +24,10 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
   late RequestServiceBloc _requestServiceBloc;
 
   late Position currentPosition;
+
+  late PolylinePoints polylinePoints;
+  Map<PolylineId, Polyline> polylines = {};
+  List<LatLng> polylineCoordinates = [];
 
   late RequestServiceAdd _requestServiceAdd;
 

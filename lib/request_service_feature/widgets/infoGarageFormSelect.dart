@@ -18,7 +18,13 @@ class _InfoGarageFormSelectState extends State<InfoGarageFormSelect> {
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          // Image(image: AssetImage('image/image-garage-mockup.png')),
+          SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * 0.23,
+              child: Image.network(
+                'https://bestkru-thumbs.s3-ap-southeast-1.amazonaws.com/127401',
+                fit: BoxFit.cover,
+              )),
           Container(
             margin: EdgeInsets.only(
               top: 120,

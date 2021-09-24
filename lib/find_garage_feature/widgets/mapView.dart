@@ -277,7 +277,11 @@ class _MapViewState extends State<MapView> {
                                     ],
                                   );
                                 }
-                                return Text("เลือกร้านให้บริการ");
+                                return Wrap(children: <Widget>[
+                                  Container(
+                                      alignment: Alignment.center,
+                                      child: Text("เลือกร้านให้บริการ"))
+                                ]);
                               },
                             )),
                       ),

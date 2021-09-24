@@ -36,14 +36,11 @@ class _SelectServicePageState extends State<SelectServicePage> {
           if (state is GarageLoadSuccess) {
             return Column(children: [
               Flexible(
-                flex: 1,
+                flex: 4,
                 child: InfoGarageFormSelect(garage: state.garage),
               ),
-              SizedBox(
-                height: 30,
-              ),
               Flexible(
-                flex: 1,
+                flex: 6,
                 child: SelectServiceOfGarage(
                   services: state.services,
                 ),
