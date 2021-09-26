@@ -129,6 +129,8 @@ flutter:
     - assets/images/icon-more-navbar.png
     - assets/launcher/ic_launcher.png
     - assets/images/car-repair.png
+    - assets/images/tow-truck.png
+    - assets/images/icon-tow-truck.png
     - assets/images/icon-break.png
     - assets/images/icon-fuel.png
     - assets/images/icon-engine-oil.png

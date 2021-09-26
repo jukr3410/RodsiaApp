@@ -289,7 +289,7 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
       geoLocationUser: GeoLocation(lat: '13.6527639', long: '100.4859599'),
       problemDesc: 'ไม่ทราบสาเหตุ',
       confirmRequest: true,
-      status: 'กำลังเตรียมอุปกรณ์');
+      status: 'กำลังเตรียม');
 }
 
 class SelectionItem extends StatelessWidget {

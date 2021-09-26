@@ -6,9 +6,12 @@ import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:rodsiaapp/constants.dart';
+import 'package:rodsiaapp/core/models/garage_model.dart';
 import 'package:rodsiaapp/core/models/request_service_add_model.dart';
 import 'package:rodsiaapp/request_service_feature/bloc/request_service_bloc.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/trackingRequestCard.dart';
+
+import '../../main.dart';
 
 class TrackingRequestPage extends StatefulWidget {
   String requestServiceId;
@@ -23,11 +26,15 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
   late GoogleMapController _mapController;
   late RequestServiceBloc _requestServiceBloc;
 
-  late Position currentPosition;
+  late LatLng currentPosition;
+  late LatLng destinationPosition;
 
-  late PolylinePoints polylinePoints;
-  Map<PolylineId, Polyline> polylines = {};
-  List<LatLng> polylineCoordinates = [];
+  List<LatLng> latlongs = [];
+  BitmapDescriptor? customIcon1;
+  List<Marker> markers = <Marker>[];
+
+  PolylinePoints polylinePoints = PolylinePoints();
+  List<Polyline> polyline = [];
 
   late RequestServiceAdd _requestServiceAdd;
 
@@ -65,8 +72,24 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
       backgroundColor: bgColor,
       body: BlocConsumer<RequestServiceBloc, RequestServiceState>(
         listener: (context, state) {
-          if (state is RequestServiceLoadSuccess) {
+          if (state is RequestServiceLoading) {
+            createMarker(context);
+          } else if (state is RequestServiceLoadSuccess) {
             _requestServiceAdd = state.requestServiceAdd;
+
+            currentPosition = LatLng(
+                double.parse(state.requestServiceAdd.geoLocationUser.lat),
+                double.parse(state.requestServiceAdd.geoLocationUser.long));
+
+            destinationPosition = LatLng(
+                double.parse(state.requestServiceAdd.geoLocationGarage.lat),
+                double.parse(state.requestServiceAdd.geoLocationGarage.long));
+            latlongs = [];
+            latlongs.add(currentPosition);
+            latlongs.add(destinationPosition);
+
+            markers = getMarkers(latlongs, customIcon1!);
+            getPolyline(latlongs);
           } else if (state is RequestServiceComleted) {
             navigateToRequestComplated(_requestServiceAdd.id);
           }
@@ -76,13 +99,17 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
             return Stack(
               children: <Widget>[
                 GoogleMap(
-                  initialCameraPosition: CameraPosition(
-                      target: LatLng(13.652744, 100.4859621), zoom: 14.0),
+                  initialCameraPosition:
+                      CameraPosition(target: currentPosition, zoom: 14.0),
                   myLocationEnabled: true,
                   myLocationButtonEnabled: false,
+                  compassEnabled: true,
+                  scrollGesturesEnabled: true,
                   mapType: MapType.normal,
                   //myLocationButtonEnabled: false,
                   zoomGesturesEnabled: true,
+                  polylines: Set<Polyline>.of(polyline),
+                  markers: Set<Marker>.of(markers),
                   onMapCreated: (GoogleMapController controller) {
                     _mapController = controller;
                   },
@@ -107,7 +134,7 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
                               _mapController.animateCamera(
                                 CameraUpdate.newCameraPosition(
                                   CameraPosition(
-                                    target: LatLng(13.652744, 100.4859621),
+                                    target: currentPosition,
                                     zoom: 14.0,
                                   ),
                                 ),
@@ -140,6 +167,70 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
         },
       ),
     );
+  }
+
+  createMarker(context) {
+    if (customIcon1 == null) {
+      ImageConfiguration configuration = createLocalImageConfiguration(context);
+
+      BitmapDescriptor.fromAssetImage(
+              configuration, 'assets/images/car-repair.png')
+          .then((icon) {
+        setState(() {
+          customIcon1 = icon;
+        });
+      });
+    }
+  }
+
+  List<Marker> getMarkers(List<LatLng> latlongs, BitmapDescriptor icon) {
+    var markers = <Marker>[];
+    BitmapDescriptor setIcon = BitmapDescriptor.defaultMarker;
+
+    latlongs.forEach((latlong) {
+      logger.d("latlong: ${latlong.toString()}");
+      if (latlong.latitude != currentPosition.latitude) {
+        setIcon = icon;
+      }
+      Marker marker = Marker(
+          markerId: MarkerId(latlong.toString()),
+          draggable: false,
+          icon: setIcon,
+          onTap: () {},
+          position: latlong);
+
+      markers.add(marker);
+    });
+    return markers;
+  }
+
+  void getPolyline(List<LatLng> latlongs) async {
+    //var polyline = <Polyline>[];
+
+    List<LatLng> polylineCoordinates = [];
+
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+      "AIzaSyA0WKpMAsoXdtAhRR3X56WgvCh4IN1cBps",
+      PointLatLng(currentPosition.latitude, currentPosition.longitude),
+      PointLatLng(destinationPosition.latitude, destinationPosition.longitude),
+      travelMode: TravelMode.driving,
+    );
+
+    if (result.points.isNotEmpty) {
+      result.points.forEach((PointLatLng point) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      });
+    } else {
+      logger.e(result.errorMessage);
+    }
+
+    polyline.add(Polyline(
+      polylineId: PolylineId("route"),
+      geodesic: true,
+      points: polylineCoordinates,
+      width: 5,
+      color: textColorBlack,
+    ));
   }
 
   navigateToRequestComplated(String? requestServiceId) {
