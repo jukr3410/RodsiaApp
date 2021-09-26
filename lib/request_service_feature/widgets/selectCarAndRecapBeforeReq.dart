@@ -154,7 +154,7 @@ class _SelectCarAndRecapBeforeReqState
               child: Align(
                 alignment: FractionalOffset.bottomCenter,
                 child: Container(
-                  height: buttonHeightSmall + 5,
+                  height: buttonHeightSmall,
                   width: buttonWidthLarge,
                   child: TextButton(
                     onPressed: () {

@@ -51,7 +51,7 @@ class _AddNumberState extends State<AddNumber> {
                       borderRadius: borderRadiusMedium,
                       child: Image.asset(
                         'assets/launcher/ic_launcher.png',
-                        height: 200,
+                        height: 150,
                       ),
                     ),
                   ),
@@ -104,9 +104,8 @@ class _AddNumberState extends State<AddNumber> {
                                     borderRadius: BorderRadius.circular(10),
                                     borderSide: BorderSide.none),
                                 hintText: 'Enter moblie number',
-                                hintStyle: GoogleFonts.alata(
-                                    textStyle: TextStyle(
-                                        color: textColorBlack, fontSize: 20)),
+                                hintStyle: TextStyle(
+                                    color: textColorBlack, fontSize: 20),
                               ),
                               validator: MultiValidator([
                                 RequiredValidator(errorText: mErrorInputPhone),
@@ -134,25 +133,24 @@ class _AddNumberState extends State<AddNumber> {
                               backgroundColor: textColorBlack,
                               onSurface: Colors.black,
                             ),
-                            child: Text(tNext,
-                                style: GoogleFonts.alata(
-                                  textStyle: TextStyle(
-                                      color: textColorWhite,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.bold),
-                                ))),
+                            child: Text(
+                              tNext,
+                              style: TextStyle(
+                                  color: textColorWhite,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold),
+                            )),
                         Padding(
                           padding: const EdgeInsets.symmetric(
                               vertical: 30, horizontal: 40),
                           child: Text(
-                              "By continuing, you agree to RodSiaApp’s Terms of Use   and confirm that you have read our Privacy Policy",
-                              textAlign: TextAlign.center,
-                              style: GoogleFonts.alata(
-                                textStyle: TextStyle(
-                                    color: textColorBlack,
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.normal),
-                              )),
+                            "By continuing, you agree to RodSiaApp’s Terms of Use   and confirm that you have read our Privacy Policy",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                color: textColorBlack,
+                                fontSize: 12,
+                                fontWeight: FontWeight.normal),
+                          ),
                         )
                       ],
                     ),

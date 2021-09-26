@@ -107,87 +107,77 @@ class _GarageListState extends State<GarageList> {
   _makeCardWidget(Garage garage, int index) {
     return GestureDetector(
       child: Card(
+        // shape: RoundedRectangleBorder(borderRadius: borderRadiusMedium),
         elevation: 3,
-        margin: new EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        margin: new EdgeInsets.symmetric(
+            horizontal: defualtPaddingLow, vertical: defualtPaddingLow - 2),
         color: cardColor,
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(
-                width: MediaQuery.of(context).size.width * 0.33,
-                child: Image.network(
-                  'https://bestkru-thumbs.s3-ap-southeast-1.amazonaws.com/127401',
-                  fit: BoxFit.cover,
-                )
-                //     CachedNetworkImage(
-                //   imageUrl:
-                //       "https://bestkru-thumbs.s3-ap-southeast-1.amazonaws.com/127399",
-                //   imageBuilder: (context, imageProvider) => Container(
-                //     decoration: BoxDecoration(
-                //       image: DecorationImage(
-                //           image: imageProvider,
-                //           fit: BoxFit.cover,
-                //           colorFilter:
-                //               ColorFilter.mode(Colors.red, BlendMode.colorBurn)),
-                //     ),
-                //   ),
-                //   placeholder: (context, url) => CircularProgressIndicator(),
-                //   errorWidget: (context, url, error) => Icon(Icons.error),
-                // ),
-                ),
+            Image.network(
+              'https://bestkru-thumbs.s3-ap-southeast-1.amazonaws.com/127401',
+              width: 110,
+              height: 80,
+              fit: BoxFit.cover,
+            ),
             Flexible(
                 child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    garage.name,
-                    style: new TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                        color: textColorBlack),
-                  ),
-                  Container(
-                      margin: new EdgeInsets.only(top: 8),
-                      child: Row(children: [
-                        Text(
-                          "distance: " + "12 km",
-                          style: new TextStyle(
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.normal,
-                              color: textColorBlack),
-                        ),
-                        Text(
-                          " | ",
-                          style: new TextStyle(
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.normal,
-                              color: Colors.black54),
-                        ),
-                        Icon(
-                          Icons.star,
-                          color: primaryColor,
-                          size: 20,
-                        ),
-                        Text(
-                          " " + "3.9",
-                          style: new TextStyle(
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.normal,
-                              color: textColorBlack),
-                        ),
-                      ])),
-                  Container(
-                    margin: new EdgeInsets.only(top: 4),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              padding: const EdgeInsets.symmetric(
+                horizontal: defualtPaddingMedium,
+                // vertical: 10,
+              ),
+              child: Align(
+                alignment: Alignment.center,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      garage.name,
+                      softWrap: true,
+                      maxLines: 1,
+                      overflow: TextOverflow.fade,
+                      style: new TextStyle(
+                          fontSize: fontSizeL,
+                          fontWeight: FontWeight.bold,
+                          color: textColorBlack),
+                    ),
+                    Row(children: [
+                      Text(
+                        "distance: " + "12 km",
+                        style: new TextStyle(
+                            fontSize: fontSizeM,
+                            fontWeight: FontWeight.normal,
+                            color: textColorBlack),
+                      ),
+                      Text(
+                        " | ",
+                        style: new TextStyle(
+                            fontSize: fontSizeM,
+                            fontWeight: FontWeight.normal,
+                            color: Colors.black54),
+                      ),
+                      Icon(
+                        Icons.star,
+                        color: primaryColor,
+                        size: 20,
+                      ),
+                      Text(
+                        " " + "3.9",
+                        style: new TextStyle(
+                            fontSize: fontSizeM,
+                            fontWeight: FontWeight.normal,
+                            color: textColorBlack),
+                      ),
+                    ]),
+                    Row(
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           'close',
                           style: TextStyle(
-                              fontSize: 14.0,
+                              fontSize: fontSizeM,
                               fontWeight: FontWeight.normal,
                               color: textColorRed),
                         ),
@@ -196,9 +186,9 @@ class _GarageListState extends State<GarageList> {
                         //   child: Icon(Icons.data_usage),
                         // ),
                       ],
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
             )),
           ],

@@ -17,6 +17,7 @@ import 'package:rodsiaapp/profile_feature/widgets/ProfilePage.dart';
 import 'package:rodsiaapp/profile_feature/widgets/add_car/selectMoreChoice.dart';
 import 'package:rodsiaapp/profile_feature/widgets/add_car/selectCarTypePage.dart';
 import 'package:rodsiaapp/profile_feature/widgets/add_car/showInfoNewCar.dart';
+import 'package:rodsiaapp/profile_feature/widgets/editProfile.dart';
 import 'package:rodsiaapp/profile_feature/widgets/edit_car/editCarModel.dart';
 import 'package:rodsiaapp/profile_feature/widgets/edit_car/editSelectCarTypePage.dart';
 import 'package:rodsiaapp/profile_feature/widgets/edit_car/editSelectMoreChoicePage.dart';
@@ -224,6 +225,14 @@ class AppRouter {
 
       case SHOWINFO_BEFOREREQ_ROUTE:
         return MaterialPageRoute(builder: (_) => SelectCarAndRecapBeforeReq());
+
+      case EDITPROFILE_ROUTE:
+        User user = settings.arguments as User;
+        return MaterialPageRoute(
+            builder: (_) => EditProfile(
+                  user: user,
+                ));
+
       default:
         return MaterialPageRoute(builder: (_) => InvalidRouteScreen());
     }

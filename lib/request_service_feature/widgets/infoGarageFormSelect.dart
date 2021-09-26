@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:getwidget/components/rating/gf_rating.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/garage_model.dart';
+import 'package:rodsiaapp/global_widgets/carouselImage.dart';
 import 'package:rodsiaapp/global_widgets/hexTocolor.dart';
+import 'package:rodsiaapp/request_service_feature/widgets/carouselImageReqService.dart';
 
 class InfoGarageFormSelect extends StatefulWidget {
   Garage garage;
@@ -17,71 +19,65 @@ class _InfoGarageFormSelectState extends State<InfoGarageFormSelect> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-        children: <Widget>[
-          SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.23,
-              child: Image.network(
-                'https://bestkru-thumbs.s3-ap-southeast-1.amazonaws.com/127401',
-                fit: BoxFit.cover,
-              )),
+        children: [
+          CarouselImageReqService(),
           Container(
+            height: 100,
             margin: EdgeInsets.only(
-              top: 120,
-              left: defualtPaddingHight,
-              right: defualtPaddingHight,
+              top: 170,
+              left: defualtPaddingMedium,
+              right: defualtPaddingMedium,
             ),
             decoration: BoxDecoration(
-              borderRadius: borderRadiusMedium,
-              boxShadow: [boxShadow],
-              color: bgColor,
-            ),
+                borderRadius: borderRadiusMedium,
+                boxShadow: [boxShadow],
+                color: bgColor),
             child: Padding(
-              padding: const EdgeInsets.all(defualtPaddingMedium),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+              padding: const EdgeInsets.all(defualtPaddingLow),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    "168 Garage - อู๋ซ้อมรถ",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: [
-                      Text('Rating: '),
-                      // Image(
-                      //   image: AssetImage('image/icon-star.png'),
-                      // ),
-                      SizedBox(
-                        width: 5,
+                  CircleAvatar(
+                    backgroundColor: Colors.transparent,
+                    radius: 35,
+                    child: ClipOval(
+                      child: Image.asset(
+                        tImageAsset('profile'),
+                        height: 65,
+                        width: 65,
+                        fit: BoxFit.cover,
                       ),
-                      Text('4.5'),
-                    ],
+                    ),
                   ),
                   SizedBox(
-                    height: 5,
+                    width: 20,
                   ),
-                  Divider(
-                    color: hexToColor(codeColorGray),
-                    height: 20,
-                  ),
-                  SizedBox(
-                    height: 5,
-                  ),
-                  Row(
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(tAddressThai),
-                      SizedBox(
-                        width: 5,
+                      Text(
+                        widget.garage.name,
+                        style: TextStyle(
+                            fontSize: fontSizeL, fontWeight: FontWeight.w600),
+                        softWrap: true,
+                        maxLines: 1,
                       ),
-                      Flexible(
-                        child: Text(
-                          '666 ถนนไม่มี แขวงแหม เขตจ้า กรุงเทพมหานคร 10000',
-                          softWrap: true,
-                        ),
+                      Row(
+                        children: [
+                          Text(tPhone + ': '),
+                          Text(
+                            widget.garage.phone,
+                          )
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Text(tEmail + ': '),
+                          Text(
+                            widget.garage.email.toString(),
+                          )
+                        ],
                       )
                     ],
                   )

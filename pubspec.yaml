@@ -68,6 +68,7 @@ dependencies:
   direct_select: ^2.0.0
 
   permission_handler: ^8.1.6
+  carousel_slider: ^4.0.0
 
 
 dev_dependencies:

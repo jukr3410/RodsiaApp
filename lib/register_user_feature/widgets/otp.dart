@@ -99,7 +99,7 @@ class _OtpState extends State<Otp> {
                   borderRadius: BorderRadius.circular(25),
                   child: Image.asset(
                     'assets/launcher/ic_launcher.png',
-                    height: 200,
+                    height: 150,
                   ),
                 ),
               ),
@@ -122,9 +122,8 @@ class _OtpState extends State<Otp> {
                           vertical: 10, horizontal: 0),
                       child: Text(
                         "ระบุ OTP",
-                        style: GoogleFonts.alata(
-                            textStyle: TextStyle(
-                                color: textColorBlack, fontSize: fontSizeL)),
+                        style: TextStyle(
+                            color: textColorBlack, fontSize: fontSizeL),
                       ),
                     ),
                     TextFieldPin(
@@ -168,17 +167,15 @@ class _OtpState extends State<Otp> {
                           onSurface: Colors.black,
                         ),
                         child: Text(tNext,
-                            style: GoogleFonts.alata(
-                                textStyle: TextStyle(
-                                    color: textColorWhite,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold)))),
+                            style: TextStyle(
+                                color: textColorWhite,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold))),
                     SizedBox(
                       height: 20,
                     ),
                     Text("ส่งอีกครั้ง",
-                        style: GoogleFonts.alata(
-                            textStyle: TextStyle(
+                        style: TextStyle(
                           color: textColorBlack,
                           fontSize: fontSizeL,
                           shadows: [
@@ -189,7 +186,7 @@ class _OtpState extends State<Otp> {
                             ),
                           ],
                           fontWeight: FontWeight.normal,
-                        ))),
+                        )),
                     // SizedBox(
                     //   height: 40,
                     // ),
@@ -197,15 +194,14 @@ class _OtpState extends State<Otp> {
                       padding: const EdgeInsets.symmetric(
                           vertical: 30, horizontal: 40),
                       child: Text(
-                          "By continuing, you agree to RodSiaApp’s Terms of Use and confirm that you have read our Privacy Policy",
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.alata(
-                            textStyle: TextStyle(
-                              color: textColorBlack,
-                              fontSize: 12,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          )),
+                        "By continuing, you agree to RodSiaApp’s Terms of Use and confirm that you have read our Privacy Policy",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: textColorBlack,
+                          fontSize: 12,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
                     )
                   ],
                 ),

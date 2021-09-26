@@ -81,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: borderRadiusMedium,
                       child: Image.asset(
                         'assets/launcher/ic_launcher.png',
-                        height: 200,
+                        height: 150,
                       ),
                     ),
                   ),

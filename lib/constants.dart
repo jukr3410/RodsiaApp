@@ -39,6 +39,7 @@ const EDITCAR_CARTYPE_ROUTE = "/edit_car";
 const EDITCAR_MORECHOICE_ROUTE = "/edit_morechoice";
 const EDITCAR_SHOWINFO_ROUTE = "/edit_showinfo";
 const SHOWINFO_BEFOREREQ_ROUTE = '/showinfo_befor_request';
+const EDITPROFILE_ROUTE = '/edit_profile';
 
 // font size
 const fontSizeXl = 18.0;

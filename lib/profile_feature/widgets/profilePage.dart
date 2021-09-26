@@ -5,6 +5,7 @@ import 'package:getwidget/types/gf_button_type.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/user_model.dart';
 import 'package:rodsiaapp/global_widgets/backPage.dart';
+import 'package:rodsiaapp/profile_feature/widgets/buttonToEditProfile.dart';
 
 import 'package:rodsiaapp/profile_feature/widgets/infoCarCard.dart';
 import 'package:rodsiaapp/profile_feature/widgets/infoProfile.dart';
@@ -32,6 +33,12 @@ class _ProfilePageState extends State<ProfilePage> {
           ])),
       child: Scaffold(
         appBar: AppBar(
+          title: Align(
+            alignment: Alignment.centerRight,
+            child: buttonToEditProfile(
+              user: widget.user,
+            ),
+          ),
           backgroundColor: textColorBlack,
         ),
         backgroundColor: Colors.transparent,

@@ -108,59 +108,40 @@ class _DetailAndGiveStarPageState extends State<DetailAndGiveStarPage> {
                     child: Padding(
                       padding:
                           const EdgeInsets.only(left: defualtPaddingMedium),
-                      child: Row(
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Flexible(
-                            flex: 4,
-                            child: Row(
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'บริการที่ใช้:',
-                                      style: TextStyle(
-                                          fontSize: fontSizeL,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Text(
-                                      'Service type',
-                                    ),
-                                    Text('Service'),
-                                    Text(
-                                      tMoreInfoThai,
-                                      softWrap: true,
-                                      maxLines: 3,
-                                    ),
-                                    Text('เวลา'),
-                                  ],
-                                ),
-                              ],
-                            ),
+                          Text(
+                            'บริการที่ใช้:',
+                            style: TextStyle(
+                                fontSize: fontSizeL,
+                                fontWeight: FontWeight.bold),
                           ),
-                          Flexible(
-                            flex: 4,
-                            child: Row(
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'สถานที่: ',
-                                      style: TextStyle(
-                                          fontSize: fontSizeL,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    Text(
-                                      '23456 แขวงนู่น เขตนี่',
-                                      softWrap: true,
-                                      maxLines: 3,
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
+                          Text(
+                            'Service type',
+                          ),
+                          Text('Service'),
+                          Text(
+                            tMoreInfoThai,
+                            softWrap: true,
+                            maxLines: 3,
+                          ),
+                          Text('เวลา'),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'สถานที่: ',
+                                style: TextStyle(
+                                    fontSize: fontSizeL,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                '23456 แขวงนู่น เขตนี่',
+                                softWrap: true,
+                                maxLines: 3,
+                              )
+                            ],
                           )
                         ],
                       ),

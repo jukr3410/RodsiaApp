@@ -59,10 +59,10 @@ class _SelectServicePageState extends State<SelectServicePage> {
     return AppBar(
       backgroundColor: primaryColor,
       centerTitle: true,
-      // title: Text(
-      //   tAddService,
-      //   style: TextStyle(color: textColorBlack, fontSize: fontSizeSemiLarge),
-      // ),
+      title: Text(
+        'เลือก' + tServiceOfGarageThai,
+        style: TextStyle(color: textColorBlack, fontSize: fontSizeL),
+      ),
       leading: IconButton(
         icon: Icon(
           Icons.arrow_back,
