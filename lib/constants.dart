@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:rodsiaapp/core/models/garage_model.dart';
+import 'package:rodsiaapp/core/models/geo_location_model.dart';
 import 'package:rodsiaapp/core/models/user_model.dart';
 import 'package:rodsiaapp/global_widgets/hexTocolor.dart';
 
@@ -40,6 +42,7 @@ const EDITCAR_MORECHOICE_ROUTE = "/edit_morechoice";
 const EDITCAR_SHOWINFO_ROUTE = "/edit_showinfo";
 const SHOWINFO_BEFOREREQ_ROUTE = '/showinfo_befor_request';
 const EDITPROFILE_ROUTE = '/edit_profile';
+const CHAT_ROUTE = '/chat';
 
 // font size
 const fontSizeXl = 18.0;
@@ -203,6 +206,7 @@ const tRegistration = 'สร้างบัญชี';
 const tAppName = 'รถเสีย';
 const tLogin = 'เข้าสู่ระบบ';
 const tRecapOrder = 'สรุปรายการ';
+const tSentMsg = 'ส่งข้อความ';
 
 //Tracking Status
 const trackingStatus = [
@@ -298,3 +302,13 @@ List<String> serviceTypeName = [
   'รถลาก',
   'น้ำมันเครื่อง'
 ];
+Garage garageMockup = Garage(
+    images: [],
+    id: '1',
+    name: 'Garage1892',
+    phone: '0359887456',
+    email: "email@mail.com",
+    address: Address(
+      addressDesc: '',
+      geoLocation: GeoLocation(lat: 'asdf', long: 'asdfasdf'),
+    ));

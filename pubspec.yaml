@@ -69,6 +69,7 @@ dependencies:
 
   permission_handler: ^8.1.6
   carousel_slider: ^4.0.0
+  flutter_chat_ui: ^1.4.4
 
 
 dev_dependencies:
