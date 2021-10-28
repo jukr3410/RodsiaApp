@@ -9,6 +9,7 @@ import 'package:rodsiaapp/core/repository/garage_repository.dart';
 import 'package:rodsiaapp/core/repository/service_repository.dart';
 import 'package:rodsiaapp/find_garage_feature/widgets/garageList.dart';
 import 'package:rodsiaapp/find_garage_feature/widgets/mapView.dart';
+import 'package:rodsiaapp/find_problem_feature/widgets/findProblemFormSelected.dart';
 import 'package:rodsiaapp/global_widgets/bottomNavigrationBarPage.dart';
 import 'package:rodsiaapp/global_widgets/invalidRoute.dart';
 import 'package:rodsiaapp/home/app.dart';
@@ -236,6 +237,13 @@ class AppRouter {
 
       case CHAT_ROUTE:
         return MaterialPageRoute(builder: (_) => ChatUi());
+
+      case FIND_PROBLEM:
+        int numOfFindProblem = settings.arguments as int;
+        return MaterialPageRoute(
+            builder: (_) => FindProblemFormSelected(
+                  findProblem: numOfFindProblem,
+                ));
 
       default:
         return MaterialPageRoute(builder: (_) => InvalidRouteScreen());

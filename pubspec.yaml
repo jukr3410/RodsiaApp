@@ -139,6 +139,11 @@ flutter:
     - assets/images/icon-rickshaw.png
     - assets/images/icon-tire.png
     - assets/images/icon-battery.png
+    - assets/images/icon-ear.png
+    - assets/images/icon-eye.png
+    - assets/images/icon-nose.png
+    - assets/images/icon-hand.png
+    - assets/images/icon-startEngine.png
 
     
   # An image asset can refer to one or more resolution-specific "variants", see

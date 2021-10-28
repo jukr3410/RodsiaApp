@@ -125,41 +125,37 @@ class _FilterGarageState extends State<FilterGarage>
                                   shrinkWrap: true,
                                   children: List.generate(serviceType.length,
                                       (index) {
-                                    return Column(
-                                      children: [
-                                        FlatButton(
-                                          color: selectProblem ==
-                                                  serviceType[index]
-                                              ? primaryColor
-                                              : Colors.transparent,
-                                          shape: new RoundedRectangleBorder(
-                                              borderRadius:
-                                                  new BorderRadius.circular(
-                                                      defualtPaddingLow)),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(5),
-                                            child: Column(
-                                              children: [
-                                                Image.asset(
-                                                  tImageAsset(serviceType[index]
-                                                      .toString()),
-                                                  width: 45,
-                                                ),
-                                                Text(serviceTypeName[index]
-                                                    .toString())
-                                              ],
+                                    return FlatButton(
+                                      color: selectProblem ==
+                                              serviceType[index]
+                                          ? primaryColor
+                                          : Colors.transparent,
+                                      shape: new RoundedRectangleBorder(
+                                          borderRadius:
+                                              new BorderRadius.circular(
+                                                  defualtPaddingLow)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(5),
+                                        child: Column(
+                                          children: [
+                                            Image.asset(
+                                              tImageAsset(serviceType[index]
+                                                  .toString()),
+                                              width: 45,
                                             ),
-                                          ),
-                                          onPressed: () {
-                                            setState(() {
-                                              selectProblem =
-                                                  serviceType[index].toString();
-
-                                              print(selectProblem);
-                                            });
-                                          },
+                                            Text(serviceTypeName[index]
+                                                .toString())
+                                          ],
                                         ),
-                                      ],
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          selectProblem =
+                                              serviceType[index].toString();
+
+                                          print(selectProblem);
+                                        });
+                                      },
                                     );
                                   }),
                                 ),
@@ -176,43 +172,39 @@ class _FilterGarageState extends State<FilterGarage>
                                     shrinkWrap: true,
                                     children: List.generate(vehicleType.length,
                                         (index) {
-                                      return Column(
-                                        children: [
-                                          FlatButton(
-                                            color: selectVehicleType ==
+                                      return FlatButton(
+                                        color: selectVehicleType ==
+                                                vehicleType[index]
+                                            ? primaryColor
+                                            : Colors.transparent,
+                                        shape: new RoundedRectangleBorder(
+                                            borderRadius:
+                                                new BorderRadius.circular(
+                                                    defualtPaddingLow)),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(5),
+                                          child: Column(
+                                            children: [
+                                              Image.asset(
+                                                tImageAsset(
                                                     vehicleType[index]
-                                                ? primaryColor
-                                                : Colors.transparent,
-                                            shape: new RoundedRectangleBorder(
-                                                borderRadius:
-                                                    new BorderRadius.circular(
-                                                        defualtPaddingLow)),
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(5),
-                                              child: Column(
-                                                children: [
-                                                  Image.asset(
-                                                    tImageAsset(
-                                                        vehicleType[index]
-                                                            .toString()),
-                                                    width: 60,
-                                                  ),
-                                                  Text(vehicleType[index]
-                                                      .toString())
-                                                ],
+                                                        .toString()),
+                                                width: 60,
                                               ),
-                                            ),
-                                            onPressed: () {
-                                              setState(() {
-                                                selectVehicleType =
-                                                    vehicleType[index]
-                                                        .toString();
-
-                                                print(selectVehicleType);
-                                              });
-                                            },
+                                              Text(vehicleType[index]
+                                                  .toString())
+                                            ],
                                           ),
-                                        ],
+                                        ),
+                                        onPressed: () {
+                                          setState(() {
+                                            selectVehicleType =
+                                                vehicleType[index]
+                                                    .toString();
+
+                                            print(selectVehicleType);
+                                          });
+                                        },
                                       );
                                     }),
                                   ),

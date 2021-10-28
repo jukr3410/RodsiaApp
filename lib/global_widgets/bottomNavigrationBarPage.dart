@@ -3,7 +3,7 @@ import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/user_model.dart';
 import 'package:rodsiaapp/find_garage_feature/widgets/homePage.dart';
 import 'package:rodsiaapp/find_garage_feature/widgets/filterGarage.dart';
-import 'package:rodsiaapp/global_widgets/findProblemPage.dart';
+import 'package:rodsiaapp/find_problem_feature/widgets/findProblemPage.dart';
 import 'package:rodsiaapp/global_widgets/hexTocolor.dart';
 import 'package:rodsiaapp/global_widgets/menusSetting.dart';
 import 'package:rodsiaapp/global_widgets/notifyPage.dart';

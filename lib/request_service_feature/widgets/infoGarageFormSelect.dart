@@ -17,76 +17,74 @@ class InfoGarageFormSelect extends StatefulWidget {
 class _InfoGarageFormSelectState extends State<InfoGarageFormSelect> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          CarouselImageReqService(),
-          Container(
-            height: 100,
-            margin: EdgeInsets.only(
-              top: 170,
-              left: defualtPaddingMedium,
-              right: defualtPaddingMedium,
-            ),
-            decoration: BoxDecoration(
-                borderRadius: borderRadiusMedium,
-                boxShadow: [boxShadow],
-                color: bgColor),
-            child: Padding(
-              padding: const EdgeInsets.all(defualtPaddingLow),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.transparent,
-                    radius: 35,
-                    child: ClipOval(
-                      child: Image.asset(
-                        tImageAsset('profile'),
-                        height: 65,
-                        width: 65,
-                        fit: BoxFit.cover,
-                      ),
+    return Stack(
+      children: [
+        CarouselImageReqService(),
+        Container(
+          height: 100,
+          margin: EdgeInsets.only(
+            top: 170,
+            left: defualtPaddingHight,
+            right: defualtPaddingHight,
+          ),
+          decoration: BoxDecoration(
+              borderRadius: borderRadiusMedium,
+              boxShadow: [boxShadow],
+              color: bgColor),
+          child: Padding(
+            padding: const EdgeInsets.all(defualtPaddingLow),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  backgroundColor: Colors.transparent,
+                  radius: 35,
+                  child: ClipOval(
+                    child: Image.asset(
+                      tImageAsset('profile'),
+                      height: 65,
+                      width: 65,
+                      fit: BoxFit.cover,
                     ),
                   ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        widget.garage.name,
-                        style: TextStyle(
-                            fontSize: fontSizeL, fontWeight: FontWeight.w600),
-                        softWrap: true,
-                        maxLines: 1,
-                      ),
-                      Row(
-                        children: [
-                          Text(tPhone + ': '),
-                          Text(
-                            widget.garage.phone,
-                          )
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Text(tEmail + ': '),
-                          Text(
-                            widget.garage.email.toString(),
-                          )
-                        ],
-                      )
-                    ],
-                  )
-                ],
-              ),
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      widget.garage.name,
+                      style: TextStyle(
+                          fontSize: fontSizeL, fontWeight: FontWeight.w600),
+                      softWrap: true,
+                      maxLines: 1,
+                    ),
+                    Row(
+                      children: [
+                        Text(tPhone + ': '),
+                        Text(
+                          widget.garage.phone,
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Text(tEmail + ': '),
+                        Text(
+                          widget.garage.email.toString(),
+                        )
+                      ],
+                    )
+                  ],
+                )
+              ],
             ),
-          )
-        ],
-      ),
+          ),
+        )
+      ],
     );
   }
 }

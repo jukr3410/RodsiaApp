@@ -48,87 +48,31 @@ class _SelectServiceOfGarageState extends State<SelectServiceOfGarage> {
       test[widget.services[i].toString()] = false;
     }
 
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: defualtPaddingMedium,
-        right: defualtPaddingMedium,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          SizedBox(
-            height: 15,
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: defualtPaddingLow),
-            child: Text(
-              tServiceOfGarageThai,
-              style: TextStyle(fontSize: fontSizeL),
-            ),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Container(
-            height: 220,
-            child: ListView.builder(
-                itemCount: widget.services.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                    elevation: 3,
-                    // margin: new EdgeInsets.symmetric(vertical: 4.0),
-                    color: cardColor,
-                    child: ListTile(
-                      title: _makeCardWidget(widget.services[index]),
-                      trailing: Radio(
-                          value: index,
-                          groupValue: val,
-                          onChanged: (int? value) {
-                            setState(() {
-                              val = value!;
-                              logger.d(widget.services[index].name);
-                            });
-                          }),
-                    ),
-                  );
-                }),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          TextField(
-            style: TextStyle(fontSize: 12),
-            maxLines: 2,
-            decoration: InputDecoration(
-              contentPadding: EdgeInsets.all(defualtPaddingLow),
-              alignLabelWithHint: true,
-              border: OutlineInputBorder(),
-              helperText: 'เช่น ยางรั่ว, ยางระเบิด, เบรคไม่อยู่, สตาร์ทไม่ติด',
-              helperStyle: TextStyle(fontSize: 10),
-              hintText:
-                  'รายละเอียดเพิ่มเติม(ไม่จำเป็น) เช่น ยางรั่ว, ยางระเบิด, เบรคไม่อยู่, สตาร์ทไม่ติด',
-              labelText: 'รายละเอียดเพิ่มเติม',
-            ),
-          ),
-          Expanded(
-            child: Align(
-              alignment: FractionalOffset.bottomCenter,
-              child: Container(
-                // margin: EdgeInsets.only(bottom: defualtPaddingHight+20),
-                width: double.infinity,
-                height: buttonHeightSmall,
-                child: TextButton(
-                  onPressed: () {
-                    navigateToConfirmRequest();
-                  },
-                  style: flatButtonStyle(primaryColor, textColorBlack),
-                  child: Text(tNext),
-                ),
+    return Container(
+      height: widget.services.length < 6 ? null : 320,
+      child: ListView.builder(
+          scrollDirection: Axis.vertical,
+          shrinkWrap: true,
+          itemCount: widget.services.length,
+          itemBuilder: (context, index) {
+            return Card(
+              elevation: 3,
+              // margin: new EdgeInsets.symmetric(vertical: 4.0),
+              color: cardColor,
+              child: ListTile(
+                title: _makeCardWidget(widget.services[index]),
+                trailing: Radio(
+                    value: index,
+                    groupValue: val,
+                    onChanged: (int? value) {
+                      setState(() {
+                        val = value!;
+                        logger.d(widget.services[index].name);
+                      });
+                    }),
               ),
-            ),
-          )
-        ],
-      ),
+            );
+          }),
     );
   }
 
