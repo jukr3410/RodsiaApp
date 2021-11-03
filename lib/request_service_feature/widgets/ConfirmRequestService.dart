@@ -40,6 +40,18 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
         .toList();
   }
 
+  List mockupImage = [
+    'https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dmlld3xlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80',
+    'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
+    'https://www.industrialempathy.com/img/remote/ZiClJf-1920w.jpg',
+    'https://images.unsplash.com/photo-1612151855475-877969f4a6cc?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGQlMjBpbWFnZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80',
+    'https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dmlld3xlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80',
+    'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
+    'https://www.industrialempathy.com/img/remote/ZiClJf-1920w.jpg',
+    'https://www.industrialempathy.com/img/remote/ZiClJf-1920w.jpg',
+    'https://images.unsplash.com/photo-1612151855475-877969f4a6cc?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGQlMjBpbWFnZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80',
+  ];
+
   TextStyle _textTitle = TextStyle(
       color: textColorBlack, fontWeight: FontWeight.w600, fontFamily: 'Kanit');
 
@@ -61,26 +73,14 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
     return AppBar(
       backgroundColor: primaryColor,
       centerTitle: true,
-      // title: Text(
-      //   tAddService,
-      //   style: TextStyle(color: textColorBlack, fontSize: fontSizeSemiLarge),
-      // ),
-      leading: IconButton(
-        icon: Icon(
-          Icons.arrow_back,
-          color: iconColorBlack,
+      title: Text(
+        'สรุปรายการขอบริการ',
+        style: TextStyle(
+          color: textColorBlack,
+          fontSize: fontSizeL
         ),
-        onPressed: () {
-          navigateToGarageinfo();
-        },
       ),
-      actions: [
-        // IconButton(
-        //   icon: Icon(Icons.add, color: iconColorBlack),
-        //   onPressed: () {},
-        //   iconSize: 30.0,
-        // ),
-      ],
+      iconTheme: IconThemeData(color: textColorBlack),
     );
   }
 
@@ -103,87 +103,76 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
       }
     }, builder: (context, state) {
       return Container(
-        child:
-            // Container(
-            //   width: buttonWidthMedium,
-            //   height: buttonHeightMedium,
-            //   child:
-            //   TextButton(
-            //     onPressed: () {
-            //       createRequestService();
-            //     },
-            //     style: flatButtonStyle(primaryColor, textColorBlack),
-            //     child: Text(tConfirm),
-            //   ),
-            // ),
-            Padding(
+        child: Padding(
           padding: const EdgeInsets.all(defualtPaddingMedium),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(tSelectCarForRequest + ':', style: _textTitle),
-              SizedBox(
-                height: 5,
-              ),
-              ShowInfoCarCard(car: mockUpCar[selectedIndex]),
-              SizedBox(
-                height: 5,
-              ),
-              DirectSelect(
-                  itemExtent: 40.0,
-                  backgroundColor: bgColor,
-                  selectedIndex: selectedIndex,
-                  mode: DirectSelectMode.drag,
-                  child: SelectionItem(
-                    isForList: false,
-                    car: mockUpCar[selectedIndex],
-                  ),
-                  onSelectedItemChanged: (int? index) {
-                    setState(() {
-                      selectedIndex = index!;
-                      car = mockUpCar[selectedIndex];
-                      print(car.toJson());
-                    });
-                  },
-                  items: _buildItems()),
-              SizedBox(
-                height: defualtPaddingLow,
-              ),
-              Text(
-                tLocationCurrent + ':',
-                style: _textTitle,
-              ),
-              Row(
-                children: [
-                  Icon(Icons.map, size: 15),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Text(
-                    '23456 แขวงนู่น เขตนี่',
-                    softWrap: true,
-                    maxLines: 3,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: defualtPaddingLow + 4,
-              ),
-              Text(
-                'ร้านผู้ให้บริการ:',
-                style: _textTitle,
-              ),
-              Text('168 Garage'),
-              SizedBox(
-                height: defualtPaddingLow + 4,
-              ),
-              Text(
-                'บริการที่เลือก' + ':',
-                style: _textTitle,
-              ),
-              Expanded(
-                child: ListView.builder(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(tSelectCarForRequest + ':', style: _textTitle),
+                SizedBox(
+                  height: 5,
+                ),
+                ShowInfoCarCard(car: mockUpCar[selectedIndex]),
+                SizedBox(
+                  height: 5,
+                ),
+                DirectSelect(
+                    itemExtent: 40.0,
+                    backgroundColor: bgColor,
+                    selectedIndex: selectedIndex,
+                    mode: DirectSelectMode.drag,
+                    child: SelectionItem(
+                      isForList: false,
+                      car: mockUpCar[selectedIndex],
+                    ),
+                    onSelectedItemChanged: (int? index) {
+                      setState(() {
+                        selectedIndex = index!;
+                        car = mockUpCar[selectedIndex];
+                        print(car.toJson());
+                      });
+                    },
+                    items: _buildItems()),
+                SizedBox(
+                  height: defualtPaddingLow,
+                ),
+                Text(
+                  tLocationCurrent + ':',
+                  style: _textTitle,
+                ),
+                Row(
+                  children: [
+                    Icon(Icons.map, size: 15),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      '23456 แขวงนู่น เขตนี่',
+                      softWrap: true,
+                      maxLines: 3,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: defualtPaddingLow + 4,
+                ),
+                Text(
+                  'ร้านผู้ให้บริการ:',
+                  style: _textTitle,
+                ),
+                Text('168 Garage'),
+                SizedBox(
+                  height: defualtPaddingLow + 4,
+                ),
+                Text(
+                  'บริการที่เลือก' + ':',
+                  style: _textTitle,
+                ),
+                ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
                     itemCount: mockupService.length,
                     itemBuilder: (context, index) => Row(
                           children: [
@@ -197,57 +186,84 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
                             Text(mockupService[index]),
                           ],
                         )),
-              ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: 1.0,
-                child: const DecoratedBox(
-                  decoration: const BoxDecoration(color: textColorBlack),
+                // SizedBox(
+                //   width: MediaQuery.of(context).size.width,
+                //   height: 1.0,
+                //   child: const DecoratedBox(
+                //     decoration: const BoxDecoration(color: textColorBlack),
+                //   ),
+                // ),
+                SizedBox(
+                  height: defualtPaddingLow + 4,
                 ),
-              ),
-              Text(
-                'หมายเหตุ' + ':',
-                style: _textTitle,
-              ),
-              Row(
-                children: [
-                  Icon(
-                    Icons.description,
-                    size: 15,
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Text(
-                    'ยากแบนเพราะเกิดจากอะไรไม่รู้',
-                    maxLines: 2,
-                    softWrap: true,
-                    overflow: TextOverflow.fade,
-                  )
-                ],
-              ),
-              Expanded(
-                child: Align(
-                  alignment: FractionalOffset.bottomCenter,
-                  child: Container(
-                    margin: EdgeInsets.only(bottom: defualtPaddingMedium),
-                    height: buttonHeightSmall + 5,
-                    width: buttonWidthLarge,
-                    child: TextButton(
-                      onPressed: () {
-                        _navigateAndDisplaySelection(context);
-                      },
-                      child: Text(tRequestServiceThai),
-                      style: flatButtonStyle(primaryColor, textColorBlack),
+                Text(
+                  'รูปภาพประกอบ' + ':',
+                  style: _textTitle,
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                addImageForReq(),
+                SizedBox(
+                  height: defualtPaddingLow + 4,
+                ),
+                Text(
+                  'หมายเหตุ' + ':',
+                  style: _textTitle,
+                ),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.description,
+                      size: 15,
                     ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      'ยากแบนเพราะเกิดจากอะไรไม่รู้',
+                      maxLines: 2,
+                      softWrap: true,
+                      overflow: TextOverflow.fade,
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  margin: EdgeInsets.only(bottom: defualtPaddingMedium),
+                  height: buttonHeightSmall + 5,
+                  width: buttonWidthLarge,
+                  child: TextButton(
+                    onPressed: () {
+                      _navigateAndDisplaySelection(context);
+                    },
+                    child: Text(tRequestServiceThai),
+                    style: flatButtonStyle(primaryColor, textColorBlack),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       );
     }));
+  }
+
+  Widget addImageForReq() {
+    return GridView.count(
+      crossAxisCount: 4,
+      mainAxisSpacing: 5,
+      crossAxisSpacing: 5,
+      shrinkWrap: true,
+      children: List.generate(
+          mockupImage.length,
+          (index) => Image.network(
+                mockupImage[index].toString(),
+                fit: BoxFit.cover,
+              )),
+    );
   }
 
   navigateToGarageinfo() {

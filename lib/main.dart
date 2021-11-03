@@ -2,11 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:rodsiaapp/request_service_feature/widgets/requestDetailAndGiveStarPage.dart';
-import 'package:rodsiaapp/request_service_feature/widgets/selectServicePage.dart';
 import 'package:rodsiaapp/router.dart';
-
-import 'constants.dart';
 
 void main() {
   Bloc.observer = GarageBlocObserver();

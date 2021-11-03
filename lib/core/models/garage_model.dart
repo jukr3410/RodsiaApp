@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:rodsiaapp/core/models/service_model.dart';
+
 import 'geo_location_model.dart';
 
 Garage userFromJson(String str) => Garage.fromJson(json.decode(str));
@@ -11,16 +13,16 @@ Garage userFromJson(String str) => Garage.fromJson(json.decode(str));
 String userToJson(Garage data) => json.encode(data.toJson());
 
 class Garage {
-  Garage({
-    required this.address,
-    this.openingHour,
-    required this.images,
-    this.logoImage,
-    required this.id,
-    required this.name,
-    required this.phone,
-    this.email,
-  });
+  Garage(
+      {required this.address,
+      this.openingHour,
+      required this.images,
+      this.logoImage,
+      required this.id,
+      required this.name,
+      required this.phone,
+      this.email,
+      required this.services});
 
   Address address;
   OpeningHour? openingHour;
@@ -30,16 +32,19 @@ class Garage {
   String name;
   String phone;
   String? email;
+  List<Service> services;
 
   factory Garage.fromJson(Map<String, dynamic> json) => Garage(
-      address: Address.fromJson(json["address"]),
-      openingHour: OpeningHour.fromJson(json["openingHour"]),
-      images: List<String>.from(json["images"].map((x) => x)),
-      logoImage: json["logoImage"],
-      id: json["_id"],
-      name: json["name"],
-      phone: json["phone"],
-      email: json["email"]);
+        address: Address.fromJson(json["address"]),
+        openingHour: OpeningHour.fromJson(json["openingHour"]),
+        images: List<String>.from(json["images"].map((x) => x)),
+        logoImage: json["logoImage"],
+        id: json["_id"],
+        name: json["name"],
+        phone: json["phone"],
+        email: json["email"],
+        services: List<Service>.from(json["services"].map((x) => x)),
+      );
 
   Map<String, dynamic> toJson() => {
         "address": address.toJson(),
@@ -49,7 +54,8 @@ class Garage {
         "_id": id,
         "name": name,
         "phone": phone,
-        "email": email
+        "email": email,
+        "services": List<dynamic>.from(services.map((x) => x))
       };
 }
 

@@ -6,6 +6,7 @@ import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/request_service_model.dart';
+import 'package:rodsiaapp/global_widgets/supportButton.dart';
 import 'package:rodsiaapp/request_service_feature/bloc/request_service_bloc.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/cardWaitForGarage.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
@@ -47,14 +48,7 @@ class _WaitForGaragePageState extends State<WaitForGaragePage> {
             automaticallyImplyLeading: false,
             backgroundColor: bgColor,
             title: Container(
-              alignment: Alignment.centerRight,
-              child: GFButton(
-                type: GFButtonType.transparent,
-                textStyle: TextStyle(fontSize: 14, color: textColorBlack),
-                child: Text(tSupportThai),
-                onPressed: () {},
-              ),
-            ),
+                alignment: Alignment.centerRight, child: SupportButton()),
           ),
           body: CardWaitForGarage(),
         );

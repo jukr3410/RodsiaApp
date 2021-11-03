@@ -31,6 +31,8 @@ class _MapViewState extends State<MapView> {
   final geoService = GeoLocatorService();
   final markerService = MarkerService();
 
+  Garage? _garageShow;
+
   final List<Garage> _garages = [];
   List<Marker> markers = <Marker>[];
 
@@ -190,100 +192,185 @@ class _MapViewState extends State<MapView> {
                       child: Container(
                         decoration: BoxDecoration(
                             color: textColorWhite,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(20.0),
-                            ),
+                            borderRadius: borderRadiusMedium,
                             boxShadow: [boxShadow]),
                         width: width * 0.9,
-                        child: Padding(
-                            padding: const EdgeInsets.only(top: 10.0),
-                            child: BlocBuilder<GarageListBloc, GarageListState>(
-                              builder: (context, state) {
-                                if (state is ShowGarageInfoSuccess) {
-                                  return Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Row(
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 10, right: 10),
-                                              child: Icon(
-                                                Icons.store_outlined,
-                                                size: 32,
-                                              ),
+                        child: BlocBuilder<GarageListBloc, GarageListState>(
+                          builder: (context, state) {
+                            if (_garageShow != null) {
+                              return Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        CircleAvatar(
+                                          backgroundColor: Colors.transparent,
+                                          radius: 40,
+                                          child: ClipOval(
+                                            child: Image.network(
+                                              'https://bestkru-thumbs.s3-ap-southeast-1.amazonaws.com/127401',
+                                              width: 110,
+                                              height: 100,
+                                              fit: BoxFit.cover,
                                             ),
-                                            Flexible(
-                                                child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                right: 15,
-                                                bottom: 10,
-                                              ),
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    state.garage.name,
-                                                    style: TextStyle(
-                                                        fontSize: fontSizeXl,
-                                                        color: textColorBlack),
-                                                  ),
-                                                  Text(
-                                                    state.garage.phone,
-                                                    maxLines: 2,
-                                                    softWrap: true,
-                                                    style: TextStyle(
-                                                        fontSize: 14,
-                                                        color: textColorBlack),
-                                                  ),
-                                                ],
-                                              ),
-                                            )),
-                                          ],
-                                        ),
-                                      ),
-                                      Container(
-                                        height: 40,
-                                        child: TextButton(
-                                          onPressed: () {
-                                            if (state.garage != null) {
-                                              navigateToGarageInfo(
-                                                  state.garage.id);
-                                            } else {}
-                                          },
-                                          child: Text(
-                                            "รายละเอียดเพิ่มเติม",
-                                            style: TextStyle(
-                                                fontSize: fontSizeM,
-                                                color: textColorBlack),
                                           ),
-                                          style: ButtonStyle(
-                                              backgroundColor:
-                                                  MaterialStateProperty.all<
-                                                      Color>(primaryColor),
-                                              shape: MaterialStateProperty.all<
-                                                      RoundedRectangleBorder>(
-                                                  RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(10),
-                                              ))),
                                         ),
-                                      )
-                                    ],
-                                  );
-                                }
-                                return Wrap(children: <Widget>[
+                                        SizedBox(
+                                          width: 15,
+                                        ),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              _garageShow!.name,
+                                              softWrap: true,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.fade,
+                                              style: new TextStyle(
+                                                  fontSize: fontSizeL,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: textColorBlack),
+                                            ),
+                                            Row(children: [
+                                              Text(
+                                                "distance: " + "12 km",
+                                                style: new TextStyle(
+                                                    fontSize: fontSizeM,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                    color: textColorBlack),
+                                              ),
+                                              Text(
+                                                " | ",
+                                                style: new TextStyle(
+                                                    fontSize: fontSizeM,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                    color: Colors.black54),
+                                              ),
+                                              Icon(
+                                                Icons.star,
+                                                color: primaryColor,
+                                                size: 20,
+                                              ),
+                                              Text(
+                                                " " + "3.9",
+                                                style: new TextStyle(
+                                                    fontSize: fontSizeM,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                    color: textColorBlack),
+                                              ),
+                                            ]),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  tServiceThai + ': ',
+                                                ),
+                                                // ListView.builder(
+                                                //     scrollDirection:
+                                                //         Axis.horizontal,
+                                                //     shrinkWrap: true,
+                                                //     itemBuilder:
+                                                //         (context, index) {
+                                                //       return Image.asset(
+                                                //         tImageAsset(
+                                                //             serviceType[0]
+                                                //                 .toString()),
+                                                //         width: 18,
+                                                //       );
+                                                //     }),
+                                                Image.asset(
+                                                  tImageAsset(serviceType[0]
+                                                      .toString()),
+                                                  width: 18,
+                                                ),
+                                                SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Image.asset(
+                                                  tImageAsset(serviceType[1]
+                                                      .toString()),
+                                                  width: 18,
+                                                ),
+                                                SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Image.asset(
+                                                  tImageAsset(serviceType[2]
+                                                      .toString()),
+                                                  width: 18,
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(
+                                                  'close',
+                                                  style: TextStyle(
+                                                      fontSize: fontSizeM,
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                      color: textColorRed),
+                                                ),
+                                                // Padding(
+                                                //   padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                                                //   child: Icon(Icons.data_usage),
+                                                // ),
+                                              ],
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
                                   Container(
-                                      alignment: Alignment.center,
-                                      child: Text("เลือกร้านให้บริการ"))
-                                ]);
-                              },
-                            )),
+                                    height: 30,
+                                    child: TextButton(
+                                      onPressed: () {
+                                        navigateToGarageInfo(_garageShow!.id);
+                                      },
+                                      child: Text(
+                                        "รายละเอียดเพิ่มเติม",
+                                        style: TextStyle(
+                                            fontSize: fontSizeS,
+                                            color: textColorBlack),
+                                      ),
+                                      style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all<Color>(
+                                                  primaryColor),
+                                          shape: MaterialStateProperty.all<
+                                                  RoundedRectangleBorder>(
+                                              RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      borderRadiusMediumOnlyBottom))),
+                                    ),
+                                  )
+                                ],
+                              );
+                            }
+                            return Wrap(children: <Widget>[
+                              Container(
+                                  alignment: Alignment.center,
+                                  child: Text("เลือกร้านให้บริการ"))
+                            ]);
+                          },
+                        ),
                       ),
                     ),
                   ),
@@ -348,9 +435,12 @@ class _MapViewState extends State<MapView> {
           icon: icon,
           infoWindow: InfoWindow(title: garage.name),
           onTap: () {
+            setState(() {
+              _garageShow = garage;
+              logger.d("Marker Tap garageId: ${garage.id}");
+              // _garageListBloc.add(ShowGarageInfo(garage: _garageShow));
+            });
             //_garage = garage;
-            logger.d("Marker Tap garageId: ${garage.id}");
-            _garageListBloc.add(ShowGarageInfo(garage: garage));
           },
           position: LatLng(double.parse(garage.address.geoLocation.lat),
               double.parse(garage.address.geoLocation.long)));

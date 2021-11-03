@@ -75,32 +75,53 @@ class _MenusSettingState extends State<MenusSetting> {
                       child: Padding(
                         padding: const EdgeInsets.only(top: 70),
                         child: Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              borderRadius: borderRadiusHightOnlyTop,
-                              color: bgColor),
-                          child: Padding(
-                              padding:
-                                  const EdgeInsets.all(defualtPaddingHight),
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                      border: Border(
-                                          bottom: BorderSide(
-                                    color: Colors.grey.shade400,
-                                  ))),
-                                  child: Column(
-                                    children: [
-                                      _TextButtonManus(
-                                          menusSetting[0], PROFILE_ROUTE),
-                                      _TextButtonManus(
-                                          menusSetting[1], PROFILE_ROUTE),
-                                      _TextButtonManus(
-                                          menusSetting[2], PROFILE_ROUTE),
-                                      _TextButtonManus(
-                                          menusSetting[3], PROFILE_ROUTE),
-                                    ],
-                                  ))),
-                        ),
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                borderRadius: borderRadiusHightOnlyTop,
+                                color: bgColor),
+                            child: Padding(
+                                padding:
+                                    const EdgeInsets.all(defualtPaddingHight),
+                                child: Container(
+                                    decoration: BoxDecoration(
+                                        border: Border(
+                                            bottom: BorderSide(
+                                      color: Colors.grey.shade400,
+                                    ))),
+                                    child: ListView.builder(
+                                        itemCount: menusSetting.length,
+                                        itemBuilder: (context, index) {
+                                          return Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              GestureDetector(
+                                                child: Text(
+                                                  menusSetting[index]
+                                                      .toString(),
+                                                  style: TextStyle(
+                                                    fontSize: fontSizeM,
+                                                    color: textColorBlack,
+                                                  ),
+                                                ),
+                                                onTap: () {
+                                                  if (index ==
+                                                      menusSetting.length - 1) {
+                                                    _authenticationBloc
+                                                        .add(LoggedOut());
+                                                  } else {
+                                                    navigator(
+                                                        menusSettingRoute[index]
+                                                            .toString());
+                                                  }
+                                                },
+                                              ),
+                                              Divider(
+                                                color: textColorBlack,
+                                              ),
+                                            ],
+                                          );
+                                        })))),
                       ),
                     ),
                   ],
@@ -110,36 +131,6 @@ class _MenusSettingState extends State<MenusSetting> {
           },
         );
       },
-    );
-  }
-
-  Widget _TextButtonManus(String name, String route) {
-    return Column(
-      children: [
-        Container(
-          alignment: Alignment.centerLeft,
-          height: 35,
-          child: TextButton(
-            onPressed: () {
-              if (name == menusSetting[3]) {
-                _authenticationBloc.add(LoggedOut());
-              } else {
-                navigator(route);
-              }
-            },
-            child: (Text(
-              name,
-              style: TextStyle(
-                fontSize: fontSizeM,
-                color: textColorBlack,
-              ),
-            )),
-          ),
-        ),
-        Divider(
-          color: Colors.grey,
-        ),
-      ],
     );
   }
 

@@ -17,7 +17,7 @@ class _AlertPleaseInputInfoState extends State<AlertPleaseInputInfo> {
       ),
       content: new Text(tPlearInputInfo),
       actions: <Widget>[
-        new FlatButton(
+        FlatButton(
           color: primaryColor,
           textColor: textColorBlack,
           child: new Text(tOKThai),

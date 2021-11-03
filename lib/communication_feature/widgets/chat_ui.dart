@@ -25,7 +25,7 @@ class _ChatUiState extends State<ChatUi> {
           backgroundColor: primaryColor,
           iconTheme: IconThemeData(color: textColorBlack),
           title: Text(
-            garageMockup.name,
+            'Garage1892',
             style: TextStyle(
                 color: textColorBlack,
                 fontSize: fontSizeXl,

@@ -7,14 +7,20 @@ import 'package:rodsiaapp/core/models/garage_model.dart';
 import 'package:rodsiaapp/core/models/user_model.dart';
 import 'package:rodsiaapp/core/repository/garage_repository.dart';
 import 'package:rodsiaapp/core/repository/service_repository.dart';
+import 'package:rodsiaapp/core/repository/service_type_repository.dart';
+import 'package:rodsiaapp/find_garage_feature/bloc/service_type_bloc.dart';
+import 'package:rodsiaapp/find_garage_feature/widgets/filterGarage.dart';
 import 'package:rodsiaapp/find_garage_feature/widgets/garageList.dart';
 import 'package:rodsiaapp/find_garage_feature/widgets/mapView.dart';
 import 'package:rodsiaapp/find_problem_feature/widgets/findProblemFormSelected.dart';
 import 'package:rodsiaapp/global_widgets/bottomNavigrationBarPage.dart';
 import 'package:rodsiaapp/global_widgets/invalidRoute.dart';
+import 'package:rodsiaapp/global_widgets/supportCenterPage.dart';
 import 'package:rodsiaapp/home/app.dart';
 import 'package:rodsiaapp/home/appBar.dart';
 import 'package:rodsiaapp/home/bloc/home_bloc.dart';
+import 'package:rodsiaapp/notify_feature/widgets/notifyFormSelectPage.dart';
+import 'package:rodsiaapp/notify_feature/widgets/notifyPage.dart';
 import 'package:rodsiaapp/profile_feature/widgets/ProfilePage.dart';
 import 'package:rodsiaapp/profile_feature/widgets/add_car/selectMoreChoice.dart';
 import 'package:rodsiaapp/profile_feature/widgets/add_car/selectCarTypePage.dart';
@@ -73,6 +79,10 @@ class AppRouter {
                       BlocProvider(
                         create: (BuildContext context) =>
                             ProfileBloc(userRepository: UserRepository()),
+                      ),
+                      BlocProvider(
+                        create: (BuildContext context) => ServiceTypeBloc(
+                            serviceTypeRepository: ServiceTypeRepository()),
                       ),
                     ],
                     child: CustomAppBar(
@@ -244,6 +254,14 @@ class AppRouter {
             builder: (_) => FindProblemFormSelected(
                   findProblem: numOfFindProblem,
                 ));
+
+      case SUPPORT_CENTER_ROUTE:
+        return MaterialPageRoute(builder: (_) => SupportCenterPage());
+
+      case NOTIFY_ROUTE:
+        NotifyInfo notify = settings.arguments as NotifyInfo;
+        return MaterialPageRoute(
+            builder: (_) => NotifyFromSelectPage(notify: notify));
 
       default:
         return MaterialPageRoute(builder: (_) => InvalidRouteScreen());

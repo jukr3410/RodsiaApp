@@ -201,11 +201,17 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
               ),
               IconButton(
                   icon: ImageIcon(AssetImage(tImageAsset('message'))),
-                  onPressed: () {}),
+                  onPressed: () {
+                    navigatorToChat();
+                  }),
             ],
           )
         ],
       ),
     );
+  }
+
+  void navigatorToChat() {
+    Navigator.pushNamed(context, CHAT_ROUTE);
   }
 }

@@ -4,6 +4,7 @@ import 'package:rodsiaapp/core/models/request_service_model.dart';
 import 'dart:convert';
 import 'package:rodsiaapp/constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:rodsiaapp/core/models/service_model.dart';
 
 import '../../main.dart';
 
@@ -43,5 +44,23 @@ class RequestServiceApi {
     RequestServiceAdd requestService = RequestServiceAdd.fromJson(decodedJson);
     logger.d(requestService);
     return requestService;
+  }
+
+  Future<List<RequestService>> getRequestServiceByUserId(
+      {required String id}) async {
+    List<RequestService> requestServices = [];
+    final url = '$baseUrl/request-services/user/$id';
+    final response = await http.get(Uri.parse(url), headers: headers);
+    if (response.statusCode != 200) {
+      logger.e(response);
+      throw new Exception('There was a problem ${response.statusCode}');
+    }
+    final decodedJson = jsonDecode(response.body) as List;
+    logger.d(decodedJson);
+    requestServices = decodedJson
+        .map((decodedJson) => RequestService.fromJson(decodedJson))
+        .toList();
+    logger.d(requestServices);
+    return requestServices;
   }
 }

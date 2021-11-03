@@ -21,7 +21,7 @@ class _InfoGarageFormSelectState extends State<InfoGarageFormSelect> {
       children: [
         CarouselImageReqService(),
         Container(
-          height: 100,
+          height: 90,
           margin: EdgeInsets.only(
             top: 170,
             left: defualtPaddingHight,
@@ -34,8 +34,12 @@ class _InfoGarageFormSelectState extends State<InfoGarageFormSelect> {
           child: Padding(
             padding: const EdgeInsets.all(defualtPaddingLow),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                SizedBox(
+                  width: 5,
+                ),
                 CircleAvatar(
                   backgroundColor: Colors.transparent,
                   radius: 35,
@@ -49,7 +53,7 @@ class _InfoGarageFormSelectState extends State<InfoGarageFormSelect> {
                   ),
                 ),
                 SizedBox(
-                  width: 20,
+                  width: 10,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,7 +81,7 @@ class _InfoGarageFormSelectState extends State<InfoGarageFormSelect> {
                           widget.garage.email.toString(),
                         )
                       ],
-                    )
+                    ),
                   ],
                 )
               ],

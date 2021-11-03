@@ -19,6 +19,11 @@ class RequestServiceRepository {
     return await requestServiceApi.getRequestService(id: id);
   }
 
+  Future<List<RequestService>> getRequestServiceByUserId(
+      {required String id}) async {
+    return await requestServiceApi.getRequestServiceByUserId(id: id);
+  }
+
   Future<String> createRequestService(
       {required RequestServiceAdd requestServiceAdd}) async {
     return await requestServiceApi.createRequestService(

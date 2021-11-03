@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/user_model.dart';
+import 'package:rodsiaapp/core/repository/service_type_repository.dart';
+import 'package:rodsiaapp/find_garage_feature/bloc/service_type_bloc.dart';
 import 'package:rodsiaapp/find_garage_feature/widgets/homePage.dart';
 import 'package:rodsiaapp/find_garage_feature/widgets/filterGarage.dart';
 import 'package:rodsiaapp/find_problem_feature/widgets/findProblemPage.dart';
 import 'package:rodsiaapp/global_widgets/hexTocolor.dart';
 import 'package:rodsiaapp/global_widgets/menusSetting.dart';
-import 'package:rodsiaapp/global_widgets/notifyPage.dart';
+import 'package:rodsiaapp/notify_feature/widgets/notifyPage.dart';
 import 'package:rodsiaapp/profile_feature/widgets/ProfilePage.dart';
 
 class BottomNavigrationBar extends StatefulWidget {
@@ -62,8 +65,13 @@ class _BottomNavigrationBarState extends State<BottomNavigrationBar> {
     return Scaffold(
       body: _pageWidget.elementAt(_selectedIndex),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton:
-          Container(height: 60, width: 60, child: FilterGarage()),
+      floatingActionButton: Container(
+          height: 60,
+          width: 60,
+          child: BlocProvider(
+              create: (context) => ServiceTypeBloc(
+                  serviceTypeRepository: ServiceTypeRepository()),
+              child: FilterGarage())),
       bottomNavigationBar: Container(
         child: BottomNavigationBar(
           items: _menuBar,

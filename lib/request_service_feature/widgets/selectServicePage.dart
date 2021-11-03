@@ -4,6 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:rodsiaapp/constants.dart';
+import 'package:rodsiaapp/core/models/service_model.dart';
+import 'package:rodsiaapp/global_widgets/alertPleaseInputInfo.dart';
+import 'package:rodsiaapp/main.dart';
 import 'package:rodsiaapp/request_service_feature/bloc/garage_info_bloc.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/infoGarageFormSelect.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/selectServiceOfGarage.dart';
@@ -37,6 +40,27 @@ class _SelectServicePageState extends State<SelectServicePage> {
     'https://www.industrialempathy.com/img/remote/ZiClJf-1920w.jpg',
     'https://images.unsplash.com/photo-1612151855475-877969f4a6cc?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGQlMjBpbWFnZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80',
   ];
+
+  int val = -1;
+  Map<String, bool> test = {};
+
+  var holder_1 = [];
+
+  getItems() {
+    test.forEach((key, value) {
+      if (value == true) {
+        holder_1.add(key);
+      }
+    });
+
+    // Printing all selected items on Terminal screen.
+    print(holder_1);
+    // Here you will get all your selected Checkbox items.
+
+    // Clear array after use.
+    holder_1.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,8 +101,33 @@ class _SelectServicePageState extends State<SelectServicePage> {
                           SizedBox(
                             height: 5,
                           ),
-                          SelectServiceOfGarage(
-                            services: state.services,
+                          Container(
+                            height: state.services.length < 6 ? null : 320,
+                            child: ListView.builder(
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemCount: state.services.length,
+                                itemBuilder: (context, index) {
+                                  return Card(
+                                    elevation: 3,
+                                    // margin: new EdgeInsets.symmetric(vertical: 4.0),
+                                    color: cardColor,
+                                    child: ListTile(
+                                      title: _makeCardWidget(
+                                          state.services[index]),
+                                      trailing: Radio(
+                                          value: index,
+                                          groupValue: val,
+                                          onChanged: (int? value) {
+                                            setState(() {
+                                              val = value!;
+                                              logger.d(
+                                                  state.services[index].name);
+                                            });
+                                          }),
+                                    ),
+                                  );
+                                }),
                           ),
                           SizedBox(
                             height: 15,
@@ -147,7 +196,11 @@ class _SelectServicePageState extends State<SelectServicePage> {
                             height: buttonHeightSmall,
                             child: TextButton(
                               onPressed: () {
-                                navigateToConfirmRequest();
+                                if (val == -1) {
+                                  _showDialog(context);
+                                } else {
+                                  navigateToConfirmRequest();
+                                }
                               },
                               style:
                                   flatButtonStyle(primaryColor, textColorBlack),
@@ -165,6 +218,15 @@ class _SelectServicePageState extends State<SelectServicePage> {
           );
         },
       ),
+    );
+  }
+
+  void _showDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertPleaseInputInfo();
+      },
     );
   }
 
@@ -217,5 +279,52 @@ class _SelectServicePageState extends State<SelectServicePage> {
 
   navigateToGarageList() {
     Navigator.pop(context);
+  }
+
+  _makeCardWidget(Service service) {
+    return GestureDetector(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Icon(Icons.build_circle_outlined, size: 40, color: iconColorBlack),
+          Flexible(
+              child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 15.0,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  service.name,
+                  maxLines: 1,
+                  softWrap: false,
+                  style: new TextStyle(
+                      fontSize: fontSizeM,
+                      fontWeight: FontWeight.w600,
+                      color: textColorBlack),
+                ),
+                Container(
+                  child: Text(
+                    service.description.toString(),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    softWrap: false,
+                    style: TextStyle(
+                        fontSize: fontSizeS,
+                        fontWeight: FontWeight.normal,
+                        color: textColorBlack),
+                  ),
+                )
+              ],
+            ),
+          )),
+        ],
+      ),
+      onTap: () {
+        //Navigator.pushNamed(context, EDIT_SERVICE_ROUTE);
+        // navigateToServiceEdit(service);
+      },
+    );
   }
 }

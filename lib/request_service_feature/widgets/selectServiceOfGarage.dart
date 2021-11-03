@@ -13,15 +13,6 @@ class SelectServiceOfGarage extends StatefulWidget {
 }
 
 class _SelectServiceOfGarageState extends State<SelectServiceOfGarage> {
-  Map<String, bool> mockupList = {
-    'ยาง': false,
-    'แบตเตอรี่': false,
-    'ทุกเซอร์วิส': false,
-    'เติมน้ำมัน': false,
-    'เครื่องยนต์': false,
-    'รถลาก': false,
-    // 'รถยก': false,
-  };
   int val = -1;
   Map<String, bool> test = {};
 

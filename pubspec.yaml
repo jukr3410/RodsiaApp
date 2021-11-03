@@ -144,6 +144,10 @@ flutter:
     - assets/images/icon-nose.png
     - assets/images/icon-hand.png
     - assets/images/icon-startEngine.png
+    - assets/images/icon-phone-support.png
+    - assets/images/icon-email-support.png
+    - assets/images/icon-โปรโมชั่น.png
+    - assets/images/icon-อัพเดต.png
 
     
   # An image asset can refer to one or more resolution-specific "variants", see
