@@ -96,7 +96,6 @@ class _NotifyPageState extends State<NotifyPage> {
       ),
       onTap: () {
         Navigator.pushNamed(context, NOTIFY_ROUTE, arguments: notifyInfo);
-        debugPrint('${notifyInfo.endDate}');
       },
     );
   }

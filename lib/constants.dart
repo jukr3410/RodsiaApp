@@ -231,7 +231,7 @@ const menusSetting = [
 ];
 const menusSettingRoute = [
   PROFILE_ROUTE,
-  PROFILE_ROUTE,
+  HISTORY_ROUTE,
   SUPPORT_CENTER_ROUTE,
   PROFILE_ROUTE,
 ];
@@ -302,8 +302,8 @@ List<String> serviceType = [
   'battery',
   'tire',
   'break',
-  'keydoorcar'
-      'rickshaw',
+  'keydoorcar',
+  'rickshaw',
   'fuel',
 ];
 List<String> serviceTypeName = [
