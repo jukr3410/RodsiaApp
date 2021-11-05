@@ -294,6 +294,7 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
   final RequestServiceAdd requestServiceAdd = RequestServiceAdd(
       user: '6127927b6582ef63c96d3f6e',
       service: '6126688e8a7cff53caba8026',
+      garage: '6129f2b0748ba19d14a2c1e3',
       car: Car(
           id: "",
           brand: "brand",

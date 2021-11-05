@@ -16,6 +16,9 @@ import 'package:rodsiaapp/find_problem_feature/widgets/findProblemFormSelected.d
 import 'package:rodsiaapp/global_widgets/bottomNavigrationBarPage.dart';
 import 'package:rodsiaapp/global_widgets/invalidRoute.dart';
 import 'package:rodsiaapp/global_widgets/supportCenterPage.dart';
+import 'package:rodsiaapp/history_feature/bloc/request_service_bloc.dart'
+    as historyBloc;
+import 'package:rodsiaapp/history_feature/widgets/listHistory.dart';
 import 'package:rodsiaapp/home/app.dart';
 import 'package:rodsiaapp/home/appBar.dart';
 import 'package:rodsiaapp/home/bloc/home_bloc.dart';
@@ -271,6 +274,14 @@ class AppRouter {
         NotifyInfo notify = settings.arguments as NotifyInfo;
         return MaterialPageRoute(
             builder: (_) => NotifyFromSelectPage(notify: notify));
+
+      case HISTORY_ROUTE:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                create: (BuildContext context) =>
+                    historyBloc.RequestServiceBloc(
+                        requestServiceRepository: RequestServiceRepository()),
+                child: Listhistory()));
 
       default:
         return MaterialPageRoute(builder: (_) => InvalidRouteScreen());
