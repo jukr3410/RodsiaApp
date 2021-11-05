@@ -11,6 +11,23 @@ class UserDao {
     return result;
   }
 
+  Future<UserDB> getToken(int id) async {
+    final db = await dbProvider.database;
+    UserDB? userDB;
+    try {
+      List<Map> users =
+          await db.query(userTable, where: 'id = ?', whereArgs: [id]);
+      if (users.length > 0) {
+        users.forEach((row) => {userDB = row as UserDB});
+        return userDB!;
+      } else {
+        return null!;
+      }
+    } catch (error) {
+      return null!;
+    }
+  }
+
   Future<int> deleteUser(int id) async {
     final db = await dbProvider.database;
     var result = await db.delete(userTable, where: "id = ?", whereArgs: [id]);

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:rodsiaapp/core/dao/user_dao.dart';
 import 'package:rodsiaapp/core/models/car_model.dart';
+import 'package:rodsiaapp/core/models/user_login.dart';
 import 'package:rodsiaapp/core/models/user_model.dart';
 import '../../constants.dart';
 import '../../main.dart';
@@ -78,6 +79,25 @@ class UserApi {
     logger.d("$decodedJson");
 
     return true;
+  }
+
+  Future<Token> getTokenLogin({required UserLogin userLogin}) async {
+    final url = '$baseUrl/auth/loginUser';
+    final msg = jsonEncode(userLogin.toJson());
+    final response =
+        await http.post(Uri.parse(url), body: msg, headers: headers);
+    if (response.statusCode != 200) {
+      final decodedJson = jsonDecode(response.body);
+      logger.d("$decodedJson");
+      //return '';
+      throw new Exception('There was a problem ${response.statusCode}');
+    }
+
+    final decodedJson = jsonDecode(response.body);
+    logger.d("$decodedJson");
+    Token token = Token.fromJson(decodedJson);
+    logger.d("$token");
+    return token;
   }
 
   // ไปทำเส้น api ก่อน

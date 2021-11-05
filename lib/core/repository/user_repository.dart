@@ -37,11 +37,11 @@ class UserRepository {
     required String password,
   }) async {
     UserLogin userLogin = UserLogin(phone: phone, password: password);
-    //Token token = await getToken(userLogin);
+    Token token = await userApi.getTokenLogin(userLogin: userLogin);
     UserDB userDB = UserDB(
       id: 0,
       phone: phone,
-      //token: token.token,
+      token: token.token,
     );
     return userDB;
   }
@@ -57,6 +57,11 @@ class UserRepository {
 
   Future<bool> hasToken() async {
     bool result = await userDao.checkUser(0);
+    return result;
+  }
+
+  Future<UserDB> getToken() async {
+    UserDB result = await userDao.getToken(0);
     return result;
   }
 }

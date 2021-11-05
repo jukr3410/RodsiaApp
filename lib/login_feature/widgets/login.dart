@@ -117,9 +117,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                           textStyle: TextStyle(
                                               color: textColorBlack,
                                               fontSize: fontSizeXl)),
-                                      inputFormatters: [
-                                        MaskedInputFormatter('###-###-####')
-                                      ],
+                                      // inputFormatters: [
+                                      //   MaskedInputFormatter('###-###-####')
+                                      // ],
                                       decoration: InputDecoration(
                                         // icon: Icon(Icons.phone_android),
                                         filled: true,

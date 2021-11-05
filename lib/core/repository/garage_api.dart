@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:rodsiaapp/constants.dart';
+import 'package:rodsiaapp/core/dao/user_dao.dart';
 import 'package:rodsiaapp/core/models/garage_model.dart';
+import 'package:rodsiaapp/core/models/user_model_db.dart';
 import 'package:rodsiaapp/main.dart';
 
 class GarageApi {
@@ -11,11 +13,19 @@ class GarageApi {
   //late final http.Client httpClient;
 
   //GarageApi({required this.httpClient});
+  final userDao = UserDao();
+
+  Map<String, String> headers = {
+    'Content-type': 'application/json',
+    'Accept': 'application/json'
+  };
 
   Future<List<Garage>> getGarages({required int page}) async {
+    UserDB token = await userDao.getToken(0);
+    headers.update("Authorization", (value) => 'Bearer $token');
     List<Garage> garages = [];
     final url = '$baseUrl/garages?page=$page&limit=10';
-    final response = await http.get(Uri.parse(url));
+    final response = await http.get(Uri.parse(url), headers: headers);
     if (response.statusCode != 200) {
       print('Exception: ${response.statusCode}');
       throw new Exception('There was a problem ${response.statusCode}');
