@@ -105,20 +105,29 @@ class AppRouter {
       case ADD_NUMBER_ROUTE:
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
-                create: (BuildContext context) => RegisterBloc(),
+                create: (BuildContext context) =>
+                    RegisterBloc(userRepository: UserRepository()),
                 child: AddNumber()));
 
       case OTP_ROUTE:
+        User user = settings.arguments as User;
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
-                create: (BuildContext context) => RegisterBloc(),
-                child: Otp()));
+                create: (BuildContext context) =>
+                    RegisterBloc(userRepository: UserRepository()),
+                child: Otp(
+                  user: user,
+                )));
 
       case REGISTER_ROUTE:
+        User user = settings.arguments as User;
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
-                create: (BuildContext context) => RegisterBloc(),
-                child: AddInfo()));
+                create: (BuildContext context) =>
+                    RegisterBloc(userRepository: UserRepository()),
+                child: AddInfo(
+                  user: user,
+                )));
 
       case HOMEPAGE_ROUTE:
         User user = settings.arguments as User;

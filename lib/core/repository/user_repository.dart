@@ -24,6 +24,14 @@ class UserRepository {
     return await userApi.updateUser(user: user);
   }
 
+  Future<bool> addUser({required User user}) async {
+    return await userApi.addUser(user: user);
+  }
+
+  Future<bool> checkUsedNumberPhone({required User user}) async {
+    return await userApi.checkUsedNumberPhone(user: user);
+  }
+
   Future<UserDB> authenticate({
     required String phone,
     required String password,

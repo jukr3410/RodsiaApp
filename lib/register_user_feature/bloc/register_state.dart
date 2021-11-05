@@ -14,3 +14,9 @@ class RegisterError extends RegisterState {}
 class RegisterLoading extends RegisterState {}
 
 class RegisterSuccess extends RegisterState {}
+
+class RegisterAddNumberSuccess extends RegisterState {}
+
+class RegisterAddNumberExist extends RegisterState {}
+
+class RegisterVerifySuccess extends RegisterState {}

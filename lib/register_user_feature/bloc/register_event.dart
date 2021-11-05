@@ -15,3 +15,51 @@ class RegisterButtonPressed extends RegisterEvent {
   @override
   String toString() => 'Register {user: $user}';
 }
+
+class RegisterCheckPhoneNumber extends RegisterEvent {
+  final String phoneNumber;
+
+  const RegisterCheckPhoneNumber({required this.phoneNumber});
+
+  @override
+  List<Object> get props => [phoneNumber];
+
+  @override
+  String toString() => 'RegisterCheckPhoneNumber {phoneNumber: $phoneNumber}';
+}
+
+class RegisterAddNumber extends RegisterEvent {
+  final User user;
+
+  const RegisterAddNumber({required this.user});
+
+  @override
+  List<Object> get props => [user];
+
+  @override
+  String toString() => 'RegisterAddNumber {user: $user}';
+}
+
+class RegisterVerifyOtp extends RegisterEvent {
+  final User user;
+
+  const RegisterVerifyOtp({required this.user});
+
+  @override
+  List<Object> get props => [user];
+
+  @override
+  String toString() => 'Register {user: $user}';
+}
+
+class RegisterSendOtpAgian extends RegisterEvent {
+  final User user;
+
+  const RegisterSendOtpAgian({required this.user});
+
+  @override
+  List<Object> get props => [user];
+
+  @override
+  String toString() => 'RegisterSendOtpAgian {user: $user}';
+}

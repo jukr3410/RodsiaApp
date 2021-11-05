@@ -1,11 +1,18 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:getwidget/getwidget.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rodsiaapp/constants.dart';
+import 'package:rodsiaapp/core/models/user_model.dart';
+import 'package:rodsiaapp/register_user_feature/bloc/register_bloc.dart';
 import 'package:sms_otp_auto_verify/sms_otp_auto_verify.dart';
 
 class Otp extends StatefulWidget {
+  User user;
+  Otp({Key? key, required this.user}) : super(key: key);
+
   @override
   _OtpState createState() => _OtpState();
 }
@@ -15,6 +22,7 @@ class _OtpState extends State<Otp> {
     return new Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
   }
 
+  final _controller = TextEditingController();
   GlobalKey<FormState> _form = GlobalKey<FormState>();
 
   bool _isLoadingButton = false;
@@ -23,8 +31,22 @@ class _OtpState extends State<Otp> {
   String _otpCode = "";
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
+  late RegisterBloc _registerBloc;
+
+  User _user = User(
+      id: "",
+      name: "",
+      email: "",
+      phone: "",
+      password: "",
+      otp: "",
+      validatePhone: true,
+      cars: []);
+
   @override
   void initState() {
+    _registerBloc = BlocProvider.of<RegisterBloc>(context);
+    _user = widget.user;
     super.initState();
     _getSignatureCode();
   }
@@ -84,15 +106,21 @@ class _OtpState extends State<Otp> {
             Colors.yellow.shade50
           ])),
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          backgroundColor: textColorBlack,
+          backgroundColor: primaryColor,
+          elevation: 0,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios, color: textColorBlack),
+            onPressed: () => navigateBackToAddPhone(),
+          ),
         ),
-        backgroundColor: Colors.transparent,
+        backgroundColor: primaryColor,
         body: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
+                margin: new EdgeInsets.only(top: 50),
                 decoration: BoxDecoration(
                     borderRadius: borderRadiusHight, boxShadow: [boxShadow]),
                 child: ClipRRect(
@@ -102,15 +130,6 @@ class _OtpState extends State<Otp> {
                     height: 150,
                   ),
                 ),
-              ),
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-                // child: Text(
-                //   "RodSiaApp",
-                //   style: GoogleFonts.alata(
-                //       textStyle: TextStyle(color: Colors.white, fontSize: 40)),
-                // ),
               ),
               Padding(
                 padding:
@@ -132,7 +151,7 @@ class _OtpState extends State<Otp> {
                       codeLength: _otpCodeLength,
                       boxSize: 60,
                       filledAfterTextChange: true,
-                      textStyle: TextStyle(fontSize: 35, color: Colors.white),
+                      textStyle: TextStyle(fontSize: 35, color: textColorBlack),
                       borderStyeAfterTextChange: UnderlineInputBorder(
                           borderRadius: BorderRadius.circular(10)),
                       borderStyle: OutlineInputBorder(
@@ -146,31 +165,60 @@ class _OtpState extends State<Otp> {
                     ),
                     // onOtpCallback: (code, isAutofill) =>
                     //     _onOtpCallBack(code, isAutofill),
-                    TextButton(
+                    // TextButton(
+                    //     onPressed: () {
+                    //       // if (_form.currentState.validate()) {
+                    //       // Navigator.push(
+                    //       //     context,
+                    //       //     MaterialPageRoute(
+                    //       //         builder: (context) => RegisterUser()));
+                    //       // }
+                    //       navigateToAddInfo();
+                    //     },
+                    //     style: TextButton.styleFrom(
+                    //       elevation: 2,
+                    //       shadowColor: Colors.black,
+                    //       shape: StadiumBorder(),
+                    //       padding: EdgeInsets.only(
+                    //           left: 137, right: 137, top: 20, bottom: 20),
+                    //       primary: Colors.orange.shade100,
+                    //       backgroundColor: textColorBlack,
+                    //       onSurface: Colors.black,
+                    //     ),
+                    //     child: Text(tNext,
+                    //         style: TextStyle(
+                    //             color: textColorWhite,
+                    //             fontSize: 15,
+                    //             fontWeight: FontWeight.bold))),
+
+                    Container(
+                      width: double.infinity,
+                      alignment: Alignment.center,
+                      child: TextButton(
                         onPressed: () {
-                          // if (_form.currentState.validate()) {
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => RegisterUser()));
-                          // }
-                          navigateToAddInfo();
+                          navigateToAddInfo(_user);
                         },
                         style: TextButton.styleFrom(
-                          elevation: 2,
                           shadowColor: Colors.black,
                           shape: StadiumBorder(),
-                          padding: EdgeInsets.only(
-                              left: 137, right: 137, top: 20, bottom: 20),
-                          primary: Colors.orange.shade100,
+                          padding: EdgeInsets.only(top: 20, bottom: 20),
+                          primary: textColorBlack,
                           backgroundColor: textColorBlack,
                           onSurface: Colors.black,
                         ),
-                        child: Text(tNext,
-                            style: TextStyle(
-                                color: textColorWhite,
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold))),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                tNext,
+                                style: TextStyle(
+                                    color: textColorWhite,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold),
+                              )
+                            ]),
+                      ),
+                    ),
                     SizedBox(
                       height: 20,
                     ),
@@ -190,19 +238,19 @@ class _OtpState extends State<Otp> {
                     // SizedBox(
                     //   height: 40,
                     // ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 30, horizontal: 40),
-                      child: Text(
-                        "By continuing, you agree to RodSiaApp’s Terms of Use and confirm that you have read our Privacy Policy",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: textColorBlack,
-                          fontSize: 12,
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    )
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(
+                    //       vertical: 30, horizontal: 40),
+                    //   child: Text(
+                    //     "By continuing, you agree to RodSiaApp’s Terms of Use and confirm that you have read our Privacy Policy",
+                    //     textAlign: TextAlign.center,
+                    //     style: TextStyle(
+                    //       color: textColorBlack,
+                    //       fontSize: 12,
+                    //       fontWeight: FontWeight.normal,
+                    //     ),
+                    //   ),
+                    // )
                   ],
                 ),
               )
@@ -213,11 +261,22 @@ class _OtpState extends State<Otp> {
     );
   }
 
-  void navigateToAddInfo() {
-    Navigator.pushNamed(context, REGISTER_ROUTE);
+  void navigateToAddInfo(User user) {
+    //Navigator.pushNamed(context, REGISTER_ROUTE);
+    Navigator.pushNamed(context, REGISTER_ROUTE, arguments: user);
   }
 
   void navigateBackToAddPhone() {
     Navigator.of(context).pop();
+  }
+
+  void verifyOTP() {}
+
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is removed from the widget tree.
+    // This also removes the _printLatestValue listener.
+    _controller.dispose();
+    super.dispose();
   }
 }

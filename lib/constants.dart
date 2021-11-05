@@ -10,10 +10,10 @@ import 'core/models/car_model.dart';
 
 //api base url
 //dev localhost api
-//final baseUrlConstant = "http://localhost:3000/api";
+final baseUrlConstant = "http://localhost:3000/api";
 
 // production api
-final baseUrlConstant = 'https://rodsia-api.herokuapp.com/api';
+//final baseUrlConstant = 'https://rodsia-api.herokuapp.com/api';
 
 // router path
 const LOGIN_ROUTE = "/login";
@@ -143,7 +143,7 @@ const mNoGarages = "ไม่พบร้านให้บริการ";
 const mNoMoreGarages = "สิ้นสุดรายการ";
 const mLoading = "กำลังโหลด";
 const mNotFound = "ไม่พบ";
-const mErrorInputPhone = 'โืปดระบุเบอร์โทรศัพท์';
+const mErrorInputPhone = 'โปดระบุเบอร์โทรศัพท์';
 
 // src string for set widget
 String tImageAsset(String imageName) {
@@ -184,7 +184,8 @@ const tModel = 'รุ่น: ';
 const tNext = 'ถัดไป';
 const tYearModel = 'ปี: ';
 const tFuelType = 'เชื้อเพลิง: ';
-const tPassword = "รหัสผ่าน: ";
+const tPassword = "รหัสผ่าน ";
+const tConfirmPassword = "ยืนยันรหัสผ่าน ";
 const tSearch = 'ค้นหา';
 const tNameGarageThai = "ชื่ออู๋:";
 const tNameUserThai = "ชื่อลูกค้า:";
