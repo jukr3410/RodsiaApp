@@ -18,6 +18,7 @@ import 'package:rodsiaapp/global_widgets/invalidRoute.dart';
 import 'package:rodsiaapp/global_widgets/supportCenterPage.dart';
 import 'package:rodsiaapp/history_feature/bloc/request_service_bloc.dart'
     as historyBloc;
+import 'package:rodsiaapp/history_feature/widgets/historyInfoPage.dart';
 import 'package:rodsiaapp/history_feature/widgets/listHistory.dart';
 import 'package:rodsiaapp/home/app.dart';
 import 'package:rodsiaapp/home/appBar.dart';
@@ -282,6 +283,11 @@ class AppRouter {
                     historyBloc.RequestServiceBloc(
                         requestServiceRepository: RequestServiceRepository()),
                 child: Listhistory()));
+      case HISTORY_INFO_ROUTE:
+        RequestService requestService = settings.arguments as RequestService;
+
+        return MaterialPageRoute(
+            builder: (_) => HistoryInfoPage(requestService: requestService));
 
       default:
         return MaterialPageRoute(builder: (_) => InvalidRouteScreen());

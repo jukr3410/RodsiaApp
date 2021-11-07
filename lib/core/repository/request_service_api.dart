@@ -60,7 +60,24 @@ class RequestServiceApi {
     requestServices = decodedJson
         .map((decodedJson) => RequestService.fromJson(decodedJson))
         .toList();
+    for (var i = 0; i < requestServices.length; i++) {
+      List<Service> services = [];
+      final urlService = '$baseUrl/garage/${requestServices[i].service.garage.id}/services';
+      final responseService =
+          await http.get(Uri.parse(urlService), headers: headers);
+      if (responseService.statusCode != 200) {
+        print('Exception service: ${responseService.statusCode}');
+        throw new Exception(
+            'There was a service problem ${responseService.statusCode}');
+      }
+      final decodedJsonService = jsonDecode(responseService.body) as List;
+      services = decodedJsonService
+          .map((decodedJsonService) => Service.fromJson(decodedJsonService))
+          .toList();
+      requestServices[i].service.garage.services = services;
+    }
     logger.d(requestServices);
+
     return requestServices;
   }
 }

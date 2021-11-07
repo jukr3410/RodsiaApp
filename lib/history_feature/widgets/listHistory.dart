@@ -41,16 +41,16 @@ class _ListhistoryState extends State<Listhistory> {
           listener: (context, state) {},
           builder: (context, state) {
             print(state.toString());
-            if (state is RequestServicesLoadSuccess && state != null) {
+            if (state is RequestServicesLoadSuccess) {
               _reqServices.addAll(state.requestServices);
               _widget = ListView.builder(
                   shrinkWrap: true,
                   scrollDirection: Axis.vertical,
-                  itemCount: mockupNotify.length,
+                  itemCount: _reqServices.length,
                   itemBuilder: (context, index) {
                     return cardNotify(_reqServices[index]);
                   });
-            } else if (state is RequestServicesError || state == null) {
+            } else if (state is RequestServicesError) {
               _widget = Center(child: Text('ไม่มีประวัติการใข้งาน!'));
             }
             return _widget;
@@ -75,53 +75,46 @@ class _ListhistoryState extends State<Listhistory> {
                 width: 10,
               ),
               Image.asset(
-                tImageAsset(requestService.service.serviceType.toString()),
-                width: 30,
-                height: 30,
+                tImageAsset(requestService.service.serviceType.name),
+                width: 35,
+                height: 35,
                 fit: BoxFit.cover,
               ),
+              SizedBox(
+                width: 20,
+              ),
               Flexible(
-                  child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: defualtPaddingMedium,
-                  // vertical: 10,
-                ),
-                child: Align(
-                  alignment: Alignment.center,
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        requestService.garage.name,
-                        softWrap: true,
-                        maxLines: 1,
-                        overflow: TextOverflow.fade,
-                        style: new TextStyle(
-                            fontSize: fontSizeL - 1,
-                            fontWeight: FontWeight.bold,
-                            color: textColorBlack),
-                      ),
-                      Text(
-                        requestService.service.name,
-                        softWrap: true,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: new TextStyle(
-                            fontSize: fontSizeS - 1,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey),
-                      ),
-                      Text(
-                        DateFormat('yyyy-MMM-dd  HH:MM น.').format(
-                            DateTime.parse(
-                                requestService.createTime.toString())),
-                        style: TextStyle(
-                            color: Colors.grey, fontSize: fontSizeS - 2),
-                      ),
-                    ],
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    requestService.service.garage.name,
+                    softWrap: true,
+                    maxLines: 1,
+                    overflow: TextOverflow.fade,
+                    style: new TextStyle(
+                        fontSize: fontSizeL - 1,
+                        fontWeight: FontWeight.bold,
+                        color: textColorBlack),
                   ),
-                ),
+                  Text(
+                    requestService.service.name,
+                    softWrap: true,
+                    maxLines: 1,
+                    overflow: TextOverflow.fade,
+                    style: new TextStyle(
+                        fontSize: fontSizeS - 1,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.grey),
+                  ),
+                  Text(
+                    DateFormat('yyyy-MMM-dd  HH:MM น.').format(
+                        DateTime.parse(requestService.createdAt.toString())),
+                    style:
+                        TextStyle(color: Colors.grey, fontSize: fontSizeS - 2),
+                  ),
+                ],
               )),
             ],
           ),

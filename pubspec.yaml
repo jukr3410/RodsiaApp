@@ -148,6 +148,12 @@ flutter:
     - assets/images/icon-email-support.png
     - assets/images/icon-โปรโมชั่น.png
     - assets/images/icon-อัพเดต.png
+    - assets/images/icon-น้ำมัน.png
+    - assets/images/icon-เบรก.png
+    - assets/images/icon-แบตเตอรี่.png
+    - assets/images/icon-ยาง.png
+    - assets/images/icon-ประตูกุญแจ.png
+    - assets/images/icon-รถยก.png
 
     
   # An image asset can refer to one or more resolution-specific "variants", see

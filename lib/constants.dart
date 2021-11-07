@@ -10,10 +10,10 @@ import 'core/models/car_model.dart';
 
 //api base url
 //dev localhost api
-final baseUrlConstant = "http://localhost:3000/api";
+// final baseUrlConstant = "http://localhost:3000/api";
 
 // production api
-//final baseUrlConstant = 'https://rodsia-api.herokuapp.com/api';
+final baseUrlConstant = 'https://rodsia-api.herokuapp.com/api';
 
 // router path
 const LOGIN_ROUTE = "/login";
@@ -308,12 +308,12 @@ List<String> serviceType = [
   'fuel',
 ];
 List<String> serviceTypeName = [
-  'น้ำมัน',
   'แบตเตอรี่',
-  'เบรค',
-  'ยางรถ',
-  'รถลาก',
-  'น้ำมันเครื่อง'
+  'ยาง',
+  'เบรก',
+  'ประตูกุญแจ',
+  'รถยก',
+  'น้ำมัน',
 ];
 // Garage garageMockup = Garage(
 //     images: [],

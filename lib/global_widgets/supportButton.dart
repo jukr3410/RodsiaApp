@@ -49,7 +49,7 @@ class _SupportButtonState extends State<SupportButton> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 10, left: 20),
+                padding: const EdgeInsets.only(top: 10, left: 20, bottom: 10),
                 child: Text(
                   'ติดต่อช่วยเหลือ:',
                   style: TextStyle(
@@ -58,46 +58,63 @@ class _SupportButtonState extends State<SupportButton> {
                       color: textColorBlack),
                 ),
               ),
+
               Row(
                 children: [
-                  Image.asset(tImageAsset('email-support')),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Image.asset(
+                    tImageAsset('email-support'),
+                    width: 30,
+                  ),
                   SizedBox(
                     width: 15,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Email: ',
-                        style: TextStyle(fontSize: fontSizeL),
-                      ),
+                      Text('Email: ',
+                          style: TextStyle(
+                              fontSize: fontSizeL - 1, color: textColorBlack)),
                       Text(
                         'asdfoiahjsdf@mail.com',
-                        style: TextStyle(color: Colors.grey.shade600),
+                        style: TextStyle(
+                          color: Colors.grey.shade600,
+                          fontSize: fontSizeS,
+                        ),
                       ),
                     ],
                   )
                 ],
               ),
               SizedBox(
-                height: 20,
+                height: 10,
               ),
               Row(
                 children: [
-                  Image.asset(tImageAsset('phone-support')),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Image.asset(
+                    tImageAsset('phone-support'),
+                    width: 30,
+                  ),
                   SizedBox(
                     width: 15,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Phone: ',
-                        style: TextStyle(fontSize: fontSizeL),
-                      ),
+                      Text('Phone: ',
+                          style: TextStyle(
+                              fontSize: fontSizeL - 1, color: textColorBlack)),
                       Text(
                         '546-46464565',
-                        style: TextStyle(color: Colors.grey.shade600),
+                        style: TextStyle(
+                          color: Colors.grey.shade600,
+                          fontSize: fontSizeS,
+                        ),
                       ),
                     ],
                   )

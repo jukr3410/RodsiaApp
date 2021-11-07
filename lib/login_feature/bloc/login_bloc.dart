@@ -30,14 +30,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     yield LoginLoading();
 
     try {
-      final userDB = await userRepository.authenticate(
-        phone: event.phone,
-        password: event.password,
-      );
-      logger.d('userDB: {$userDB.phone}');
+      // final userDB = await userRepository.authenticate(
+      //   phone: event.phone,
+      //   password: event.password,
+      // );
+      // logger.d('userDB: {$userDB.phone}');
 
-      authenticationBloc.add(LoggedIn(userDB: userDB));
-      //yield LoginInitial();
+      // authenticationBloc.add(LoggedIn(userDB: userDB));
+      // yield LoginInitial();
       yield LoginSuccess();
     } catch (error) {
       yield LoginFaliure(error: "หมายเลขโทรศัพท์หรือรหัสผ่านไม่ถูกต้อง");

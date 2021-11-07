@@ -4,8 +4,10 @@ import 'package:http/http.dart' as http;
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/dao/user_dao.dart';
 import 'package:rodsiaapp/core/models/garage_model.dart';
+import 'package:rodsiaapp/core/models/service_model.dart';
 import 'package:rodsiaapp/core/models/user_model_db.dart';
 import 'package:rodsiaapp/main.dart';
+import 'package:rodsiaapp/core/repository/service_api.dart';
 
 class GarageApi {
   final baseUrl = baseUrlConstant;
@@ -21,9 +23,10 @@ class GarageApi {
   };
 
   Future<List<Garage>> getGarages({required int page}) async {
+    
     UserDB token = await userDao.getToken(0);
     headers.update("Authorization", (value) => 'Bearer $token');
-    List<Garage> garages = [];
+    List<Garage>? garages = [];
     final url = '$baseUrl/garages?page=$page&limit=10';
     final response = await http.get(Uri.parse(url), headers: headers);
     if (response.statusCode != 200) {
@@ -33,7 +36,12 @@ class GarageApi {
     final decodedJson = jsonDecode(response.body) as List;
     garages =
         decodedJson.map((decodedJson) => Garage.fromJson(decodedJson)).toList();
-
+    for (var i = 0; i < garages.length; i++) {
+      List<Service> services = ServiceApi()
+          .getServiceByGarage(garageId: garages[i].id) as List<Service>;
+      garages[i].services = services;
+    }
+    logger.d(garages);
     return garages;
   }
 
@@ -53,6 +61,8 @@ class GarageApi {
   }
 
   Future<Garage> getGarageInfo({required String id}) async {
+    List<Service> services = [];
+
     final url = '$baseUrl/garages-id/$id';
     final response = await http.get(Uri.parse(url));
     if (response.statusCode != 200) {
@@ -61,6 +71,16 @@ class GarageApi {
     final decodedJson = jsonDecode(response.body);
 
     Garage garage = Garage.fromJson(decodedJson);
+
+    final urlService = '$baseUrl/garage/${garage.id}/services';
+    final responseService =
+        await http.get(Uri.parse(urlService), headers: headers);
+    services =
+        ServiceApi().getServiceByGarage(garageId: garage.id) as List<Service>;
+    garage.services = services;
+
+    garage.services = services;
+
     logger.d(garage);
     return garage;
   }

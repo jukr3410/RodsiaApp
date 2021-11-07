@@ -108,139 +108,126 @@ class _GarageListState extends State<GarageList> {
   }
 
   _makeCardWidget(Garage garage, int index) {
-    _garageInfoBloc = BlocProvider.of<GarageInfoBloc>(context)
-      ..add(GarageInfoLoad(garage.id));
-    return BlocConsumer<GarageInfoBloc, GarageInfoState>(
-        listener: (context, state) {
-      // TODO: implement listener
-    }, builder: (context, state) {
-      if (state is GarageLoadSuccess) {
-        return GestureDetector(
-          child: Card(
-            // shape: RoundedRectangleBorder(borderRadius: borderRadiusMedium),
-            elevation: 2,
-            margin: new EdgeInsets.symmetric(
-                horizontal: defualtPaddingLow - 2,
-                vertical: defualtPaddingLow - 7),
-            color: cardColor,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.transparent,
-                    radius: 40,
-                    child: ClipOval(
-                      child: Image.network(
-                        'https://bestkru-thumbs.s3-ap-southeast-1.amazonaws.com/127401',
-                        width: 110,
-                        height: 100,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+    return GestureDetector(
+      child: Card(
+        // shape: RoundedRectangleBorder(borderRadius: borderRadiusMedium),
+        elevation: 2,
+        margin: new EdgeInsets.symmetric(
+            horizontal: defualtPaddingLow - 2, vertical: defualtPaddingLow - 7),
+        color: cardColor,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                backgroundColor: Colors.transparent,
+                radius: 40,
+                child: ClipOval(
+                  child: Image.network(
+                    'https://bestkru-thumbs.s3-ap-southeast-1.amazonaws.com/127401',
+                    width: 110,
+                    height: 100,
+                    fit: BoxFit.cover,
                   ),
-                  Flexible(
-                      child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: defualtPaddingMedium,
-                      // vertical: 10,
-                    ),
-                    child: Align(
-                      alignment: Alignment.center,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
+                ),
+              ),
+              Flexible(
+                  child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: defualtPaddingMedium,
+                  // vertical: 10,
+                ),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        garage.name,
+                        softWrap: true,
+                        maxLines: 1,
+                        overflow: TextOverflow.fade,
+                        style: new TextStyle(
+                            fontSize: fontSizeL,
+                            fontWeight: FontWeight.bold,
+                            color: textColorBlack),
+                      ),
+                      Row(children: [
+                        Text(
+                          "distance: " + "12 km",
+                          style: new TextStyle(
+                              fontSize: fontSizeM,
+                              fontWeight: FontWeight.normal,
+                              color: textColorBlack),
+                        ),
+                        Text(
+                          " | ",
+                          style: new TextStyle(
+                              fontSize: fontSizeM,
+                              fontWeight: FontWeight.normal,
+                              color: Colors.black54),
+                        ),
+                        Icon(
+                          Icons.star,
+                          color: primaryColor,
+                          size: 20,
+                        ),
+                        Text(
+                          " " + "3.9",
+                          style: new TextStyle(
+                              fontSize: fontSizeM,
+                              fontWeight: FontWeight.normal,
+                              color: textColorBlack),
+                        ),
+                      ]),
+                      Row(
                         children: [
                           Text(
-                            garage.name,
-                            softWrap: true,
-                            maxLines: 1,
-                            overflow: TextOverflow.fade,
-                            style: new TextStyle(
-                                fontSize: fontSizeL,
-                                fontWeight: FontWeight.bold,
-                                color: textColorBlack),
+                            tServiceThai + ': ',
                           ),
-                          Row(children: [
-                            Text(
-                              "distance: " + "12 km",
-                              style: new TextStyle(
-                                  fontSize: fontSizeM,
-                                  fontWeight: FontWeight.normal,
-                                  color: textColorBlack),
-                            ),
-                            Text(
-                              " | ",
-                              style: new TextStyle(
-                                  fontSize: fontSizeM,
-                                  fontWeight: FontWeight.normal,
-                                  color: Colors.black54),
-                            ),
-                            Icon(
-                              Icons.star,
-                              color: primaryColor,
-                              size: 20,
-                            ),
-                            Text(
-                              " " + "3.9",
-                              style: new TextStyle(
-                                  fontSize: fontSizeM,
-                                  fontWeight: FontWeight.normal,
-                                  color: textColorBlack),
-                            ),
-                          ]),
-                          Row(
-                            children: [
-                              Text(
-                                tServiceThai + ': ',
-                              ),
-                            ],
-                          ),
-                          ListView.builder(
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              itemCount: state.services.length,
-                              itemBuilder: (context, index) {
-                                return Image.asset(
-                                  tImageAsset(
-                                      state.services[index].serviceType.name),
-                                  width: 18,
-                                );
-                              }),
-                          Row(
-                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'close',
-                                style: TextStyle(
-                                    fontSize: fontSizeM,
-                                    fontWeight: FontWeight.normal,
-                                    color: textColorRed),
-                              ),
-                              // Padding(
-                              //   padding: const EdgeInsets.symmetric(horizontal: 0.0),
-                              //   child: Icon(Icons.data_usage),
-                              // ),
-                            ],
-                          )
                         ],
                       ),
-                    ),
-                  )),
-                ],
-              ),
-            ),
+                      ListView.builder(
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          itemCount: garage.services!.length,
+                          itemBuilder: (context, index) {
+                            return Image.asset(
+                              tImageAsset(
+                                  garage.services![index].serviceType.name),
+                              width: 18,
+                            );
+                          }),
+                      Row(
+                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'close',
+                            style: TextStyle(
+                                fontSize: fontSizeM,
+                                fontWeight: FontWeight.normal,
+                                color: textColorRed),
+                          ),
+                          // Padding(
+                          //   padding: const EdgeInsets.symmetric(horizontal: 0.0),
+                          //   child: Icon(Icons.data_usage),
+                          // ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              )),
+            ],
           ),
-          onTap: () {
-            navigateToGarageInfo(garage.id);
-          },
-        );
-      }
-      return Center(
-        child: CircularProgressIndicator(),
-      );
-    });
+        ),
+      ),
+      onTap: () {
+        navigateToGarageInfo(garage.id);
+      },
+    );
   }
 
   Widget showIconServiceT(List<Service> service) {
