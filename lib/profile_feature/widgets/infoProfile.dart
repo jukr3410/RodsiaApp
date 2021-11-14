@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/user_model.dart';
@@ -11,7 +12,6 @@ class InfoProfile extends StatefulWidget {
 }
 
 class _InfoProfileState extends State<InfoProfile> {
-  
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -27,16 +27,17 @@ class _InfoProfileState extends State<InfoProfile> {
               children: [
                 Stack(
                   children: <Widget>[
-                    CircleAvatar(
-                      backgroundColor: Colors.transparent,
-                      radius: 70,
-                      child: ClipOval(
-                        child: Image.asset(
-                          tImageAsset('profile'),
-                          height: 120,
-                          width: 120,
-                          fit: BoxFit.cover,
+                    ClipOval(
+                      child: CachedNetworkImage(
+                        imageUrl: widget.user.profileImage!,
+                        placeholder: (context, url) =>
+                            CircularProgressIndicator(
+                          color: textColorBlack,
                         ),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                        fit: BoxFit.cover,
+                        height: 100,
+                        width: 100,
                       ),
                     ),
                     // Positioned(

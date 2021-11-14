@@ -10,7 +10,7 @@ abstract class GarageInfoEvent extends Equatable {
 class GarageInfoLoad extends GarageInfoEvent {
   final String garageId;
 
-  const GarageInfoLoad(this.garageId);
+  const GarageInfoLoad({required this.garageId});
 
   @override
   String toString() => 'GarageLoadInfo {garageId: $garageId}';

@@ -46,6 +46,21 @@ class GarageListBloc extends Bloc<GarageListEvent, GarageListState> {
       yield* _mapGetCurrentLocationToState();
     } else if (event is ShowGarageInfo) {
       yield* _mapShowGarageInfoToState(event);
+    } else if (event is GarageSearchListFetchEvent) {
+      try {
+        yield GarageListLoadingState(message: mLoading);
+        final garages = await garagerRepository.getByGaragesName(
+            page: page, name: event.nameGarage);
+        if (garages.isNotEmpty) {
+          yield GarageListSuccessState(garages: garages);
+          page++;
+        } else {
+          yield GarageListEmptyState();
+        }
+      } catch (e) {
+        logger.e(e);
+        yield GarageListErrorState(error: mError);
+      }
     }
   }
 

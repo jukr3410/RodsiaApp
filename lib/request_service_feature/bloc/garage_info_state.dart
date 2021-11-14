@@ -15,14 +15,19 @@ class GarageInfoError extends GarageInfoState {}
 
 class GarageLoadSuccess extends GarageInfoState {
   final Garage garage;
-  final List<Service> services;
+  // final List<Service> services;
 
-  const GarageLoadSuccess(this.garage, this.services);
+  const GarageLoadSuccess(
+    this.garage,
+    // this.services
+  );
 
   @override
-  List<Object> get props => [garage, services];
+  List<Object> get props => [
+        garage,
+        // services
+      ];
 
   @override
-  String toString() =>
-      'GarageLoadSuccess {garage: ${garage.id}, service: $services}';
+  String toString() => 'GarageLoadSuccess {garage: ${garage.id}, service: }';
 }

@@ -15,4 +15,8 @@ class ServiceRepository {
   Future<List<Service>> getServiceByGarage({required String garageId}) async {
     return await serviceApi.getServiceByGarage(garageId: garageId);
   }
+
+  Future<Service> getServiceById({required String serviceId}) async {
+    return await serviceApi.getServiceById(serviceId: serviceId);
+  }
 }

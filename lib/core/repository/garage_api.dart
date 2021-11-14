@@ -23,9 +23,8 @@ class GarageApi {
   };
 
   Future<List<Garage>> getGarages({required int page}) async {
-    
-    UserDB token = await userDao.getToken(0);
-    headers.update("Authorization", (value) => 'Bearer $token');
+    // UserDB token = await userDao.getToken(0);
+    // headers.update("Authorization", (value) => 'Bearer $token');
     List<Garage>? garages = [];
     final url = '$baseUrl/garages?page=$page&limit=10';
     final response = await http.get(Uri.parse(url), headers: headers);
@@ -37,8 +36,18 @@ class GarageApi {
     garages =
         decodedJson.map((decodedJson) => Garage.fromJson(decodedJson)).toList();
     for (var i = 0; i < garages.length; i++) {
-      List<Service> services = ServiceApi()
-          .getServiceByGarage(garageId: garages[i].id) as List<Service>;
+      List<Service> services = [];
+      final url = '$baseUrl/garage/${garages[i].id}/services';
+      final response = await http.get(Uri.parse(url), headers: headers);
+      if (response.statusCode != 200) {
+        logger.e(response);
+        throw new Exception('There was a problem ${response.statusCode}');
+      }
+      final decodedJson = jsonDecode(response.body) as List;
+      logger.d("services: $decodedJson");
+      services = decodedJson
+          .map((decodedJson) => Service.fromJson(decodedJson))
+          .toList();
       garages[i].services = services;
     }
     logger.d(garages);
@@ -46,9 +55,9 @@ class GarageApi {
   }
 
   Future<List<Garage>> getByGaragesName(
-      {required int page, required String name}) async {
+      {required String name}) async {
     List<Garage> garages = [];
-    final url = '$baseUrl/garages-name/:$name?page=$page';
+    final url = '$baseUrl/garages-name/$name';
     final response = await http.get(Uri.parse(url));
     if (response.statusCode != 200) {
       throw new Exception('There was a problem ${response.statusCode}');
@@ -56,7 +65,21 @@ class GarageApi {
     final decodedJson = jsonDecode(response.body) as List;
     garages =
         decodedJson.map((decodedJson) => Garage.fromJson(decodedJson)).toList();
-
+    for (var i = 0; i < garages.length; i++) {
+      List<Service> services = [];
+      final url = '$baseUrl/garage/${garages[i].id}/services';
+      final response = await http.get(Uri.parse(url), headers: headers);
+      if (response.statusCode != 200) {
+        logger.e(response);
+        throw new Exception('There was a problem ${response.statusCode}');
+      }
+      final decodedJson = jsonDecode(response.body) as List;
+      logger.d("services: $decodedJson");
+      services = decodedJson
+          .map((decodedJson) => Service.fromJson(decodedJson))
+          .toList();
+      garages[i].services = services;
+    }
     return garages;
   }
 
@@ -75,10 +98,13 @@ class GarageApi {
     final urlService = '$baseUrl/garage/${garage.id}/services';
     final responseService =
         await http.get(Uri.parse(urlService), headers: headers);
-    services =
-        ServiceApi().getServiceByGarage(garageId: garage.id) as List<Service>;
-    garage.services = services;
-
+    if (responseService.statusCode != 200) {
+      throw new Exception('There was a problem ${response.statusCode}');
+    }
+    final decodedJsonService = jsonDecode(responseService.body) as List;
+    services = decodedJsonService
+        .map((decodedJsonService) => Service.fromJson(decodedJsonService))
+        .toList();
     garage.services = services;
 
     logger.d(garage);

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rodsiaapp/authentication/bloc/authentication_bloc.dart';
@@ -55,17 +56,32 @@ class _MenusSettingState extends State<MenusSetting> {
                       backgroundColor: Colors.transparent,
                       radius: 70,
                       child: ClipOval(
-                        child: Image.asset(
-                          tImageAsset('profile'),
-                          height: 130,
-                          width: 130,
+                        child: CachedNetworkImage(
+                          imageUrl: widget.user.profileImage!,
+                          placeholder: (context, url) =>
+                              CircularProgressIndicator(
+                            color: textColorBlack,
+                          ),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
                           fit: BoxFit.cover,
+                          height: 120,
+                          width: 120,
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 5,
-                    ),
+                    // CircleAvatar(
+                    //   backgroundColor: Colors.transparent,
+
+                    //   radius: 70,
+                    //   child: ClipOval(
+                    //       child: Image.network(
+                    //     widget.user.profileImage!,
+                    //     width: 90,
+                    //     fit: BoxFit.fitWidth,
+                    //   )),
+                    // ),
+
                     Text(
                       // widget.user.name,
                       "หม่ำ",
@@ -135,7 +151,7 @@ class _MenusSettingState extends State<MenusSetting> {
   }
 
   void navigator(String route) {
-    Navigator.pushNamed(context, route, arguments: widget.user);
+    Navigator.pushNamed(context, route, arguments: mockUpUser);
   }
 
   void navigateToLogin() {

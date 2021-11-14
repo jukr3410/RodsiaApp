@@ -4,6 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:rodsiaapp/constants.dart';
+import 'package:rodsiaapp/core/models/car_model.dart';
+import 'package:rodsiaapp/core/models/garage_model.dart';
+import 'package:rodsiaapp/core/models/geo_location_model.dart';
+import 'package:rodsiaapp/core/models/request_service_add_model.dart';
 import 'package:rodsiaapp/core/models/service_model.dart';
 import 'package:rodsiaapp/global_widgets/alertPleaseInputInfo.dart';
 import 'package:rodsiaapp/main.dart';
@@ -12,33 +16,21 @@ import 'package:rodsiaapp/request_service_feature/widgets/infoGarageFormSelect.d
 import 'package:rodsiaapp/request_service_feature/widgets/selectServiceOfGarage.dart';
 
 class SelectServicePage extends StatefulWidget {
-  final String garageId;
-  SelectServicePage({Key? key, required this.garageId}) : super(key: key);
+  final Garage garage;
+  SelectServicePage({Key? key, required this.garage}) : super(key: key);
 
   @override
   _SelectServicePageState createState() => _SelectServicePageState();
 }
 
 class _SelectServicePageState extends State<SelectServicePage> {
-  late GarageInfoBloc _garageInfoBloc;
-
-  @override
-  void initState() {
-    _garageInfoBloc = BlocProvider.of<GarageInfoBloc>(context)
-      ..add(GarageInfoLoad(widget.garageId));
-    super.initState();
-  }
+  late TextEditingController _controller;
 
   List mockupImage = [
-    'https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dmlld3xlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80',
-    'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
+    'https://www.tqm.co.th/new_images/1478_1.jpg?v=20200722135804',
+    'https://s359.kapook.com/pagebuilder/f443f787-8814-4b89-afcf-86280b0bdfd8.jpg',
     'https://www.industrialempathy.com/img/remote/ZiClJf-1920w.jpg',
-    'https://images.unsplash.com/photo-1612151855475-877969f4a6cc?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGQlMjBpbWFnZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80',
-    'https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dmlld3xlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80',
-    'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
-    'https://www.industrialempathy.com/img/remote/ZiClJf-1920w.jpg',
-    'https://www.industrialempathy.com/img/remote/ZiClJf-1920w.jpg',
-    'https://images.unsplash.com/photo-1612151855475-877969f4a6cc?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGQlMjBpbWFnZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80',
+    'http://www.tqm.co.th/gallery/5266.jpg',
   ];
 
   int val = -1;
@@ -62,163 +54,180 @@ class _SelectServicePageState extends State<SelectServicePage> {
   }
 
   @override
+  void initState() {
+    _controller = TextEditingController();
+    super.initState();
+  }
+
+  RequestServiceAdd _requestServiceAdd = RequestServiceAdd(
+    user: '6127927b6582ef63c96d3f6e',
+    service: '',
+    garage: '',
+    car: Car(id: '', brand: '', model: '', type: '', year: '', fuelType: ''),
+    geoLocationGarage: GeoLocation(lat: '13.6561449', long: '100.4958788'),
+    geoLocationUser: GeoLocation(lat: '13.6527639', long: '100.4859599'),
+    problemDesc: '',
+    confirmRequest: false,
+    status: '',
+  );
+
+  ComfirmReq cmReq = ComfirmReq(garageName: '', serviceName: '');
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: setAppBar(),
-      body: BlocConsumer<GarageInfoBloc, GarageInfoState>(
-        listener: (context, state) {
-          // TODO: implement listener
-        },
-        builder: (context, state) {
-          if (state is GarageLoadSuccess) {
-            return SingleChildScrollView(
+        resizeToAvoidBottomInset: false,
+        appBar: setAppBar(),
+        body: SingleChildScrollView(
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            InfoGarageFormSelect(garage: widget.garage),
+            SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(defualtPaddingLow),
               child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    InfoGarageFormSelect(garage: state.garage),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(defualtPaddingLow),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                tServiceOfGarageThai,
-                                style: TextStyle(fontSize: fontSizeL),
-                              ),
-                              Text(' (' +
-                                  state.services.length.toString() +
-                                  ' ' +
-                                  tServiceThai +
-                                  ')')
-                            ],
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                            height: state.services.length < 6 ? null : 320,
-                            child: ListView.builder(
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true,
-                                itemCount: state.services.length,
-                                itemBuilder: (context, index) {
-                                  return Card(
-                                    elevation: 3,
-                                    // margin: new EdgeInsets.symmetric(vertical: 4.0),
-                                    color: cardColor,
-                                    child: ListTile(
-                                      title: _makeCardWidget(
-                                          state.services[index]),
-                                      trailing: Radio(
-                                          value: index,
-                                          groupValue: val,
-                                          onChanged: (int? value) {
-                                            setState(() {
-                                              val = value!;
-                                              logger.d(
-                                                  state.services[index].name);
-                                            });
-                                          }),
-                                    ),
-                                  );
-                                }),
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          addImageForReq(),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Row(
-                            children: [
-                              TextButton(
-                                  onPressed: () {},
-                                  style: flatButtonStyle(
-                                      primaryColor, textColorBlack),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(Icons.image, size: 20),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Text('เพิ่มรูปภาพ'),
-                                    ],
-                                  )),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              TextButton(
-                                  onPressed: () {},
-                                  style: flatButtonStyle(
-                                      primaryColor, textColorBlack),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Icon(Icons.camera_alt, size: 20),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Text('กล้อง'),
-                                    ],
-                                  )),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          TextField(
-                            style: TextStyle(fontSize: 12),
-                            maxLines: 3,
-                            decoration: InputDecoration(
-                              contentPadding: EdgeInsets.all(defualtPaddingLow),
-                              alignLabelWithHint: true,
-                              border: OutlineInputBorder(),
-                              helperText:
-                                  'เช่น ยางรั่ว, ยางระเบิด, เบรคไม่อยู่, สตาร์ทไม่ติด',
-                              helperStyle: TextStyle(fontSize: 10),
-                              labelText: 'รายละเอียดเพิ่มเติม',
-                            ),
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Container(
-                            // margin: EdgeInsets.only(bottom: defualtPaddingHight+20),
-                            width: double.infinity,
-                            height: buttonHeightSmall,
-                            child: TextButton(
-                              onPressed: () {
-                                if (val == -1) {
-                                  _showDialog(context);
-                                } else {
-                                  navigateToConfirmRequest();
-                                }
-                              },
-                              style:
-                                  flatButtonStyle(primaryColor, textColorBlack),
-                              child: Text(tNext),
-                            ),
-                          )
-                        ],
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        tServiceOfGarageThai,
+                        style: TextStyle(fontSize: fontSizeL),
                       ),
+                      Text(' (' +
+                          widget.garage.services!.length.toString() +
+                          ' ' +
+                          tServiceThai +
+                          ')')
+                    ],
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Container(
+                    height: widget.garage.services!.length < 6 ? null : 320,
+                    child: ListView.builder(
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        itemCount: widget.garage.services!.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            elevation: 3,
+                            // margin: new EdgeInsets.symmetric(vertical: 4.0),
+                            color: cardColor,
+                            child: ListTile(
+                              title: _makeCardWidget(
+                                  widget.garage.services![index]),
+                              trailing: Radio(
+                                  value: index,
+                                  groupValue: val,
+                                  onChanged: (int? value) {
+                                    setState(() {
+                                      val = value!;
+
+                                      _requestServiceAdd.service =
+                                          widget.garage.services![val].id;
+                                      _requestServiceAdd.garage =
+                                          widget.garage.id;
+
+                                      cmReq.garageName = widget.garage.name;
+                                      cmReq.serviceName =
+                                          widget.garage.services![val].name;
+                                      logger.d(
+                                          widget.garage.services![index].name);
+                                    });
+                                  }),
+                            ),
+                          );
+                        }),
+                  ),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  addImageForReq(),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Row(
+                    children: [
+                      TextButton(
+                          onPressed: () {},
+                          style: flatButtonStyle(primaryColor, textColorBlack),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(Icons.image, size: 20),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text('เพิ่มรูปภาพ'),
+                            ],
+                          )),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      TextButton(
+                          onPressed: () {},
+                          style: flatButtonStyle(primaryColor, textColorBlack),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(Icons.camera_alt, size: 20),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text('กล้อง'),
+                            ],
+                          )),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  TextField(
+                    style: TextStyle(fontSize: 12),
+                    controller: _controller,
+                    maxLines: 3,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.all(defualtPaddingLow),
+                      alignLabelWithHint: true,
+                      border: OutlineInputBorder(),
+                      helperText:
+                          'เช่น ยางรั่ว, ยางระเบิด, เบรคไม่อยู่, สตาร์ทไม่ติด',
+                      helperStyle: TextStyle(fontSize: 10),
+                      labelText: 'รายละเอียดเพิ่มเติม',
                     ),
-                  ]),
-            );
-          }
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        },
-      ),
-    );
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    // margin: EdgeInsets.only(bottom: defualtPaddingHight+20),
+                    width: double.infinity,
+                    height: buttonHeightSmall,
+                    child: TextButton(
+                      onPressed: () {
+                        if (val == -1) {
+                          _showDialog(context);
+                        } else {
+                          _requestServiceAdd.problemDesc = _controller.text;
+                          logger.d(_requestServiceAdd.toJson());
+                          cmReq.req = _requestServiceAdd;
+                          logger.d(cmReq.toString());
+                          navigateToConfirmRequest();
+                        }
+                      },
+                      style: flatButtonStyle(primaryColor, textColorBlack),
+                      child: Text(tNext),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ]),
+        ));
   }
 
   void _showDialog(BuildContext context) {
@@ -231,8 +240,7 @@ class _SelectServicePageState extends State<SelectServicePage> {
   }
 
   navigateToConfirmRequest() {
-    Navigator.pushNamed(context, CONFIRM_REQUEST_ROUTE,
-        arguments: {'garage': null});
+    Navigator.pushNamed(context, CONFIRM_REQUEST_ROUTE, arguments: cmReq);
   }
 
   setAppBar() {
@@ -286,7 +294,10 @@ class _SelectServicePageState extends State<SelectServicePage> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Icon(Icons.build_circle_outlined, size: 40, color: iconColorBlack),
+          Image.asset(
+            tImageAsset(service.serviceType.name),
+            width: 35,
+          ),
           Flexible(
               child: Padding(
             padding: const EdgeInsets.symmetric(
@@ -327,4 +338,12 @@ class _SelectServicePageState extends State<SelectServicePage> {
       },
     );
   }
+}
+
+class ComfirmReq {
+  String garageName;
+  String serviceName;
+  RequestServiceAdd? req;
+
+  ComfirmReq({required this.garageName, this.req, required this.serviceName});
 }

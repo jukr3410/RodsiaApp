@@ -24,10 +24,6 @@ class RodSiaApp extends StatelessWidget {
         fontFamily: 'Kanit',
       ),
       onGenerateRoute: router.generateRoute,
-      // initialRoute: '/',
-      // routes: {
-      //   BottomNavigrationBar.routeName: (context) => BottomNavigrationBar()
-      // },
     );
   }
 }

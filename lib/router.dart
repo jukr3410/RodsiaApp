@@ -4,12 +4,14 @@ import 'package:rodsiaapp/authentication/bloc/authentication_bloc.dart';
 import 'package:rodsiaapp/communication_feature/widgets/chat_ui.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/garage_model.dart';
+import 'package:rodsiaapp/core/models/request_service_add_model.dart';
 import 'package:rodsiaapp/core/models/user_model.dart';
 import 'package:rodsiaapp/core/repository/garage_repository.dart';
 import 'package:rodsiaapp/core/repository/service_repository.dart';
 import 'package:rodsiaapp/core/repository/service_type_repository.dart';
 import 'package:rodsiaapp/find_garage_feature/bloc/service_type_bloc.dart';
 import 'package:rodsiaapp/find_garage_feature/widgets/filterGarage.dart';
+import 'package:rodsiaapp/find_garage_feature/widgets/garageFormSearchPage.dart';
 import 'package:rodsiaapp/find_garage_feature/widgets/garageList.dart';
 import 'package:rodsiaapp/find_garage_feature/widgets/mapView.dart';
 import 'package:rodsiaapp/find_problem_feature/widgets/findProblemFormSelected.dart';
@@ -36,6 +38,7 @@ import 'package:rodsiaapp/profile_feature/widgets/edit_car/editSelectMoreChoiceP
 import 'package:rodsiaapp/profile_feature/widgets/edit_car/editShowInfoNewCar.dart';
 import 'package:rodsiaapp/request_service_feature/bloc/garage_info_bloc.dart';
 import 'package:rodsiaapp/request_service_feature/bloc/request_service_bloc.dart';
+import 'package:rodsiaapp/request_service_feature/bloc/service_bloc.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/ConfirmRequestService.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/infoGarageFormSelect.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/requestDetailAndGiveStarPage.dart';
@@ -196,27 +199,36 @@ class AppRouter {
                 ));
 
       case GARAGE_INFO_ROUTE:
-        Map args = settings.arguments as Map;
-        String garageId = args['garageId'];
+        // Map args = settings.arguments as Map;
+        Garage garage = settings.arguments as Garage;
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                 create: (BuildContext context) => GarageInfoBloc(
-                    garageRepository: GarageRepository(),
-                    serviceRepository: ServiceRepository()),
+                      garageRepository: GarageRepository(),
+                    ),
                 child: SelectServicePage(
-                  garageId: garageId,
+                  garage: garage,
                 )));
 
       case CONFIRM_REQUEST_ROUTE:
-        Map args = settings.arguments as Map;
-        Service service = args['service'];
+        ComfirmReq req = settings.arguments as ComfirmReq;
         return MaterialPageRoute(
-            builder: (_) => BlocProvider(
-                create: (BuildContext context) => RequestServiceBloc(
-                    requestServiceRepository: RequestServiceRepository()),
-                child: ConfirmRequestService(
-                  service: service,
-                )));
+            builder: (_) => MultiBlocProvider(
+                    providers: [
+                      BlocProvider(
+                          create: (BuildContext context) => RequestServiceBloc(
+                              requestServiceRepository:
+                                  RequestServiceRepository())),
+                      BlocProvider(
+                          create: (BuildContext context) => ServiceBloc(
+                              serviceRepository: ServiceRepository())),
+                      BlocProvider(
+                          create: (BuildContext context) => GarageInfoBloc(
+                              garageRepository: GarageRepository()))
+                    ],
+                    child: ConfirmRequestService(
+                      req: req,
+                    )));
 
       case WAITING_REQUEST_ROUTE:
         Map args = settings.arguments as Map;
@@ -285,9 +297,17 @@ class AppRouter {
                 child: Listhistory()));
       case HISTORY_INFO_ROUTE:
         RequestService requestService = settings.arguments as RequestService;
-
         return MaterialPageRoute(
             builder: (_) => HistoryInfoPage(requestService: requestService));
+
+      case GARAGE_SEARCH_ROUTE:
+        String garageName = settings.arguments as String;
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                  create: (BuildContext context) =>
+                      GarageListBloc(garagerRepository: GarageRepository()),
+                  child: GarageFormSearch(garageName: garageName),
+                ));
 
       default:
         return MaterialPageRoute(builder: (_) => InvalidRouteScreen());

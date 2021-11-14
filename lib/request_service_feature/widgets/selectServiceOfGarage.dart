@@ -72,7 +72,10 @@ class _SelectServiceOfGarageState extends State<SelectServiceOfGarage> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Icon(Icons.build_circle_outlined, size: 40, color: iconColorBlack),
+          Image.asset(
+            tImageAsset(service.serviceType.name),
+            width: 40,
+          ),
           Flexible(
               child: Padding(
             padding: const EdgeInsets.symmetric(

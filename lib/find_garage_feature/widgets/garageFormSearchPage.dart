@@ -1,24 +1,25 @@
-import 'package:cached_network_image/cached_network_image.dart';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rodsiaapp/core/models/service_model.dart';
-import 'package:rodsiaapp/request_service_feature/bloc/garage_info_bloc.dart';
-import 'package:rodsiaapp/request_service_feature/widgets/selectServicePage.dart';
-import 'package:shimmer/shimmer.dart';
+import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/garage_model.dart';
+import 'package:rodsiaapp/core/models/service_model.dart';
 import 'package:rodsiaapp/find_garage_feature/bloc/garage_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
-import 'package:getwidget/getwidget.dart';
 
-import '../../constants.dart';
+class GarageFormSearch extends StatefulWidget {
+  final String garageName;
+  const GarageFormSearch({Key? key, required this.garageName})
+      : super(key: key);
 
-class GarageList extends StatefulWidget {
   @override
-  _GarageListState createState() => _GarageListState();
+  _GarageFormSearchState createState() => _GarageFormSearchState();
 }
 
-class _GarageListState extends State<GarageList> {
+class _GarageFormSearchState extends State<GarageFormSearch> {
   ScrollController scrollController = ScrollController();
   late GarageListBloc _garageListBloc;
 
@@ -26,82 +27,96 @@ class _GarageListState extends State<GarageList> {
 
   @override
   void initState() {
-    _garageListBloc = BlocProvider.of<GarageListBloc>(context);
+    _garageListBloc = BlocProvider.of<GarageListBloc>(context)
+      ..add(GarageSearchListFetchEvent(nameGarage: widget.garageName));
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: BlocConsumer<GarageListBloc, GarageListState>(
-        listener: (context, garageState) {
-          if (garageState is GarageListLoadingState) {
-            // ScaffoldMessenger.of(context)
-            //     .showSnackBar(SnackBar(content: Text(garageState.message)));
+    return Scaffold(
+      appBar: AppBar(
+        iconTheme: IconThemeData(color: textColorBlack),
+        title: Text(
+          'ร้านที่ค้นหา: ' + widget.garageName,
+          style: TextStyle(color: textColorBlack, fontSize: fontSizeL),
+        ),
+        backgroundColor: primaryColor,
+      ),
+      body: Container(
+        child: BlocConsumer<GarageListBloc, GarageListState>(
+          listener: (context, garageState) {
+            if (garageState is GarageListLoadingState) {
+              // ScaffoldMessenger.of(context)
+              //     .showSnackBar(SnackBar(content: Text(garageState.message)));
 
-          } else if (garageState is GarageListSuccessState &&
-              garageState.garages.isEmpty) {
-            // ScaffoldMessenger.of(context)
-            //     .showSnackBar(SnackBar(content: Text('No more garages')));
-          } else if (garageState is GarageListErrorState) {
-            // ScaffoldMessenger.of(context)
-            //     .showSnackBar(SnackBar(content: Text(garageState.error)));
+            } else if (garageState is GarageListSuccessState &&
+                garageState.garages.isEmpty) {
+              // ScaffoldMessenger.of(context)
+              //     .showSnackBar(SnackBar(content: Text('No more garages')));
+            } else if (garageState is GarageListErrorState) {
+              // ScaffoldMessenger.of(context)
+              //     .showSnackBar(SnackBar(content: Text(garageState.error)));
 
-            showTopSnackBar(
-              context,
-              CustomSnackBar.error(
-                message: mError,
-              ),
-            );
-            _garageListBloc.isFetching = false;
-          }
-          return;
-        },
-        builder: (context, garageState) {
-          if (garageState is GarageListInitialState ||
-              garageState is GarageListLoadingState && _garages.isEmpty) {
-            return Center(
-                child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
-              child: _shimmer(),
-            ));
-          } else if (garageState is GarageListSuccessState) {
-            _garages.addAll(garageState.garages);
-            _garageListBloc.isFetching = false;
-            ScaffoldMessenger.of(context).hideCurrentSnackBar();
-          } else if (garageState is GarageListErrorState && _garages.isEmpty) {
-            return Center(
-                child: Column(
-              children: [
-                IconButton(
-                  onPressed: () {
+              showTopSnackBar(
+                context,
+                CustomSnackBar.error(
+                  message: mError,
+                ),
+              );
+              _garageListBloc.isFetching = false;
+            }
+            return;
+          },
+          builder: (context, garageState) {
+            if (garageState is GarageListInitialState ||
+                garageState is GarageListLoadingState && _garages.isEmpty) {
+              return Center(
+                  child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
+                child: _shimmer(),
+              ));
+            } else if (garageState is GarageListSuccessState) {
+              _garages.addAll(garageState.garages);
+              _garageListBloc.isFetching = false;
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            } else if (garageState is GarageListErrorState &&
+                _garages.isEmpty) {
+              return Center(
+                  child: Column(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      _garageListBloc
+                        ..isFetching = true
+                        ..add(GarageSearchListFetchEvent(
+                            nameGarage: widget.garageName));
+                    },
+                    icon: Icon(Icons.refresh),
+                  ),
+                  const SizedBox(height: 15),
+                  Text(garageState.error, textAlign: TextAlign.center),
+                ],
+              ));
+            }
+            return ListView.builder(
+              controller: scrollController
+                ..addListener(() {
+                  if (scrollController.offset ==
+                          scrollController.position.maxScrollExtent &&
+                      !_garageListBloc.isFetching) {
                     _garageListBloc
                       ..isFetching = true
-                      ..add(GarageListFetchEvent());
-                  },
-                  icon: Icon(Icons.refresh),
-                ),
-                const SizedBox(height: 15),
-                Text(garageState.error, textAlign: TextAlign.center),
-              ],
-            ));
-          }
-          return ListView.builder(
-            controller: scrollController
-              ..addListener(() {
-                if (scrollController.offset ==
-                        scrollController.position.maxScrollExtent &&
-                    !_garageListBloc.isFetching) {
-                  _garageListBloc
-                    ..isFetching = true
-                    ..add(GarageListFetchEvent());
-                }
-              }),
-            itemBuilder: (context, index) =>
-                _makeCardWidget(_garages[index], index),
-            itemCount: _garages.length,
-          );
-        },
+                      ..add(GarageSearchListFetchEvent(
+                          nameGarage: widget.garageName));
+                  }
+                }),
+              itemBuilder: (context, index) =>
+                  _makeCardWidget(_garages[index], index),
+              itemCount: _garages.length,
+            );
+          },
+        ),
       ),
     );
   }
@@ -309,8 +324,7 @@ class _GarageListState extends State<GarageList> {
   }
 
   void navigateToGarageInfo(Garage garage) {
-    Navigator.pushNamed(context, GARAGE_INFO_ROUTE,
-        arguments: garage);
+    Navigator.pushNamed(context, GARAGE_INFO_ROUTE, arguments: garage);
   }
 
   @override

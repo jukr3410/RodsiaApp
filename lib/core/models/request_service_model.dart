@@ -54,7 +54,8 @@ RequestService {
       geoLocationUser: GeoLocation.fromJson(json["geoLocationUser"]),
       geoLocationGarage: GeoLocation.fromJson(json["geoLocationGarage"]),
       image: json["image"],
-      createdAt: DateTime.parse(json["createdAt"]));
+      createdAt: DateTime.parse(json["createdAt"]),
+      );
 
   Map<String, dynamic> toJson() => {
         "_id": id,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/message_model.dart';
+import 'package:rodsiaapp/main.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class ChatUi extends StatefulWidget {
   ChatUi({Key? key}) : super(key: key);
@@ -10,6 +12,24 @@ class ChatUi extends StatefulWidget {
 }
 
 class _ChatUiState extends State<ChatUi> {
+  late IO.Socket socket;
+
+  @override
+  void initState() {
+    super.initState();
+    socketServer();
+  }
+
+  void socketServer() {
+    socket = IO.io('http://localhost:3000', <String, dynamic>{
+      'transports': ['websocket'],
+      'autoConnect': false
+    });
+    socket.connect();
+    socket.onConnect((data) => print('connected-socketIO'));
+    socket.onDisconnect((data) => logger.d('disconnected'));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,10 +118,7 @@ class _ChatUiState extends State<ChatUi> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8),
       height: 50,
-      decoration: BoxDecoration(
-        color: bgColor,
-        boxShadow: [boxShadow]
-      ),
+      decoration: BoxDecoration(color: bgColor, boxShadow: [boxShadow]),
       child: Row(
         children: [
           // IconButton(

@@ -11,6 +11,11 @@ class GarageListFetchEvent extends GarageListEvent {
   const GarageListFetchEvent();
 }
 
+class GarageSearchListFetchEvent extends GarageListEvent {
+  final String nameGarage;
+  const GarageSearchListFetchEvent({required this.nameGarage});
+}
+
 class GetCurrentLocation extends GarageListEvent {}
 
 class ShowGarageInfo extends GarageListEvent {

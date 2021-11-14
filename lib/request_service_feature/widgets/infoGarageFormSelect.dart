@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/rating/gf_rating.dart';
 import 'package:rodsiaapp/constants.dart';
@@ -44,11 +45,19 @@ class _InfoGarageFormSelectState extends State<InfoGarageFormSelect> {
                   backgroundColor: Colors.transparent,
                   radius: 35,
                   child: ClipOval(
-                    child: Image.asset(
-                      tImageAsset('profile'),
-                      height: 65,
-                      width: 65,
-                      fit: BoxFit.cover,
+                    child: ClipOval(
+                      child: CachedNetworkImage(
+                        imageUrl:
+                            'https://lh3.googleusercontent.com/proxy/-g4Id1okFOoVJH6yEDsdTjbr8-QwYZdQoY0ohT9OUAn5ZEsHsBkTwTAvlyRjX3KYmiHWPqPUhIgAMWX1BTRBnd4',
+                        placeholder: (context, url) =>
+                            CircularProgressIndicator(
+                          color: textColorBlack,
+                        ),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                        fit: BoxFit.cover,
+                        height: 65,
+                        width: 65,
+                      ),
                     ),
                   ),
                 ),

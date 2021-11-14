@@ -11,6 +11,7 @@ import 'core/models/car_model.dart';
 //api base url
 //dev localhost api
 // final baseUrlConstant = "http://localhost:3000/api";
+// final baseUrlConstantSockertIO = "http://localhost:3000/";
 
 // production api
 final baseUrlConstant = 'https://rodsia-api.herokuapp.com/api';
@@ -48,6 +49,7 @@ const CHAT_ROUTE = '/chat';
 const FIND_PROBLEM = '/find_problem';
 const SUPPORT_CENTER_ROUTE = '/support_center';
 const NOTIFY_ROUTE = '/notify';
+const GARAGE_SEARCH_ROUTE = 'garage-search';
 
 // font size
 const fontSizeXl = 18.0;
@@ -227,6 +229,7 @@ const menusSetting = [
   'โปรไฟล์',
   'ประวัติการใช้งาน',
   'ศูยน์ช่วยเหลือ',
+  'chat test',
   'การตั้งค่า',
   'ออกจากระบบ'
 ];
@@ -234,6 +237,7 @@ const menusSettingRoute = [
   PROFILE_ROUTE,
   HISTORY_ROUTE,
   SUPPORT_CENTER_ROUTE,
+  CHAT_ROUTE,
   PROFILE_ROUTE,
 ];
 
@@ -279,7 +283,9 @@ User mockUpUser = User(
     password: '1234',
     otp: '1234',
     validatePhone: true,
-    cars: mockUpCar);
+    cars: mockUpCar,
+    profileImage:'https://files.gqthailand.com/uploads/Johnny-Depp.jpg'
+    );
 
 final brandCar = [
   'Mazda',

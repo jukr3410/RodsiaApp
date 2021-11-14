@@ -10,13 +10,16 @@ import 'package:rodsiaapp/core/models/service_model.dart';
 import 'package:rodsiaapp/global_widgets/alertPopupYesNo.dart';
 import 'package:rodsiaapp/main.dart';
 import 'package:rodsiaapp/profile_feature/widgets/showInfoCarCard.dart';
+import 'package:rodsiaapp/request_service_feature/bloc/garage_info_bloc.dart';
 import 'package:rodsiaapp/request_service_feature/bloc/request_service_bloc.dart';
+import 'package:rodsiaapp/request_service_feature/bloc/service_bloc.dart';
+import 'package:rodsiaapp/request_service_feature/widgets/selectServicePage.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class ConfirmRequestService extends StatefulWidget {
-  Service service;
-  ConfirmRequestService({Key? key, required this.service}) : super(key: key);
+  ComfirmReq req;
+  ConfirmRequestService({Key? key, required this.req}) : super(key: key);
 
   @override
   _ConfirmRequestServiceState createState() => _ConfirmRequestServiceState();
@@ -25,13 +28,11 @@ class ConfirmRequestService extends StatefulWidget {
 class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
   late RequestServiceBloc _requestServiceBloc;
 
-  late RequestServiceAdd _requestServiceAdd;
-
   int selectedIndex = 0;
 
-  List<String> mockupService = ['ยางแตก', 'หม้อน้ำเสีย', 'ระบบไฟฟ้า'];
+  late Widget _garageName;
+  late Widget _serviceName;
 
-  Car car = Car(id: "", brand: "", model: "", type: "", year: "", fuelType: "");
   List<Widget> _buildItems() {
     return mockUpCar
         .map((val) => SelectionItem(
@@ -58,6 +59,10 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
   @override
   void initState() {
     _requestServiceBloc = BlocProvider.of<RequestServiceBloc>(context);
+    ServiceBloc _serviceBloc = BlocProvider.of<ServiceBloc>(context)
+      ..add(ServiceFetchEvent(serviceId: widget.req.serviceName));
+    GarageInfoBloc _garageInfoBloc = BlocProvider.of<GarageInfoBloc>(context)
+      ..add(GarageInfoLoad(garageId: widget.req.garageName));
     super.initState();
   }
 
@@ -75,10 +80,7 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
       centerTitle: true,
       title: Text(
         'สรุปรายการขอบริการ',
-        style: TextStyle(
-          color: textColorBlack,
-          fontSize: fontSizeL
-        ),
+        style: TextStyle(color: textColorBlack, fontSize: fontSizeL),
       ),
       iconTheme: IconThemeData(color: textColorBlack),
     );
@@ -90,7 +92,7 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
         child: BlocConsumer<RequestServiceBloc, RequestServiceState>(
             listener: (context, state) {
       if (state is CreatedRequestService) {
-        navigateToWaitingRequest(state.requestServiceId);
+        navigateToWaitingRequest(widget.req.req!);
         // showTopSnackBar(
         //     context, CustomSnackBar.success(message: ""));
       } else if (state is CreateRequestServiceError) {
@@ -130,8 +132,8 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
                     onSelectedItemChanged: (int? index) {
                       setState(() {
                         selectedIndex = index!;
-                        car = mockUpCar[selectedIndex];
-                        print(car.toJson());
+                        widget.req.req!.car = mockUpCar[selectedIndex];
+                        print(widget.req.req!.car.toJson());
                       });
                     },
                     items: _buildItems()),
@@ -162,37 +164,15 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
                   'ร้านผู้ให้บริการ:',
                   style: _textTitle,
                 ),
-                Text('168 Garage'),
-                SizedBox(
+                Text(widget.req.garageName),
+                 SizedBox(
                   height: defualtPaddingLow + 4,
                 ),
                 Text(
                   'บริการที่เลือก' + ':',
                   style: _textTitle,
                 ),
-                ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.vertical,
-                    itemCount: mockupService.length,
-                    itemBuilder: (context, index) => Row(
-                          children: [
-                            Icon(
-                              Icons.report_problem_outlined,
-                              size: 13,
-                            ),
-                            SizedBox(
-                              width: 5,
-                            ),
-                            Text(mockupService[index]),
-                          ],
-                        )),
-                // SizedBox(
-                //   width: MediaQuery.of(context).size.width,
-                //   height: 1.0,
-                //   child: const DecoratedBox(
-                //     decoration: const BoxDecoration(color: textColorBlack),
-                //   ),
-                // ),
+                Text(widget.req.serviceName),
                 SizedBox(
                   height: defualtPaddingLow + 4,
                 ),
@@ -211,22 +191,11 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
                   'หมายเหตุ' + ':',
                   style: _textTitle,
                 ),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.description,
-                      size: 15,
-                    ),
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      'ยากแบนเพราะเกิดจากอะไรไม่รู้',
-                      maxLines: 2,
-                      softWrap: true,
-                      overflow: TextOverflow.fade,
-                    )
-                  ],
+                Text(
+                  widget.req.req!.problemDesc,
+                  maxLines: 2,
+                  softWrap: true,
+                  overflow: TextOverflow.fade,
                 ),
                 SizedBox(
                   height: 20,
@@ -270,14 +239,14 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
     Navigator.pop(context);
   }
 
-  navigateToWaitingRequest(String requestServiceId) {
+  navigateToWaitingRequest(RequestServiceAdd requestServiceAdd) {
     Navigator.pushNamed(context, WAITING_REQUEST_ROUTE,
-        arguments: {'requestServiceId': requestServiceId});
+        arguments: requestServiceAdd);
   }
 
   createRequestService() {
     _requestServiceBloc
-      ..add(CreateRequestService(requestServiceAdd: requestServiceAdd));
+      ..add(CreateRequestService(requestServiceAdd: widget.req.req!));
   }
 
   void _navigateAndDisplaySelection(BuildContext context) async {
@@ -287,26 +256,12 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
             AlertPopupYesNo(title: tConfirm + tRequestServiceThai));
     if (result == 'Ok') {
       logger.d("Clicked Confirm Request Service");
+      widget.req.req!.createdAt = DateTime.now();
+      logger.d(widget.req.req!.toJson());
       createRequestService();
+      navigateToWaitingRequest(widget.req.req!);
     }
   }
-
-  final RequestServiceAdd requestServiceAdd = RequestServiceAdd(
-      user: '6127927b6582ef63c96d3f6e',
-      service: '6126688e8a7cff53caba8026',
-      garage: '6129f2b0748ba19d14a2c1e3',
-      car: Car(
-          id: "",
-          brand: "brand",
-          model: "model",
-          type: "type",
-          year: "year",
-          fuelType: "fuelType"),
-      geoLocationGarage: GeoLocation(lat: '13.6561449', long: '100.4958788'),
-      geoLocationUser: GeoLocation(lat: '13.6527639', long: '100.4859599'),
-      problemDesc: 'ไม่ทราบสาเหตุ',
-      confirmRequest: true,
-      status: 'กำลังเตรียม');
 }
 
 class SelectionItem extends StatelessWidget {

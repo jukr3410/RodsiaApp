@@ -59,7 +59,7 @@ class _BottomNavigrationBarState extends State<BottomNavigrationBar> {
       FindProblemPage(),
       NotifyPage(),
       MenusSetting(
-        user: widget.user,
+        user: mockUpUser,
       )
     ];
     return Scaffold(

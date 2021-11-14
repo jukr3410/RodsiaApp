@@ -13,11 +13,10 @@ part 'garage_info_state.dart';
 
 class GarageInfoBloc extends Bloc<GarageInfoEvent, GarageInfoState> {
   final GarageRepository garageRepository;
-  final ServiceRepository serviceRepository;
   StreamSubscription? _servicesSubscription;
 
   GarageInfoBloc(
-      {required this.garageRepository, required this.serviceRepository})
+      {required this.garageRepository})
       : super(GarageInfoInitial());
 
   @override
@@ -34,9 +33,10 @@ class GarageInfoBloc extends Bloc<GarageInfoEvent, GarageInfoState> {
     try {
       yield GarageInfoLoading();
       final garage = await garageRepository.getGarageInfo(id: event.garageId);
-      final services =
-          await serviceRepository.getServiceByGarage(garageId: event.garageId);
-      yield GarageLoadSuccess(garage, services);
+
+      // final services =
+      //     await serviceRepository.getServiceByGarage(garageId: event.garageId);
+      yield GarageLoadSuccess(garage);
     } catch (e) {
       logger.e(e);
       yield GarageInfoError();

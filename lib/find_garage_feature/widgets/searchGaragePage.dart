@@ -1,8 +1,14 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:getwidget/components/button/gf_button.dart';
+import 'package:getwidget/getwidget.dart';
+import 'package:getwidget/shape/gf_button_shape.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/find_garage_feature/bloc/search_bloc.dart';
 import 'package:rodsiaapp/find_garage_feature/widgets/garageList.dart';
 import 'package:rodsiaapp/global_widgets/hexTocolor.dart';
+import 'package:rodsiaapp/main.dart';
 
 class SearchPage extends StatefulWidget {
   SearchPage({Key? key}) : super(key: key);
@@ -12,7 +18,12 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  TextEditingController garageConTroller = TextEditingController();
+  late TextEditingController _controller;
+  @override
+  void initState() {
+    _controller = TextEditingController();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,16 +49,16 @@ class _SearchPageState extends State<SearchPage> {
                       }),
                   Expanded(
                     child: Container(
-                      margin: EdgeInsets.only(right: 20),
                       height: 30,
                       child: TextField(
-                        onSubmitted: (String value) {
-                          print(value);
-
-                          SearchFetchEvent(garageName: garageConTroller.text);
-                        },
+                        // onSubmitted: (String value) {
+                        //   setState(() {
+                        //     search = value;
+                        //     logger.d(value);
+                        //   });
+                        // },
                         autofocus: true,
-                        controller: garageConTroller,
+                        controller: _controller,
                         decoration: InputDecoration(
                             isDense: true,
                             contentPadding:
@@ -57,59 +68,36 @@ class _SearchPageState extends State<SearchPage> {
                               size: 20,
                             ),
                             filled: true,
+                            focusColor: primaryColor,
                             fillColor: textColorWhite,
                             border: OutlineInputBorder(
                               borderRadius: borderRadiusMedium,
                             ),
-                            hintText: 'ค้นหา',
+                            hintText: 'ค้นหาร้านซ้อมรถ',
                             hintStyle: TextStyle(
                                 color: hexToColor("#C4C4C4"), fontSize: 12)),
                       ),
                     ),
+                  ),
+                  GFButton(
+                    onPressed: () {
+                      navigatorToListGarage(_controller.text);
+                    },
+                    child: Text(tSearch),
+                    type: GFButtonType.transparent,
+                    textStyle: TextStyle(
+                        fontWeight: FontWeight.bold, color: primaryColor),
                   )
                 ],
               ),
-            ),
-            Padding(
-              padding:
-                  const EdgeInsets.only(left: defualtPaddingMedium, top: 20),
-              child: Text(
-                "การค้นหาล่าสุด",
-                style: TextStyle(
-                    fontSize: 16,
-                    color: hexToColor(codeColorBlack),
-                    fontWeight: FontWeight.w500),
-              ),
-            ),
-            Expanded(
-              child: ListView(
-                  children: ListTile.divideTiles(context: context, tiles: [
-                ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: historySearch.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                        height: 30,
-                        child: ListTile(
-                            title: Text(
-                          historySearch[index].toString(),
-                          style: TextStyle(fontSize: 14),
-                        )),
-                      );
-                    }),
-              ]).toList()),
             ),
           ],
         ),
       ),
     );
   }
-}
 
-// mockup
-List historySearch = [
-  'ยางแตก',
-  'หม้อน้ำเสีย',
-  'ระบบไฟฟ้า',
-  'ระบบเบรค',
-];
+  void navigatorToListGarage(String garageName) {
+    Navigator.pushNamed(context, GARAGE_SEARCH_ROUTE, arguments: garageName);
+  }
+}

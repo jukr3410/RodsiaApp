@@ -29,4 +29,19 @@ class ServiceApi {
 
     return services;
   }
+
+  Future<Service> getServiceById({required String serviceId}) async {
+    Service services;
+    final url = '$baseUrl/services-id/$serviceId';
+    final response = await http.get(Uri.parse(url), headers: headers);
+    if (response.statusCode != 200) {
+      logger.e(response);
+      throw new Exception('There was a problem ${response.statusCode}');
+    }
+    final decodedJson = jsonDecode(response.body);
+    logger.d("services: $decodedJson");
+    services = Service.fromJson(decodedJson);
+
+    return services;
+  }
 }
