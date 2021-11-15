@@ -3,6 +3,7 @@ import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/message_model.dart';
 import 'package:rodsiaapp/main.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:url_launcher/url_launcher.dart' as UrlLauncher;
 
 class ChatUi extends StatefulWidget {
   ChatUi({Key? key}) : super(key: key);
@@ -38,7 +39,9 @@ class _ChatUiState extends State<ChatUi> {
           elevation: 3.0,
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                UrlLauncher.launch('tel://1234567890');
+              },
               icon: Icon(Icons.call),
             )
           ],

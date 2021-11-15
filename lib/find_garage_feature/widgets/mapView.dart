@@ -275,47 +275,49 @@ class _MapViewState extends State<MapView> {
                                                     color: textColorBlack),
                                               ),
                                             ]),
-                                            Row(
-                                              children: [
-                                                Text(
-                                                  tServiceThai + ': ',
-                                                ),
-                                                // ListView.builder(
-                                                //     scrollDirection:
-                                                //         Axis.horizontal,
-                                                //     shrinkWrap: true,
-                                                //     itemBuilder:
-                                                //         (context, index) {
-                                                //       return Image.asset(
-                                                //         tImageAsset(
-                                                //             serviceType[0]
-                                                //                 .toString()),
-                                                //         width: 18,
-                                                //       );
-                                                //     }),
-                                                Image.asset(
-                                                  tImageAsset(serviceType[0]
-                                                      .toString()),
-                                                  width: 18,
-                                                ),
-                                                SizedBox(
-                                                  width: 5,
-                                                ),
-                                                Image.asset(
-                                                  tImageAsset(serviceType[1]
-                                                      .toString()),
-                                                  width: 18,
-                                                ),
-                                                SizedBox(
-                                                  width: 5,
-                                                ),
-                                                Image.asset(
-                                                  tImageAsset(serviceType[2]
-                                                      .toString()),
-                                                  width: 18,
-                                                ),
-                                              ],
-                                            ),
+                                            ListView.builder(
+                                                scrollDirection:
+                                                    Axis.horizontal,
+                                                shrinkWrap: true,
+                                                itemBuilder: (context, index) {
+                                                  return Image.asset(
+                                                    tImageAsset(serviceType[index]
+                                                        .toString()),
+                                                    width: 18,
+                                                  );
+                                                }),
+
+                                            // Expanded(
+                                            //   child: Row(
+                                            //     children: [
+                                            //       Text(
+                                            //         tServiceThai + ': ',
+                                            //       ),
+
+                                            // Image.asset(
+                                            //   tImageAsset(serviceType[0]
+                                            //       .toString()),
+                                            //   width: 18,
+                                            // ),
+                                            // SizedBox(
+                                            //   width: 5,
+                                            // ),
+                                            // Image.asset(
+                                            //   tImageAsset(serviceType[1]
+                                            //       .toString()),
+                                            //   width: 18,
+                                            // ),
+                                            // SizedBox(
+                                            //   width: 5,
+                                            // ),
+                                            // Image.asset(
+                                            //   tImageAsset(serviceType[2]
+                                            //       .toString()),
+                                            //   width: 18,
+                                            // ),
+                                            //     ],
+                                            //   ),
+                                            // ),
                                             Row(
                                               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [

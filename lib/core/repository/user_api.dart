@@ -29,6 +29,18 @@ class UserApi {
     return user;
   }
 
+  Future<User> getUserInfoFormPhone({required String phone}) async {
+    final url = '$baseUrl/users/$phone';
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode != 200) {
+      throw new Exception('There was a problem ${response.statusCode}');
+    }
+    final decodedJson = jsonDecode(response.body);
+    User user = decodedJson;
+
+    return user;
+  }
+
   Future<bool> updateUser({required User user}) async {
     final url = '$baseUrl/users';
     final msg = jsonEncode(user.toJson());

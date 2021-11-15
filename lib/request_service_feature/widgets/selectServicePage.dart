@@ -14,6 +14,8 @@ import 'package:rodsiaapp/main.dart';
 import 'package:rodsiaapp/request_service_feature/bloc/garage_info_bloc.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/infoGarageFormSelect.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/selectServiceOfGarage.dart';
+import 'package:multi_image_picker2/multi_image_picker2.dart';
+import 'package:image_picker/image_picker.dart';
 
 class SelectServicePage extends StatefulWidget {
   final Garage garage;
@@ -26,12 +28,11 @@ class SelectServicePage extends StatefulWidget {
 class _SelectServicePageState extends State<SelectServicePage> {
   late TextEditingController _controller;
 
-  List mockupImage = [
-    'https://www.tqm.co.th/new_images/1478_1.jpg?v=20200722135804',
-    'https://s359.kapook.com/pagebuilder/f443f787-8814-4b89-afcf-86280b0bdfd8.jpg',
-    'https://www.industrialempathy.com/img/remote/ZiClJf-1920w.jpg',
-    'http://www.tqm.co.th/gallery/5266.jpg',
-  ];
+  // List mockupImage = [
+  //   'https://www.tqm.co.th/new_images/1478_1.jpg?v=20200722135804',
+  //   'https://s359.kapook.com/pagebuilder/f443f787-8814-4b89-afcf-86280b0bdfd8.jpg',
+  //   'http://www.tqm.co.th/gallery/5266.jpg',
+  // ];
 
   int val = -1;
   Map<String, bool> test = {};
@@ -52,6 +53,9 @@ class _SelectServicePageState extends State<SelectServicePage> {
     // Clear array after use.
     holder_1.clear();
   }
+
+  List<Asset> images = <Asset>[];
+  String _error = 'No Error Dectected';
 
   @override
   void initState() {
@@ -153,7 +157,9 @@ class _SelectServicePageState extends State<SelectServicePage> {
                   Row(
                     children: [
                       TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            loadAssets();
+                          },
                           style: flatButtonStyle(primaryColor, textColorBlack),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
@@ -168,19 +174,19 @@ class _SelectServicePageState extends State<SelectServicePage> {
                       SizedBox(
                         width: 10,
                       ),
-                      TextButton(
-                          onPressed: () {},
-                          style: flatButtonStyle(primaryColor, textColorBlack),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(Icons.camera_alt, size: 20),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text('กล้อง'),
-                            ],
-                          )),
+                      // TextButton(
+                      //     onPressed: () {},
+                      //     style: flatButtonStyle(primaryColor, textColorBlack),
+                      //     child: Row(
+                      //       mainAxisSize: MainAxisSize.min,
+                      //       children: [
+                      //         Icon(Icons.camera_alt, size: 20),
+                      //         SizedBox(
+                      //           width: 5,
+                      //         ),
+                      //         Text('กล้อง'),
+                      //       ],
+                      //     )),
                     ],
                   ),
                   SizedBox(
@@ -215,6 +221,7 @@ class _SelectServicePageState extends State<SelectServicePage> {
                           _requestServiceAdd.problemDesc = _controller.text;
                           logger.d(_requestServiceAdd.toJson());
                           cmReq.req = _requestServiceAdd;
+                          cmReq.images = images;
                           logger.d(cmReq.toString());
                           navigateToConfirmRequest();
                         }
@@ -228,6 +235,43 @@ class _SelectServicePageState extends State<SelectServicePage> {
             ),
           ]),
         ));
+  }
+
+  Future<void> loadAssets() async {
+    List<Asset> resultList = <Asset>[];
+    String error = 'No Error Detected';
+
+    try {
+      resultList = await MultiImagePicker.pickImages(
+        maxImages: 10,
+        enableCamera: true,
+        selectedAssets: images,
+        cupertinoOptions: CupertinoOptions(
+          takePhotoIcon: "chat",
+          doneButtonTitle: "Fatto",
+        ),
+        materialOptions: MaterialOptions(
+          statusBarColor: '#808080',
+          actionBarColor: '#38454C',
+          actionBarTitle: "เลือกรูปภาพ",
+          allViewTitle: "รูปทั้งหมด",
+          useDetailsView: false,
+          selectCircleStrokeColor: "#FECE2F",
+        ),
+      );
+    } on Exception catch (e) {
+      error = e.toString();
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+
+    setState(() {
+      images = resultList;
+      _error = error;
+    });
   }
 
   void _showDialog(BuildContext context) {
@@ -276,12 +320,15 @@ class _SelectServicePageState extends State<SelectServicePage> {
       mainAxisSpacing: 5,
       crossAxisSpacing: 5,
       shrinkWrap: true,
-      children: List.generate(
-          mockupImage.length,
-          (index) => Image.network(
-                mockupImage[index].toString(),
-                fit: BoxFit.cover,
-              )),
+      children: List.generate(images.length, (index) {
+        Asset asset = images[index];
+        print(asset);
+        return AssetThumb(
+          asset: asset,
+          width: 300,
+          height: 300,
+        );
+      }),
     );
   }
 
@@ -344,6 +391,11 @@ class ComfirmReq {
   String garageName;
   String serviceName;
   RequestServiceAdd? req;
+  List<Asset>? images;
 
-  ComfirmReq({required this.garageName, this.req, required this.serviceName});
+  ComfirmReq(
+      {required this.garageName,
+      this.req,
+      required this.serviceName,
+      this.images});
 }

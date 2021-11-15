@@ -48,7 +48,7 @@ class _InfoGarageFormSelectState extends State<InfoGarageFormSelect> {
                     child: ClipOval(
                       child: CachedNetworkImage(
                         imageUrl:
-                            'https://lh3.googleusercontent.com/proxy/-g4Id1okFOoVJH6yEDsdTjbr8-QwYZdQoY0ohT9OUAn5ZEsHsBkTwTAvlyRjX3KYmiHWPqPUhIgAMWX1BTRBnd4',
+                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTB5AuY2eoSPaOkKdJWC2fkbfO3b_T4GuLVnA&usqp=CAU',
                         placeholder: (context, url) =>
                             CircularProgressIndicator(
                           color: textColorBlack,

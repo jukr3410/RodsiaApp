@@ -1,6 +1,7 @@
 import 'package:direct_select/direct_select.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:multi_image_picker2/multi_image_picker2.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/car_model.dart';
 import 'package:rodsiaapp/core/models/geo_location_model.dart';
@@ -165,7 +166,7 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
                   style: _textTitle,
                 ),
                 Text(widget.req.garageName),
-                 SizedBox(
+                SizedBox(
                   height: defualtPaddingLow + 4,
                 ),
                 Text(
@@ -226,12 +227,15 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
       mainAxisSpacing: 5,
       crossAxisSpacing: 5,
       shrinkWrap: true,
-      children: List.generate(
-          mockupImage.length,
-          (index) => Image.network(
-                mockupImage[index].toString(),
-                fit: BoxFit.cover,
-              )),
+      children: List.generate(widget.req.images!.length, (index) {
+        Asset asset = widget.req.images![index];
+        print(asset);
+        return AssetThumb(
+          asset: asset,
+          width: 300,
+          height: 300,
+        );
+      }),
     );
   }
 

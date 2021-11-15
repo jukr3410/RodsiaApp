@@ -17,6 +17,7 @@ class LoggedIn extends AuthenticationEvent {
 
   const LoggedIn({required this.userDB});
 
+
   @override
   List<Object> get props => [userDB];
 
