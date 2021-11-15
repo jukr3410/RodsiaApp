@@ -22,12 +22,23 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   Stream<ProfileState> mapEventToState(
     ProfileEvent event,
   ) async* {
-    // TODO: implement mapEventToState
+    if( event is ProfileLoadFormPhone){
+      yield* _mapUserFormPhoneLoadToState();
+    }
   }
 
   Stream<ProfileState> _mapServiceLoadToState() async* {
     try {
       final user = await this.userRepository.getUserInfo(id: mockUserId);
+      yield UserLoadSuccess(user: user);
+    } catch (e) {
+      logger.e(e);
+      yield ProfileError();
+    }
+  }
+  Stream<ProfileState> _mapUserFormPhoneLoadToState() async* {
+    try {
+      final user = await this.userRepository.getUserInfoPhone();
       yield UserLoadSuccess(user: user);
     } catch (e) {
       logger.e(e);

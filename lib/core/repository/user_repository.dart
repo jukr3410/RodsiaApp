@@ -20,6 +20,10 @@ class UserRepository {
     return await userApi.getUserInfo(id: id);
   }
 
+  Future<User> getUserInfoPhone() async {
+    return await userApi.getUserInfoPhone();
+  }
+
   Future<bool> updateUser({required User user}) async {
     return await userApi.updateUser(user: user);
   }

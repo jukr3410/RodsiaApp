@@ -5,6 +5,8 @@ import 'package:rodsiaapp/core/dao/user_dao.dart';
 import 'package:rodsiaapp/core/models/car_model.dart';
 import 'package:rodsiaapp/core/models/user_login.dart';
 import 'package:rodsiaapp/core/models/user_model.dart';
+import 'package:rodsiaapp/core/models/user_model_db.dart';
+import 'package:rodsiaapp/core/repository/user_repository.dart';
 import '../../constants.dart';
 import '../../main.dart';
 
@@ -16,6 +18,7 @@ class UserApi {
   };
 
   final userDao = UserDao();
+  final userRepository = UserRepository();
 
   Future<User> getUserInfo({required String id}) async {
     final url = '$baseUrl/users/$id';
@@ -29,8 +32,9 @@ class UserApi {
     return user;
   }
 
-  Future<User> getUserInfoFormPhone({required String phone}) async {
-    final url = '$baseUrl/users/$phone';
+  Future<User> getUserInfoPhone() async {
+    UserDB userToken = await userRepository.getUserToken();
+    final url = '$baseUrl/users-phone/${userToken.phone}';
     final response = await http.get(Uri.parse(url));
     if (response.statusCode != 200) {
       throw new Exception('There was a problem ${response.statusCode}');
