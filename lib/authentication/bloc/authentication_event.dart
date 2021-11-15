@@ -22,7 +22,7 @@ class LoggedIn extends AuthenticationEvent {
   List<Object> get props => [userDB];
 
   @override
-  String toString() => 'LoggedIn { user: $userDB.phone }';
+  String toString() => 'LoggedIn { user: ${userDB.phone} }';
 }
 
 class LoggedOut extends AuthenticationEvent {}

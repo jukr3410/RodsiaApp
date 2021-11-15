@@ -60,8 +60,8 @@ class UserRepository {
     return result;
   }
 
-  Future<UserDB> getToken() async {
-    UserDB result = await userDao.getToken(0);
+  Future<UserDB> getUserToken() async {
+    UserDB result = await userDao.getUserToken(0);
     return result;
   }
 }
