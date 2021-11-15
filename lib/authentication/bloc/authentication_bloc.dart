@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:rodsiaapp/core/models/user_model_db.dart';
 import 'package:rodsiaapp/core/repository/user_repository.dart';
+import 'package:rodsiaapp/main.dart';
 
 part 'authentication_event.dart';
 part 'authentication_state.dart';
@@ -30,7 +31,7 @@ class AuthenticationBloc
 
   Stream<AuthenticationState> _mapAppStartedToState() async* {
     final bool hasToken = await userRepository.hasToken();
-
+    logger.d('hasToken: $hasToken');
     if (hasToken) {
       yield AuthenticationAuthenticated();
     } else {

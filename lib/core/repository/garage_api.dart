@@ -6,6 +6,7 @@ import 'package:rodsiaapp/core/dao/user_dao.dart';
 import 'package:rodsiaapp/core/models/garage_model.dart';
 import 'package:rodsiaapp/core/models/service_model.dart';
 import 'package:rodsiaapp/core/models/user_model_db.dart';
+import 'package:rodsiaapp/core/repository/user_repository.dart';
 import 'package:rodsiaapp/main.dart';
 import 'package:rodsiaapp/core/repository/service_api.dart';
 
@@ -15,7 +16,7 @@ class GarageApi {
   //late final http.Client httpClient;
 
   //GarageApi({required this.httpClient});
-  final userDao = UserDao();
+  final userRepository = UserRepository();
 
   Map<String, String> headers = {
     'Content-type': 'application/json',
@@ -23,8 +24,11 @@ class GarageApi {
   };
 
   Future<List<Garage>> getGarages({required int page}) async {
-    // UserDB token = await userDao.getToken(0);
+    // UserDB token = await userDao.getUserToken(0);
     // headers.update("Authorization", (value) => 'Bearer $token');
+    UserDB userToken = await userRepository.getUserToken();
+    logger.d('userToken: ${userToken.phone}');
+
     List<Garage>? garages = [];
     final url = '$baseUrl/garages?page=$page&limit=10';
     final response = await http.get(Uri.parse(url), headers: headers);
@@ -54,8 +58,7 @@ class GarageApi {
     return garages;
   }
 
-  Future<List<Garage>> getByGaragesName(
-      {required String name}) async {
+  Future<List<Garage>> getByGaragesName({required String name}) async {
     List<Garage> garages = [];
     final url = '$baseUrl/garages-name/$name';
     final response = await http.get(Uri.parse(url));

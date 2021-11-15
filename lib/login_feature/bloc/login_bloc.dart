@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:rodsiaapp/authentication/bloc/authentication_bloc.dart';
+import 'package:rodsiaapp/core/models/user_model_db.dart';
 import 'package:rodsiaapp/core/repository/user_repository.dart';
 import 'package:rodsiaapp/main.dart';
 
@@ -30,14 +31,17 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     yield LoginLoading();
 
     try {
-      // final userDB = await userRepository.authenticate(
-      //   phone: event.phone,
-      //   password: event.password,
-      // );
-      // logger.d('userDB: {$userDB.phone}');
+      final UserDB userDB = await userRepository.authenticate(
+        phone: event.phone,
+        password: event.password,
+      );
+      logger.d(
+        'userDB Token: ${userDB.token}',
+      );
 
-      // authenticationBloc.add(LoggedIn(userDB: userDB));
-      // yield LoginInitial();
+      authenticationBloc.add(LoggedIn(userDB: userDB));
+
+      //yield LoginInitial();
       yield LoginSuccess();
     } catch (error) {
       yield LoginFaliure(error: "หมายเลขโทรศัพท์หรือรหัสผ่านไม่ถูกต้อง");

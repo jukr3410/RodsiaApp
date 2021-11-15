@@ -1,5 +1,6 @@
 import 'package:rodsiaapp/core/database/user_database.dart';
 import 'package:rodsiaapp/core/models/user_model_db.dart';
+import 'package:rodsiaapp/main.dart';
 
 class UserDao {
   final dbProvider = DatabaseProvider.dbProvider;
@@ -11,15 +12,17 @@ class UserDao {
     return result;
   }
 
-  Future<UserDB> getToken(int id) async {
+  Future<UserDB> getUserToken(int id) async {
     final db = await dbProvider.database;
-    UserDB? userDB;
+    UserDB userDB;
     try {
-      List<Map> users =
+      List<Map<String, dynamic>> users =
           await db.query(userTable, where: 'id = ?', whereArgs: [id]);
       if (users.length > 0) {
-        users.forEach((row) => {userDB = row as UserDB});
-        return userDB!;
+        //users.forEach((row) => logger.d('getUserToken: ${row}'));
+        userDB = UserDB.fromDatabaseJson(users[0]);
+        logger.d('getUserToken: ${userDB}');
+        return userDB;
       } else {
         return null!;
       }

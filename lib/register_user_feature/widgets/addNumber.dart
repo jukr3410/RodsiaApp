@@ -141,7 +141,7 @@ class _AddNumberState extends State<AddNumber> {
                           Form(
                             key: _form,
                             child: TextFormField(
-                                // maxLength: 15,
+                                maxLength: 10,
                                 onChanged: (value) => {_user.phone = value},
                                 keyboardType: TextInputType.number,
                                 textAlign: TextAlign.center,
