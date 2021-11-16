@@ -31,7 +31,7 @@ class AuthenticationBloc
 
   Stream<AuthenticationState> _mapAppStartedToState() async* {
     final bool hasToken = await userRepository.hasToken();
-    logger.d('hasToken: $hasToken');
+    //logger.d('hasToken: $hasToken');
     if (hasToken) {
       yield AuthenticationAuthenticated();
     } else {
