@@ -235,7 +235,6 @@ class _AddNumberState extends State<AddNumber> {
   }
 
   void navigateToOtp(User user) {
-    //Navigator.pushNamed(context, OTP_ROUTE);
     Navigator.pushNamed(context, OTP_ROUTE, arguments: user);
   }
 
@@ -248,6 +247,7 @@ class _AddNumberState extends State<AddNumber> {
     // Clean up the controller when the widget is removed from the widget tree.
     // This also removes the _printLatestValue listener.
     _controller.dispose();
+
     super.dispose();
   }
 }

@@ -24,10 +24,10 @@ class GarageApi {
   };
 
   Future<List<Garage>> getGarages({required int page}) async {
-    // UserDB token = await userDao.getUserToken(0);
-    // headers.update("Authorization", (value) => 'Bearer $token');
     UserDB userToken = await userDao.getUserToken();
     logger.d('userToken: ${userToken.phone}');
+
+    // headers.update("authorization", (value) => '$token');
 
     List<Garage>? garages = [];
     final url = '$baseUrl/garages?page=$page&limit=10';
