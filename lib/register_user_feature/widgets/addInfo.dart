@@ -313,19 +313,6 @@ class _AddInfoState extends State<AddInfo> {
                               ]),
                         ),
                       ),
-                      // Padding(
-                      //   padding: const EdgeInsets.symmetric(
-                      //       vertical: 20, horizontal: 40),
-                      //   child: Text(
-                      //     "By continuing, you agree to RodSiaApp’s Terms of Use   and confirm that you have read our Privacy Policy",
-                      //     textAlign: TextAlign.center,
-                      //     style: TextStyle(
-                      //       color: textColorBlack,
-                      //       fontSize: 12,
-                      //       fontWeight: FontWeight.normal,
-                      //     ),
-                      //   ),
-                      // )
                     ],
                   ),
                 )

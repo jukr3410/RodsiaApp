@@ -150,20 +150,4 @@ class UserApi {
     logger.d("$token");
     return token;
   }
-
-  // ไปทำเส้น api ก่อน
-  // Future<bool> updateCar({required User user}) async {
-  //   logger.d('${user.cars}');
-  //   final msg = jsonEncode(user.cars);
-  //   final url = '$baseUrl/users/${user.id}/update-car';
-  //   final response =
-  //       await http.post(Uri.parse(url), body: msg, headers: headers);
-  //   if (response.statusCode != 200) {
-  //     logger.e(response);
-  //     return false;
-  //     //throw new Exception('There was a problem ${response.statusCode}');
-  //   }
-  //   return true;
-  // }
-
 }
