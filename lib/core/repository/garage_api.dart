@@ -16,7 +16,7 @@ class GarageApi {
   //late final http.Client httpClient;
 
   //GarageApi({required this.httpClient});
-  final userRepository = UserRepository();
+  final userDao = UserDao();
 
   Map<String, String> headers = {
     'Content-type': 'application/json',
@@ -26,7 +26,7 @@ class GarageApi {
   Future<List<Garage>> getGarages({required int page}) async {
     // UserDB token = await userDao.getUserToken(0);
     // headers.update("Authorization", (value) => 'Bearer $token');
-    UserDB userToken = await userRepository.getUserToken();
+    UserDB userToken = await userDao.getUserToken();
     logger.d('userToken: ${userToken.phone}');
 
     List<Garage>? garages = [];
