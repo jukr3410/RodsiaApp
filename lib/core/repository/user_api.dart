@@ -18,7 +18,6 @@ class UserApi {
   };
 
   final userDao = UserDao();
-  final userRepository = UserRepository();
 
   Future<User> getUserInfo({required String id}) async {
     final url = '$baseUrl/users/$id';
@@ -33,8 +32,9 @@ class UserApi {
   }
 
   Future<User> getUserInfoPhone() async {
-    UserDB userToken = await userRepository.getUserToken();
+    UserDB userToken = await userDao.getUserToken();
     final url = '$baseUrl/users-phone/${userToken.phone}';
+
     final response = await http.get(Uri.parse(url));
     if (response.statusCode != 200) {
       throw new Exception('There was a problem ${response.statusCode}');

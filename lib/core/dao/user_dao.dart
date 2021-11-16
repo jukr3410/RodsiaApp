@@ -12,12 +12,12 @@ class UserDao {
     return result;
   }
 
-  Future<UserDB> getUserToken(int id) async {
+  Future<UserDB> getUserToken() async {
     final db = await dbProvider.database;
     UserDB userDB;
     try {
       List<Map<String, dynamic>> users =
-          await db.query(userTable, where: 'id = ?', whereArgs: [id]);
+          await db.query(userTable, where: 'id = ?', whereArgs: [0]);
       if (users.length > 0) {
         //users.forEach((row) => logger.d('getUserToken: ${row}'));
         userDB = UserDB.fromDatabaseJson(users[0]);
