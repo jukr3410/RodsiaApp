@@ -227,7 +227,6 @@ const trackingStatus = [
 //menus setting
 const menusSetting = [
   'โปรไฟล์',
-  'ประวัติการใช้งาน',
   'ศูยน์ช่วยเหลือ',
   'chat test',
   'การตั้งค่า',
@@ -235,7 +234,6 @@ const menusSetting = [
 ];
 const menusSettingRoute = [
   PROFILE_ROUTE,
-  HISTORY_ROUTE,
   SUPPORT_CENTER_ROUTE,
   CHAT_ROUTE,
   PROFILE_ROUTE,

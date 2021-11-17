@@ -89,6 +89,11 @@ class AppRouter {
                     create: (BuildContext context) => ServiceTypeBloc(
                         serviceTypeRepository: ServiceTypeRepository()),
                   ),
+                  BlocProvider(
+                      create: (BuildContext context) =>
+                          historyBloc.RequestServiceBloc(
+                              requestServiceRepository:
+                                  RequestServiceRepository())),
                 ], child: CustomAppBar()));
 
       case LOGIN_ROUTE:
