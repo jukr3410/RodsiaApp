@@ -28,18 +28,8 @@ class _InfoProfileState extends State<InfoProfile> {
                 Stack(
                   children: <Widget>[
                     ClipOval(
-                      child: CachedNetworkImage(
-                        imageUrl: widget.user.profileImage!,
-                        placeholder: (context, url) =>
-                            CircularProgressIndicator(
-                          color: textColorBlack,
-                        ),
-                        errorWidget: (context, url, error) => Icon(Icons.error),
-                        fit: BoxFit.cover,
-                        height: 100,
-                        width: 100,
-                      ),
-                    ),
+                        child:
+                            _proFileImage(widget.user.profileImage.toString())),
                     // Positioned(
                     //     bottom: 7,
                     //     right: 18,
@@ -97,5 +87,25 @@ class _InfoProfileState extends State<InfoProfile> {
         ],
       ),
     );
+  }
+
+  _proFileImage(String profileImage) {
+    if (profileImage == '') {
+      return Image.asset(
+        tImageAsset('profile'),
+        width: 120,
+      );
+    } else {
+      return CachedNetworkImage(
+        imageUrl: profileImage,
+        placeholder: (context, url) => CircularProgressIndicator(
+          color: textColorBlack,
+        ),
+        errorWidget: (context, url, error) => Icon(Icons.error),
+        fit: BoxFit.cover,
+        height: 120,
+        width: 120,
+      );
+    }
   }
 }

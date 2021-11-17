@@ -227,7 +227,6 @@ const trackingStatus = [
 //menus setting
 const menusSetting = [
   'โปรไฟล์',
-  'ประวัติการใช้งาน',
   'ศูยน์ช่วยเหลือ',
   'chat test',
   'การตั้งค่า',
@@ -235,7 +234,6 @@ const menusSetting = [
 ];
 const menusSettingRoute = [
   PROFILE_ROUTE,
-  HISTORY_ROUTE,
   SUPPORT_CENTER_ROUTE,
   CHAT_ROUTE,
   PROFILE_ROUTE,
@@ -258,21 +256,24 @@ List<Car> mockUpCar = [
       model: 'Civic',
       type: 'four-wheel',
       year: '2010',
-      fuelType: 'Gas'),
+      fuelType: 'Gas',
+      regisNumber: 'กง1123'),
   Car(
       id: "2",
       brand: 'Mazda',
       model: '2',
       type: 'four-wheel',
       year: '2020',
-      fuelType: 'Desel'),
+      fuelType: 'Desel',
+      regisNumber: 'กง1123'),
   Car(
       id: "3",
       brand: 'Yamaha',
       model: 'scoopy-i',
       type: 'two-wheel',
       year: '2013',
-      fuelType: 'Gasoho'),
+      fuelType: 'Gasoho',
+      regisNumber: "GG5552"),
 ];
 DateTime mockupDateTime = DateTime(2017, 9, 7, 17, 30);
 User mockUpUser = User(

@@ -26,25 +26,27 @@ class Garage {
 
   Address address;
   OpeningHour? openingHour;
-  List<String> images;
+  List<ImageGarage> images;
   String? logoImage;
   String id;
   String name;
   String phone;
   String? email;
   List<Service>? services;
-  List<String> typeCarRepairs;
+  List<TypeCarRepairs> typeCarRepairs;
 
   factory Garage.fromJson(Map<String, dynamic> json) => Garage(
         address: Address.fromJson(json["address"]),
         openingHour: OpeningHour.fromJson(json["openingHour"]),
-        images: List<String>.from(json["images"].map((x) => x)),
+        images: List<ImageGarage>.from(
+            json["images"].map((x) => ImageGarage.fromJson(x))),
         logoImage: json["logoImage"],
         id: json["_id"],
         name: json["name"],
         phone: json["phone"],
         email: json["email"],
-        typeCarRepairs: List<String>.from(json["typeCarRepairs"].map((x) => x)),
+        typeCarRepairs: List<TypeCarRepairs>.from(
+            json["typeCarRepairs"].map((x) => TypeCarRepairs.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -56,8 +58,36 @@ class Garage {
         "name": name,
         "phone": phone,
         "email": email,
-        "services": List<dynamic>.from(services!.map((x) => x)),
-        "typeCarRepairs": List<dynamic>.from(typeCarRepairs.map((x) => x)),
+        "services": List<Service>.from(services!.map((x) => x)),
+        "typeCarRepairs": List<TypeCarRepairs>.from(typeCarRepairs.map((x) => x)),
+      };
+}
+
+class TypeCarRepairs {
+  String type;
+
+  TypeCarRepairs({required this.type});
+
+  factory TypeCarRepairs.fromJson(Map<String, dynamic> json) => TypeCarRepairs(
+        type: json["type"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "type": type,
+      };
+}
+
+class ImageGarage {
+  String image;
+
+  ImageGarage({required this.image});
+
+  factory ImageGarage.fromJson(Map<String, dynamic> json) => ImageGarage(
+        image: json["image"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "image": image,
       };
 }
 

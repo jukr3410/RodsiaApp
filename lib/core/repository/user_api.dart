@@ -26,7 +26,7 @@ class UserApi {
       throw new Exception('There was a problem ${response.statusCode}');
     }
     final decodedJson = jsonDecode(response.body);
-    User user = decodedJson;
+    User user = User.fromJson(decodedJson);
 
     return user;
   }
@@ -41,8 +41,9 @@ class UserApi {
       throw new Exception('There was a problem ${response.statusCode}');
     }
     final decodedJson = jsonDecode(response.body);
-    User user = decodedJson;
-    logger.d("User: ${user.phone}");
+
+    User user = User.fromJson(decodedJson);
+    logger.d(user);
 
     return user;
   }

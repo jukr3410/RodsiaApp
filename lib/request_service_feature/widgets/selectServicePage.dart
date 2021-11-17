@@ -4,17 +4,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:rodsiaapp/constants.dart';
+import 'package:rodsiaapp/core/dao/user_dao.dart';
 import 'package:rodsiaapp/core/models/car_model.dart';
 import 'package:rodsiaapp/core/models/garage_model.dart';
 import 'package:rodsiaapp/core/models/geo_location_model.dart';
 import 'package:rodsiaapp/core/models/request_service_add_model.dart';
 import 'package:rodsiaapp/core/models/service_model.dart';
+import 'package:rodsiaapp/core/models/user_model_db.dart';
 import 'package:rodsiaapp/global_widgets/alertPleaseInputInfo.dart';
 import 'package:rodsiaapp/main.dart';
 import 'package:rodsiaapp/request_service_feature/bloc/garage_info_bloc.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/infoGarageFormSelect.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/selectServiceOfGarage.dart';
 import 'package:multi_image_picker2/multi_image_picker2.dart';
+import 'package:rodsiaapp/core/models/user_model_db.dart';
+
 import 'package:image_picker/image_picker.dart';
 
 class SelectServicePage extends StatefulWidget {
@@ -59,6 +63,7 @@ class _SelectServicePageState extends State<SelectServicePage> {
 
   @override
   void initState() {
+    UserDB userToken = UserDao().getUserToken() as UserDB;
     _controller = TextEditingController();
     super.initState();
   }
@@ -67,7 +72,14 @@ class _SelectServicePageState extends State<SelectServicePage> {
     user: '6127927b6582ef63c96d3f6e',
     service: '',
     garage: '',
-    car: Car(id: '', brand: '', model: '', type: '', year: '', fuelType: ''),
+    car: Car(
+        id: '',
+        brand: '',
+        model: '',
+        type: '',
+        year: '',
+        fuelType: '',
+        regisNumber: ''),
     geoLocationGarage: GeoLocation(lat: '13.6561449', long: '100.4958788'),
     geoLocationUser: GeoLocation(lat: '13.6527639', long: '100.4859599'),
     problemDesc: '',

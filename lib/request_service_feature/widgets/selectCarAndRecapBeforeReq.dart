@@ -23,7 +23,7 @@ class _SelectCarAndRecapBeforeReqState
 
   List<String> mockupService = ['ยางแตก', 'หม้อน้ำเสีย', 'ระบบไฟฟ้า'];
 
-  Car car = Car(id: "", brand: "", model: "", type: "", year: "", fuelType: "");
+  Car car = Car(id: "", brand: "", model: "", type: "", year: "", fuelType: "",regisNumber: '');
   List<Widget> _buildItems() {
     return mockUpCar
         .map((val) => SelectionItem(

@@ -9,11 +9,14 @@ import 'package:rodsiaapp/find_garage_feature/widgets/filterGarage.dart';
 import 'package:rodsiaapp/find_problem_feature/widgets/findProblemPage.dart';
 import 'package:rodsiaapp/global_widgets/hexTocolor.dart';
 import 'package:rodsiaapp/global_widgets/menusSetting.dart';
+import 'package:rodsiaapp/history_feature/widgets/listHistory.dart';
 import 'package:rodsiaapp/notify_feature/widgets/notifyPage.dart';
 import 'package:rodsiaapp/profile_feature/widgets/ProfilePage.dart';
 
 class BottomNavigrationBar extends StatefulWidget {
-  const BottomNavigrationBar({Key? key, }) : super(key: key);
+  const BottomNavigrationBar({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _BottomNavigrationBarState createState() => _BottomNavigrationBarState();
@@ -36,9 +39,9 @@ class _BottomNavigrationBarState extends State<BottomNavigrationBar> {
     BottomNavigationBarItem(
         icon: Container(
           margin: EdgeInsets.only(left: 50),
-          child: ImageIcon(AssetImage(tImageAsset('notify-navbar'))),
+          child: Icon(Icons.history),
         ),
-        label: 'Notify'),
+        label: 'History'),
     BottomNavigationBarItem(
       icon: ImageIcon(AssetImage(tImageAsset('more-navbar'))),
       label: 'More',
@@ -56,7 +59,7 @@ class _BottomNavigrationBarState extends State<BottomNavigrationBar> {
     List<Widget> _pageWidget = <Widget>[
       HomePage(),
       FindProblemPage(),
-      NotifyPage(),
+      Listhistory(),
       MenusSetting()
     ];
     return Scaffold(
