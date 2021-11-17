@@ -26,8 +26,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       yield* _mapRegisterAddNumberToState(event);
     } else if (event is RegisterVerifyOtp) {
       yield* _mapRegisterVerifyOtpToState(event);
-    } else if (event is RegisterSendOtpAgian) {
-      yield* _mapRegisterSendOtpAgianToState(event);
+    } else if (event is RegisterSendOtp) {
+      yield* _mapRegisterSendOtpToState(event);
     } else if (event is RegisterButtonPressed) {
       yield* _mapRegisterButtonPressedToState(event);
     } else {
@@ -39,7 +39,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       RegisterAddNumber event) async* {
     try {
       yield RegisterLoading();
-
+      yield RegisterAddNumberSuccess();
       var isPhoneNumberExist =
           await this.userRepository.checkUsedNumberPhone(user: event.user);
       logger.d("isPhoneNumberExist: $isPhoneNumberExist");
@@ -63,10 +63,40 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   }
 
   Stream<RegisterState> _mapRegisterVerifyOtpToState(
-      RegisterVerifyOtp event) async* {}
+      RegisterVerifyOtp event) async* {
+    try {
+      yield RegisterLoading();
 
-  Stream<RegisterState> _mapRegisterSendOtpAgianToState(
-      RegisterSendOtpAgian event) async* {}
+      var isSuccess = await this.userRepository.verifyOtpUser(user: event.user);
+      if (isSuccess == true) {
+        yield RegisterVerifySuccess();
+      } else {
+        yield RegisterVerifyFailed();
+      }
+    } catch (e) {
+      logger.e(e);
+      yield RegisterError();
+    }
+  }
+
+  Stream<RegisterState> _mapRegisterSendOtpToState(
+      RegisterSendOtp event) async* {
+    try {
+      yield RegisterLoading();
+
+      var isSendOtp =
+          await this.userRepository.requestSendOtpUser(user: event.user);
+      logger.d("RegisterSendOtp: $isSendOtp");
+      if (isSendOtp == true) {
+        yield RegisterSendVerifyOtpSuccess();
+      } else {
+        yield RegisterError();
+      }
+    } catch (e) {
+      logger.e(e);
+      yield RegisterError();
+    }
+  }
 
   Stream<RegisterState> _mapRegisterButtonPressedToState(
       RegisterButtonPressed event) async* {

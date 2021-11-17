@@ -25,7 +25,7 @@ class RegisterCheckPhoneNumber extends RegisterEvent {
   List<Object> get props => [phoneNumber];
 
   @override
-  String toString() => 'RegisterCheckPhoneNumber {phoneNumber: $phoneNumber}';
+  String toString() => 'RegisterCheckPhoneNumber phoneNumber: ${phoneNumber}';
 }
 
 class RegisterAddNumber extends RegisterEvent {
@@ -37,7 +37,7 @@ class RegisterAddNumber extends RegisterEvent {
   List<Object> get props => [user];
 
   @override
-  String toString() => 'RegisterAddNumber {user: $user}';
+  String toString() => 'RegisterAddNumber user: ${user}';
 }
 
 class RegisterVerifyOtp extends RegisterEvent {
@@ -49,17 +49,17 @@ class RegisterVerifyOtp extends RegisterEvent {
   List<Object> get props => [user];
 
   @override
-  String toString() => 'Register {user: $user}';
+  String toString() => 'Register user: ${user}';
 }
 
-class RegisterSendOtpAgian extends RegisterEvent {
+class RegisterSendOtp extends RegisterEvent {
   final User user;
 
-  const RegisterSendOtpAgian({required this.user});
+  const RegisterSendOtp({required this.user});
 
   @override
   List<Object> get props => [user];
 
   @override
-  String toString() => 'RegisterSendOtpAgian {user: $user}';
+  String toString() => 'RegisterSendOtpAgian user: ${user}';
 }

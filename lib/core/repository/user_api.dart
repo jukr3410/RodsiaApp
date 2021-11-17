@@ -99,6 +99,41 @@ class UserApi {
     return true;
   }
 
+  Future<bool> requestSendOtpUser({required User user}) async {
+    final url = '$baseUrl/auth/sendOtpUser';
+    final msg = jsonEncode(user.toJson());
+    final response =
+        await http.post(Uri.parse(url), body: msg, headers: headers);
+    if (response.statusCode != 200) {
+      logger.e(response);
+      return false;
+      //throw new Exception('There was a problem ${response.statusCode}');
+    }
+    return true;
+  }
+
+  Future<bool> verifyOtpUser({required User user}) async {
+    logger.d("User Verify: ${user.otp}");
+    final url = '$baseUrl/auth/verifyOtpUser';
+    final msg = jsonEncode(user.toJson());
+    final response =
+        await http.post(Uri.parse(url), body: msg, headers: headers);
+    if (response.statusCode != 200) {
+      logger.e(response);
+      return false;
+      //throw new Exception('There was a problem ${response.statusCode}');
+    }
+    final decodedJson = jsonDecode(response.body);
+    logger.d("isSuccess: ${decodedJson['success']}");
+
+    if (decodedJson["success"] == false) {
+      logger.d("verify failed");
+      return false;
+    }
+
+    return true;
+  }
+
   Future<Token> getTokenLogin({required UserLogin userLogin}) async {
     final url = '$baseUrl/auth/loginUser';
     final msg = jsonEncode(userLogin.toJson());
@@ -117,20 +152,4 @@ class UserApi {
     logger.d("$token");
     return token;
   }
-
-  // ไปทำเส้น api ก่อน
-  // Future<bool> updateCar({required User user}) async {
-  //   logger.d('${user.cars}');
-  //   final msg = jsonEncode(user.cars);
-  //   final url = '$baseUrl/users/${user.id}/update-car';
-  //   final response =
-  //       await http.post(Uri.parse(url), body: msg, headers: headers);
-  //   if (response.statusCode != 200) {
-  //     logger.e(response);
-  //     return false;
-  //     //throw new Exception('There was a problem ${response.statusCode}');
-  //   }
-  //   return true;
-  // }
-
 }

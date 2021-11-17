@@ -36,6 +36,14 @@ class UserRepository {
     return await userApi.checkUsedNumberPhone(user: user);
   }
 
+  Future<bool> requestSendOtpUser({required User user}) async {
+    return await userApi.requestSendOtpUser(user: user);
+  }
+
+  Future<bool> verifyOtpUser({required User user}) async {
+    return await userApi.verifyOtpUser(user: user);
+  }
+
   Future<UserDB> authenticate({
     required String phone,
     required String password,

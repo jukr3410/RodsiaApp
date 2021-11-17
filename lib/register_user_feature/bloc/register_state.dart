@@ -19,4 +19,8 @@ class RegisterAddNumberSuccess extends RegisterState {}
 
 class RegisterAddNumberExist extends RegisterState {}
 
+class RegisterSendVerifyOtpSuccess extends RegisterState {}
+
 class RegisterVerifySuccess extends RegisterState {}
+
+class RegisterVerifyFailed extends RegisterState {}

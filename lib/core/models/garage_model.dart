@@ -13,16 +13,16 @@ Garage userFromJson(String str) => Garage.fromJson(json.decode(str));
 String userToJson(Garage data) => json.encode(data.toJson());
 
 class Garage {
-  Garage({
-    required this.address,
-    this.openingHour,
-    required this.images,
-    this.logoImage,
-    required this.id,
-    required this.name,
-    required this.phone,
-    this.email,
-  });
+  Garage(
+      {required this.address,
+      this.openingHour,
+      required this.images,
+      this.logoImage,
+      required this.id,
+      required this.name,
+      required this.phone,
+      this.email,
+      required this.typeCarRepairs});
 
   Address address;
   OpeningHour? openingHour;
@@ -33,6 +33,7 @@ class Garage {
   String phone;
   String? email;
   List<Service>? services;
+  List<String> typeCarRepairs;
 
   factory Garage.fromJson(Map<String, dynamic> json) => Garage(
         address: Address.fromJson(json["address"]),
@@ -43,6 +44,7 @@ class Garage {
         name: json["name"],
         phone: json["phone"],
         email: json["email"],
+        typeCarRepairs: List<String>.from(json["typeCarRepairs"].map((x) => x)),
       );
 
   Map<String, dynamic> toJson() => {
@@ -54,7 +56,8 @@ class Garage {
         "name": name,
         "phone": phone,
         "email": email,
-        "services": List<dynamic>.from(services!.map((x) => x))
+        "services": List<dynamic>.from(services!.map((x) => x)),
+        "typeCarRepairs": List<dynamic>.from(typeCarRepairs.map((x) => x)),
       };
 }
 
