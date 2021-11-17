@@ -73,28 +73,23 @@ class AppRouter {
                 child: App()));
 
       case MAIN_ROUTE:
-        User user = settings.arguments as User;
         return MaterialPageRoute(
-            builder: (_) => MultiBlocProvider(
-                    providers: [
-                      BlocProvider(
-                          create: (BuildContext context) => AuthenticationBloc(
-                              userRepository: UserRepository())),
-                      BlocProvider(
-                        create: (BuildContext context) => HomeBloc(),
-                      ),
-                      BlocProvider(
-                        create: (BuildContext context) =>
-                            ProfileBloc(userRepository: UserRepository()),
-                      ),
-                      BlocProvider(
-                        create: (BuildContext context) => ServiceTypeBloc(
-                            serviceTypeRepository: ServiceTypeRepository()),
-                      ),
-                    ],
-                    child: CustomAppBar(
-                      user: user,
-                    )));
+            builder: (_) => MultiBlocProvider(providers: [
+                  BlocProvider(
+                      create: (BuildContext context) =>
+                          AuthenticationBloc(userRepository: UserRepository())),
+                  BlocProvider(
+                    create: (BuildContext context) => HomeBloc(),
+                  ),
+                  BlocProvider(
+                    create: (BuildContext context) =>
+                        ProfileBloc(userRepository: UserRepository()),
+                  ),
+                  BlocProvider(
+                    create: (BuildContext context) => ServiceTypeBloc(
+                        serviceTypeRepository: ServiceTypeRepository()),
+                  ),
+                ], child: CustomAppBar()));
 
       case LOGIN_ROUTE:
         return MaterialPageRoute(
@@ -137,7 +132,6 @@ class AppRouter {
                 )));
 
       case HOMEPAGE_ROUTE:
-        User user = settings.arguments as User;
         return MaterialPageRoute(
             builder: (_) => MultiBlocProvider(providers: [
                   BlocProvider(
@@ -150,7 +144,7 @@ class AppRouter {
                     create: (BuildContext context) =>
                         ProfileBloc(userRepository: UserRepository()),
                   ),
-                ], child: BottomNavigrationBar(user: user)));
+                ], child: BottomNavigrationBar()));
 
       case PROFILE_ROUTE:
         User user = settings.arguments as User;

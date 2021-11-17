@@ -133,7 +133,7 @@ class _ShowInfoNewCarState extends State<ShowInfoNewCar> {
         builder: (BuildContext context) =>
             AlertPopupYesNo(title: tUpdateTrackingStatus));
     if (result == 'Ok') {
-      mockUpUser.cars.add(widget.car);
+      mockUpUser.cars!.add(widget.car);
       navigatorToAddCar();
     }
   }

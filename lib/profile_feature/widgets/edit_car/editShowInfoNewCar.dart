@@ -138,7 +138,7 @@ class _EditShowInfoNewCarState extends State<EditShowInfoNewCar> {
         builder: (BuildContext context) =>
             AlertPopupYesNo(title: tUpdateTrackingStatus));
     if (result == 'Ok') {
-      mockUpUser.cars[widget.car.indexCar - 1] = widget.car.carNew;
+      mockUpUser.cars![widget.car.indexCar - 1] = widget.car.carNew;
       navigatorToEditCar();
     }
   }

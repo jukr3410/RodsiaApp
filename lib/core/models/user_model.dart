@@ -19,7 +19,7 @@ class User {
       required this.password,
       required this.otp,
       required this.validatePhone,
-      required this.cars,
+      this.cars,
       this.profileImage});
 
   String id;
@@ -29,7 +29,7 @@ class User {
   String password;
   String otp;
   bool validatePhone;
-  List<Car> cars;
+  List<Car>? cars;
   String? profileImage;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
@@ -51,7 +51,7 @@ class User {
         "password": password,
         "otp": otp,
         "validatePhone": validatePhone,
-        "cars": List<Car>.from(cars.map((x) => x.toJson())),
+        "cars": List<Car>.from(cars!.map((x) => x.toJson())),
         "profileImage": profileImage
       };
 }

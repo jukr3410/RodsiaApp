@@ -89,7 +89,7 @@ class _SelectCarTypePageState extends State<SelectCarTypePage> {
             if (newCar.type == 'car-null') {
               return _showDialog(context);
             }
-            newCar.id = (widget.user.cars.length + 1).toString();
+            newCar.id = (widget.user.cars!.length + 1).toString();
             print(newCar.toJson());
             navigatorToNextSelect();
           },

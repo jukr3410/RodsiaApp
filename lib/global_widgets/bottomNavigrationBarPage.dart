@@ -13,8 +13,7 @@ import 'package:rodsiaapp/notify_feature/widgets/notifyPage.dart';
 import 'package:rodsiaapp/profile_feature/widgets/ProfilePage.dart';
 
 class BottomNavigrationBar extends StatefulWidget {
-  final User user;
-  const BottomNavigrationBar({Key? key, required this.user}) : super(key: key);
+  const BottomNavigrationBar({Key? key, }) : super(key: key);
 
   @override
   _BottomNavigrationBarState createState() => _BottomNavigrationBarState();
@@ -58,9 +57,7 @@ class _BottomNavigrationBarState extends State<BottomNavigrationBar> {
       HomePage(),
       FindProblemPage(),
       NotifyPage(),
-      MenusSetting(
-        user: mockUpUser,
-      )
+      MenusSetting()
     ];
     return Scaffold(
       body: _pageWidget.elementAt(_selectedIndex),

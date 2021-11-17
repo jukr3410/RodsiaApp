@@ -7,8 +7,9 @@ import 'package:rodsiaapp/core/models/user_model.dart';
 import 'package:rodsiaapp/profile_feature/bloc/profile_bloc.dart';
 
 class MenusSetting extends StatefulWidget {
-  final User user;
-  MenusSetting({Key? key, required this.user}) : super(key: key);
+  MenusSetting({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _MenusSettingState createState() => _MenusSettingState();
@@ -21,6 +22,8 @@ class _MenusSettingState extends State<MenusSetting> {
   @override
   void initState() {
     _authenticationBloc = BlocProvider.of<AuthenticationBloc>(context);
+    _profileBloc = BlocProvider.of<ProfileBloc>(context)
+      ..add(ProfileLoadFormPhone());
     super.initState();
   }
 
@@ -34,115 +37,99 @@ class _MenusSettingState extends State<MenusSetting> {
       },
       builder: (context, state) {
         return BlocBuilder<ProfileBloc, ProfileState>(
-          builder: (context, state) {
-            return Container(
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                    Colors.yellow.shade800,
-                    Colors.yellow.shade400,
-                    Colors.yellow.shade50
-                  ])),
-              child: Scaffold(
-                backgroundColor: Colors.transparent,
-                body: Column(
-                  children: [
-                    SizedBox(
-                      height: 50,
-                    ),
-                    CircleAvatar(
-                      backgroundColor: Colors.transparent,
-                      radius: 70,
-                      child: ClipOval(
-                        child: CachedNetworkImage(
-                          imageUrl: widget.user.profileImage!,
-                          placeholder: (context, url) =>
-                              CircularProgressIndicator(
-                            color: textColorBlack,
-                          ),
-                          errorWidget: (context, url, error) =>
-                              Icon(Icons.error),
-                          fit: BoxFit.cover,
-                          height: 120,
-                          width: 120,
+          builder: (context, stateUser) {
+            if (stateUser is UserLoadSuccess) {
+              return Container(
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                      Colors.yellow.shade800,
+                      Colors.yellow.shade400,
+                      Colors.yellow.shade50
+                    ])),
+                child: Scaffold(
+                  backgroundColor: Colors.transparent,
+                  body: Column(
+                    children: [
+                      SizedBox(
+                        height: 50,
+                      ),
+                      CircleAvatar(
+                        backgroundColor: Colors.transparent,
+                        radius: 70,
+                        child: ClipOval(
+                            child: _proFileImage(
+                                stateUser.user.profileImage.toString())),
+                      ),
+                      Text(
+                        stateUser.user.name,
+                        style: TextStyle(fontSize: fontSizeXl),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 70),
+                          child: Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                  borderRadius: borderRadiusHightOnlyTop,
+                                  color: bgColor),
+                              child: Padding(
+                                  padding:
+                                      const EdgeInsets.all(defualtPaddingHight),
+                                  child: Container(
+                                      decoration: BoxDecoration(
+                                          border: Border(
+                                              bottom: BorderSide(
+                                        color: Colors.grey.shade400,
+                                      ))),
+                                      child: ListView.builder(
+                                          itemCount: menusSetting.length,
+                                          itemBuilder: (context, index) {
+                                            return Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                GestureDetector(
+                                                  child: Text(
+                                                    menusSetting[index]
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                      fontSize: fontSizeM,
+                                                      color: textColorBlack,
+                                                    ),
+                                                  ),
+                                                  onTap: () {
+                                                    if (index ==
+                                                        menusSetting.length -
+                                                            1) {
+                                                      _authenticationBloc
+                                                          .add(LoggedOut());
+                                                    } else {
+                                                      navigator(
+                                                          menusSettingRoute[
+                                                                  index]
+                                                              .toString(),
+                                                          stateUser.user);
+                                                    }
+                                                  },
+                                                ),
+                                                Divider(
+                                                  color: textColorBlack,
+                                                ),
+                                              ],
+                                            );
+                                          })))),
                         ),
                       ),
-                    ),
-                    // CircleAvatar(
-                    //   backgroundColor: Colors.transparent,
-
-                    //   radius: 70,
-                    //   child: ClipOval(
-                    //       child: Image.network(
-                    //     widget.user.profileImage!,
-                    //     width: 90,
-                    //     fit: BoxFit.fitWidth,
-                    //   )),
-                    // ),
-
-                    Text(
-                      // widget.user.name,
-                      "หม่ำ",
-                      style: TextStyle(fontSize: fontSizeXl),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 70),
-                        child: Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                borderRadius: borderRadiusHightOnlyTop,
-                                color: bgColor),
-                            child: Padding(
-                                padding:
-                                    const EdgeInsets.all(defualtPaddingHight),
-                                child: Container(
-                                    decoration: BoxDecoration(
-                                        border: Border(
-                                            bottom: BorderSide(
-                                      color: Colors.grey.shade400,
-                                    ))),
-                                    child: ListView.builder(
-                                        itemCount: menusSetting.length,
-                                        itemBuilder: (context, index) {
-                                          return Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              GestureDetector(
-                                                child: Text(
-                                                  menusSetting[index]
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                    fontSize: fontSizeM,
-                                                    color: textColorBlack,
-                                                  ),
-                                                ),
-                                                onTap: () {
-                                                  if (index ==
-                                                      menusSetting.length - 1) {
-                                                    _authenticationBloc
-                                                        .add(LoggedOut());
-                                                  } else {
-                                                    navigator(
-                                                        menusSettingRoute[index]
-                                                            .toString());
-                                                  }
-                                                },
-                                              ),
-                                              Divider(
-                                                color: textColorBlack,
-                                              ),
-                                            ],
-                                          );
-                                        })))),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
+              );
+            }
+            return Center(
+              child: CircularProgressIndicator(),
             );
           },
         );
@@ -150,8 +137,28 @@ class _MenusSettingState extends State<MenusSetting> {
     );
   }
 
-  void navigator(String route) {
-    Navigator.pushNamed(context, route, arguments: mockUpUser);
+  _proFileImage(String profileImage) {
+    if (profileImage == '') {
+      return Image.asset(
+        tImageAsset('profile'),
+        width: 120,
+      );
+    } else {
+      return CachedNetworkImage(
+        imageUrl: profileImage,
+        placeholder: (context, url) => CircularProgressIndicator(
+          color: textColorBlack,
+        ),
+        errorWidget: (context, url, error) => Icon(Icons.error),
+        fit: BoxFit.cover,
+        height: 120,
+        width: 120,
+      );
+    }
+  }
+
+  void navigator(String route, User user) {
+    Navigator.pushNamed(context, route, arguments: user);
   }
 
   void navigateToLogin() {

@@ -7,8 +7,9 @@ import 'package:rodsiaapp/global_widgets/alertPopupBackHomePage.dart';
 import 'package:rodsiaapp/global_widgets/bottomNavigrationBarPage.dart';
 
 class CustomAppBar extends StatefulWidget {
-  final User user;
-  const CustomAppBar({Key? key, required this.user}) : super(key: key);
+  const CustomAppBar({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _CustomAppBarState createState() => _CustomAppBarState();
@@ -20,13 +21,9 @@ class _CustomAppBarState extends State<CustomAppBar> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        bottomNavigationBar: BottomNavigrationBar(user: widget.user),
+        bottomNavigationBar: BottomNavigrationBar(),
       ),
     );
-  }
-
-  Widget testWidgets() {
-    return BottomNavigrationBar(user: widget.user);
   }
 
   void navigateToService() {
@@ -34,7 +31,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
   }
 
   void navigateToHomePage() {
-    Navigator.pushNamed(context, HOMEPAGE_ROUTE, arguments: widget.user);
+    Navigator.pushNamed(context, HOMEPAGE_ROUTE);
   }
 
   void trackingRequestService() {

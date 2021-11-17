@@ -26,9 +26,9 @@ class _InfoCarCardState extends State<InfoCarCard> {
       height: 360,
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: widget.user.cars.length,
+          itemCount: widget.user.cars!.length,
           itemBuilder: (context, index) {
-            final _infoCar = widget.user.cars[index];
+            final _infoCar = widget.user.cars![index];
             return Container(
               width: 290,
               child: Card(
@@ -115,7 +115,7 @@ class _InfoCarCardState extends State<InfoCarCard> {
         builder: (BuildContext context) =>
             AlertPopupYesNo(title: tDeleteThisCar));
     if (result == 'Ok') {
-      mockUpUser.cars.remove(mockUpCar[index]);
+      mockUpUser.cars!.remove(mockUpCar[index]);
 
       navigatorToDelete();
     }
@@ -129,7 +129,7 @@ class _InfoCarCardState extends State<InfoCarCard> {
     if (result == 'Ok') {
       Navigator.pushNamed(context, EDITCAR_CARTYPE_ROUTE,
           arguments: EditCarNoNewCar(
-              carOld: widget.user.cars[index], index: index + 1));
+              carOld: widget.user.cars![index], index: index + 1));
     }
   }
 

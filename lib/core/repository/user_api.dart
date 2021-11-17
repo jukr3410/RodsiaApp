@@ -36,11 +36,13 @@ class UserApi {
     final url = '$baseUrl/users-phone/${userToken.phone}';
 
     final response = await http.get(Uri.parse(url));
+    logger.d('${response.body}');
     if (response.statusCode != 200) {
       throw new Exception('There was a problem ${response.statusCode}');
     }
     final decodedJson = jsonDecode(response.body);
     User user = decodedJson;
+    logger.d(user);
 
     return user;
   }

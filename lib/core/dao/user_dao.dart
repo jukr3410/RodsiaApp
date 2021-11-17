@@ -21,7 +21,7 @@ class UserDao {
       if (users.length > 0) {
         //users.forEach((row) => logger.d('getUserToken: ${row}'));
         userDB = UserDB.fromDatabaseJson(users[0]);
-        logger.d('getUserToken: ${userDB}');
+        logger.d('getUserToken: ${userDB.phone}');
         return userDB;
       } else {
         return null!;
