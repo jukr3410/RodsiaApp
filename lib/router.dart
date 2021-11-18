@@ -154,9 +154,12 @@ class AppRouter {
       case PROFILE_ROUTE:
         User user = settings.arguments as User;
         return MaterialPageRoute(
-            builder: (_) => ProfilePage(
+            builder: (_) => BlocProvider(
+                create: (BuildContext context) =>
+                    ProfileBloc(userRepository: UserRepository()),
+                child: ProfilePage(
                   user: user,
-                ));
+                )));
 
       case ADDCAR_CARTYPE_ROUTE:
         User user = settings.arguments as User;
@@ -174,7 +177,11 @@ class AppRouter {
 
       case ADDCAR_SHOWINFO_NEWCAR_ROUTE:
         Car car = settings.arguments as Car;
-        return MaterialPageRoute(builder: (_) => ShowInfoNewCar(car: car));
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                create: (BuildContext context) =>
+                    ProfileBloc(userRepository: UserRepository()),
+                child: ShowInfoNewCar(car: car)));
 
       case EDITCAR_CARTYPE_ROUTE:
         EditCarNoNewCar car = settings.arguments as EditCarNoNewCar;

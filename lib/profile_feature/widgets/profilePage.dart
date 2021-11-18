@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/types/gf_button_type.dart';
 import 'package:rodsiaapp/constants.dart';
+import 'package:rodsiaapp/core/models/car_model.dart';
 import 'package:rodsiaapp/core/models/user_model.dart';
 import 'package:rodsiaapp/global_widgets/backPage.dart';
 import 'package:rodsiaapp/profile_feature/widgets/buttonToEditProfile.dart';
@@ -40,6 +41,10 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
           ),
           backgroundColor: textColorBlack,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios, color: bgColor),
+            onPressed: () => navigatorToMenu(),
+          ),
         ),
         backgroundColor: Colors.transparent,
         body: Column(
@@ -57,9 +62,7 @@ class _ProfilePageState extends State<ProfilePage> {
             SizedBox(
               height: 20,
             ),
-            InfoCarCard(
-              user: widget.user,
-            ),
+            _showInfoCar(widget.user),
             SizedBox(
               height: 20,
             ),
@@ -83,7 +86,33 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
+  _showInfoCar(User user) {
+    if (user.cars!.length == 0) {
+      return Container(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 30,
+            ),
+            Text(
+              'คุณยังไม่มีรถ!',
+              style: TextStyle(color: redStatus, fontSize: fontSizeXl),
+            )
+          ],
+        ),
+      );
+    } else {
+      return InfoCarCard(
+        user: user,
+      );
+    }
+  }
+
   void navigatorToAddCar() {
     Navigator.pushNamed(context, ADDCAR_CARTYPE_ROUTE, arguments: widget.user);
+  }
+
+  void navigatorToMenu() {
+    Navigator.of(context).popUntil((route) => route.isFirst);
   }
 }

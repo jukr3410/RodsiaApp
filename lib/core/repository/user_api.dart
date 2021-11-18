@@ -43,7 +43,7 @@ class UserApi {
     final decodedJson = jsonDecode(response.body);
 
     User user = User.fromJson(decodedJson);
-    logger.d(user);
+    logger.d(user.toJson());
 
     return user;
   }

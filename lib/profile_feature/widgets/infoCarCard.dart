@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/car_model.dart';
 import 'package:rodsiaapp/core/models/user_model.dart';
 import 'package:rodsiaapp/global_widgets/alertPopupYesNo.dart';
+import 'package:rodsiaapp/main.dart';
+import 'package:rodsiaapp/profile_feature/bloc/profile_bloc.dart';
 import 'package:rodsiaapp/profile_feature/widgets/ProfilePage.dart';
 import 'package:rodsiaapp/profile_feature/widgets/edit_car/editCarModel.dart';
 
@@ -17,95 +20,117 @@ class InfoCarCard extends StatefulWidget {
 }
 
 class _InfoCarCardState extends State<InfoCarCard> {
+  late ProfileBloc _profileBloc;
+
+  @override
+  void initState() {
+    _profileBloc = BlocProvider.of<ProfileBloc>(context);
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: defualtPaddingMedium,
-      ),
-      height: 360,
-      child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: widget.user.cars!.length,
-          itemBuilder: (context, index) {
-            final _infoCar = widget.user.cars![index];
-            return Container(
-              width: 290,
-              child: Card(
-                shape: RoundedRectangleBorder(borderRadius: borderRadiusMedium),
-                color: bgColor,
-                child: Padding(
-                  padding: const EdgeInsets.all(defualtPaddingMedium),
-                  child: Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          'รถคันที่: ${index + 1}',
-                          style: TextStyle(fontSize: fontSizeXl),
-                          textAlign: TextAlign.right,
-                        ),
-                        Image.asset(
-                          tImageAsset(_infoCar.type),
-                          alignment: Alignment.center,
-                          width: 150,
-                        ),
-                        Row(
-                          children: [Text(tBrand), Text(_infoCar.brand)],
-                        ),
-                        Row(
+    return BlocConsumer<ProfileBloc, ProfileState>(
+      listener: (context, state) {
+        if (state is ProfileUpdated) {
+          navigatorToProfilePage();
+        }
+      },
+      builder: (context, state) {
+        return Container(
+          padding: EdgeInsets.symmetric(
+            horizontal: defualtPaddingMedium,
+          ),
+          height: 360,
+          child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: widget.user.cars!.length,
+              itemBuilder: (context, index) {
+                final _infoCar = widget.user.cars![index];
+                return Container(
+                  width: 290,
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: borderRadiusMedium),
+                    color: bgColor,
+                    child: Padding(
+                      padding: const EdgeInsets.all(defualtPaddingMedium),
+                      child: Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text(tModel),
-                            Text(_infoCar.model + ' ' + _infoCar.year)
-                          ],
-                        ),
-                        Row(
-                          children: [Text(tFuelType), Text(_infoCar.fuelType)],
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: buttonWidthSmall,
-                              height: buttonHeightSmall,
-                              decoration: BoxDecoration(
-                                  color: primaryColor,
-                                  borderRadius: borderRadiusMedium),
-                              child: TextButton(
-                                  onPressed: () {
-                                    _navigateAndDisplayEdit(context, index);
-                                  },
-                                  child: Text(
-                                    tEdit,
-                                    style: TextStyle(color: textColorBlack),
-                                  )),
+                            Text(
+                              'รถคันที่: ${index + 1}',
+                              style: TextStyle(fontSize: fontSizeXl),
+                              textAlign: TextAlign.right,
+                            ),
+                            Image.asset(
+                              tImageAsset(_infoCar.type),
+                              alignment: Alignment.center,
+                              width: 150,
+                            ),
+                            Row(
+                              children: [Text(tBrand), Text(_infoCar.brand)],
+                            ),
+                            Row(
+                              children: [
+                                Text(tModel),
+                                Text(_infoCar.model + ' ' + _infoCar.year)
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(tFuelType),
+                                Text(_infoCar.fuelType)
+                              ],
                             ),
                             SizedBox(
-                              width: 5,
+                              height: 20,
                             ),
-                            GFButton(
-                                onPressed: () {
-                                  _navigateAndDisplayDelete(context, index);
-                                },
-                                type: GFButtonType.transparent,
-                                child: Text(
-                                  tRemove,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: textColorRed),
-                                ))
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: buttonWidthSmall,
+                                  height: buttonHeightSmall,
+                                  decoration: BoxDecoration(
+                                      color: primaryColor,
+                                      borderRadius: borderRadiusMedium),
+                                  child: TextButton(
+                                      onPressed: () {
+                                        _navigateAndDisplayEdit(context, index);
+                                      },
+                                      child: Text(
+                                        tEdit,
+                                        style: TextStyle(color: textColorBlack),
+                                      )),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                GFButton(
+                                    onPressed: () {
+                                      _navigateAndDisplayDelete(context, index);
+                                    },
+                                    type: GFButtonType.transparent,
+                                    child: Text(
+                                      tRemove,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: textColorRed),
+                                    ))
+                              ],
+                            ),
                           ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
-                ),
-              ),
-            );
-          }),
+                );
+              }),
+        );
+      },
     );
   }
 
@@ -115,9 +140,9 @@ class _InfoCarCardState extends State<InfoCarCard> {
         builder: (BuildContext context) =>
             AlertPopupYesNo(title: tDeleteThisCar));
     if (result == 'Ok') {
-      mockUpUser.cars!.remove(mockUpCar[index]);
-
-      navigatorToDelete();
+      logger.d(widget.user.cars![index].toJson());
+      widget.user.cars!.removeAt(index);
+      _profileBloc.add(CarUpdate(widget.user));
     }
   }
 
@@ -133,7 +158,7 @@ class _InfoCarCardState extends State<InfoCarCard> {
     }
   }
 
-  void navigatorToDelete() {
+  void navigatorToProfilePage() {
     Navigator.push(
         context,
         MaterialPageRoute(

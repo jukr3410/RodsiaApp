@@ -23,13 +23,13 @@ class _SelectCarTypePageState extends State<SelectCarTypePage> {
   String fuelType = tSelectFeulTypeCar;
 
   Car newCar = Car(
-      id: '',
       brand: tSelectBrandCar,
       model: tSelectModelCar,
       type: 'car-null',
       year: '',
       fuelType: tSelectFeulTypeCar,
-      regisNumber: '');
+      regisNumber: '',
+      id: '');
 
   void setStateCarType(int item) {
     setState(() {
@@ -52,26 +52,22 @@ class _SelectCarTypePageState extends State<SelectCarTypePage> {
       ),
       body: Column(
         children: [
-          Flexible(
-            flex: 6,
-            child: Column(
-              children: [
-                ShowInfoCarCard(car: newCar),
-              ],
-            ),
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(defualtPaddingMedium),
+                child: ShowInfoCarCard(car: newCar),
+              ),
+              SizedBox(
+                height: 30,
+              ),
+              _selectVehicleType(),
+              SizedBox(
+                height: 30,
+              ),
+              _buttonNext()
+            ],
           ),
-          Flexible(
-            flex: 5,
-            child: Column(
-              children: [
-                _selectVehicleType(),
-                SizedBox(
-                  height: 10,
-                ),
-                _buttonNext()
-              ],
-            ),
-          )
         ],
       ),
     );
@@ -90,7 +86,6 @@ class _SelectCarTypePageState extends State<SelectCarTypePage> {
             if (newCar.type == 'car-null') {
               return _showDialog(context);
             }
-            newCar.id = (widget.user.cars!.length + 1).toString();
             print(newCar.toJson());
             navigatorToNextSelect();
           },

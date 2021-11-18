@@ -22,8 +22,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   Stream<ProfileState> mapEventToState(
     ProfileEvent event,
   ) async* {
-    if( event is ProfileLoadFormPhone){
+    if (event is ProfileLoadFormPhone) {
       yield* _mapUserFormPhoneLoadToState();
+    } else if (event is CarUpdate) {
+      yield* _mapUserUpdateToState(event.user);
     }
   }
 
@@ -36,6 +38,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       yield ProfileError();
     }
   }
+
   Stream<ProfileState> _mapUserFormPhoneLoadToState() async* {
     try {
       final user = await this.userRepository.getUserInfoPhone();
@@ -46,11 +49,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     }
   }
 
-  Stream<ProfileState> _mapUserUpdateToState(UserUpdate event) async* {
+  Stream<ProfileState> _mapUserUpdateToState(User user) async* {
     try {
       yield ProfileUpdating();
-      final res = await this.userRepository.updateUser(user: event.user);
-      yield ProfileUpdated();
+      final res = await this.userRepository.updateUser(user: user);
+      yield ProfileUpdated(status: res);
     } catch (e) {
       logger.e(e);
       yield ProfileError();

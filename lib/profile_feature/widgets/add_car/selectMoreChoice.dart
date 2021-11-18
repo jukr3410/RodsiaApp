@@ -3,6 +3,8 @@ import 'package:getwidget/components/dropdown/gf_dropdown.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/car_model.dart';
 import 'package:rodsiaapp/global_widgets/alertPleaseInputInfo.dart';
+import 'package:rodsiaapp/global_widgets/hexTocolor.dart';
+import 'package:rodsiaapp/main.dart';
 import 'package:rodsiaapp/profile_feature/widgets/showInfoCarCard.dart';
 
 class SelectMoreChoice extends StatefulWidget {
@@ -18,6 +20,8 @@ class _SelectMoreChoiceState extends State<SelectMoreChoice> {
   String? valueModel;
   String? valueYear;
   String? valueFuelType;
+  TextEditingController _controller = TextEditingController();
+  FocusNode myFocusNode = new FocusNode();
 
   void setStateBrand(Object? item) {
     setState(() {
@@ -50,6 +54,7 @@ class _SelectMoreChoiceState extends State<SelectMoreChoice> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: primaryColor,
         title: Text(
@@ -59,31 +64,31 @@ class _SelectMoreChoiceState extends State<SelectMoreChoice> {
       ),
       body: Column(
         children: [
-          Flexible(
-            flex: 5,
-            child: Column(
-              children: [
-                ShowInfoCarCard(
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(defualtPaddingMedium),
+                child: ShowInfoCarCard(
                   car: widget.car,
                 ),
-              ],
-            ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              _fromTextRegisNumber(),
+              SizedBox(
+                height: 10,
+              ),
+              _selectDropdownBrand(tBrand, brandCar),
+              _selectDropdownModel(tModel, modelCar),
+              _selectDropdownYear(tYearModel, yearModelCar),
+              _selectDropdownFuelType(tFuelType, fuelTypeCar),
+              SizedBox(
+                height: 30,
+              ),
+              _buttonNext()
+            ],
           ),
-          Flexible(
-            flex: 5,
-            child: Column(
-              children: [
-                _selectDropdownBrand(tBrand, brandCar),
-                _selectDropdownModel(tModel, modelCar),
-                _selectDropdownYear(tYearModel, yearModelCar),
-                _selectDropdownFuelType(tFuelType, fuelTypeCar),
-                SizedBox(
-                  height: 20,
-                ),
-                _buttonNext()
-              ],
-            ),
-          )
         ],
       ),
     );
@@ -260,6 +265,37 @@ class _SelectMoreChoiceState extends State<SelectMoreChoice> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _fromTextRegisNumber() {
+    return Padding(
+      padding: const EdgeInsets.only(
+          right: defualtPaddingHight + 10, left: defualtPaddingHight + 10),
+      child: TextFormField(
+        onChanged: (String value) {
+          setState(() {
+            widget.car.regisNumber = value;
+            logger.d(widget.car.regisNumber);
+          });
+        },
+        controller: _controller,
+        focusNode: myFocusNode,
+        cursorColor: textColorBlack,
+        //style: Theme.of(context).textTheme.headline5,
+        decoration: InputDecoration(
+            hoverColor: primaryColor,
+            hintText: 'ตัวอย่าง ฆก1565',
+            labelText: 'ป้ายทะเบียน',
+            labelStyle: TextStyle(
+                color: myFocusNode.hasFocus ? textColorBlack : Colors.black,
+                fontSize: fontSizeM)),
+        validator: (val) {
+          if (val == null || val.trim().isEmpty) {
+            return 'โปรระบุป้ายทะเบียน';
+          }
+        },
       ),
     );
   }

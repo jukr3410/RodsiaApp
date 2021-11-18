@@ -27,4 +27,7 @@ class ProfileError extends ProfileState {}
 
 class ProfileUpdating extends ProfileState {}
 
-class ProfileUpdated extends ProfileState {}
+class ProfileUpdated extends ProfileState {
+  final bool status; 
+  const ProfileUpdated({required this.status});
+}

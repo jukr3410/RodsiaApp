@@ -15,6 +15,12 @@ class _ShowInfoCarCardState extends State<ShowInfoCarCard> {
   String model = tSelectModelCar;
   String yearModel = '';
   String fuelType = tSelectFeulTypeCar;
+  String regisNumber = 'ป้ายทะเบียน';
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +37,22 @@ class _ShowInfoCarCardState extends State<ShowInfoCarCard> {
           Padding(
             padding: const EdgeInsets.only(
               top: defualtPaddingLow,
+              right: defualtPaddingMedium,
               left: defualtPaddingMedium,
             ),
-            child: _infoTextOfBrandNewCar(tBrand, widget.car.brand),
+            child: Row(
+              children: [
+                Expanded(
+                    flex: 5,
+                    child: _infoTextOfBrandNewCar(tBrand, widget.car.brand)),
+                Expanded(
+                    flex: 4,
+                    child: Text(
+                      widget.car.regisNumber,
+                      textAlign: TextAlign.end,
+                    ))
+              ],
+            ),
           ),
           Image.asset(
             tImageAsset(widget.car.type),
@@ -74,14 +93,14 @@ class _ShowInfoCarCardState extends State<ShowInfoCarCard> {
       children: [
         Text(
           title,
-          style: TextStyle(fontSize: fontSizeL),
+          // style: TextStyle(fontSize: fontSizeL),
         ),
         SizedBox(
           width: 2,
         ),
         Text(
           info,
-          style: TextStyle(fontSize: fontSizeL),
+          // style: TextStyle(fontSize: fontSizeL),
         )
       ],
     );

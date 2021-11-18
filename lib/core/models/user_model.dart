@@ -51,7 +51,7 @@ class User {
         "password": password,
         "otp": otp,
         "validatePhone": validatePhone,
-        "cars": List<Car>.from(cars!.map((x) => x.toJson())),
+        "cars": List<dynamic>.from(cars!.map((x) => x.toJson())),
         "profileImage": profileImage
       };
 }
