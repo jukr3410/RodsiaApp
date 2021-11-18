@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:rodsiaapp/core/repository/request_service_repository.dart';
+import 'package:rodsiaapp/find_garage_feature/bloc/garage_bloc.dart';
+import 'package:rodsiaapp/request_service_feature/bloc/request_service_bloc.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/alertPopupCancleRequest.dart';
 
 class CardWaitForGarage extends StatefulWidget {
-  CardWaitForGarage({Key? key}) : super(key: key);
+  String requestServiceId;
+  CardWaitForGarage({Key? key, required this.requestServiceId})
+      : super(key: key);
 
   @override
   _CardWaitForGarageState createState() => _CardWaitForGarageState();
@@ -52,8 +58,13 @@ class _CardWaitForGarageState extends State<CardWaitForGarage> {
                         onPressed: () {
                           showDialog<String>(
                               context: context,
-                              builder: (BuildContext context) =>
-                                  AlertPopupCancleReq());
+                              builder: (BuildContext context) => BlocProvider(
+                                  create: (context) => RequestServiceBloc(
+                                      requestServiceRepository:
+                                          RequestServiceRepository()),
+                                  child: AlertPopupCancleReq(
+                                    requestServiceId: widget.requestServiceId,
+                                  )));
                         },
                         child: Text(tCancleThai),
                         style: flatButtonStyle(primaryColor, textColorBlack),
@@ -65,5 +76,9 @@ class _CardWaitForGarageState extends State<CardWaitForGarage> {
         ],
       ),
     );
+  }
+
+  navigateToConfirmRequest() {
+    Navigator.pop(context);
   }
 }

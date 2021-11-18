@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/request_service_add_model.dart';
 import 'package:rodsiaapp/core/models/request_service_model.dart';
 import 'package:rodsiaapp/core/repository/request_service_api.dart';
@@ -30,6 +31,8 @@ class RequestServiceBloc
   ) async* {
     if (event is CreateRequestService) {
       yield* _mapCreateRequestServiceToState(event);
+    } else if (event is CancelRequestService) {
+      yield* _mapCancelRequestServiceToState(event);
     } else if (event is LoadRequestService) {
       yield* _mapLoadRequestServiceToState(event);
     } else if (event is TrackingRequestService) {
@@ -43,6 +46,8 @@ class RequestServiceBloc
       CreateRequestService event) async* {
     try {
       yield CreatingRequestService();
+      logger.d("_mapCreateRequestServiceToState: ");
+      logger.d(event.requestServiceAdd);
       String requestServiceId = await this
           .requestServiceRepository
           .createRequestService(requestServiceAdd: event.requestServiceAdd);
@@ -50,6 +55,22 @@ class RequestServiceBloc
     } catch (e) {
       logger.e(e);
       yield CreateRequestServiceError();
+    }
+  }
+
+  Stream<RequestServiceState> _mapCancelRequestServiceToState(
+      CancelRequestService event) async* {
+    try {
+      yield RequestServiceLoading();
+      logger.d("_mapCancelRequestServiceToState: ");
+      logger.d(event.requestServiceId);
+      await this
+          .requestServiceRepository
+          .removeRequestService(id: event.requestServiceId);
+      yield CanceledRequestService();
+    } catch (e) {
+      logger.e(e);
+      yield RequestServiceError();
     }
   }
 
@@ -64,9 +85,12 @@ class RequestServiceBloc
             .getRequestService(id: event.requestServiceId);
         logger.d("GarageConfirm: ${requestService.confirmRequest}");
         yield RequestServiceLoadSuccess(requestServiceAdd: requestService);
-        if (requestService.confirmRequest == false) {
+        if (requestService.status == waitingForConfirm) {
           yield RequestServiceWaiting();
-        } else {
+        } else if (requestService.status == denyRequestService) {
+          _isNotConfirmed = false;
+          yield RequestServiceGarageDeny();
+        } else if (requestService.status == confirmedRequestService) {
           _isNotConfirmed = false;
           yield RequestServiceGarageConfirmed();
         }
@@ -80,6 +104,7 @@ class RequestServiceBloc
       TrackingRequestService event) async* {
     try {
       yield RequestServiceLoading();
+      yield RequestServiceInService();
       while (_isNotCompleted) {
         await Future.delayed(Duration(milliseconds: 1000));
         final requestService = await this
@@ -87,7 +112,7 @@ class RequestServiceBloc
             .getRequestService(id: event.requestServiceId);
         logger.d("GarageConfirm: ${requestService.confirmRequest}");
         yield RequestServiceLoadSuccess(requestServiceAdd: requestService);
-        if (requestService.status != "เสร็จสิ้น") {
+        if (requestService.status != completeRequestService) {
           yield RequestServiceInService();
         } else {
           _isNotCompleted = false;

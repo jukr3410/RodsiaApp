@@ -13,18 +13,19 @@ RequestServiceAdd requestAddFromJson(String str) =>
 String requestAddToJson(RequestServiceAdd data) => json.encode(data.toJson());
 
 class RequestServiceAdd {
-  RequestServiceAdd(
-      {this.id,
-      required this.user,
-      required this.service,
-      required this.garage,
-      required this.geoLocationUser,
-      required this.geoLocationGarage,
-      required this.problemDesc,
-      required this.confirmRequest,
-      required this.status,
-      required this.car,
-      this.createdAt});
+  RequestServiceAdd({
+    this.id,
+    required this.user,
+    required this.service,
+    required this.garage,
+    required this.geoLocationUser,
+    required this.geoLocationGarage,
+    required this.problemDesc,
+    required this.confirmRequest,
+    required this.status,
+    required this.car,
+    //this.createdAt
+  });
 
   String? id;
   String user;
@@ -36,22 +37,22 @@ class RequestServiceAdd {
   bool confirmRequest;
   String status;
   Car car;
-  DateTime? createdAt;
+  //DateTime? createdAt;
 
   factory RequestServiceAdd.fromJson(Map<String, dynamic> json) =>
       RequestServiceAdd(
-          id: json["_id"],
-          user: json["user"],
-          service: json["service"],
-          garage: json['garage'],
-          geoLocationUser: GeoLocation.fromJson(json["geoLocationUser"]),
-          geoLocationGarage: GeoLocation.fromJson(json["geoLocationGarage"]),
-          problemDesc: json["problemDesc"],
-          confirmRequest: json["confirmRequest"],
-          status: json["status"],
-          car: Car.fromJson(json["car"]),
-          // createdAt: DateTime.parse(json["createdAt"])
-          );
+        id: json["_id"],
+        user: json["user"],
+        service: json["service"],
+        garage: json['garage'],
+        geoLocationUser: GeoLocation.fromJson(json["geoLocationUser"]),
+        geoLocationGarage: GeoLocation.fromJson(json["geoLocationGarage"]),
+        problemDesc: json["problemDesc"],
+        confirmRequest: json["confirmRequest"],
+        status: json["status"],
+        car: Car.fromJson(json["car"]),
+        // createdAt: DateTime.parse(json["createdAt"])
+      );
 
   Map<String, dynamic> toJson() => {
         "user": user,
@@ -63,6 +64,6 @@ class RequestServiceAdd {
         "confirmRequest": confirmRequest,
         "status": status,
         "car": car.toJson(),
-        "createdAt": createdAt
+        //"createdAt": createdAt
       };
 }

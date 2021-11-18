@@ -37,8 +37,12 @@ class _WaitForGaragePageState extends State<WaitForGaragePage> {
       listener: (context, state) {
         if (state is RequestServiceGarageConfirmed) {
           showTopSnackBar(
-              context, CustomSnackBar.success(message: "ร้านกดยืนยันแล้ว"));
+              context, CustomSnackBar.success(message: "ร้านยืนยันคำขอแล้ว"));
           navigateToTrackingRequest(widget.requestServiceId);
+        } else if (state is RequestServiceGarageDeny) {
+          showTopSnackBar(
+              context, CustomSnackBar.info(message: "คำขอถูกปฏิเสธ"));
+          navigateToConfirmRequest();
         }
       },
       builder: (context, state) {
@@ -50,7 +54,9 @@ class _WaitForGaragePageState extends State<WaitForGaragePage> {
             title: Container(
                 alignment: Alignment.centerRight, child: SupportButton()),
           ),
-          body: CardWaitForGarage(),
+          body: CardWaitForGarage(
+            requestServiceId: widget.requestServiceId,
+          ),
         );
         //}
         // return Center(
@@ -65,6 +71,10 @@ class _WaitForGaragePageState extends State<WaitForGaragePage> {
   navigateToTrackingRequest(String requestServiceId) {
     Navigator.pushNamed(context, TRACKING_REQUEST_ROUTE,
         arguments: {'requestServiceId': requestServiceId});
+  }
+
+  navigateToConfirmRequest() {
+    Navigator.pop(context);
   }
 
   cancelRequestService(requestServiceId) {

@@ -68,7 +68,7 @@ class _SelectServicePageState extends State<SelectServicePage> {
   }
 
   RequestServiceAdd _requestServiceAdd = RequestServiceAdd(
-    user: '6127927b6582ef63c96d3f6e',
+    user: '',
     service: '',
     garage: '',
     car: Car(
