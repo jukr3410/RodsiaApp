@@ -63,7 +63,6 @@ class _SelectServicePageState extends State<SelectServicePage> {
 
   @override
   void initState() {
-    UserDB userToken = UserDao().getUserToken() as UserDB;
     _controller = TextEditingController();
     super.initState();
   }
@@ -309,7 +308,7 @@ class _SelectServicePageState extends State<SelectServicePage> {
       ),
       leading: IconButton(
         icon: Icon(
-          Icons.arrow_back,
+          Icons.arrow_back_ios,
           color: iconColorBlack,
         ),
         onPressed: () {
@@ -391,10 +390,7 @@ class _SelectServicePageState extends State<SelectServicePage> {
           )),
         ],
       ),
-      onTap: () {
-        //Navigator.pushNamed(context, EDIT_SERVICE_ROUTE);
-        // navigateToServiceEdit(service);
-      },
+      onTap: () {},
     );
   }
 }

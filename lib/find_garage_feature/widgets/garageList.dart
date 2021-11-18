@@ -124,7 +124,7 @@ class _GarageListState extends State<GarageList> {
                 radius: 40,
                 child: ClipOval(
                   child: Image.network(
-                    'https://bestkru-thumbs.s3-ap-southeast-1.amazonaws.com/127401',
+                    garage.logoImage,
                     width: 110,
                     height: 150,
                     fit: BoxFit.cover,
@@ -309,8 +309,7 @@ class _GarageListState extends State<GarageList> {
   }
 
   void navigateToGarageInfo(Garage garage) {
-    Navigator.pushNamed(context, GARAGE_INFO_ROUTE,
-        arguments: garage);
+    Navigator.pushNamed(context, GARAGE_INFO_ROUTE, arguments: garage);
   }
 
   @override

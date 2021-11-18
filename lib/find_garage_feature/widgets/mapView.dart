@@ -281,8 +281,9 @@ class _MapViewState extends State<MapView> {
                                                 shrinkWrap: true,
                                                 itemBuilder: (context, index) {
                                                   return Image.asset(
-                                                    tImageAsset(serviceType[index]
-                                                        .toString()),
+                                                    tImageAsset(
+                                                        serviceType[index]
+                                                            .toString()),
                                                     width: 18,
                                                   );
                                                 }),

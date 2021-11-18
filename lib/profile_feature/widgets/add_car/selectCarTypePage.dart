@@ -28,7 +28,8 @@ class _SelectCarTypePageState extends State<SelectCarTypePage> {
       model: tSelectModelCar,
       type: 'car-null',
       year: '',
-      fuelType: tSelectFeulTypeCar);
+      fuelType: tSelectFeulTypeCar,
+      regisNumber: '');
 
   void setStateCarType(int item) {
     setState(() {
