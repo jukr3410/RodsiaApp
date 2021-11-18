@@ -216,6 +216,12 @@ const tLogin = 'เข้าสู่ระบบ';
 const tRecapOrder = 'สรุปรายการ';
 const tSentMsg = 'ส่งข้อความ';
 
+//Confirm Request
+const waitingForConfirm = "รอยืนยัน";
+const cancelRequestService = "ยกเลิกคำขอ";
+const denyRequestService = "ปฏิเสธ";
+const confirmedRequestService = "ยืนยันแล้ว";
+const completeRequestService = "งานเสร็จแล้ว";
 //Tracking Status
 const trackingStatus = [
   'กำลังเตรียมของ',

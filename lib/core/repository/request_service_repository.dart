@@ -29,4 +29,8 @@ class RequestServiceRepository {
     return await requestServiceApi.createRequestService(
         requestServiceAdd: requestServiceAdd);
   }
+
+  Future<bool> removeRequestService({required String id}) async {
+    return await requestServiceApi.removeRequestService(id: id);
+  }
 }

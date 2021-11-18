@@ -1,10 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:getwidget/components/rating/gf_rating.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/garage_model.dart';
-import 'package:rodsiaapp/global_widgets/carouselImage.dart';
-import 'package:rodsiaapp/global_widgets/hexTocolor.dart';
+
 import 'package:rodsiaapp/request_service_feature/widgets/carouselImageReqService.dart';
 
 class InfoGarageFormSelect extends StatefulWidget {

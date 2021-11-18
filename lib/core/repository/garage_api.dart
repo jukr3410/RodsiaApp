@@ -13,9 +13,6 @@ import 'package:rodsiaapp/core/repository/service_api.dart';
 class GarageApi {
   final baseUrl = baseUrlConstant;
 
-  //late final http.Client httpClient;
-
-  //GarageApi({required this.httpClient});
   final userDao = UserDao();
 
   Map<String, String> headers = {

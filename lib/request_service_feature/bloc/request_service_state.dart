@@ -41,11 +41,15 @@ class CreatedRequestService extends RequestServiceState {
       'CreatedRequestService { requestServiceId: $requestServiceId }';
 }
 
+class CanceledRequestService extends RequestServiceState {}
+
 class CreateRequestServiceError extends RequestServiceState {}
 
 class RequestServiceWaiting extends RequestServiceState {}
 
 class RequestServiceGarageConfirmed extends RequestServiceState {}
+
+class RequestServiceGarageDeny extends RequestServiceState {}
 
 class RequestServiceInService extends RequestServiceState {}
 

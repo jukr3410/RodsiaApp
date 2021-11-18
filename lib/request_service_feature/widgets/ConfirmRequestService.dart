@@ -28,6 +28,10 @@ class ConfirmRequestService extends StatefulWidget {
 
 class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
   late RequestServiceBloc _requestServiceBloc;
+  late ServiceBloc _serviceBloc;
+  late GarageInfoBloc _garageInfoBloc;
+
+  String _requestServiceId = '';
 
   int selectedIndex = 0;
 
@@ -60,9 +64,9 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
   @override
   void initState() {
     _requestServiceBloc = BlocProvider.of<RequestServiceBloc>(context);
-    ServiceBloc _serviceBloc = BlocProvider.of<ServiceBloc>(context)
+    _serviceBloc = BlocProvider.of<ServiceBloc>(context)
       ..add(ServiceFetchEvent(serviceId: widget.req.serviceName));
-    GarageInfoBloc _garageInfoBloc = BlocProvider.of<GarageInfoBloc>(context)
+    _garageInfoBloc = BlocProvider.of<GarageInfoBloc>(context)
       ..add(GarageInfoLoad(garageId: widget.req.garageName));
     super.initState();
   }
@@ -93,7 +97,8 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
         child: BlocConsumer<RequestServiceBloc, RequestServiceState>(
             listener: (context, state) {
       if (state is CreatedRequestService) {
-        navigateToWaitingRequest(widget.req.req!);
+        _requestServiceId = state.requestServiceId;
+        navigateToWaitingRequest(state.requestServiceId);
         // showTopSnackBar(
         //     context, CustomSnackBar.success(message: ""));
       } else if (state is CreateRequestServiceError) {
@@ -243,9 +248,9 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
     Navigator.pop(context);
   }
 
-  navigateToWaitingRequest(RequestServiceAdd requestServiceAdd) {
+  navigateToWaitingRequest(requestServiceId) {
     Navigator.pushNamed(context, WAITING_REQUEST_ROUTE,
-        arguments: requestServiceAdd);
+        arguments: {'requestServiceId': requestServiceId});
   }
 
   createRequestService() {
@@ -260,10 +265,10 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
             AlertPopupYesNo(title: tConfirm + tRequestServiceThai));
     if (result == 'Ok') {
       logger.d("Clicked Confirm Request Service");
-      widget.req.req!.createdAt = DateTime.now();
+      //widget.req.req!.createdAt = DateTime.now();
       logger.d(widget.req.req!.toJson());
-      createRequestService();
-      navigateToWaitingRequest(widget.req.req!);
+      await createRequestService();
+      //navigateToWaitingRequest(_requestServiceId);
     }
   }
 }
