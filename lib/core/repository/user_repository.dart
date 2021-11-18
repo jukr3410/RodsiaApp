@@ -59,6 +59,11 @@ class UserRepository {
     return userDB;
   }
 
+  Future<bool> checkPassword({required UserLogin userLogin}) async {
+    bool result = await userApi.checkPassword(userLogin: userLogin);
+    return result;
+  }
+
   Future<void> persistToken({required UserDB userDB}) async {
     // write token with the user to the database
     await userDao.createUser(userDB);

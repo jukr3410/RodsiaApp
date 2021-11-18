@@ -21,6 +21,7 @@ class _SelectMoreChoiceState extends State<SelectMoreChoice> {
   String? valueYear;
   String? valueFuelType;
   TextEditingController _controller = TextEditingController();
+
   FocusNode myFocusNode = new FocusNode();
 
   void setStateBrand(Object? item) {
@@ -107,7 +108,8 @@ class _SelectMoreChoiceState extends State<SelectMoreChoice> {
             if (widget.car.brand == tSelectBrandCar ||
                 widget.car.model == tSelectModelCar ||
                 widget.car.year == '' ||
-                widget.car.fuelType == tSelectFeulTypeCar) {
+                widget.car.fuelType == tSelectFeulTypeCar ||
+                widget.car.regisNumber == '') {
               return _showDialog(context);
             } else {
               navigatorToSelectMoreChoice();
@@ -273,7 +275,7 @@ class _SelectMoreChoiceState extends State<SelectMoreChoice> {
     return Padding(
       padding: const EdgeInsets.only(
           right: defualtPaddingHight + 10, left: defualtPaddingHight + 10),
-      child: TextFormField(
+      child: TextField(
         onChanged: (String value) {
           setState(() {
             widget.car.regisNumber = value;
@@ -291,11 +293,6 @@ class _SelectMoreChoiceState extends State<SelectMoreChoice> {
             labelStyle: TextStyle(
                 color: myFocusNode.hasFocus ? textColorBlack : Colors.black,
                 fontSize: fontSizeM)),
-        validator: (val) {
-          if (val == null || val.trim().isEmpty) {
-            return 'โปรระบุป้ายทะเบียน';
-          }
-        },
       ),
     );
   }

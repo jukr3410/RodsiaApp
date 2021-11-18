@@ -5,11 +5,13 @@ import 'package:getwidget/components/dropdown/gf_dropdown.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/user_model.dart';
 import 'package:rodsiaapp/global_widgets/alertPleaseInputInfo.dart';
+import 'package:rodsiaapp/main.dart';
 import 'package:rodsiaapp/profile_feature/widgets/edit_car/editCarModel.dart';
+import 'package:rodsiaapp/profile_feature/widgets/showInfoCarCard.dart';
 
 class EditSelectMoreChoice extends StatefulWidget {
-  EditCarAndIndex editCar;
-  EditSelectMoreChoice({Key? key, required this.editCar}) : super(key: key);
+  EditCarNoNewCar car;
+  EditSelectMoreChoice({Key? key, required this.car}) : super(key: key);
 
   @override
   _EditSelectMoreChoiceState createState() => _EditSelectMoreChoiceState();
@@ -26,69 +28,83 @@ class _EditSelectMoreChoiceState extends State<EditSelectMoreChoice> {
   String? valueYear;
   String? valueFuelType;
 
+  TextEditingController _controller = TextEditingController();
+
+  FocusNode myFocusNode = new FocusNode();
+
   void setStateBrand(Object? item) {
     setState(() {
       valueBrand = item.toString();
-      widget.editCar.carNew.brand = item.toString();
+      widget.car.carOld.brand = item.toString();
     });
   }
 
   void setStateModel(Object? item) {
     setState(() {
       valueModel = item.toString();
-      widget.editCar.carNew.model = item.toString();
+      widget.car.carOld.model = item.toString();
     });
   }
 
   void setStateYear(Object? item) {
     setState(() {
       valueYear = item.toString();
-      widget.editCar.carNew.year = item.toString();
+      widget.car.carOld.year = item.toString();
     });
   }
 
   void setStateFuelType(Object? item) {
     setState(() {
       valueFuelType = item.toString();
-      widget.editCar.carNew.fuelType = item.toString();
+      widget.car.carOld.fuelType = item.toString();
+    });
+  }
+
+  void setStateRegisNumber(Object? item) {
+    setState(() {
+      valueFuelType = item.toString();
+      widget.car.carOld.regisNumber = item.toString();
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         backgroundColor: primaryColor,
         title: Text(
-          tEditCar + 'คันที่: ' + widget.editCar.carNew.id,
+          tEditCar + 'คันที่: ' + widget.car.index.toString(),
           style: TextStyle(color: textColorBlack),
         ),
       ),
       body: Column(
         children: [
-          Flexible(
-            flex: 5,
-            child: Column(
-              children: [
-                _showInfoNewCar(),
-              ],
-            ),
-          ),
-          Flexible(
-            flex: 5,
-            child: Column(
-              children: [
-                _selectDropdownBrand(tBrand, brandCar),
-                _selectDropdownModel(tModel, modelCar),
-                _selectDropdownYear(tYearModel, yearModelCar),
-                _selectDropdownFuelType(tFuelType, fuelTypeCar),
-                SizedBox(
-                  height: 20,
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(defualtPaddingMedium),
+                child: ShowInfoCarCard(
+                  car: widget.car.carOld,
                 ),
-                _buttonNext()
-              ],
-            ),
-          )
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              _fromTextRegisNumber(),
+              SizedBox(
+                height: 10,
+              ),
+              _selectDropdownBrand(tBrand, brandCar),
+              _selectDropdownModel(tModel, modelCar),
+              _selectDropdownYear(tYearModel, yearModelCar),
+              _selectDropdownFuelType(tFuelType, fuelTypeCar),
+              SizedBox(
+                height: 20,
+              ),
+              _buttonNext()
+            ],
+          ),
         ],
       ),
     );
@@ -104,14 +120,14 @@ class _EditSelectMoreChoiceState extends State<EditSelectMoreChoice> {
       ),
       child: TextButton(
           onPressed: () {
-            if (widget.editCar.carNew.brand == brand ||
-                widget.editCar.carNew.model == model ||
-                widget.editCar.carNew.year == yearModel ||
-                widget.editCar.carNew.fuelType == fuelType) {
+            if (widget.car.carOld.brand == brand ||
+                widget.car.carOld.model == model ||
+                widget.car.carOld.year == yearModel ||
+                widget.car.carOld.fuelType == fuelType ||
+                widget.car.carOld.regisNumber == '') {
               return _showDialog(context);
             } else {
-              navigatorToSelectFuelType();
-              print(widget.editCar.carNew.toJson());
+              navigatorToShowInfoEditCar();
             }
           },
           child: Row(
@@ -130,12 +146,8 @@ class _EditSelectMoreChoiceState extends State<EditSelectMoreChoice> {
     );
   }
 
-  void navigatorToSelectFuelType() {
-    Navigator.pushNamed(context, EDITCAR_SHOWINFO_ROUTE,
-        arguments: EditCarAndIndex(
-            carOld: widget.editCar.carOld,
-            carNew: widget.editCar.carNew,
-            indexCar: widget.editCar.indexCar));
+  void navigatorToShowInfoEditCar() {
+    Navigator.pushNamed(context, EDITCAR_SHOWINFO_ROUTE, arguments: widget.car);
   }
 
   void _showDialog(BuildContext context) {
@@ -147,99 +159,6 @@ class _EditSelectMoreChoiceState extends State<EditSelectMoreChoice> {
     );
   }
 
-// show info new car
-  Widget _showInfoNewCar() {
-    return Padding(
-      padding: const EdgeInsets.all(defualtPaddingMedium),
-      child: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          borderRadius: borderRadiusMedium,
-          boxShadow: [boxShadow],
-          color: bgColor,
-        ),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                top: defualtPaddingLow,
-                left: defualtPaddingMedium,
-              ),
-              child:
-                  _infoTextOfBrandNewCar(tBrand, widget.editCar.carNew.brand),
-            ),
-            Image.asset(
-              tImageAsset(widget.editCar.carNew.type),
-              width: 180,
-            ),
-            Container(
-              decoration: BoxDecoration(
-                  borderRadius: borderRadiusMediumOnlyBottom,
-                  color: primaryColor),
-              width: double.infinity,
-              child: Padding(
-                padding: const EdgeInsets.only(
-                    left: defualtPaddingMedium,
-                    top: defualtPaddingLow,
-                    bottom: defualtPaddingLow),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Row(
-                      children: [
-                        _infoTextOfNewCar(tModel, widget.editCar.carNew.model),
-                        _infoTextOfNewCar('', widget.editCar.carNew.year),
-                      ],
-                    ),
-                    _infoTextOfNewCar(
-                        tFuelType, widget.editCar.carNew.fuelType),
-                  ],
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _infoTextOfBrandNewCar(String title, String info) {
-    return Row(
-      children: [
-        Text(
-          title,
-          style: TextStyle(fontSize: fontSizeXl),
-        ),
-        SizedBox(
-          width: 2,
-        ),
-        Text(
-          info,
-          style: TextStyle(fontSize: fontSizeXl),
-        )
-      ],
-    );
-  }
-
-  Widget _infoTextOfNewCar(String title, String info) {
-    return Row(
-      children: [
-        Text(
-          title,
-        ),
-        SizedBox(
-          width: 2,
-        ),
-        Text(
-          info,
-        )
-      ],
-    );
-  }
-
-// select dropdown
   Widget _selectDropdownBrand(String titleInfoText, List<String> list) {
     return Padding(
       padding: const EdgeInsets.only(
@@ -360,6 +279,32 @@ class _EditSelectMoreChoiceState extends State<EditSelectMoreChoice> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _fromTextRegisNumber() {
+    return Padding(
+      padding: const EdgeInsets.only(
+          right: defualtPaddingHight + 10, left: defualtPaddingHight + 10),
+      child: TextField(
+        onChanged: (String value) {
+          setState(() {
+            widget.car.carOld.regisNumber = value;
+            logger.d(widget.car.carOld.regisNumber);
+          });
+        },
+        controller: _controller,
+        focusNode: myFocusNode,
+        cursorColor: textColorBlack,
+        //style: Theme.of(context).textTheme.headline5,
+        decoration: InputDecoration(
+            hoverColor: primaryColor,
+            hintText: widget.car.carOld.regisNumber,
+            labelText: 'ป้ายทะเบียน',
+            labelStyle: TextStyle(
+                color: myFocusNode.hasFocus ? textColorBlack : Colors.black,
+                fontSize: fontSizeM)),
       ),
     );
   }

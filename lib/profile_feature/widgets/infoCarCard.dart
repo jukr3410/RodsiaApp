@@ -34,7 +34,7 @@ class _InfoCarCardState extends State<InfoCarCard> {
     return BlocConsumer<ProfileBloc, ProfileState>(
       listener: (context, state) {
         if (state is ProfileUpdated) {
-          navigatorToProfilePage();
+          // navigatorToProfilePage();
         }
       },
       builder: (context, state) {
@@ -42,7 +42,7 @@ class _InfoCarCardState extends State<InfoCarCard> {
           padding: EdgeInsets.symmetric(
             horizontal: defualtPaddingMedium,
           ),
-          height: 360,
+          height: 380,
           child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: widget.user.cars!.length,
@@ -83,6 +83,12 @@ class _InfoCarCardState extends State<InfoCarCard> {
                               children: [
                                 Text(tFuelType),
                                 Text(_infoCar.fuelType)
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text('ป้ายทะเบียน: '),
+                                Text(_infoCar.regisNumber)
                               ],
                             ),
                             SizedBox(
@@ -159,9 +165,6 @@ class _InfoCarCardState extends State<InfoCarCard> {
   }
 
   void navigatorToProfilePage() {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (BuildContext context) => ProfilePage(user: widget.user)));
+    Navigator.pushNamed(context, PROFILE_ROUTE, arguments: widget.user);
   }
 }

@@ -191,18 +191,21 @@ class AppRouter {
                 ));
 
       case EDITCAR_MORECHOICE_ROUTE:
-        EditCarAndIndex editCar = settings.arguments as EditCarAndIndex;
+        EditCarNoNewCar car = settings.arguments as EditCarNoNewCar;
         return MaterialPageRoute(
             builder: (_) => EditSelectMoreChoice(
-                  editCar: editCar,
+                  car: car,
                 ));
 
       case EDITCAR_SHOWINFO_ROUTE:
-        EditCarAndIndex editCar = settings.arguments as EditCarAndIndex;
+        EditCarNoNewCar car = settings.arguments as EditCarNoNewCar;
         return MaterialPageRoute(
-            builder: (_) => EditShowInfoNewCar(
-                  car: editCar,
-                ));
+            builder: (_) => BlocProvider(
+                create: (BuildContext context) =>
+                    ProfileBloc(userRepository: UserRepository()),
+                child: EditShowInfoNewCar(
+                  car: car,
+                )));
 
       case GARAGE_INFO_ROUTE:
         // Map args = settings.arguments as Map;
@@ -272,9 +275,12 @@ class AppRouter {
       case EDITPROFILE_ROUTE:
         User user = settings.arguments as User;
         return MaterialPageRoute(
-            builder: (_) => EditProfile(
+            builder: (_) => BlocProvider(
+                create: (BuildContext context) =>
+                    ProfileBloc(userRepository: UserRepository()),
+                child: EditProfile(
                   user: user,
-                ));
+                )));
 
       case CHAT_ROUTE:
         return MaterialPageRoute(builder: (_) => ChatUi());

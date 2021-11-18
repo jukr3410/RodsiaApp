@@ -8,6 +8,7 @@ import 'package:rodsiaapp/global_widgets/alertPleaseInputInfo.dart';
 import 'package:rodsiaapp/profile_feature/widgets/add_car/selectMoreChoice.dart';
 import 'package:rodsiaapp/profile_feature/widgets/add_car/showInfoNewCar.dart';
 import 'package:rodsiaapp/profile_feature/widgets/edit_car/editCarModel.dart';
+import 'package:rodsiaapp/profile_feature/widgets/showInfoCarCard.dart';
 
 class EditSelectCarTypePage extends StatefulWidget {
   final EditCarNoNewCar car;
@@ -34,7 +35,7 @@ class _EditSelectCarTypePageState extends State<EditSelectCarTypePage> {
 
   void setStateCarType(int item) {
     setState(() {
-      editCar.type = vehicleType[item].toString();
+      widget.car.carOld.type = vehicleType[item].toString();
       print(editCar.type.toString());
     });
   }
@@ -53,20 +54,19 @@ class _EditSelectCarTypePageState extends State<EditSelectCarTypePage> {
       ),
       body: Column(
         children: [
-          Flexible(
-            flex: 6,
-            child: Column(
-              children: [
-                _showInfoNewCar(),
-              ],
-            ),
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(defualtPaddingMedium),
+                child: ShowInfoCarCard(car: widget.car.carOld),
+              ),
+              _selectVehicleType(),
+              SizedBox(
+                height: 20,
+              ),
+              _buttonNext()
+            ],
           ),
-          Flexible(
-            flex: 5,
-            child: Column(
-              children: [_selectVehicleType(), _buttonNext()],
-            ),
-          )
         ],
       ),
     );
@@ -82,10 +82,10 @@ class _EditSelectCarTypePageState extends State<EditSelectCarTypePage> {
       ),
       child: TextButton(
           onPressed: () {
-            if (editCar.type == 'car-null') {
-              return _showDialog(context);
-            }
-            print(editCar.type);
+            // if (editCar.type == 'car-null') {
+            //   return _showDialog(context);
+            // }
+            // print(editCar.type);
             navigatorToNextSelect();
           },
           child: Row(
@@ -115,10 +115,7 @@ class _EditSelectCarTypePageState extends State<EditSelectCarTypePage> {
 
   void navigatorToNextSelect() {
     Navigator.pushNamed(context, EDITCAR_MORECHOICE_ROUTE,
-        arguments: EditCarAndIndex(
-            carOld: widget.car.carOld,
-            carNew: editCar,
-            indexCar: widget.car.index));
+        arguments: widget.car);
   }
 
 // show info new car
@@ -140,7 +137,7 @@ class _EditSelectCarTypePageState extends State<EditSelectCarTypePage> {
                 top: defualtPaddingLow,
                 left: defualtPaddingMedium,
               ),
-              child: _infoTextOfBrandNewCar(tBrand, editCar.brand),
+              child: _infoTextOfBrandNewCar(tBrand, widget.car.carOld.brand),
             ),
             Image.asset(
               tImageAsset(editCar.type),
@@ -162,11 +159,11 @@ class _EditSelectCarTypePageState extends State<EditSelectCarTypePage> {
                   children: [
                     Row(
                       children: [
-                        _infoTextOfNewCar(tModel, editCar.model),
+                        _infoTextOfNewCar(tModel, widget.car.carOld.model),
                         _infoTextOfNewCar('', editCar.year),
                       ],
                     ),
-                    _infoTextOfNewCar(tFuelType, editCar.fuelType),
+                    _infoTextOfNewCar(tFuelType, widget.car.carOld.fuelType),
                   ],
                 ),
               ),
@@ -242,6 +239,11 @@ class _EditSelectCarTypePageState extends State<EditSelectCarTypePage> {
     return Column(
       children: [
         FlatButton(
+          color: widget.car.carOld.type == vehicleType[typeCar]
+              ? primaryColor
+              : Colors.transparent,
+          shape: new RoundedRectangleBorder(
+              borderRadius: new BorderRadius.circular(defualtPaddingLow)),
           child: Column(
             children: [
               Image.asset(

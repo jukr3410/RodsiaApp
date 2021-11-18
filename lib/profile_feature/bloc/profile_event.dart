@@ -8,6 +8,7 @@ abstract class ProfileEvent extends Equatable {
 }
 
 class ProfileLoad extends ProfileEvent {}
+
 class ProfileLoadFormPhone extends ProfileEvent {}
 
 class CarUpdate extends ProfileEvent {
@@ -32,4 +33,9 @@ class UserUpdate extends ProfileEvent {
 
   @override
   String toString() => 'UserUpdate {user: $user}';
+}
+
+class CheckPassword extends ProfileEvent {
+  final UserLogin userLogin;
+  const CheckPassword({required this.userLogin});
 }

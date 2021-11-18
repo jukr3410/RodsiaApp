@@ -135,6 +135,20 @@ class UserApi {
     return true;
   }
 
+  Future<bool> checkPassword({required UserLogin userLogin}) async {
+    final url = '$baseUrl/auth/loginUser';
+    final msg = jsonEncode(userLogin.toJson());
+    final response =
+        await http.post(Uri.parse(url), body: msg, headers: headers);
+    if (response.statusCode != 200) {
+      final decodedJson = jsonDecode(response.body);
+      logger.d("$decodedJson");
+      //return '';
+      return false;
+    }
+    return true;
+  }
+
   Future<Token> getTokenLogin({required UserLogin userLogin}) async {
     final url = '$baseUrl/auth/loginUser';
     final msg = jsonEncode(userLogin.toJson());
