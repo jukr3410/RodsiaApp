@@ -9,11 +9,12 @@ class UserLogin {
 }
 
 class Token {
+  String user_id;
   String token;
 
-  Token({required this.token});
+  Token({required this.token, required this.user_id});
 
   factory Token.fromJson(Map<String, dynamic> json) {
-    return Token(token: json['token']);
+    return Token(token: json['token'], user_id: json['user_id']);
   }
 }

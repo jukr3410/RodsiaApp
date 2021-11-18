@@ -17,7 +17,7 @@ class Garage {
       {required this.address,
       this.openingHour,
       required this.images,
-      this.logoImage,
+      required this.logoImage,
       required this.id,
       required this.name,
       required this.phone,
@@ -27,7 +27,7 @@ class Garage {
   Address address;
   OpeningHour? openingHour;
   List<ImageGarage> images;
-  String? logoImage;
+  String logoImage;
   String id;
   String name;
   String phone;
@@ -59,7 +59,8 @@ class Garage {
         "phone": phone,
         "email": email,
         "services": List<Service>.from(services!.map((x) => x)),
-        "typeCarRepairs": List<TypeCarRepairs>.from(typeCarRepairs.map((x) => x)),
+        "typeCarRepairs":
+            List<TypeCarRepairs>.from(typeCarRepairs.map((x) => x)),
       };
 }
 

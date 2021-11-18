@@ -52,6 +52,7 @@ class UserRepository {
     Token token = await userApi.getTokenLogin(userLogin: userLogin);
     UserDB userDB = UserDB(
       id: 0,
+      user_id: token.user_id,
       phone: phone,
       token: token.token,
     );
