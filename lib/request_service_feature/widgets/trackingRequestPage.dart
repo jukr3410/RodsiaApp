@@ -6,8 +6,10 @@ import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:rodsiaapp/constants.dart';
+import 'package:rodsiaapp/core/models/distance_matrix.dart';
 import 'package:rodsiaapp/core/models/garage_model.dart';
 import 'package:rodsiaapp/core/models/request_service_add_model.dart';
+import 'package:rodsiaapp/core/models/request_service_model.dart';
 import 'package:rodsiaapp/request_service_feature/bloc/request_service_bloc.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/trackingRequestCard.dart';
 
@@ -36,7 +38,8 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
   PolylinePoints polylinePoints = PolylinePoints();
   List<Polyline> polyline = [];
 
-  late RequestServiceAdd _requestServiceAdd;
+  late RequestService _requestService;
+  late DistanceMatrix _distanceMatrix;
 
   @override
   void initState() {
@@ -75,15 +78,15 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
           if (state is RequestServiceLoading) {
             createMarker(context);
           } else if (state is RequestServiceLoadSuccess) {
-            _requestServiceAdd = state.requestServiceAdd;
-
+            _requestService = state.requestService;
+            _distanceMatrix = state.distanceMatrix!;
             currentPosition = LatLng(
-                double.parse(state.requestServiceAdd.geoLocationUser.lat),
-                double.parse(state.requestServiceAdd.geoLocationUser.long));
+                double.parse(state.requestService.geoLocationUser.lat),
+                double.parse(state.requestService.geoLocationUser.long));
 
             destinationPosition = LatLng(
-                double.parse(state.requestServiceAdd.geoLocationGarage.lat),
-                double.parse(state.requestServiceAdd.geoLocationGarage.long));
+                double.parse(state.requestService.geoLocationGarage.lat),
+                double.parse(state.requestService.geoLocationGarage.long));
             latlongs = [];
             latlongs.add(currentPosition);
             latlongs.add(destinationPosition);
@@ -91,7 +94,7 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
             markers = getMarkers(latlongs, customIcon1!);
             getPolyline(latlongs);
           } else if (state is RequestServiceComleted) {
-            navigateToRequestComplated(_requestServiceAdd.id);
+            navigateToRequestComplated(_requestService);
           }
         },
         builder: (context, state) {
@@ -155,7 +158,16 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
                         child: Padding(
                             padding: const EdgeInsets.only(bottom: 10.0),
                             child: TrackingRequestCard(
-                                requestServiceAdd: _requestServiceAdd))))
+                              requestService: _requestService,
+                              duration: ((_distanceMatrix
+                                          .rows[0].elements[0].duration.value /
+                                      60))
+                                  .toStringAsFixed(0),
+                              distance: (_distanceMatrix
+                                          .rows[0].elements[0].distance.value ~/
+                                      1000)
+                                  .toStringAsFixed(1),
+                            ))))
               ],
             );
           }
@@ -233,8 +245,8 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
     ));
   }
 
-  navigateToRequestComplated(String? requestServiceId) {
+  navigateToRequestComplated(RequestService? requestService) {
     Navigator.pushReplacementNamed(context, REQUEST_COMPLETE_ROUTE,
-        arguments: {'requestServiceId': requestServiceId});
+        arguments: {'requestService': requestService});
   }
 }

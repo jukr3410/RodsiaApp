@@ -18,6 +18,7 @@ class RequestServiceAdd {
     required this.user,
     required this.service,
     required this.garage,
+    required this.addressUser,
     required this.geoLocationUser,
     required this.geoLocationGarage,
     required this.problemDesc,
@@ -31,6 +32,7 @@ class RequestServiceAdd {
   String user;
   String garage;
   String service;
+  String addressUser;
   GeoLocation geoLocationUser;
   GeoLocation geoLocationGarage;
   String problemDesc;
@@ -45,6 +47,7 @@ class RequestServiceAdd {
         user: json["user"],
         service: json["service"],
         garage: json['garage'],
+        addressUser: json['addressUser'],
         geoLocationUser: GeoLocation.fromJson(json["geoLocationUser"]),
         geoLocationGarage: GeoLocation.fromJson(json["geoLocationGarage"]),
         problemDesc: json["problemDesc"],
@@ -58,6 +61,7 @@ class RequestServiceAdd {
         "user": user,
         "service": service,
         "garage": garage,
+        "addressUser": addressUser,
         "geoLocationUser": geoLocationUser.toJson(),
         "geoLocationGarage": geoLocationGarage.toJson(),
         "problemDesc": problemDesc,

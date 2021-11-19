@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:rodsiaapp/constants.dart';
+
 import 'package:rodsiaapp/core/models/request_service_add_model.dart';
 import 'package:rodsiaapp/core/models/request_service_model.dart';
 import 'package:rodsiaapp/find_garage_feature/widgets/test.dart';
 
 class TrackingRequestCard extends StatefulWidget {
-  RequestServiceAdd requestServiceAdd;
-  TrackingRequestCard({Key? key, required this.requestServiceAdd})
+  RequestService requestService;
+  String duration;
+  String distance;
+  TrackingRequestCard(
+      {Key? key,
+      required this.requestService,
+      required this.duration,
+      required this.distance})
       : super(key: key);
 
   @override
@@ -85,7 +92,7 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
                                 fontSize: 5,
                               ),
                               text: TextSpan(
-                                text: 'BMW center',
+                                text: widget.requestService.service.garage.name,
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize: fontSizeXl,
@@ -108,7 +115,7 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
                           width: 5,
                         ),
                         Text(
-                          widget.requestServiceAdd.status,
+                          widget.requestService.status,
                           style: TextStyle(fontSize: 12),
                         )
                       ],
@@ -139,7 +146,11 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
                                 tEstimateDuration,
                               ),
                               Text(
-                                '10.20 - 10.35',
+                                widget.duration +
+                                    ' - ' +
+                                    (double.parse(widget.duration) + 5)
+                                        .toStringAsFixed(0) +
+                                    " นาที",
                                 style: _textStyleBig,
                               )
                             ],
@@ -148,25 +159,25 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
                             height: defualtPaddingMedium,
                           ),
                           _textInfo(
-                            widget.requestServiceAdd.car.type +
+                            widget.requestService.car.type +
                                 ' ' +
-                                widget.requestServiceAdd.car.brand +
+                                widget.requestService.car.brand +
                                 ' ' +
-                                widget.requestServiceAdd.car.model +
+                                widget.requestService.car.model +
                                 ' ' +
-                                widget.requestServiceAdd.car.year,
+                                widget.requestService.car.year,
                             'car',
                           ),
                           _textInfo(
-                            '2.5 กิโลเมตร',
+                            widget.distance + ' กิโลเมตร',
                             'distance',
                           ),
                           _textInfo(
-                            'ถนนพระราม 2 ซอยท่าข้าม 20',
+                            widget.requestService.addressUser,
                             'location2',
                           ),
                           _textInfo(
-                            widget.requestServiceAdd.problemDesc,
+                            widget.requestService.problemDesc,
                             'desc',
                           ),
                           SizedBox(
@@ -177,16 +188,16 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
                     ),
                   ),
                 ),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    // alignment: Alignment.topCenter,
-                    child: Image.asset(
-                      tImageAsset('location-requestCard'),
-                      alignment: Alignment.topRight,
-                    ),
-                  ),
-                )
+                // Expanded(
+                //   flex: 1,
+                //   child: Container(
+                //     // alignment: Alignment.topCenter,
+                //     child: Image.asset(
+                //       tImageAsset('location-requestCard'),
+                //       alignment: Alignment.topRight,
+                //     ),
+                //   ),
+                // )
               ],
             ),
           ),

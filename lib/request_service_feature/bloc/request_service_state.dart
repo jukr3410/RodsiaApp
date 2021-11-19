@@ -12,16 +12,18 @@ class RequestServiceInitial extends RequestServiceState {}
 class RequestServiceLoading extends RequestServiceState {}
 
 class RequestServiceLoadSuccess extends RequestServiceState {
-  final RequestServiceAdd requestServiceAdd;
+  final RequestService requestService;
+  final DistanceMatrix? distanceMatrix;
 
-  const RequestServiceLoadSuccess({required this.requestServiceAdd});
+  const RequestServiceLoadSuccess(
+      {required this.requestService, this.distanceMatrix});
 
   @override
-  List<Object> get props => [requestServiceAdd];
+  List<Object> get props => [requestService];
 
   @override
   String toString() =>
-      'RequestServiceLoadSuccess { requestService: ${requestServiceAdd} }';
+      'RequestServiceLoadSuccess { requestService: ${requestService} }';
 }
 
 class RequestServiceError extends RequestServiceState {}
@@ -54,3 +56,17 @@ class RequestServiceGarageDeny extends RequestServiceState {}
 class RequestServiceInService extends RequestServiceState {}
 
 class RequestServiceComleted extends RequestServiceState {}
+
+class CurrentLocationAndAddressSuccess extends RequestServiceState {
+  final Position position;
+  final String? address;
+
+  const CurrentLocationAndAddressSuccess(
+      {required this.position, this.address});
+
+  @override
+  List<Object> get props => [position];
+
+  @override
+  String toString() => 'CurrentLocationSuccess {position: $position}';
+}

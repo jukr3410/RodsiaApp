@@ -87,5 +87,7 @@ class _AlertPopupCancleReqState extends State<AlertPopupCancleReq> {
     logger.d("cancelRequestService: $requestServiceId");
     _requestServiceBloc
         .add(CancelRequestService(requestServiceId: requestServiceId));
+
+    navigateToConfirmRequest();
   }
 }

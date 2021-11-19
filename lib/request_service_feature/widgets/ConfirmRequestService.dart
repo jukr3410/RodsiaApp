@@ -63,7 +63,8 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
 
   @override
   void initState() {
-    _requestServiceBloc = BlocProvider.of<RequestServiceBloc>(context);
+    _requestServiceBloc = BlocProvider.of<RequestServiceBloc>(context)
+      ..add(GetCurrentLocationAndAddress());
     _serviceBloc = BlocProvider.of<ServiceBloc>(context)
       ..add(ServiceFetchEvent(serviceId: widget.req.serviceName));
     _garageInfoBloc = BlocProvider.of<GarageInfoBloc>(context)
@@ -108,6 +109,15 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
             message: mError,
           ),
         );
+      } else if (state is CurrentLocationAndAddressSuccess) {
+        logger.d(
+            "current location: ${state.position.latitude.toString()}, ${state.position.longitude.toString()}");
+        logger.d("current address: ${state.address}");
+        widget.req.req!.geoLocationUser.lat =
+            state.position.latitude.toString();
+        widget.req.req!.geoLocationUser.long =
+            state.position.longitude.toString();
+        widget.req.req!.addressUser = state.address!;
       }
     }, builder: (context, state) {
       return Container(
@@ -157,7 +167,7 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
                       width: 5,
                     ),
                     Text(
-                      '23456 แขวงนู่น เขตนี่',
+                      widget.req.req!.addressUser,
                       softWrap: true,
                       maxLines: 3,
                     ),

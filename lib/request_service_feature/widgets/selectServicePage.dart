@@ -61,12 +61,6 @@ class _SelectServicePageState extends State<SelectServicePage> {
   List<Asset> images = <Asset>[];
   String _error = 'No Error Dectected';
 
-  @override
-  void initState() {
-    _controller = TextEditingController();
-    super.initState();
-  }
-
   RequestServiceAdd _requestServiceAdd = RequestServiceAdd(
     user: '',
     service: '',
@@ -84,9 +78,20 @@ class _SelectServicePageState extends State<SelectServicePage> {
     problemDesc: '',
     confirmRequest: false,
     status: '',
+    addressUser: '',
   );
 
   ComfirmReq cmReq = ComfirmReq(garageName: '', serviceName: '');
+
+  @override
+  void initState() {
+    _controller = TextEditingController();
+    _requestServiceAdd.geoLocationGarage.lat =
+        widget.garage.address.geoLocation.lat;
+    _requestServiceAdd.geoLocationGarage.long =
+        widget.garage.address.geoLocation.long;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

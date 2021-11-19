@@ -260,13 +260,15 @@ class AppRouter {
 
       case REQUEST_COMPLETE_ROUTE:
         Map args = settings.arguments as Map;
-        String requestServiceId = args['requestServiceId'] as String;
+        //String requestServiceId = args['requestServiceId'] as String;
+        RequestService requestService =
+            args['requestService'] as RequestService;
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                 create: (BuildContext context) => RequestServiceBloc(
                     requestServiceRepository: RequestServiceRepository()),
                 child: DetailAndGiveStarPage(
-                  requestServiceId: requestServiceId,
+                  requestService: requestService,
                 )));
 
       case SHOWINFO_BEFOREREQ_ROUTE:

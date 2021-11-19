@@ -3,11 +3,12 @@ import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/components/rating/gf_rating.dart';
 import 'package:getwidget/types/gf_button_type.dart';
 import 'package:rodsiaapp/constants.dart';
+import 'package:rodsiaapp/core/models/request_service_model.dart';
 import 'package:rodsiaapp/global_widgets/hexTocolor.dart';
 
 class DetailAndGiveStarPage extends StatefulWidget {
-  String requestServiceId;
-  DetailAndGiveStarPage({Key? key, required this.requestServiceId})
+  RequestService requestService;
+  DetailAndGiveStarPage({Key? key, required this.requestService})
       : super(key: key);
 
   @override
@@ -118,9 +119,9 @@ class _DetailAndGiveStarPageState extends State<DetailAndGiveStarPage> {
                                 fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            'Service type',
+                            widget.requestService.service.serviceType.name,
                           ),
-                          Text('Service'),
+                          Text(widget.requestService.service.name),
                           Text(
                             tMoreInfoThai,
                             softWrap: true,
@@ -137,7 +138,7 @@ class _DetailAndGiveStarPageState extends State<DetailAndGiveStarPage> {
                                     fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                '23456 แขวงนู่น เขตนี่',
+                                widget.requestService.addressUser,
                                 softWrap: true,
                                 maxLines: 3,
                               )

@@ -2,11 +2,14 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:rodsiaapp/constants.dart';
+import 'package:rodsiaapp/core/models/distance_matrix.dart';
 import 'package:rodsiaapp/core/models/request_service_add_model.dart';
 import 'package:rodsiaapp/core/models/request_service_model.dart';
 import 'package:rodsiaapp/core/repository/request_service_api.dart';
 import 'package:rodsiaapp/core/repository/request_service_repository.dart';
+import 'package:rodsiaapp/core/services/geo_location_service.dart';
 import 'package:rodsiaapp/main.dart';
 
 part 'request_service_event.dart';
@@ -18,6 +21,7 @@ class RequestServiceBloc
   StreamSubscription? _servicesSubscription;
 
   RequestServiceApi requestServiceApi = RequestServiceApi();
+  final geoService = GeoLocatorService();
 
   RequestServiceBloc({required this.requestServiceRepository})
       : super(RequestServiceInitial());
@@ -31,6 +35,8 @@ class RequestServiceBloc
   ) async* {
     if (event is CreateRequestService) {
       yield* _mapCreateRequestServiceToState(event);
+    } else if (event is GetCurrentLocationAndAddress) {
+      yield* _mapGetCurrentLocationAndAddressToState(event);
     } else if (event is CancelRequestService) {
       yield* _mapCancelRequestServiceToState(event);
     } else if (event is LoadRequestService) {
@@ -84,7 +90,7 @@ class RequestServiceBloc
             .requestServiceRepository
             .getRequestService(id: event.requestServiceId);
         logger.d("GarageConfirm: ${requestService.confirmRequest}");
-        yield RequestServiceLoadSuccess(requestServiceAdd: requestService);
+        yield RequestServiceLoadSuccess(requestService: requestService);
         if (requestService.status == waitingForConfirm) {
           yield RequestServiceWaiting();
         } else if (requestService.status == denyRequestService) {
@@ -104,14 +110,19 @@ class RequestServiceBloc
       TrackingRequestService event) async* {
     try {
       yield RequestServiceLoading();
-      yield RequestServiceInService();
       while (_isNotCompleted) {
         await Future.delayed(Duration(milliseconds: 1000));
         final requestService = await this
             .requestServiceRepository
             .getRequestService(id: event.requestServiceId);
+        final distanceMatrix = await this.geoService.getDistanceMatrix(
+            startLatitude: double.parse(requestService.geoLocationUser.lat),
+            startLongitude: double.parse(requestService.geoLocationUser.long),
+            endLatitude: double.parse(requestService.geoLocationGarage.lat),
+            endLongitude: double.parse(requestService.geoLocationGarage.long));
         logger.d("GarageConfirm: ${requestService.confirmRequest}");
-        yield RequestServiceLoadSuccess(requestServiceAdd: requestService);
+        yield RequestServiceLoadSuccess(
+            requestService: requestService, distanceMatrix: distanceMatrix);
         if (requestService.status != completeRequestService) {
           yield RequestServiceInService();
         } else {
@@ -120,6 +131,21 @@ class RequestServiceBloc
         }
       }
     } catch (e) {
+      yield RequestServiceError();
+    }
+  }
+
+  Stream<RequestServiceState> _mapGetCurrentLocationAndAddressToState(
+      GetCurrentLocationAndAddress event) async* {
+    try {
+      yield RequestServiceLoading();
+      final position = await geoService.getLocation();
+      final address =
+          await geoService.getAddress(position.latitude, position.longitude);
+      yield CurrentLocationAndAddressSuccess(
+          position: position, address: address);
+    } catch (e) {
+      logger.e(e);
       yield RequestServiceError();
     }
   }

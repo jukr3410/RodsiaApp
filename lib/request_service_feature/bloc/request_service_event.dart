@@ -53,3 +53,5 @@ class TrackingRequestService extends RequestServiceEvent {
   @override
   String toString() => 'LoadRequestService {requestService: $requestServiceId}';
 }
+
+class GetCurrentLocationAndAddress extends RequestServiceEvent {}

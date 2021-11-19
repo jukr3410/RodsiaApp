@@ -25,6 +25,7 @@ class RequestService {
       required this.car,
       required this.confirmRequest,
       required this.status,
+      required this.addressUser,
       required this.geoLocationUser,
       required this.geoLocationGarage,
       this.image,
@@ -37,6 +38,7 @@ class RequestService {
   Car car;
   bool confirmRequest;
   String status;
+  String addressUser;
   GeoLocation geoLocationUser;
   GeoLocation geoLocationGarage;
   String? image;
@@ -50,6 +52,7 @@ class RequestService {
         car: Car.fromJson(json["car"]),
         confirmRequest: json["confirmRequest"],
         status: json["status"],
+        addressUser: json['addressUser'],
         geoLocationUser: GeoLocation.fromJson(json["geoLocationUser"]),
         geoLocationGarage: GeoLocation.fromJson(json["geoLocationGarage"]),
         image: json["image"],
@@ -64,6 +67,7 @@ class RequestService {
         "car": car.toJson(),
         "confirmRequest": confirmRequest,
         "status": status,
+        "addressUser": addressUser,
         "geoLocationUser": geoLocationUser.toJson(),
         "geoLocationGarage": geoLocationGarage.toJson(),
         "image": image,
