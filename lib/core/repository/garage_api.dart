@@ -20,7 +20,8 @@ class GarageApi {
     'Accept': 'application/json'
   };
 
-  Future<List<Garage>> getGarages({required int page}) async {
+  Future<List<Garage>> getGarages(
+      {required int page, FilterGarageModel? filter}) async {
     UserDB userToken = await userDao.getUserToken();
     logger.d('userToken phone: ${userToken.phone}');
     logger.d('userToken id: ${userToken.user_id}');
@@ -28,7 +29,8 @@ class GarageApi {
     // headers.update("authorization", (value) => '$token');
 
     List<Garage>? garages = [];
-    final url = '$baseUrl/garages?page=$page&limit=10';
+    final url =
+        '$baseUrl/garages/q?page=$page&limit=10&carType=${filter!.carType}&serviceType=${filter.serviceType}';
     final response = await http.get(Uri.parse(url), headers: headers);
     if (response.statusCode != 200) {
       print('Exception: ${response.statusCode}');

@@ -7,9 +7,8 @@ import 'package:rodsiaapp/global_widgets/alertPopupBackHomePage.dart';
 import 'package:rodsiaapp/global_widgets/bottomNavigrationBarPage.dart';
 
 class CustomAppBar extends StatefulWidget {
-  const CustomAppBar({
-    Key? key,
-  }) : super(key: key);
+  final FilterGarageModel filter;
+  const CustomAppBar({Key? key, required this.filter}) : super(key: key);
 
   @override
   _CustomAppBarState createState() => _CustomAppBarState();
@@ -21,20 +20,10 @@ class _CustomAppBarState extends State<CustomAppBar> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        bottomNavigationBar: BottomNavigrationBar(),
+        bottomNavigationBar: BottomNavigrationBar(
+          filter: widget.filter,
+        ),
       ),
     );
-  }
-
-  void navigateToService() {
-    Navigator.pushNamed(context, SERVICE_LIST_ROUTE);
-  }
-
-  void navigateToHomePage() {
-    Navigator.pushNamed(context, HOMEPAGE_ROUTE);
-  }
-
-  void trackingRequestService() {
-    Navigator.pushNamed(context, TRACKING_REQUEST_ROUTE);
   }
 }

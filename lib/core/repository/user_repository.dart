@@ -27,6 +27,12 @@ class UserRepository {
   Future<bool> updateUser({required User user}) async {
     return await userApi.updateUser(user: user);
   }
+  Future<bool> updateUserNoPassword({required User user}) async {
+    return await userApi.updateUserNoPassword(user: user);
+  }
+  Future<bool> updateUserPassword({required User user}) async {
+    return await userApi.updateUserPassword(user: user);
+  }
 
   Future<bool> addUser({required User user}) async {
     return await userApi.addUser(user: user);

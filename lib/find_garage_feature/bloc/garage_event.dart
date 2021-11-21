@@ -8,7 +8,8 @@ abstract class GarageListEvent {
 }
 
 class GarageListFetchEvent extends GarageListEvent {
-  const GarageListFetchEvent();
+  final FilterGarageModel filter;
+  const GarageListFetchEvent({required this.filter});
 }
 
 class GarageSearchListFetchEvent extends GarageListEvent {

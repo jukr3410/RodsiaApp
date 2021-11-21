@@ -17,6 +17,8 @@ import 'package:rodsiaapp/main.dart';
 import '../../secrets.dart';
 
 class MapView extends StatefulWidget {
+  final FilterGarageModel? filter;
+  MapView({required this.filter});
   @override
   _MapViewState createState() => _MapViewState();
 }
@@ -43,7 +45,9 @@ class _MapViewState extends State<MapView> {
     super.initState();
     _garageListBloc = BlocProvider.of<GarageListBloc>(context)
       ..add(GetCurrentLocation())
-      ..add(GarageListFetchEvent());
+      ..add(GarageListFetchEvent(
+        filter: widget.filter!,
+      ));
   }
 
   createMarker(context) {
@@ -217,13 +221,8 @@ class _MapViewState extends State<MapView> {
                                           backgroundColor: Colors.transparent,
                                           radius: 40,
                                           child: ClipOval(
-                                            child: Image.network(
-                                              'https://bestkru-thumbs.s3-ap-southeast-1.amazonaws.com/127401',
-                                              width: 110,
-                                              height: 100,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
+                                              child: _imageProfile(
+                                                  _garageShow!.logoImage)),
                                         ),
                                         SizedBox(
                                           width: 15,
@@ -233,16 +232,26 @@ class _MapViewState extends State<MapView> {
                                               CrossAxisAlignment.start,
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
+                                          mainAxisSize: MainAxisSize.min,
                                           children: [
-                                            Text(
-                                              _garageShow!.name,
-                                              softWrap: true,
-                                              maxLines: 1,
-                                              overflow: TextOverflow.fade,
-                                              style: new TextStyle(
-                                                  fontSize: fontSizeL,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: textColorBlack),
+                                            Flexible(
+                                              child: Container(
+                                                width: width * 0.58,
+                                                padding: new EdgeInsets.only(
+                                                    right: 13.0),
+                                                child: Text(
+                                                  _garageShow!.name,
+                                                  softWrap: true,
+                                                  maxLines: 1,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: new TextStyle(
+                                                      fontSize: fontSizeL,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: textColorBlack),
+                                                ),
+                                              ),
                                             ),
                                             Row(children: [
                                               Text(
@@ -275,50 +284,67 @@ class _MapViewState extends State<MapView> {
                                                     color: textColorBlack),
                                               ),
                                             ]),
-                                            ListView.builder(
-                                                scrollDirection:
-                                                    Axis.horizontal,
-                                                shrinkWrap: true,
-                                                itemBuilder: (context, index) {
-                                                  return Image.asset(
-                                                    tImageAsset(
-                                                        serviceType[index]
-                                                            .toString()),
-                                                    width: 18,
-                                                  );
-                                                }),
-
-                                            // Expanded(
-                                            //   child: Row(
-                                            //     children: [
-                                            //       Text(
-                                            //         tServiceThai + ': ',
-                                            //       ),
-
-                                            // Image.asset(
-                                            //   tImageAsset(serviceType[0]
-                                            //       .toString()),
-                                            //   width: 18,
-                                            // ),
-                                            // SizedBox(
-                                            //   width: 5,
-                                            // ),
-                                            // Image.asset(
-                                            //   tImageAsset(serviceType[1]
-                                            //       .toString()),
-                                            //   width: 18,
-                                            // ),
-                                            // SizedBox(
-                                            //   width: 5,
-                                            // ),
-                                            // Image.asset(
-                                            //   tImageAsset(serviceType[2]
-                                            //       .toString()),
-                                            //   width: 18,
-                                            // ),
-                                            //     ],
-                                            //   ),
-                                            // ),
+                                            Container(
+                                              height: 25,
+                                              child: Row(
+                                                children: [
+                                                  Text(
+                                                    tServiceThai + ': ',
+                                                  ),
+                                                  ListView.builder(
+                                                      shrinkWrap: true,
+                                                      scrollDirection:
+                                                          Axis.horizontal,
+                                                      itemCount: _garageShow!
+                                                          .typeCarRepairs
+                                                          .length,
+                                                      itemBuilder:
+                                                          (context, index) {
+                                                        return Row(
+                                                          children: [
+                                                            Image.asset(
+                                                              tImageAsset(
+                                                                  _garageShow!
+                                                                      .typeCarRepairs[
+                                                                          index]
+                                                                      .type),
+                                                              width: 18,
+                                                            ),
+                                                            SizedBox(
+                                                              width: 5,
+                                                            )
+                                                          ],
+                                                        );
+                                                      }),
+                                                  Text(' | '),
+                                                  ListView.builder(
+                                                      shrinkWrap: true,
+                                                      scrollDirection:
+                                                          Axis.horizontal,
+                                                      itemCount: _garageShow!
+                                                          .services!.length,
+                                                      itemBuilder:
+                                                          (context, index) {
+                                                        return Row(
+                                                          children: [
+                                                            Image.asset(
+                                                              tImageAsset(
+                                                                  _garageShow!
+                                                                      .services![
+                                                                          index]
+                                                                      .serviceType
+                                                                      .name),
+                                                              width: 18,
+                                                            ),
+                                                            SizedBox(
+                                                              width: 5,
+                                                            )
+                                                          ],
+                                                        );
+                                                      }),
+                                                ],
+                                              ),
+                                            ),
                                             Row(
                                               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
@@ -452,6 +478,24 @@ class _MapViewState extends State<MapView> {
     });
 
     return markers;
+  }
+
+  _imageProfile(String image) {
+    if (image == '') {
+      return Image.asset(
+        tImageAsset(image),
+        width: 110,
+        height: 150,
+        fit: BoxFit.cover,
+      );
+    } else {
+      return Image.network(
+        image,
+        width: 110,
+        height: 150,
+        fit: BoxFit.cover,
+      );
+    }
   }
 
   void navigateToGarageInfo(String garageId) {

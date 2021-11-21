@@ -9,7 +9,8 @@ import 'package:rodsiaapp/constants.dart';
 import 'mapViewDisplay.dart';
 
 class ViewBars extends StatefulWidget {
-  ViewBars({Key? key}) : super(key: key);
+  final FilterGarageModel filter;
+  ViewBars({Key? key, required this.filter}) : super(key: key);
 
   @override
   _ViewBarsState createState() => _ViewBarsState();
@@ -102,7 +103,10 @@ class _ViewBarsState extends State<ViewBars>
                 controller: _tabController,
                 children: [
                   // first tab bar view widget
-                  Center(child: DisplayMapView()),
+                  Center(
+                      child: DisplayMapView(
+                    filter: widget.filter,
+                  )),
 
                   // second tab bar view widget
                   // Center(
@@ -116,7 +120,9 @@ class _ViewBarsState extends State<ViewBars>
                   // ),
 
                   Center(
-                    child: DisplayGarageList(),
+                    child: DisplayGarageList(
+                      filter: widget.filter,
+                    ),
                   ),
                 ],
               ),

@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -6,8 +9,10 @@ import 'package:getwidget/getwidget.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/user_login.dart';
 import 'package:rodsiaapp/core/models/user_model.dart';
+import 'package:rodsiaapp/global_widgets/alertPopupYesNo.dart';
 import 'package:rodsiaapp/main.dart';
 import 'package:rodsiaapp/profile_feature/bloc/profile_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 
 class EditProfile extends StatefulWidget {
   User user;
@@ -22,9 +27,24 @@ class _EditProfileState extends State<EditProfile> {
   GlobalKey<FormState> _formPassword = GlobalKey<FormState>();
   final _nameConTroller = TextEditingController();
   final _emailConTroller = TextEditingController();
-  final _passwordConTroller = TextEditingController();
 
   late ProfileBloc _profileBloc;
+  String name = '';
+  String email = '';
+  String imageProfile = '';
+  bool addImageProfile = false;
+
+  final ImagePicker _picker = ImagePicker();
+  Future getImage() async {
+    final XFile? photo = await _picker.pickImage(source: ImageSource.gallery);
+
+    setState(() {
+      _image = photo;
+      addImageProfile = true;
+    });
+  }
+
+  late XFile? _image;
 
   @override
   void initState() {
@@ -60,25 +80,12 @@ class _EditProfileState extends State<EditProfile> {
         resizeToAvoidBottomInset: false,
         body: BlocConsumer<ProfileBloc, ProfileState>(
           listener: (context, state) {
-            if (state is CheckPasswordSuccesss && state.status == false) {
-              logger.d(state.status);
-              _navigateToErrorPassword(context);
-            } else {
-              if (_nameConTroller.text != '') {
-                widget.user.name = _nameConTroller.text;
-              }
-              if (_emailConTroller.text != '') {
-                widget.user.email = _emailConTroller.text;
-              }
-              _profileBloc.add(CarUpdate(widget.user));
-            }
-            if (state is ProfileUpdated
-            ) {
+            if (state is ProfileUpdated) {
               navigatorToProfilePage(widget.user);
             }
           },
           builder: (context, state) {
-            return Center(
+            return SingleChildScrollView(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -91,16 +98,26 @@ class _EditProfileState extends State<EditProfile> {
                         backgroundColor: Colors.transparent,
                         radius: 80,
                         child: ClipOval(
-                          child: Image.asset(
-                            tImageAsset('profile'),
-                            height: 140,
-                            width: 140,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
+                            child: _proFileImage(
+                                widget.user.profileImage.toString())),
                       ),
-                      _addOrChangeProfileImage(
-                          widget.user.profileImage.toString()),
+                      Positioned(
+                          bottom: 15,
+                          right: 25,
+                          child: Container(
+                            height: 35,
+                            width: 35,
+                            child: FloatingActionButton(
+                              backgroundColor: textColorBlack,
+                              mini: true,
+                              onPressed: getImage,
+                              tooltip: 'Pick Image',
+                              child: new Icon(
+                                Icons.add_a_photo,
+                                size: 20,
+                              ),
+                            ),
+                          )),
                     ],
                   ),
                   SizedBox(
@@ -119,10 +136,10 @@ class _EditProfileState extends State<EditProfile> {
                               child: Column(
                                 children: [
                                   TextFormField(
-                                    // onChanged: (String value) {
-                                    //   _nameConTroller.text = value;
-                                    //   logger.d('name: ' + _nameConTroller.text);
-                                    // },
+                                    onChanged: (String value) {
+                                      name = value;
+                                      logger.d('name: ' + _nameConTroller.text);
+                                    },
                                     controller: _nameConTroller,
                                     keyboardType: TextInputType.name,
                                     textAlign: TextAlign.start,
@@ -158,10 +175,11 @@ class _EditProfileState extends State<EditProfile> {
                                   ),
                                   TextFormField(
                                     // maxLength: 25,
-                                    // onChanged: (String value) {
-                                    //   _emailConTroller.text = value;
-                                    //   logger.d('email: ' + _emailConTroller.text);
-                                    // },
+                                    onChanged: (String value) {
+                                      email = value;
+                                      logger
+                                          .d('email: ' + _emailConTroller.text);
+                                    },
                                     controller: _emailConTroller,
                                     keyboardType: TextInputType.emailAddress,
                                     textAlign: TextAlign.start,
@@ -189,95 +207,30 @@ class _EditProfileState extends State<EditProfile> {
                                     //       errorText: "โปรดใส่อีเมลใหม่ของคุณ"),
                                     // ])
                                   ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  // TextFormField(
-                                  //     // maxLength: 25,
-                                  //     keyboardType: TextInputType.visiblePassword,
-                                  //     autofocus: true,
-                                  //     obscureText: true,
-                                  //     textAlign: TextAlign.start,
-                                  //     style: TextStyle(
-                                  //         color: textColorBlack, fontSize: 15),
-                                  //     inputFormatters: [
-                                  //       //MaskedInputFormatter('(###)-###-####')
-                                  //     ],
-                                  //     decoration: InputDecoration(
-                                  //       // icon: Icon(Icons.phone_android),
-                                  //       filled: true,
-                                  //       prefixIcon: Icon(
-                                  //         Icons.security_rounded,
-                                  //         color: textColorBlack,
-                                  //       ),
-                                  //       fillColor: Colors.white,
-                                  //       alignLabelWithHint: true,
-                                  //       border: OutlineInputBorder(
-                                  //           borderRadius: borderRadiusMedium,
-                                  //           borderSide: BorderSide.none),
-                                  //       hintText: 'รหัสผ่านเก่า',
-                                  //       hintStyle: TextStyle(
-                                  //           color: textColorBlack, fontSize: 15),
-                                  //     ),
-                                  //     validator: MultiValidator([
-                                  //       RequiredValidator(
-                                  //           errorText: "Please, input password."),
-                                  //       MinLengthValidator(14,
-                                  //           errorText:
-                                  //               "Phone should be atleast 10 number."),
-                                  //     ])
-                                  //     ),
-                                  // SizedBox(
-                                  //   height: 10,
-                                  // ),
-                                  // TextFormField(
-                                  //     // maxLength: 25,
-                                  //     keyboardType: TextInputType.name,
-                                  //     autofocus: true,
-                                  //     obscureText: true,
-                                  //     textAlign: TextAlign.start,
-                                  //     style: TextStyle(
-                                  //         color: textColorBlack, fontSize: 15),
-                                  //     inputFormatters: [
-                                  //       //MaskedInputFormatter('(###)-###-####')
-                                  //     ],
-                                  //     decoration: InputDecoration(
-                                  //       // icon: Icon(Icons.phone_android),
-                                  //       filled: true,
-                                  //       prefixIcon: Icon(
-                                  //         Icons.security_rounded,
-                                  //         color: textColorBlack,
-                                  //       ),
-                                  //       fillColor: Colors.white,
-                                  //       alignLabelWithHint: true,
-                                  //       border: OutlineInputBorder(
-                                  //           borderRadius: borderRadiusMedium,
-                                  //           borderSide: BorderSide.none),
-                                  //       hintText: 'รหัสผ่านใหม่',
-                                  //       hintStyle: TextStyle(
-                                  //           color: textColorBlack, fontSize: 15),
-                                  //     ),
-                                  //     validator: MultiValidator([
-                                  //       RequiredValidator(
-                                  //           errorText: "Please, input password."),
-                                  //       MinLengthValidator(14,
-                                  //           errorText:
-                                  //               "Phone should be atleast 10 number."),
-                                  //     ])),
-                                  SizedBox(
-                                    height: 30,
-                                  ),
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: GFButton(
+                                      onPressed: () {
+                                        _navigatorToEditPassword();
+                                      },
+                                      child: Text('เปลี่ยนรหัสผ่าน'),
+                                      type: GFButtonType.transparent,
+                                      color: textColorBlack,
+                                    ),
+                                  )
                                 ],
                               ),
                             ),
                           ],
                         ),
                         SizedBox(
-                          height: 30,
+                          height: 20,
                         ),
                         TextButton(
                             onPressed: () {
-                              if (_form.currentState!.validate()) {
+                              if (name == '' && email == '') {
+                                _navigateAndDisplayEditError(context);
+                              } else {
                                 _navigateAndDisplayEdit(context);
                               }
                             },
@@ -324,146 +277,44 @@ class _EditProfileState extends State<EditProfile> {
     );
   }
 
-  _addOrChangeProfileImage(String profileImage) {
-    if (profileImage == '') {
-      return Positioned(
-          bottom: 5,
-          right: 25,
-          child: Container(
-            height: 35,
-            width: 35,
-            child: IconButton(
-              icon: Icon(
-                Icons.add_a_photo,
-                size: 18,
-                color: Colors.white,
-              ),
-              onPressed: () {},
-            ),
-            decoration: BoxDecoration(
-                color: textColorBlack, borderRadius: borderRadiusHight),
-          ));
-    } else {
-      return GFButton(
-        onPressed: () {},
-        type: GFButtonType.transparent,
-        textStyle: TextStyle(color: textColorBlack, fontSize: fontSizeS),
-        child: Text('เปลี่ยนรูปภาพ'),
-      );
-    }
-  }
-
   void _navigateAndDisplayEdit(BuildContext context) async {
     final result = await showDialog<String>(
         context: context,
-        builder: (BuildContext context) => _AlertFormPinPassword());
+        builder: (BuildContext context) => AlertPopupYesNo(
+              title: 'คุณต้องการอัพเดตข้อมูลใช้ไหม',
+            ));
     if (result == 'Ok') {
-      logger.d(_passwordConTroller.text);
-      UserLogin userLogin = UserLogin(
-          phone: widget.user.phone, password: _passwordConTroller.text);
-
-      _profileBloc.add(CheckPassword(userLogin: userLogin));
-      logger.d(userLogin.toJson());
+      if (name != '') {
+        widget.user.name = name;
+      }
+      if (email != '') {
+        widget.user.email = email;
+      }
+      logger.d(widget.user.toJson());
+      _profileBloc.add(UserUpdateNoPassword(widget.user));
     }
+  }
+
+  void _navigatorToEditPassword() {
+    Navigator.pushNamed(context, EDIT_PASSWOED_ROUTE, arguments: widget.user);
+  }
+
+  void _navigateAndDisplayEditError(BuildContext context) async {
+    final result = await showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertPopupYesNo(
+              title: 'คุณต้องใล่ข้อมูล',
+            ));
+    if (result == 'Ok') {}
   }
 
   void _navigateToErrorPassword(BuildContext context) async {
     final result = await showDialog<String>(
         context: context,
         builder: (BuildContext context) => _AlertErrorPinPassword());
-    if (result == 'Ok') {}
-  }
-
-  Widget _AlertFormPinPassword() {
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: Center(
-        child: Container(
-          width: cardWidthLow,
-          decoration: BoxDecoration(
-            borderRadius: borderRadiusMedium,
-            boxShadow: [boxShadow],
-            color: bgColor,
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(defualtPaddingLow),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'ใส่รหัสผ่าน: ',
-                  style: TextStyle(
-                      fontSize: fontSizeL,
-                      color: textColorBlack,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'Kanit'),
-                ),
-                SizedBox(
-                  height: defualtPaddingLow,
-                ),
-                Form(
-                  key: _formPassword,
-                  child: TextFormField(
-                      obscureText: true,
-                      controller: _passwordConTroller,
-                      keyboardType: TextInputType.visiblePassword,
-                      textAlign: TextAlign.start,
-                      style: TextStyle(color: textColorBlack, fontSize: 15),
-                      inputFormatters: [
-                        //MaskedInputFormatter('(###)-###-####')
-                      ],
-                      decoration: InputDecoration(
-                        // icon: Icon(Icons.phone_android),
-                        filled: true,
-                        prefixIcon: Icon(Icons.security, color: textColorBlack),
-                        fillColor: primaryColor,
-                        alignLabelWithHint: true,
-                        border: OutlineInputBorder(
-                            borderRadius: borderRadiusMedium,
-                            borderSide: BorderSide.none),
-                        hintText: 'รหัสผ่าน',
-                        hintStyle:
-                            TextStyle(color: textColorBlack, fontSize: 15),
-                      ),
-                      validator: MultiValidator([
-                        RequiredValidator(errorText: "โปรดใส่รหัสผ่านของคุณ"),
-                      ])),
-                ),
-                SizedBox(
-                  height: defualtPaddingLow,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                        height: buttonHeightSmall,
-                        width: buttonWidthSmall,
-                        child: TextButton(
-                          onPressed: () {
-                            if (_formPassword.currentState!.validate()) {
-                              Navigator.pop(context, 'Ok');
-                            }
-                          },
-                          child: Text(tOKThai),
-                          style: flatButtonStyle(primaryColor, textColorBlack),
-                        )),
-                    GFButton(
-                      onPressed: () {
-                        Navigator.pop(context, 'Cancal');
-                      },
-                      child: Text(tCancleThai),
-                      textColor: textColorBlack,
-                      type: GFButtonType.transparent,
-                    )
-                  ],
-                )
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
+    if (result == 'Ok') {
+      _navigateAndDisplayEdit(context);
+    }
   }
 
   Widget _AlertErrorPinPassword() {
@@ -522,5 +373,34 @@ class _EditProfileState extends State<EditProfile> {
 
   void navigatorToProfilePage(User user) {
     Navigator.pushNamed(context, PROFILE_ROUTE, arguments: user);
+  }
+
+  _proFileImage(String profileImage) {
+    if (profileImage == '' && addImageProfile == false) {
+      return Image.asset(
+        tImageAsset('profile'),
+        fit: BoxFit.cover,
+        width: 130,
+        height: 130,
+      );
+    } else if (addImageProfile == true) {
+      return Image.file(
+        File(_image!.path),
+        fit: BoxFit.cover,
+        width: 130,
+        height: 130,
+      );
+    } else {
+      return CachedNetworkImage(
+        imageUrl: profileImage,
+        placeholder: (context, url) => CircularProgressIndicator(
+          color: textColorBlack,
+        ),
+        errorWidget: (context, url, error) => Icon(Icons.error),
+        fit: BoxFit.cover,
+        height: 120,
+        width: 120,
+      );
+    }
   }
 }

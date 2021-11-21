@@ -29,6 +29,10 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       yield* _mapUserUpdateToState(event.user);
     } else if (event is CheckPassword) {
       yield* _checkPasswordToState(event.userLogin);
+    } else if (event is UserUpdateNoPassword) {
+      yield* _mapUserUpdateNoPasswordToState(event.user);
+    } else if (event is UserUpdatePassword) {
+      yield* _mapUserUpdatePasswordToState(event.user);
     }
   }
 
@@ -46,7 +50,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     try {
       bool status =
           await this.userRepository.checkPassword(userLogin: userLogin);
-      yield CheckPasswordSuccesss(status: status);
+      if (status == true) {
+        yield CheckPasswordSuccesss(status: status);
+      } else {
+        yield CheckPasswordError(status: status);
+      }
     } catch (e) {
       logger.e(e);
       yield ProfileError();
@@ -67,6 +75,28 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     try {
       yield ProfileUpdating();
       final res = await this.userRepository.updateUser(user: user);
+      yield ProfileUpdated(status: res);
+    } catch (e) {
+      logger.e(e);
+      yield ProfileError();
+    }
+  }
+
+  Stream<ProfileState> _mapUserUpdateNoPasswordToState(User user) async* {
+    try {
+      yield ProfileUpdating();
+      final res = await this.userRepository.updateUserNoPassword(user: user);
+      yield ProfileUpdated(status: res);
+    } catch (e) {
+      logger.e(e);
+      yield ProfileError();
+    }
+  }
+
+  Stream<ProfileState> _mapUserUpdatePasswordToState(User user) async* {
+    try {
+      yield ProfileUpdating();
+      final res = await this.userRepository.updateUserPassword(user: user);
       yield ProfileUpdated(status: res);
     } catch (e) {
       logger.e(e);

@@ -10,11 +10,11 @@ import 'core/models/car_model.dart';
 
 //api base url
 //dev localhost api
-final baseUrlConstant = "http://localhost:3000/api";
+// final baseUrlConstant = "http://localhost:3000/api";
 // final baseUrlConstantSockertIO = "http://localhost:3000/";
 
 // production api
-// final baseUrlConstant = 'https://rodsia-api.herokuapp.com/api';
+final baseUrlConstant = 'https://rodsia-api.herokuapp.com/api';
 
 // router path
 const LOGIN_ROUTE = "/login";
@@ -49,7 +49,8 @@ const CHAT_ROUTE = '/chat';
 const FIND_PROBLEM = '/find_problem';
 const SUPPORT_CENTER_ROUTE = '/support_center';
 const NOTIFY_ROUTE = '/notify';
-const GARAGE_SEARCH_ROUTE = 'garage-search';
+const GARAGE_SEARCH_ROUTE = '/garage_search';
+const EDIT_PASSWOED_ROUTE = '/edit_password';
 
 // font size
 const fontSizeXl = 18.0;
@@ -77,6 +78,8 @@ const iconColorWhite = Colors.white;
 const iconColorRed = Color(0xffDA5B49);
 
 const cardColor = Colors.white;
+
+//Global variable
 
 // color status
 const redStatus = Colors.red;
@@ -492,3 +495,10 @@ List<NotifyInfo> mockupNotify = [
         'หากคุณไม่เห็นรายการอัปเดตในอุปกรณ์ คุณสามารถอัปเดตด้วยตนเองได้โดยใช้คอมพิวเตอร์ ดูวิธีอัปเดตอุปกรณ์ของคุณด้วยตนเอง หากคุณใช้ Mac ที่มี macOS Catalina หรือใหม่กว่า หรือหากคุณใช้ Mac ที่มี macOS Mojave หรือรุ่นก่อนหน้า หรือใช้ PC ที่ใช้ Windows'
       ]),
 ];
+
+class FilterGarageModel {
+  String serviceType;
+  String carType;
+
+  FilterGarageModel({required this.serviceType, required this.carType});
+}

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rodsiaapp/authentication/bloc/authentication_bloc.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/user_model.dart';
+import 'package:rodsiaapp/main.dart';
 import 'package:rodsiaapp/profile_feature/bloc/profile_bloc.dart';
 
 class MenusSetting extends StatefulWidget {
@@ -104,6 +105,9 @@ class _MenusSettingState extends State<MenusSetting> {
                                                     if (index ==
                                                         menusSetting.length -
                                                             1) {
+                                                      logger.d(
+                                                          menusSetting.length -
+                                                              1);
                                                       _authenticationBloc
                                                           .add(LoggedOut());
                                                     } else {

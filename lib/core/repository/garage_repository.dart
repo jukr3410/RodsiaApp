@@ -1,3 +1,4 @@
+import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/garage_model.dart';
 import 'package:rodsiaapp/core/repository/garage_api.dart';
 
@@ -11,8 +12,9 @@ class GarageRepository {
     return _garageRepository;
   }
 
-  Future<List<Garage>> getGarages({required int page}) async {
-    return await garageApi.getGarages(page: page);
+  Future<List<Garage>> getGarages(
+      {required int page,  FilterGarageModel? filter}) async {
+    return await garageApi.getGarages(page: page, filter: filter!);
   }
 
   Future<List<Garage>> getByGaragesName(

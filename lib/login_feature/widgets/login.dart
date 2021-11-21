@@ -7,6 +7,7 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:rodsiaapp/authentication/bloc/authentication_bloc.dart';
 import 'package:rodsiaapp/login_feature/bloc/login_bloc.dart';
+import 'package:rodsiaapp/main.dart';
 import 'package:rodsiaapp/register_user_feature/widgets/otp.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
@@ -280,6 +281,8 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   _onLoginButtonPressed() {
+    logger.d(phoneController.text);
+    logger.d(passwordController.text);
     _loginBloc.add(LoginButtonPressed(
       phone: phoneController.text,
       password: passwordController.text,

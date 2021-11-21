@@ -32,8 +32,6 @@ class _InfoProfileState extends State<InfoProfile> {
                     ClipOval(
                         child:
                             _proFileImage(widget.user.profileImage.toString())),
-                    _addOrChangeProfileImage(
-                        widget.user.profileImage.toString()),
                   ],
                 ),
               ],
@@ -73,35 +71,6 @@ class _InfoProfileState extends State<InfoProfile> {
         ],
       ),
     );
-  }
-
-  _addOrChangeProfileImage(String profileImage) {
-    if (profileImage == '') {
-      return Positioned(
-          bottom: 0,
-          right: 15,
-          child: Container(
-            height: 35,
-            width: 35,
-            child: IconButton(
-              icon: Icon(
-                Icons.add_a_photo,
-                size: 18,
-                color: Colors.white,
-              ),
-              onPressed: () {},
-            ),
-            decoration: BoxDecoration(
-                color: textColorBlack, borderRadius: borderRadiusHight),
-          ));
-    } else {
-      return GFButton(
-        onPressed: () {},
-        type: GFButtonType.transparent,
-        textStyle: TextStyle(color: textColorBlack, fontSize: fontSizeS),
-        child: Text('เปลี่ยนรูปภาพ'),
-      );
-    }
   }
 
   _proFileImage(String profileImage) {

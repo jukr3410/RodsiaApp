@@ -29,19 +29,7 @@ class GarageListBloc extends Bloc<GarageListEvent, GarageListState> {
     GarageListEvent event,
   ) async* {
     if (event is GarageListFetchEvent) {
-      try {
-        yield GarageListLoadingState(message: mLoading);
-        final garages = await garagerRepository.getGarages(page: page);
-        if (garages.isNotEmpty) {
-          yield GarageListSuccessState(garages: garages);
-          page++;
-        } else {
-          yield GarageListEmptyState();
-        }
-      } catch (e) {
-        logger.e(e);
-        yield GarageListErrorState(error: mError);
-      }
+      yield* _mapGetLIstGarageToState(event.filter);
     } else if (event is GetCurrentLocation) {
       yield* _mapGetCurrentLocationToState();
     } else if (event is ShowGarageInfo) {
@@ -61,6 +49,24 @@ class GarageListBloc extends Bloc<GarageListEvent, GarageListState> {
         logger.e(e);
         yield GarageListErrorState(error: mError);
       }
+    }
+  }
+
+  Stream<GarageListState> _mapGetLIstGarageToState(
+      FilterGarageModel? filter) async* {
+    try {
+      yield GarageListLoadingState(message: mLoading);
+      final garages =
+          await garagerRepository.getGarages(page: page, filter: filter);
+      if (garages.isNotEmpty) {
+        yield GarageListSuccessState(garages: garages);
+        page++;
+      } else {
+        yield GarageListEmptyState();
+      }
+    } catch (e) {
+      logger.e(e);
+      yield GarageListErrorState(error: mError);
     }
   }
 

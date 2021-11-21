@@ -31,6 +31,7 @@ import 'package:rodsiaapp/profile_feature/widgets/ProfilePage.dart';
 import 'package:rodsiaapp/profile_feature/widgets/add_car/selectMoreChoice.dart';
 import 'package:rodsiaapp/profile_feature/widgets/add_car/selectCarTypePage.dart';
 import 'package:rodsiaapp/profile_feature/widgets/add_car/showInfoNewCar.dart';
+import 'package:rodsiaapp/profile_feature/widgets/editPassword.dart';
 import 'package:rodsiaapp/profile_feature/widgets/editProfile.dart';
 import 'package:rodsiaapp/profile_feature/widgets/edit_car/editCarModel.dart';
 import 'package:rodsiaapp/profile_feature/widgets/edit_car/editSelectCarTypePage.dart';
@@ -73,6 +74,7 @@ class AppRouter {
                 child: App()));
 
       case MAIN_ROUTE:
+        FilterGarageModel filter = settings.arguments as FilterGarageModel;
         return MaterialPageRoute(
             builder: (_) => MultiBlocProvider(providers: [
                   BlocProvider(
@@ -94,7 +96,7 @@ class AppRouter {
                           historyBloc.RequestServiceBloc(
                               requestServiceRepository:
                                   RequestServiceRepository())),
-                ], child: CustomAppBar()));
+                ], child: CustomAppBar(filter: filter)));
 
       case LOGIN_ROUTE:
         return MaterialPageRoute(
@@ -137,19 +139,24 @@ class AppRouter {
                 )));
 
       case HOMEPAGE_ROUTE:
+        FilterGarageModel filter = settings.arguments as FilterGarageModel;
         return MaterialPageRoute(
-            builder: (_) => MultiBlocProvider(providers: [
-                  BlocProvider(
-                      create: (BuildContext context) =>
-                          AuthenticationBloc(userRepository: UserRepository())),
-                  BlocProvider(
-                    create: (BuildContext context) => HomeBloc(),
-                  ),
-                  BlocProvider(
-                    create: (BuildContext context) =>
-                        ProfileBloc(userRepository: UserRepository()),
-                  ),
-                ], child: BottomNavigrationBar()));
+            builder: (_) => MultiBlocProvider(
+                    providers: [
+                      BlocProvider(
+                          create: (BuildContext context) => AuthenticationBloc(
+                              userRepository: UserRepository())),
+                      BlocProvider(
+                        create: (BuildContext context) => HomeBloc(),
+                      ),
+                      BlocProvider(
+                        create: (BuildContext context) =>
+                            ProfileBloc(userRepository: UserRepository()),
+                      ),
+                    ],
+                    child: BottomNavigrationBar(
+                      filter: filter,
+                    )));
 
       case PROFILE_ROUTE:
         User user = settings.arguments as User;
@@ -281,6 +288,15 @@ class AppRouter {
                 create: (BuildContext context) =>
                     ProfileBloc(userRepository: UserRepository()),
                 child: EditProfile(
+                  user: user,
+                )));
+      case EDIT_PASSWOED_ROUTE:
+        User user = settings.arguments as User;
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                create: (BuildContext context) =>
+                    ProfileBloc(userRepository: UserRepository()),
+                child: EditPassword(
                   user: user,
                 )));
 

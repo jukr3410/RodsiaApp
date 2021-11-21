@@ -48,8 +48,32 @@ class UserApi {
     return user;
   }
 
-  Future<bool> updateUser({required User user}) async {
+  Future<bool>  updateUser({required User user}) async {
     final url = '$baseUrl/users';
+    final msg = jsonEncode(user.toJson());
+    final response =
+        await http.patch(Uri.parse(url), body: msg, headers: headers);
+    if (response.statusCode != 200) {
+      logger.e(response);
+      return false;
+      //throw new Exception('There was a problem ${response.statusCode}');
+    }
+    return true;
+  }
+  Future<bool>  updateUserNoPassword({required User user}) async {
+    final url = '$baseUrl/users-no-password';
+    final msg = jsonEncode(user.toJson());
+    final response =
+        await http.patch(Uri.parse(url), body: msg, headers: headers);
+    if (response.statusCode != 200) {
+      logger.e(response);
+      return false;
+      //throw new Exception('There was a problem ${response.statusCode}');
+    }
+    return true;
+  }
+  Future<bool>  updateUserPassword({required User user}) async {
+    final url = '$baseUrl/users-password';
     final msg = jsonEncode(user.toJson());
     final response =
         await http.patch(Uri.parse(url), body: msg, headers: headers);
@@ -141,9 +165,9 @@ class UserApi {
     final response =
         await http.post(Uri.parse(url), body: msg, headers: headers);
     if (response.statusCode != 200) {
-      final decodedJson = jsonDecode(response.body);
-      logger.d("$decodedJson");
-      //return '';
+      // final decodedJson = jsonDecode(response.body);
+      // logger.d("$decodedJson");
+      
       return false;
     }
     return true;

@@ -35,6 +35,29 @@ class UserUpdate extends ProfileEvent {
   String toString() => 'UserUpdate {user: $user}';
 }
 
+class UserUpdateNoPassword extends ProfileEvent {
+  final User user;
+
+  const UserUpdateNoPassword(this.user);
+
+  @override
+  List<Object> get props => [user];
+
+  @override
+  String toString() => 'UserUpdate {user: $user}';
+}
+class UserUpdatePassword extends ProfileEvent {
+  final User user;
+
+  const UserUpdatePassword(this.user);
+
+  @override
+  List<Object> get props => [user];
+
+  @override
+  String toString() => 'UserUpdate {user: $user}';
+}
+
 class CheckPassword extends ProfileEvent {
   final UserLogin userLogin;
   const CheckPassword({required this.userLogin});

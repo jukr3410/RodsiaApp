@@ -210,7 +210,7 @@ class _ShowInfoNewCarState extends State<ShowInfoNewCar> {
       _user.cars!.forEach((element) {
         logger.d(element.toJson());
       });
-      _profileBloc.add(CarUpdate(_user));
+      _profileBloc.add(UserUpdateNoPassword(_user));
     }
   }
 

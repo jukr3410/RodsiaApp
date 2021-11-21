@@ -14,9 +14,9 @@ import 'package:rodsiaapp/notify_feature/widgets/notifyPage.dart';
 import 'package:rodsiaapp/profile_feature/widgets/ProfilePage.dart';
 
 class BottomNavigrationBar extends StatefulWidget {
-  const BottomNavigrationBar({
-    Key? key,
-  }) : super(key: key);
+  final FilterGarageModel filter;
+  const BottomNavigrationBar({Key? key, required this.filter})
+      : super(key: key);
 
   @override
   _BottomNavigrationBarState createState() => _BottomNavigrationBarState();
@@ -57,7 +57,9 @@ class _BottomNavigrationBarState extends State<BottomNavigrationBar> {
   @override
   Widget build(BuildContext context) {
     List<Widget> _pageWidget = <Widget>[
-      HomePage(),
+      HomePage(
+        filter: widget.filter,
+      ),
       FindProblemPage(),
       Listhistory(),
       MenusSetting()

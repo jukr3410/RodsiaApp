@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:getwidget/components/button/gf_button.dart';
+import 'package:getwidget/getwidget.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/global_widgets/hexTocolor.dart';
 import 'package:rodsiaapp/main.dart';
@@ -66,8 +68,7 @@ class _FilterGarageState extends State<FilterGarage>
                         children: [
                           Expanded(
                             child: Container(
-                              margin: EdgeInsets.only(
-                                  bottom: 10, right: 20, left: 20),
+                              margin: EdgeInsets.only(right: 20, left: 20),
                               height: 45,
                               decoration: BoxDecoration(
                                   color: textColorBlack,
@@ -102,9 +103,6 @@ class _FilterGarageState extends State<FilterGarage>
                           ),
                         ],
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
                       Expanded(
                         child: TabBarView(
                           controller: _tabController,
@@ -112,10 +110,13 @@ class _FilterGarageState extends State<FilterGarage>
                             // first tab bar view widget
                             Center(
                                 child: Column(
-                              children: <Widget>[
+                              children: [
+                                SizedBox(
+                                  height: 10,
+                                ),
                                 // selectToFilter[numSelect],
                                 GridView.count(
-                                  childAspectRatio: (3 / 2.5),
+                                  childAspectRatio: (3 / 2.1),
                                   crossAxisCount: 3,
                                   padding: EdgeInsets.all(20),
                                   shrinkWrap: true,
@@ -140,7 +141,7 @@ class _FilterGarageState extends State<FilterGarage>
                                                   tImageAsset(
                                                       serviceTypeName[index]
                                                           .toString()),
-                                                  width: 45,
+                                                  width: 40,
                                                 ),
                                                 Text(serviceTypeName[index]
                                                     .toString())
@@ -160,14 +161,20 @@ class _FilterGarageState extends State<FilterGarage>
                                     );
                                   }),
                                 ),
+                                SizedBox(
+                                  height: 10,
+                                ),
                                 buttonSelect()
                               ],
                             )),
                             Center(
                               child: Column(
                                 children: [
+                                  SizedBox(
+                                    height: 30,
+                                  ),
                                   GridView.count(
-                                    childAspectRatio: (2 / 1.2),
+                                    childAspectRatio: (2 / 0.9),
                                     crossAxisCount: 2,
                                     shrinkWrap: true,
                                     children: List.generate(vehicleType.length,
@@ -191,7 +198,7 @@ class _FilterGarageState extends State<FilterGarage>
                                                     tImageAsset(
                                                         vehicleType[index]
                                                             .toString()),
-                                                    width: 60,
+                                                    width: 50,
                                                   ),
                                                   Text(vehicleType[index]
                                                       .toString())
@@ -211,7 +218,10 @@ class _FilterGarageState extends State<FilterGarage>
                                       );
                                     }),
                                   ),
-                                  buttonSelect()
+                                  SizedBox(
+                                    height: 20,
+                                  ),
+                                  buttonSelect(),
                                 ],
                               ),
                             ),
@@ -234,34 +244,52 @@ class _FilterGarageState extends State<FilterGarage>
     );
   }
 
-  void navigatorToSelectServiceType() {
-    Navigator.pop(context);
+  void navigatorToListGarage() {
+    Navigator.pushNamed(context, MAIN_ROUTE,
+        arguments: FilterGarageModel(
+            serviceType: selectProblem, carType: selectVehicleType));
+  }
+
+  void navigatorToListGarageAll() {
+    Navigator.pushNamed(context, MAIN_ROUTE,
+        arguments: FilterGarageModel(serviceType: '', carType: ''));
   }
 
   Widget buttonSelect() {
     if (selectProblem == '' || selectVehicleType == '') {
       return Padding(
         padding: EdgeInsets.only(
-          bottom: 10,
           left: 20,
           right: 20,
         ),
-        child: Container(
-          height: buttonHeightSmall,
-          width: double.infinity,
-          child: Material(
-            borderRadius: borderRadiusMedium,
-            color: textColorBlack,
-            child: MaterialButton(
-              onPressed: () {},
-              child: Text('กรุณาเลือกให้ครบ!',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: primaryColor,
-                    fontSize: 15,
-                  )),
+        child: Column(
+          children: [
+            Container(
+              height: buttonHeightSmall,
+              width: double.infinity,
+              child: Material(
+                borderRadius: borderRadiusMedium,
+                color: textColorBlack,
+                child: MaterialButton(
+                  onPressed: () {},
+                  child: Text('กรุณาเลือกให้ครบ!',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: primaryColor,
+                        fontSize: 15,
+                      )),
+                ),
+              ),
             ),
-          ),
+            GFButton(
+              onPressed: () {
+                navigatorToListGarageAll();
+              },
+              child: Text('ค้นหาทั้งหมด'),
+              color: textColorBlack,
+              type: GFButtonType.transparent,
+            )
+          ],
         ),
       );
     }
@@ -271,24 +299,36 @@ class _FilterGarageState extends State<FilterGarage>
         left: 20,
         right: 20,
       ),
-      child: Container(
-        height: buttonHeightSmall,
-        width: double.infinity,
-        child: Material(
-          borderRadius: borderRadiusMedium,
-          color: hexToColor(primaryCodeColor),
-          child: MaterialButton(
-            onPressed: () {
-              navigatorToSelectServiceType();
-            },
-            child: Text(tSearch,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: hexToColor(codeColorBlack),
-                  fontSize: 15,
-                )),
+      child: Column(
+        children: [
+          Container(
+            height: buttonHeightSmall,
+            width: double.infinity,
+            child: Material(
+              borderRadius: borderRadiusMedium,
+              color: hexToColor(primaryCodeColor),
+              child: MaterialButton(
+                onPressed: () {
+                  navigatorToListGarage();
+                },
+                child: Text(tSearch,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: hexToColor(codeColorBlack),
+                      fontSize: 15,
+                    )),
+              ),
+            ),
           ),
-        ),
+          GFButton(
+            onPressed: () {
+              navigatorToListGarageAll();
+            },
+            child: Text('ค้นหาทั้งหมด'),
+            color: textColorBlack,
+            type: GFButtonType.transparent,
+          )
+        ],
       ),
     );
   }

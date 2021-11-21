@@ -4,6 +4,7 @@ import 'package:logger/logger.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:rodsiaapp/router.dart';
 
+
 void main() {
   Bloc.observer = GarageBlocObserver();
   runApp(RodSiaApp(router: AppRouter()));

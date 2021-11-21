@@ -14,6 +14,8 @@ import 'package:getwidget/getwidget.dart';
 import '../../constants.dart';
 
 class GarageList extends StatefulWidget {
+  final FilterGarageModel? filter;
+  GarageList({required this.filter});
   @override
   _GarageListState createState() => _GarageListState();
 }
@@ -77,7 +79,7 @@ class _GarageListState extends State<GarageList> {
                   onPressed: () {
                     _garageListBloc
                       ..isFetching = true
-                      ..add(GarageListFetchEvent());
+                      ..add(GarageListFetchEvent(filter: widget.filter!));
                   },
                   icon: Icon(Icons.refresh),
                 ),
@@ -94,7 +96,7 @@ class _GarageListState extends State<GarageList> {
                     !_garageListBloc.isFetching) {
                   _garageListBloc
                     ..isFetching = true
-                    ..add(GarageListFetchEvent());
+                    ..add(GarageListFetchEvent(filter: widget.filter!));
                 }
               }),
             itemBuilder: (context, index) =>
@@ -122,14 +124,7 @@ class _GarageListState extends State<GarageList> {
               CircleAvatar(
                 backgroundColor: Colors.transparent,
                 radius: 40,
-                child: ClipOval(
-                  child: Image.network(
-                    garage.logoImage,
-                    width: 110,
-                    height: 150,
-                    fit: BoxFit.cover,
-                  ),
-                ),
+                child: ClipOval(child: _imageProfile(garage.logoImage)),
               ),
               Flexible(
                   child: Padding(
@@ -181,23 +176,53 @@ class _GarageListState extends State<GarageList> {
                               color: textColorBlack),
                         ),
                       ]),
-                      Row(
-                        children: [
-                          Text(
-                            tServiceThai + ': ',
-                          ),
-                          // ListView.builder(
-                          //     shrinkWrap: true,
-                          //     scrollDirection: Axis.horizontal,
-                          //     itemCount: garage.services!.length,
-                          //     itemBuilder: (context, index) {
-                          //       return Image.asset(
-                          //         tImageAsset(
-                          //             garage.services![index].serviceType.name),
-                          //         width: 18,
-                          //       );
-                          //     }),
-                        ],
+
+                      Container(
+                        height: 25,
+                        child: Row(
+                          children: [
+                            Text(
+                              tServiceThai + ': ',
+                            ),
+                            ListView.builder(
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                itemCount: garage.typeCarRepairs.length,
+                                itemBuilder: (context, index) {
+                                  return Row(
+                                    children: [
+                                      Image.asset(
+                                        tImageAsset(
+                                            garage.typeCarRepairs[index].type),
+                                        width: 18,
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      )
+                                    ],
+                                  );
+                                }),
+                            Text(' | '),
+                            ListView.builder(
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                itemCount: garage.services!.length,
+                                itemBuilder: (context, index) {
+                                  return Row(
+                                    children: [
+                                      Image.asset(
+                                        tImageAsset(garage
+                                            .services![index].serviceType.name),
+                                        width: 18,
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      )
+                                    ],
+                                  );
+                                }),
+                          ],
+                        ),
                       ),
                       // Container(
                       //   height: 20,
@@ -306,6 +331,24 @@ class _GarageListState extends State<GarageList> {
         ),
         baseColor: Colors.grey.shade300,
         highlightColor: Colors.grey.shade100);
+  }
+
+  _imageProfile(String image) {
+    if (image == '') {
+      return Image.asset(
+        tImageAsset(image),
+        width: 110,
+        height: 150,
+        fit: BoxFit.cover,
+      );
+    } else {
+      return Image.network(
+        image,
+        width: 110,
+        height: 150,
+        fit: BoxFit.cover,
+      );
+    }
   }
 
   void navigateToGarageInfo(Garage garage) {

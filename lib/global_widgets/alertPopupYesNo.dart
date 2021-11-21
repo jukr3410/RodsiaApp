@@ -20,7 +20,7 @@ class AlertPopupYesNo extends StatelessWidget {
             color: bgColor,
           ),
           child: Padding(
-            padding: const EdgeInsets.all(defualtPaddingMedium),
+            padding: const EdgeInsets.all(defualtPaddingLow),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -34,7 +34,7 @@ class AlertPopupYesNo extends StatelessWidget {
                       fontFamily: 'Kanit'),
                 ),
                 SizedBox(
-                  height: defualtPaddingMedium,
+                  height: defualtPaddingLow,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
