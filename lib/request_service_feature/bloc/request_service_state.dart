@@ -70,3 +70,5 @@ class CurrentLocationAndAddressSuccess extends RequestServiceState {
   @override
   String toString() => 'CurrentLocationSuccess {position: $position}';
 }
+
+class CreatedReview extends RequestServiceState {}
