@@ -228,7 +228,9 @@ class _EditProfileState extends State<EditProfile> {
                         ),
                         TextButton(
                             onPressed: () {
-                              if (name == '' && email == '') {
+                              if (name == '' &&
+                                  email == '' &&
+                                  addImageProfile == false) {
                                 _navigateAndDisplayEditError(context);
                               } else {
                                 _navigateAndDisplayEdit(context);
@@ -289,6 +291,9 @@ class _EditProfileState extends State<EditProfile> {
       }
       if (email != '') {
         widget.user.email = email;
+      }
+      if (addImageProfile == true) {
+        _profileBloc.add(UploadImageProfile(image: File(_image!.path)));
       }
       logger.d(widget.user.toJson());
       _profileBloc.add(UserUpdateNoPassword(widget.user));

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:rodsiaapp/core/dao/user_dao.dart';
@@ -14,7 +15,8 @@ class UserApi {
   final baseUrl = baseUrlConstant;
   Map<String, String> headers = {
     'Content-type': 'application/json',
-    'Accept': 'application/json'
+    'Accept': 'application/json',
+    "Content-Type": "multipart/form-data"
   };
 
   final userDao = UserDao();
@@ -48,7 +50,7 @@ class UserApi {
     return user;
   }
 
-  Future<bool>  updateUser({required User user}) async {
+  Future<bool> updateUser({required User user}) async {
     final url = '$baseUrl/users';
     final msg = jsonEncode(user.toJson());
     final response =
@@ -60,7 +62,8 @@ class UserApi {
     }
     return true;
   }
-  Future<bool>  updateUserNoPassword({required User user}) async {
+
+  Future<bool> updateUserNoPassword({required User user}) async {
     final url = '$baseUrl/users-no-password';
     final msg = jsonEncode(user.toJson());
     final response =
@@ -72,7 +75,8 @@ class UserApi {
     }
     return true;
   }
-  Future<bool>  updateUserPassword({required User user}) async {
+
+  Future<bool> updateUserPassword({required User user}) async {
     final url = '$baseUrl/users-password';
     final msg = jsonEncode(user.toJson());
     final response =
@@ -81,6 +85,25 @@ class UserApi {
       logger.e(response);
       return false;
       //throw new Exception('There was a problem ${response.statusCode}');
+    }
+    return true;
+  }
+
+  Future<bool> updateUserImage({required File image}) async {
+    UserDB userToken = await userDao.getUserToken();
+    final url = '$baseUrl/image-uploads/user/${userToken.phone}';
+    final request = http.MultipartRequest('POST', Uri.parse(url));
+    request.files.add(http.MultipartFile(
+        'picture',
+        File(image.path).readAsBytes().asStream(),
+        File(image.path).lengthSync(),
+        filename: image.path.split("/").last));
+    var streamedResponse = await request.send();
+    var response = await http.Response.fromStream(streamedResponse);
+
+    if (response.statusCode != 200) {
+      logger.e(response);
+      return false;
     }
     return true;
   }
@@ -167,7 +190,7 @@ class UserApi {
     if (response.statusCode != 200) {
       // final decodedJson = jsonDecode(response.body);
       // logger.d("$decodedJson");
-      
+
       return false;
     }
     return true;

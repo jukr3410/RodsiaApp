@@ -27,13 +27,8 @@ class _InfoProfileState extends State<InfoProfile> {
             flex: 4,
             child: Column(
               children: [
-                Stack(
-                  children: <Widget>[
-                    ClipOval(
-                        child:
-                            _proFileImage(widget.user.profileImage.toString())),
-                  ],
-                ),
+                ClipOval(
+                    child: _proFileImage(widget.user.profileImage.toString())),
               ],
             ),
           ),
