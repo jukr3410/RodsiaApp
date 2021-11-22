@@ -46,6 +46,7 @@ class UserUpdateNoPassword extends ProfileEvent {
   @override
   String toString() => 'UserUpdate {user: $user}';
 }
+
 class UserUpdatePassword extends ProfileEvent {
   final User user;
 
@@ -61,4 +62,9 @@ class UserUpdatePassword extends ProfileEvent {
 class CheckPassword extends ProfileEvent {
   final UserLogin userLogin;
   const CheckPassword({required this.userLogin});
+}
+
+class UploadImageProfile extends ProfileEvent {
+  final File image;
+  const UploadImageProfile({required this.image});
 }

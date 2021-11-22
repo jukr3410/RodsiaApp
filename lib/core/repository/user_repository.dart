@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:rodsiaapp/core/dao/user_dao.dart';
 import 'package:rodsiaapp/core/models/user_login.dart';
 import 'package:rodsiaapp/core/models/user_model.dart';
@@ -27,11 +29,17 @@ class UserRepository {
   Future<bool> updateUser({required User user}) async {
     return await userApi.updateUser(user: user);
   }
+
   Future<bool> updateUserNoPassword({required User user}) async {
     return await userApi.updateUserNoPassword(user: user);
   }
+
   Future<bool> updateUserPassword({required User user}) async {
     return await userApi.updateUserPassword(user: user);
+  }
+
+  Future<bool> updateUserImage({required File image}) async {
+    return await userApi.updateUserImage(image: image);
   }
 
   Future<bool> addUser({required User user}) async {

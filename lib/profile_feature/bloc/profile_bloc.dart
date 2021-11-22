@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -33,6 +34,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       yield* _mapUserUpdateNoPasswordToState(event.user);
     } else if (event is UserUpdatePassword) {
       yield* _mapUserUpdatePasswordToState(event.user);
+    } else if (event is UploadImageProfile) {
+      yield* _mapUserUpdatImageToState(event.image);
     }
   }
 
@@ -97,6 +100,17 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     try {
       yield ProfileUpdating();
       final res = await this.userRepository.updateUserPassword(user: user);
+      yield ProfileUpdated(status: res);
+    } catch (e) {
+      logger.e(e);
+      yield ProfileError();
+    }
+  }
+
+  Stream<ProfileState> _mapUserUpdatImageToState(File image) async* {
+    try {
+      yield ProfileUpdating();
+      final res = await this.userRepository.updateUserImage(image: image);
       yield ProfileUpdated(status: res);
     } catch (e) {
       logger.e(e);
