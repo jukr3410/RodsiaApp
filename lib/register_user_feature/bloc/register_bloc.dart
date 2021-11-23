@@ -39,7 +39,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       RegisterAddNumber event) async* {
     try {
       yield RegisterLoading();
-      yield RegisterAddNumberSuccess();
+      logger.d("Phone: ${event.user.phone}");
       var isPhoneNumberExist =
           await this.userRepository.checkUsedNumberPhone(user: event.user);
       logger.d("isPhoneNumberExist: $isPhoneNumberExist");

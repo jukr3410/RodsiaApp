@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:rodsiaapp/core/models/geo_location_model.dart';
 import 'package:rodsiaapp/core/models/request_service_add_model.dart';
 import 'package:rodsiaapp/core/models/request_service_model.dart';
@@ -32,5 +34,11 @@ class RequestServiceRepository {
 
   Future<bool> removeRequestService({required String id}) async {
     return await requestServiceApi.removeRequestService(id: id);
+  }
+
+  Future<bool> uploadRequestServiceImage(
+      {required String id, required File image}) async {
+    return await requestServiceApi.uploadRequestServiceImage(
+        image: image, id: id);
   }
 }

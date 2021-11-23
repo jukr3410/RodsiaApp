@@ -47,7 +47,8 @@ class _OtpState extends State<Otp> {
       password: "",
       otp: "",
       validatePhone: true,
-      cars: []);
+      cars: [],
+      profileImage: "");
 
   @override
   void initState() {

@@ -33,7 +33,8 @@ class _AddNumberState extends State<AddNumber> {
       password: "",
       otp: "",
       validatePhone: true,
-      cars: []);
+      cars: [],
+      profileImage: "");
 
   late RegisterBloc _registerBloc;
   @override

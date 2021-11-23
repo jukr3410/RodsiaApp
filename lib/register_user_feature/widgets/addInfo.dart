@@ -32,7 +32,8 @@ class _AddInfoState extends State<AddInfo> {
       password: "",
       otp: "",
       validatePhone: true,
-      cars: []);
+      cars: [],
+      profileImage: "");
 
   late RegisterBloc _registerBloc;
   @override

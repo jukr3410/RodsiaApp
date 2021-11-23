@@ -15,8 +15,7 @@ class UserApi {
   final baseUrl = baseUrlConstant;
   Map<String, String> headers = {
     'Content-type': 'application/json',
-    'Accept': 'application/json',
-    "Content-Type": "multipart/form-data"
+    'Accept': 'application/json'
   };
 
   final userDao = UserDao();
@@ -92,25 +91,47 @@ class UserApi {
   Future<bool> updateUserImage({required File image}) async {
     UserDB userToken = await userDao.getUserToken();
     final url = '$baseUrl/image-uploads/user/${userToken.phone}';
-    final request = http.MultipartRequest('POST', Uri.parse(url));
-    request.files.add(http.MultipartFile(
-        'picture',
-        File(image.path).readAsBytes().asStream(),
-        File(image.path).lengthSync(),
-        filename: image.path.split("/").last));
-    var streamedResponse = await request.send();
-    var response = await http.Response.fromStream(streamedResponse);
 
-    if (response.statusCode != 200) {
-      logger.e(response);
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse(url),
+    );
+    Map<String, String> headersUpload = {"Content-type": "multipart/form-data"};
+    request.files.add(
+      http.MultipartFile(
+        'file',
+        image.readAsBytes().asStream(),
+        image.lengthSync(),
+        filename: image.path.split('/').last,
+      ),
+    );
+    request.headers.addAll(headersUpload);
+    logger.d("request: " + request.toString());
+    try {
+      var res = await request.send();
+      var data = await res.stream
+          .transform(utf8.decoder)
+          .transform(json.decoder)
+          .first;
+
+      logger.d('Response:\n$data');
+
+      if (res.statusCode != 200) {
+        logger.e(res);
+        return false;
+      }
+      return true;
+    } catch (e, stacktrace) {
+      logger.d('Http exception:\nInstance of: ${e.runtimeType}\nMessage: ${e}');
+      logger.d('Http stacktrace:\n$stacktrace');
       return false;
     }
-    return true;
   }
 
   Future<bool> checkUsedNumberPhone({required User user}) async {
     final url = '$baseUrl/auth/phoneCheck-User';
     final msg = jsonEncode(user.toJson());
+    logger.d("checkUsedNumberPhone msg: ${msg}");
     final response =
         await http.post(Uri.parse(url), body: msg, headers: headers);
     if (response.statusCode != 200) {

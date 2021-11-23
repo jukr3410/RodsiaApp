@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:rodsiaapp/core/dao/user_dao.dart';
 import 'package:rodsiaapp/core/models/geo_location_model.dart';
 import 'package:rodsiaapp/core/models/request_service_add_model.dart';
@@ -38,6 +40,10 @@ class RequestServiceApi {
       return response.body;
       //throw new Exception('There was a problem ${response.statusCode}');
     }
+    // แนบ file รูปมาด้วย
+    // post เสร็จก็เรียกอัพรูปต่อ
+    // uploadRequestServiceImage(id: '', image: null);
+
     logger.d('createRequestService api: ${response.body}');
     final decodedJson = jsonDecode(response.body);
 
@@ -108,5 +114,45 @@ class RequestServiceApi {
     logger.d(requestServices);
 
     return requestServices;
+  }
+
+  Future<bool> uploadRequestServiceImage(
+      {required String id, required File image}) async {
+    final url = '$baseUrl/image-uploads/request-service/${id}';
+
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse(url),
+    );
+    Map<String, String> headersUpload = {"Content-type": "multipart/form-data"};
+    request.files.add(
+      http.MultipartFile(
+        'file',
+        image.readAsBytes().asStream(),
+        image.lengthSync(),
+        filename: image.path.split('/').last,
+      ),
+    );
+    request.headers.addAll(headersUpload);
+    logger.d("request: " + request.toString());
+    try {
+      var res = await request.send();
+      var data = await res.stream
+          .transform(utf8.decoder)
+          .transform(json.decoder)
+          .first;
+
+      logger.d('Response:\n$data');
+
+      if (res.statusCode != 200) {
+        logger.e(res);
+        return false;
+      }
+      return true;
+    } catch (e, stacktrace) {
+      logger.d('Http exception:\nInstance of: ${e.runtimeType}\nMessage: ${e}');
+      logger.d('Http stacktrace:\n$stacktrace');
+      return false;
+    }
   }
 }

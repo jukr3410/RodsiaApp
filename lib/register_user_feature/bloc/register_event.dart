@@ -37,7 +37,7 @@ class RegisterAddNumber extends RegisterEvent {
   List<Object> get props => [user];
 
   @override
-  String toString() => 'RegisterAddNumber user: ${user}';
+  String toString() => 'RegisterAddNumber user: ${user.toJson()}';
 }
 
 class RegisterVerifyOtp extends RegisterEvent {

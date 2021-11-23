@@ -36,12 +36,14 @@ class _EditProfileState extends State<EditProfile> {
 
   final ImagePicker _picker = ImagePicker();
   Future getImage() async {
-    final XFile? photo = await _picker.pickImage(source: ImageSource.gallery);
+    try {
+      final XFile? photo = await _picker.pickImage(source: ImageSource.gallery);
 
-    setState(() {
-      _image = photo;
-      addImageProfile = true;
-    });
+      setState(() {
+        _image = photo;
+        addImageProfile = true;
+      });
+    } catch (e) {}
   }
 
   late XFile? _image;
