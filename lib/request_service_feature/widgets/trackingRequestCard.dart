@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rodsiaapp/constants.dart';
-
-import 'package:rodsiaapp/core/models/request_service_add_model.dart';
 import 'package:rodsiaapp/core/models/request_service_model.dart';
-import 'package:rodsiaapp/find_garage_feature/widgets/test.dart';
 
 class TrackingRequestCard extends StatefulWidget {
   RequestService requestService;
@@ -57,7 +54,7 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
       decoration: BoxDecoration(
         borderRadius: borderRadiusMedium,
         boxShadow: [boxShadow],
-        color: bgColor,
+        color: cardColor,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
