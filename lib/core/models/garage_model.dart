@@ -22,7 +22,8 @@ class Garage {
       required this.name,
       required this.phone,
       this.email,
-      required this.typeCarRepairs});
+      required this.typeCarRepairs,
+      this.reviewStar});
 
   Address address;
   OpeningHour? openingHour;
@@ -34,6 +35,7 @@ class Garage {
   String? email;
   List<Service>? services;
   List<TypeCarRepairs> typeCarRepairs;
+  String? reviewStar;
 
   factory Garage.fromJson(Map<String, dynamic> json) => Garage(
         address: Address.fromJson(json["address"]),
@@ -45,6 +47,7 @@ class Garage {
         name: json["name"],
         phone: json["phone"],
         email: json["email"],
+        reviewStar: json["reviewStar"],
         typeCarRepairs: List<TypeCarRepairs>.from(
             json["typeCarRepairs"].map((x) => TypeCarRepairs.fromJson(x))),
       );

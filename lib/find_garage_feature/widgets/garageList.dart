@@ -169,7 +169,7 @@ class _GarageListState extends State<GarageList> {
                           size: 20,
                         ),
                         Text(
-                          " " + "3.9",
+                          " " + garage.reviewStar.toString(),
                           style: new TextStyle(
                               fontSize: fontSizeM,
                               fontWeight: FontWeight.normal,
