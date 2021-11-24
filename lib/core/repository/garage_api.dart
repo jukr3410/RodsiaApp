@@ -7,6 +7,7 @@ import 'package:rodsiaapp/core/models/garage_model.dart';
 import 'package:rodsiaapp/core/models/service_model.dart';
 import 'package:rodsiaapp/core/models/user_model_db.dart';
 import 'package:rodsiaapp/core/repository/user_repository.dart';
+import 'package:rodsiaapp/core/services/geo_location_service.dart';
 import 'package:rodsiaapp/main.dart';
 import 'package:rodsiaapp/core/repository/service_api.dart';
 
@@ -20,6 +21,8 @@ class GarageApi {
     'Accept': 'application/json'
   };
 
+  final geoService = GeoLocatorService();
+
   Future<List<Garage>> getGarages(
       {required int page, FilterGarageModel? filter}) async {
     UserDB userToken = await userDao.getUserToken();
@@ -27,10 +30,11 @@ class GarageApi {
     logger.d('userToken id: ${userToken.user_id}');
 
     // headers.update("authorization", (value) => '$token');
+    final position = await geoService.getLocation();
 
     List<Garage>? garages = [];
     final url =
-        '$baseUrl/garages/q?page=$page&limit=10&carType=${filter!.carType}&serviceType=${filter.serviceType}';
+        '$baseUrl/garages/q?page=$page&limit=10&carType=${filter!.carType}&serviceType=${filter.serviceType}&lat=${position.latitude}&long=${position.longitude}';
     final response = await http.get(Uri.parse(url), headers: headers);
     if (response.statusCode != 200) {
       print('Exception: ${response.statusCode}');

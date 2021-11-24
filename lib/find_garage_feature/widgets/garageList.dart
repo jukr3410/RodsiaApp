@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rodsiaapp/core/models/service_model.dart';
+import 'package:rodsiaapp/core/services/geo_location_service.dart';
 import 'package:rodsiaapp/request_service_feature/bloc/garage_info_bloc.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/selectServicePage.dart';
 import 'package:shimmer/shimmer.dart';
@@ -23,6 +24,7 @@ class GarageList extends StatefulWidget {
 class _GarageListState extends State<GarageList> {
   ScrollController scrollController = ScrollController();
   late GarageListBloc _garageListBloc;
+  final geoService = GeoLocatorService();
 
   final List<Garage> _garages = [];
 
@@ -150,7 +152,9 @@ class _GarageListState extends State<GarageList> {
                       ),
                       Row(children: [
                         Text(
-                          "distance: " + "12 km",
+                          "distance: " +
+                              getDistance(garage.address.geoLocation.lat,
+                                  garage.address.geoLocation.long),
                           style: new TextStyle(
                               fontSize: fontSizeM,
                               fontWeight: FontWeight.normal,
@@ -349,6 +353,17 @@ class _GarageListState extends State<GarageList> {
         fit: BoxFit.cover,
       );
     }
+  }
+
+  getDistance(String garageLat, String garageLong) async {
+    final position = await geoService.getLocation();
+    final distanceMatrix = await this.geoService.getDistanceMatrix(
+        startLatitude: position.latitude,
+        startLongitude: position.longitude,
+        endLatitude: double.parse(garageLat),
+        endLongitude: double.parse(garageLong));
+
+    return distanceMatrix.rows[0].elements[0].distance.text;
   }
 
   void navigateToGarageInfo(Garage garage) {
