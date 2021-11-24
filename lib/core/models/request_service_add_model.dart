@@ -17,7 +17,7 @@ class RequestServiceAdd {
     this.id,
     required this.user,
     required this.service,
-    required this.garage,
+    //required this.garage,
     required this.addressUser,
     required this.geoLocationUser,
     required this.geoLocationGarage,
@@ -30,7 +30,7 @@ class RequestServiceAdd {
 
   String? id;
   String user;
-  String garage;
+  //String garage;
   String service;
   String addressUser;
   GeoLocation geoLocationUser;
@@ -46,7 +46,7 @@ class RequestServiceAdd {
         id: json["_id"],
         user: json["user"],
         service: json["service"],
-        garage: json['garage'],
+        //: json['garage'],
         addressUser: json['addressUser'],
         geoLocationUser: GeoLocation.fromJson(json["geoLocationUser"]),
         geoLocationGarage: GeoLocation.fromJson(json["geoLocationGarage"]),
@@ -60,7 +60,7 @@ class RequestServiceAdd {
   Map<String, dynamic> toJson() => {
         "user": user,
         "service": service,
-        "garage": garage,
+        //"garage": garage,
         "addressUser": addressUser,
         "geoLocationUser": geoLocationUser.toJson(),
         "geoLocationGarage": geoLocationGarage.toJson(),

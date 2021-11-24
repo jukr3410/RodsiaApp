@@ -64,7 +64,7 @@ class _SelectServicePageState extends State<SelectServicePage> {
   RequestServiceAdd _requestServiceAdd = RequestServiceAdd(
     user: '',
     service: '',
-    garage: '',
+    //garage: '',
     car: Car(
         id: '',
         brand: '',
@@ -149,8 +149,8 @@ class _SelectServicePageState extends State<SelectServicePage> {
 
                                       _requestServiceAdd.service =
                                           widget.garage.services![val].id;
-                                      _requestServiceAdd.garage =
-                                          widget.garage.id;
+                                      // _requestServiceAdd.garage =
+                                      //     widget.garage.id;
 
                                       cmReq.garageName = widget.garage.name;
                                       cmReq.serviceName =
