@@ -128,6 +128,45 @@ class UserApi {
     }
   }
 
+  Future<bool> updateUserProfile({required File image}) async {
+    UserDB userToken = await userDao.getUserToken();
+    final url = '$baseUrl/image-uploads/user/${userToken.phone}';
+
+    var request = http.MultipartRequest(
+      'POST',
+      Uri.parse(url),
+    );
+    Map<String, String> headersUpload = {"Content-type": "multipart/form-data"};
+    request.files.add(
+      http.MultipartFile(
+        'file',
+        image.readAsBytes().asStream(),
+        image.lengthSync(),
+        filename: image.path.split('/').last,
+      ),
+    );
+    request.headers.addAll(headersUpload);
+    logger.d("request: " + request.toString());
+    try {
+      var res = await request.send();
+      var data = await res.stream
+          .transform(utf8.decoder)
+          .transform(json.decoder)
+          .first;
+
+      logger.d('Response:\n$data');
+
+      if (res.statusCode != 200) {
+        logger.e(res);
+      }
+      return true;
+    } catch (e, stacktrace) {
+      logger.d('Http exception:\nInstance of: ${e.runtimeType}\nMessage: ${e}');
+      logger.d('Http stacktrace:\n$stacktrace');
+      return false;
+    }
+  }
+
   Future<bool> checkUsedNumberPhone({required User user}) async {
     final url = '$baseUrl/auth/phoneCheck-User';
     final msg = jsonEncode(user.toJson());

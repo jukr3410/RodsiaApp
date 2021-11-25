@@ -72,6 +72,8 @@ class _EditSelectMoreChoiceState extends State<EditSelectMoreChoice> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        centerTitle: true,
+        iconTheme: IconThemeData(color: textColorBlack),
         backgroundColor: primaryColor,
         title: Text(
           tEditCar + 'คันที่: ' + widget.car.index.toString(),

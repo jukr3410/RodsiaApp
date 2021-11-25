@@ -174,7 +174,7 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
                   ],
                 ),
                 SizedBox(
-                  height: defualtPaddingLow + 4,
+                  height: defualtPaddingLow,
                 ),
                 Text(
                   'ร้านผู้ให้บริการ:',
@@ -182,7 +182,7 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
                 ),
                 Text(widget.req.garageName),
                 SizedBox(
-                  height: defualtPaddingLow + 4,
+                  height: defualtPaddingLow,
                 ),
                 Text(
                   'บริการที่เลือก' + ':',
@@ -190,7 +190,15 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
                 ),
                 Text(widget.req.serviceName),
                 SizedBox(
-                  height: defualtPaddingLow + 4,
+                  height: defualtPaddingLow,
+                ),
+                Text(
+                  'ประเภท' + ':',
+                  style: _textTitle,
+                ),
+                Text(widget.req.serviceType),
+                SizedBox(
+                  height: defualtPaddingLow,
                 ),
                 Text(
                   'รูปภาพประกอบ' + ':',
@@ -199,9 +207,9 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
                 SizedBox(
                   height: 5,
                 ),
-                addImageForReq(),
+                _addImageForReq(),
                 SizedBox(
-                  height: defualtPaddingLow + 4,
+                  height: defualtPaddingLow,
                 ),
                 Text(
                   'หมายเหตุ' + ':',
@@ -236,22 +244,26 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
     }));
   }
 
-  Widget addImageForReq() {
-    return GridView.count(
-      crossAxisCount: 4,
-      mainAxisSpacing: 5,
-      crossAxisSpacing: 5,
-      shrinkWrap: true,
-      children: List.generate(widget.req.images!.length, (index) {
-        Asset asset = widget.req.images![index];
-        print(asset);
-        return AssetThumb(
-          asset: asset,
-          width: 300,
-          height: 300,
-        );
-      }),
-    );
+  _addImageForReq() {
+    if (widget.req.images!.length > 0) {
+      return GridView.count(
+        crossAxisCount: 4,
+        mainAxisSpacing: 5,
+        crossAxisSpacing: 5,
+        shrinkWrap: true,
+        children: List.generate(widget.req.images!.length, (index) {
+          Asset asset = widget.req.images![index];
+          print(asset);
+          return AssetThumb(
+            asset: asset,
+            width: 300,
+            height: 300,
+          );
+        }),
+      );
+    }else{
+      return Text('ไม่มีรูปภาพเพิ่มเติม');
+    }
   }
 
   navigateToGarageinfo() {

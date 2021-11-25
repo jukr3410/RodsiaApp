@@ -31,6 +31,7 @@ class CheckPasswordSuccesss extends ProfileState {
   final bool status;
   const CheckPasswordSuccesss({required this.status});
 }
+
 class CheckPasswordError extends ProfileState {
   final bool status;
   const CheckPasswordError({required this.status});
@@ -40,3 +41,7 @@ class ProfileUpdated extends ProfileState {
   final bool status;
   const ProfileUpdated({required this.status});
 }
+
+class UploadImageSuccess extends ProfileState {}
+
+class UploadImageError extends ProfileState {}

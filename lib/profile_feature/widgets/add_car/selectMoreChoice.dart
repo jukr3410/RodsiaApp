@@ -57,6 +57,8 @@ class _SelectMoreChoiceState extends State<SelectMoreChoice> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        centerTitle: true,
+        iconTheme: IconThemeData(color: textColorBlack),
         backgroundColor: primaryColor,
         title: Text(
           tAddCar,

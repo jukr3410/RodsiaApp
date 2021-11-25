@@ -210,7 +210,7 @@ class _EditShowInfoNewCarState extends State<EditShowInfoNewCar> {
           _user.cars![i] = widget.car.carOld;
         }
       }
-      _profileBloc.add(UserUpdateNoPassword(_user));
+      _profileBloc.add(UserUpdateNoPassword(user: _user));
     }
   }
 

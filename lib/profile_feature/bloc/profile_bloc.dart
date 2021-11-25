@@ -31,11 +31,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     } else if (event is CheckPassword) {
       yield* _checkPasswordToState(event.userLogin);
     } else if (event is UserUpdateNoPassword) {
-      yield* _mapUserUpdateNoPasswordToState(event.user);
+      yield* _mapUserUpdateNoPasswordToState(event.user, event.image);
     } else if (event is UserUpdatePassword) {
       yield* _mapUserUpdatePasswordToState(event.user);
     } else if (event is UploadImageProfile) {
-      yield* _mapUserUpdatImageToState(event.image);
+      yield* _mapUserUpdatImageProfileToState(event.image);
     }
   }
 
@@ -85,10 +85,14 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     }
   }
 
-  Stream<ProfileState> _mapUserUpdateNoPasswordToState(User user) async* {
+  Stream<ProfileState> _mapUserUpdateNoPasswordToState(
+      User user, File? image) async* {
     try {
       yield ProfileUpdating();
       final res = await this.userRepository.updateUserNoPassword(user: user);
+      if (image != null) {
+        await this.userRepository.updateUserImageProfile(image: image);
+      }
       yield ProfileUpdated(status: res);
     } catch (e) {
       logger.e(e);
@@ -107,11 +111,11 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     }
   }
 
-  Stream<ProfileState> _mapUserUpdatImageToState(File image) async* {
+  Stream<ProfileState> _mapUserUpdatImageProfileToState(File image) async* {
     try {
-      yield ProfileUpdating();
-      final res = await this.userRepository.updateUserImage(image: image);
-      yield ProfileUpdated(status: res);
+      final res =
+          await this.userRepository.updateUserImageProfile(image: image);
+      yield UploadImageSuccess();
     } catch (e) {
       logger.e(e);
       yield ProfileError();

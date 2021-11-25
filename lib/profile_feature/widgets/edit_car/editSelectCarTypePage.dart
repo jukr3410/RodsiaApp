@@ -46,6 +46,8 @@ class _EditSelectCarTypePageState extends State<EditSelectCarTypePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        iconTheme: IconThemeData(color: textColorBlack),
         backgroundColor: primaryColor,
         title: Text(
           tEditCar + 'คันที่: ' + widget.car.index.toString(),

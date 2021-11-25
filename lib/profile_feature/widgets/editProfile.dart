@@ -33,20 +33,23 @@ class _EditProfileState extends State<EditProfile> {
   String email = '';
   String imageProfile = '';
   bool addImageProfile = false;
+  bool deleteImageProfile = false;
+  User _user = mockUpUser;
 
   final ImagePicker _picker = ImagePicker();
   Future getImage() async {
     try {
       final XFile? photo = await _picker.pickImage(source: ImageSource.gallery);
-
-      setState(() {
-        _image = photo;
-        addImageProfile = true;
-      });
+      if (photo != null) {
+        setState(() {
+          _image = File(photo.path);
+          addImageProfile = true;
+        });
+      }
     } catch (e) {}
   }
 
-  late XFile? _image;
+  File? _image;
 
   @override
   void initState() {
@@ -57,6 +60,8 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
+    imageProfile = widget.user.profileImage.toString();
+    _user = widget.user;
     return Container(
       decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -75,7 +80,7 @@ class _EditProfileState extends State<EditProfile> {
           elevation: 0,
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios, color: bgColor),
-            onPressed: () => navigateBack(),
+            onPressed: () => navigatorToProfilePage(widget.user),
           ),
         ),
         backgroundColor: Colors.transparent,
@@ -83,6 +88,9 @@ class _EditProfileState extends State<EditProfile> {
         body: BlocConsumer<ProfileBloc, ProfileState>(
           listener: (context, state) {
             if (state is ProfileUpdated) {
+              _profileBloc.add(ProfileLoadFormPhone());
+            }
+            if (state is UserLoadSuccess) {
               navigatorToProfilePage(widget.user);
             }
           },
@@ -94,34 +102,7 @@ class _EditProfileState extends State<EditProfile> {
                   SizedBox(
                     height: 30,
                   ),
-                  Stack(
-                    children: <Widget>[
-                      CircleAvatar(
-                        backgroundColor: Colors.transparent,
-                        radius: 80,
-                        child: ClipOval(
-                            child: _proFileImage(
-                                widget.user.profileImage.toString())),
-                      ),
-                      Positioned(
-                          bottom: 15,
-                          right: 25,
-                          child: Container(
-                            height: 35,
-                            width: 35,
-                            child: FloatingActionButton(
-                              backgroundColor: textColorBlack,
-                              mini: true,
-                              onPressed: getImage,
-                              tooltip: 'Pick Image',
-                              child: new Icon(
-                                Icons.add_a_photo,
-                                size: 20,
-                              ),
-                            ),
-                          )),
-                    ],
-                  ),
+                  _showImageProfile(imageProfile),
                   SizedBox(
                     height: 30,
                   ),
@@ -232,7 +213,8 @@ class _EditProfileState extends State<EditProfile> {
                             onPressed: () {
                               if (name == '' &&
                                   email == '' &&
-                                  addImageProfile == false) {
+                                  addImageProfile == false &&
+                                  deleteImageProfile == false) {
                                 _navigateAndDisplayEditError(context);
                               } else {
                                 _navigateAndDisplayEdit(context);
@@ -289,16 +271,20 @@ class _EditProfileState extends State<EditProfile> {
             ));
     if (result == 'Ok') {
       if (name != '') {
-        widget.user.name = name;
+        _user.name = name;
       }
       if (email != '') {
-        widget.user.email = email;
+        _user.email = email;
       }
-      if (addImageProfile == true) {
-        _profileBloc.add(UploadImageProfile(image: File(_image!.path)));
+      if (deleteImageProfile == true) {
+        _user.profileImage = '';
       }
-      logger.d(widget.user.toJson());
-      _profileBloc.add(UserUpdateNoPassword(widget.user));
+      logger.d(_user.toJson());
+      _profileBloc.add(UserUpdateNoPassword(
+          user: _user,
+          image: deleteImageProfile == true || addImageProfile == false
+              ? null
+              : _image!));
     }
   }
 
@@ -383,19 +369,20 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   _proFileImage(String profileImage) {
-    if (profileImage == '' && addImageProfile == false) {
+    if (profileImage == '' && addImageProfile == false ||
+        deleteImageProfile == true && addImageProfile == false) {
       return Image.asset(
         tImageAsset('profile'),
         fit: BoxFit.cover,
-        width: 130,
-        height: 130,
+        width: 120,
+        height: 120,
       );
     } else if (addImageProfile == true) {
       return Image.file(
         File(_image!.path),
         fit: BoxFit.cover,
-        width: 130,
-        height: 130,
+        width: 120,
+        height: 120,
       );
     } else {
       return CachedNetworkImage(
@@ -407,6 +394,77 @@ class _EditProfileState extends State<EditProfile> {
         fit: BoxFit.cover,
         height: 120,
         width: 120,
+      );
+    }
+  }
+
+  _showImageProfile(String profileImage) {
+    if (profileImage == '' && addImageProfile == false ||
+        deleteImageProfile == true && addImageProfile == false) {
+      return Stack(
+        children: <Widget>[
+          CircleAvatar(
+            backgroundColor: Colors.transparent,
+            radius: 80,
+            child: ClipOval(child: _proFileImage(profileImage)),
+          ),
+          Positioned(
+              bottom: 20,
+              right: 30,
+              child: Container(
+                width: 32,
+                height: 32,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle, color: textColorBlack),
+                child: Align(
+                  alignment: Alignment.center,
+                  child: new IconButton(
+                      onPressed: getImage,
+                      icon: Icon(
+                        Icons.add_a_photo,
+                        color: bgColor,
+                        size: 15,
+                      )),
+                ),
+              )),
+        ],
+      );
+    } else {
+      return Column(
+        children: [
+          Stack(
+            children: [
+              ClipOval(child: _proFileImage(profileImage)),
+              Positioned(
+                  right: 10,
+                  child: Container(
+                    width: 32,
+                    height: 32,
+                    decoration:
+                        BoxDecoration(shape: BoxShape.circle, color: redStatus),
+                    child: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            addImageProfile = false;
+                            deleteImageProfile = true;
+                            profileImage = '';
+                          });
+                        },
+                        icon: Icon(
+                          Icons.delete,
+                          color: bgColor,
+                          size: 15,
+                        )),
+                  )),
+            ],
+          ),
+          GFButton(
+            onPressed: getImage,
+            child: Text('เปลี่ยนรูปภาพ'),
+            textStyle: TextStyle(color: textColorBlack, fontSize: fontSizeM),
+            type: GFButtonType.transparent,
+          )
+        ],
       );
     }
   }

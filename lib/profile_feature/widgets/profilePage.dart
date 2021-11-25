@@ -47,40 +47,38 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ),
         backgroundColor: Colors.transparent,
-        body: Column(
-          children: [
-            // Container(
-            //   alignment: Alignment.centerLeft,
-            //   child: backPage(),
-            // ),
-            SizedBox(
-              height: 20,
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(defualtPaddingMedium),
+            child: Column(
+              children: [
+                InfoProfile(
+                  user: widget.user,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                _showInfoCar(widget.user),
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: textColorBlack),
+                    child: IconButton(
+                      icon: Icon(Icons.add),
+                      onPressed: () {
+                        navigatorToAddCar();
+                      },
+                      color: primaryColor,
+                    )),
+                SizedBox(
+                  height: 5,
+                ),
+                Text(tAddCar)
+              ],
             ),
-            InfoProfile(
-              user: widget.user,
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            _showInfoCar(widget.user),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-                decoration: BoxDecoration(
-                    shape: BoxShape.circle, color: textColorBlack),
-                child: IconButton(
-                  icon: Icon(Icons.add),
-                  onPressed: () {
-                    navigatorToAddCar();
-                  },
-                  color: primaryColor,
-                )),
-            SizedBox(
-              height: 5,
-            ),
-            Text(tAddCar)
-          ],
+          ),
         ),
       ),
     );
