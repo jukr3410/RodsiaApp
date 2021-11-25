@@ -29,7 +29,7 @@ class _DetailAndGiveStarPageState extends State<DetailAndGiveStarPage> {
   @override
   void initState() {
     _reviewAdd.user = widget.requestService.user.id;
-    _reviewAdd.garage = widget.requestService.service.garage.id;
+    _reviewAdd.garage = widget.requestService.service.garage!.id;
     _reviewAdd.requestService = widget.requestService.id;
     _requestServiceBloc = BlocProvider.of<RequestServiceBloc>(context);
     super.initState();

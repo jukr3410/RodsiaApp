@@ -89,7 +89,7 @@ class _ListhistoryState extends State<Listhistory> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    requestService.service.garage.name,
+                    requestService.service.garage!.name,
                     softWrap: true,
                     maxLines: 1,
                     overflow: TextOverflow.fade,

@@ -71,6 +71,7 @@ class _GarageListState extends State<GarageList> {
             ));
           } else if (garageState is GarageListSuccessState) {
             _garages.addAll(garageState.garages);
+
             _garageListBloc.isFetching = false;
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
           } else if (garageState is GarageListErrorState && _garages.isEmpty) {
@@ -152,9 +153,7 @@ class _GarageListState extends State<GarageList> {
                       ),
                       Row(children: [
                         Text(
-                          "distance: " +
-                              getDistance(garage.address.geoLocation.lat,
-                                  garage.address.geoLocation.long),
+                          "distance: " + garage.distance.toString(),
                           style: new TextStyle(
                               fontSize: fontSizeM,
                               fontWeight: FontWeight.normal,
@@ -206,17 +205,19 @@ class _GarageListState extends State<GarageList> {
                                     ],
                                   );
                                 }),
-                            Text(' | '),
+                            Text('  |  '),
                             ListView.builder(
                                 shrinkWrap: true,
                                 scrollDirection: Axis.horizontal,
-                                itemCount: garage.services!.length,
+                                itemCount: garage.serviceInGarages!.length,
                                 itemBuilder: (context, index) {
                                   return Row(
                                     children: [
                                       Image.asset(
                                         tImageAsset(garage
-                                            .services![index].serviceType.name),
+                                            .serviceInGarages![index]
+                                            .serviceType
+                                            .name),
                                         width: 18,
                                       ),
                                       SizedBox(
@@ -353,17 +354,6 @@ class _GarageListState extends State<GarageList> {
         fit: BoxFit.cover,
       );
     }
-  }
-
-  getDistance(String garageLat, String garageLong) async {
-    final position = await geoService.getLocation();
-    final distanceMatrix = await this.geoService.getDistanceMatrix(
-        startLatitude: position.latitude,
-        startLongitude: position.longitude,
-        endLatitude: double.parse(garageLat),
-        endLongitude: double.parse(garageLong));
-
-    return distanceMatrix.rows[0].elements[0].distance.text;
   }
 
   void navigateToGarageInfo(Garage garage) {

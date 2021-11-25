@@ -46,7 +46,7 @@ class _HistoryInfoPageState extends State<HistoryInfoPage> {
                   ),
                 ),
                 Text(
-                  widget.requestService.service.garage.name,
+                  widget.requestService.service.garage!.name,
                   style: TextStyle(
                       fontSize: fontSizeXl + 2, fontWeight: FontWeight.bold),
                 ),

@@ -97,7 +97,7 @@ class RequestServiceApi {
     for (var i = 0; i < requestServices.length; i++) {
       List<Service> services = [];
       final urlService =
-          '$baseUrl/garage/${requestServices[i].service.garage.id}/services';
+          '$baseUrl/garage/${requestServices[i].service.garage!.id}/services';
       final responseService =
           await http.get(Uri.parse(urlService), headers: headers);
       if (responseService.statusCode != 200) {
@@ -109,7 +109,7 @@ class RequestServiceApi {
       services = decodedJsonService
           .map((decodedJsonService) => Service.fromJson(decodedJsonService))
           .toList();
-      requestServices[i].service.garage.services = services;
+      requestServices[i].service.garage!.services = services;
     }
     logger.d(requestServices);
 

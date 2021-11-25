@@ -89,7 +89,8 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
                                 fontSize: 5,
                               ),
                               text: TextSpan(
-                                text: widget.requestService.service.garage.name,
+                                text:
+                                    widget.requestService.service.garage!.name,
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize: fontSizeXl,

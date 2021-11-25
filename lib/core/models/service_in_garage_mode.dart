@@ -7,38 +7,29 @@ import 'dart:convert';
 import 'package:rodsiaapp/core/models/garage_model.dart';
 import 'package:rodsiaapp/core/models/services_type_model.dart';
 
-Service serviceFromJson(String str) => Service.fromJson(json.decode(str));
+ServiceInGarage serviceFromJson(String str) =>
+    ServiceInGarage.fromJson(json.decode(str));
 
-String serviceToJson(Service data) => json.encode(data.toJson());
+//String serviceToJson(ServiceInGarage data) => json.encode(data.toJson());
 
-class Service {
-  Service({
+class ServiceInGarage {
+  ServiceInGarage({
     required this.id,
     required this.name,
     this.description,
     required this.serviceType,
-    this.garage,
   });
 
   String id;
   String name;
   String? description;
   ServiceType serviceType;
-  Garage? garage;
 
-  factory Service.fromJson(Map<String, dynamic> json) => Service(
+  factory ServiceInGarage.fromJson(Map<String, dynamic> json) =>
+      ServiceInGarage(
         id: json["_id"],
         name: json["name"],
         description: json["description"],
         serviceType: ServiceType.fromJson(json["serviceType"]),
-        garage: Garage.fromJson(json["garage"]),
       );
-
-  Map<String, dynamic> toJson() => {
-        "_id": id,
-        "name": name,
-        "description": description,
-        "serviceType": serviceType.id,
-        "garage": garage!.toJson(),
-      };
 }

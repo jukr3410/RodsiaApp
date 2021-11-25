@@ -33,6 +33,7 @@ class GarageApi {
     final position = await geoService.getLocation();
 
     List<Garage>? garages = [];
+    List<Service> services = [];
     final url =
         '$baseUrl/garages/q?page=$page&limit=10&carType=${filter!.carType}&serviceType=${filter.serviceType}&lat=${position.latitude}&long=${position.longitude}';
     final response = await http.get(Uri.parse(url), headers: headers);
@@ -41,23 +42,41 @@ class GarageApi {
       throw new Exception('There was a problem ${response.statusCode}');
     }
     final decodedJson = jsonDecode(response.body) as List;
+
     garages =
         decodedJson.map((decodedJson) => Garage.fromJson(decodedJson)).toList();
-    for (var i = 0; i < garages.length; i++) {
-      List<Service> services = [];
-      final url = '$baseUrl/garage/${garages[i].id}/services';
-      final response = await http.get(Uri.parse(url), headers: headers);
-      if (response.statusCode != 200) {
-        logger.e(response);
-        throw new Exception('There was a problem ${response.statusCode}');
-      }
-      final decodedJson = jsonDecode(response.body) as List;
-      logger.d("services: $decodedJson");
-      services = decodedJson
-          .map((decodedJson) => Service.fromJson(decodedJson))
-          .toList();
-      garages[i].services = services;
+
+    for (var garage in garages) {
+      final position = await geoService.getLocation();
+      final distanceMatrix = await this.geoService.getDistanceMatrix(
+          startLatitude: position.latitude,
+          startLongitude: position.longitude,
+          endLatitude: double.parse(garage.address.geoLocation.lat),
+          endLongitude: double.parse(garage.address.geoLocation.long));
+
+      garages[garages.indexOf(garage)].distance =
+          distanceMatrix.rows[0].elements[0].distance.text;
+
+      logger.d("serviceInGarage: ${garage.serviceInGarages!.first.name}");
+
+      //logger.d("garage: ${garage.services}");
     }
+
+    // for (var i = 0; i < garages.length; i++) {
+    //   List<Service> services = [];
+    //   final url = '$baseUrl/garage/${garages[i].id}/services';
+    //   final response = await http.get(Uri.parse(url), headers: headers);
+    //   if (response.statusCode != 200) {
+    //     logger.e(response);
+    //     throw new Exception('There was a problem ${response.statusCode}');
+    //   }
+    //   final decodedJson = jsonDecode(response.body) as List;
+    //   logger.d("services: $decodedJson");
+    //   services = decodedJson
+    //       .map((decodedJson) => Service.fromJson(decodedJson))
+    //       .toList();
+    //   garages[i].services = services;
+    // }
     logger.d(garages);
     return garages;
   }

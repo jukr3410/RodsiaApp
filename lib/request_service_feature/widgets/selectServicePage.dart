@@ -9,6 +9,7 @@ import 'package:rodsiaapp/core/models/car_model.dart';
 import 'package:rodsiaapp/core/models/garage_model.dart';
 import 'package:rodsiaapp/core/models/geo_location_model.dart';
 import 'package:rodsiaapp/core/models/request_service_add_model.dart';
+import 'package:rodsiaapp/core/models/service_in_garage_mode.dart';
 import 'package:rodsiaapp/core/models/service_model.dart';
 import 'package:rodsiaapp/core/models/user_model_db.dart';
 import 'package:rodsiaapp/global_widgets/alertPleaseInputInfo.dart';
@@ -117,7 +118,7 @@ class _SelectServicePageState extends State<SelectServicePage> {
                         style: TextStyle(fontSize: fontSizeL),
                       ),
                       Text(' (' +
-                          widget.garage.services!.length.toString() +
+                          widget.garage.serviceInGarages!.length.toString() +
                           ' ' +
                           tServiceThai +
                           ')')
@@ -127,11 +128,12 @@ class _SelectServicePageState extends State<SelectServicePage> {
                     height: 5,
                   ),
                   Container(
-                    height: widget.garage.services!.length < 6 ? null : 320,
+                    height:
+                        widget.garage.serviceInGarages!.length < 6 ? null : 320,
                     child: ListView.builder(
                         scrollDirection: Axis.vertical,
                         shrinkWrap: true,
-                        itemCount: widget.garage.services!.length,
+                        itemCount: widget.garage.serviceInGarages!.length,
                         itemBuilder: (context, index) {
                           return Card(
                             elevation: 3,
@@ -139,7 +141,7 @@ class _SelectServicePageState extends State<SelectServicePage> {
                             color: cardColor,
                             child: ListTile(
                               title: _makeCardWidget(
-                                  widget.garage.services![index]),
+                                  widget.garage.serviceInGarages![index]),
                               trailing: Radio(
                                   value: index,
                                   groupValue: val,
@@ -147,16 +149,16 @@ class _SelectServicePageState extends State<SelectServicePage> {
                                     setState(() {
                                       val = value!;
 
-                                      _requestServiceAdd.service =
-                                          widget.garage.services![val].id;
+                                      _requestServiceAdd.service = widget
+                                          .garage.serviceInGarages![val].id;
                                       // _requestServiceAdd.garage =
                                       //     widget.garage.id;
 
                                       cmReq.garageName = widget.garage.name;
-                                      cmReq.serviceName =
-                                          widget.garage.services![val].name;
-                                      logger.d(
-                                          widget.garage.services![index].name);
+                                      cmReq.serviceName = widget
+                                          .garage.serviceInGarages![val].name;
+                                      logger.d(widget.garage
+                                          .serviceInGarages![index].name);
                                     });
                                   }),
                             ),
@@ -352,7 +354,7 @@ class _SelectServicePageState extends State<SelectServicePage> {
     Navigator.pop(context);
   }
 
-  _makeCardWidget(Service service) {
+  _makeCardWidget(ServiceInGarage service) {
     return GestureDetector(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
