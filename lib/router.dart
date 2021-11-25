@@ -42,6 +42,7 @@ import 'package:rodsiaapp/request_service_feature/bloc/request_service_bloc.dart
 import 'package:rodsiaapp/request_service_feature/bloc/service_bloc.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/ConfirmRequestService.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/infoGarageFormSelect.dart';
+import 'package:rodsiaapp/request_service_feature/widgets/moreInfoGarage.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/requestDetailAndGiveStarPage.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/selectCarAndRecapBeforeReq.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/trackingRequestPage.dart';
@@ -223,6 +224,18 @@ class AppRouter {
                       garageRepository: GarageRepository(),
                     ),
                 child: SelectServicePage(
+                  garage: garage,
+                )));
+
+      case MOREINFO_GARAGE_ROUTE:
+        // Map args = settings.arguments as Map;
+        Garage garage = settings.arguments as Garage;
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                create: (BuildContext context) => GarageInfoBloc(
+                      garageRepository: GarageRepository(),
+                    ),
+                child: MoreInfoGaragePage(
                   garage: garage,
                 )));
 

@@ -305,13 +305,26 @@ class _SelectServicePageState extends State<SelectServicePage> {
     Navigator.pushNamed(context, CONFIRM_REQUEST_ROUTE, arguments: cmReq);
   }
 
+  navigateToMoreInfo() {
+    Navigator.pushNamed(context, MOREINFO_GARAGE_ROUTE,
+        arguments: widget.garage);
+  }
+
   setAppBar() {
     return AppBar(
       backgroundColor: primaryColor,
-      centerTitle: true,
-      title: Text(
-        'เลือก' + tServiceOfGarageThai,
-        style: TextStyle(color: textColorBlack, fontSize: fontSizeL),
+      centerTitle: false,
+      title: Container(
+        alignment: Alignment.centerRight,
+        child: GFButton(
+          type: GFButtonType.transparent,
+          textStyle: TextStyle(fontSize: 16, color: textColorBlack),
+          child: Text(tMoreInfoGarage),
+          onPressed: () {
+            logger.d(tMoreInfoGarage);
+            navigateToMoreInfo();
+          },
+        ),
       ),
       leading: IconButton(
         icon: Icon(
