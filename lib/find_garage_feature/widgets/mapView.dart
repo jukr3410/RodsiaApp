@@ -376,7 +376,7 @@ class _MapViewState extends State<MapView> {
                                     height: 30,
                                     child: TextButton(
                                       onPressed: () {
-                                        navigateToGarageInfo(_garageShow!.id);
+                                        navigateToGarageInfo(_garageShow!);
                                       },
                                       child: Text(
                                         "รายละเอียดเพิ่มเติม",
@@ -611,9 +611,8 @@ class _MapViewState extends State<MapView> {
     );
   }
 
-  void navigateToGarageInfo(String garageId) {
-    Navigator.pushNamed(context, GARAGE_INFO_ROUTE,
-        arguments: {'garageId': garageId});
+  void navigateToGarageInfo(Garage garage) {
+    Navigator.pushNamed(context, GARAGE_INFO_ROUTE, arguments: garage);
   }
 
   // Method for retrieving the current location

@@ -67,7 +67,6 @@ class _SelectServicePageState extends State<SelectServicePage> {
     service: '',
     //garage: '',
     car: Car(
-        id: '',
         brand: '',
         model: '',
         type: '',
@@ -321,7 +320,10 @@ class _SelectServicePageState extends State<SelectServicePage> {
         child: GFButton(
           type: GFButtonType.transparent,
           textStyle: TextStyle(fontSize: 16, color: textColorBlack),
-          child: Text(tMoreInfoGarage),
+          child: Text(
+            tMoreInfoGarage,
+            style: TextStyle(fontFamily: 'Kanit'),
+          ),
           onPressed: () {
             logger.d(tMoreInfoGarage);
             navigateToMoreInfo();

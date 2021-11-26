@@ -23,13 +23,13 @@ class _SelectCarTypePageState extends State<SelectCarTypePage> {
   String fuelType = tSelectFeulTypeCar;
 
   Car newCar = Car(
-      brand: tSelectBrandCar,
-      model: tSelectModelCar,
-      type: 'car-null',
-      year: '',
-      fuelType: tSelectFeulTypeCar,
-      regisNumber: '',
-      id: '');
+    brand: tSelectBrandCar,
+    model: tSelectModelCar,
+    type: 'car-null',
+    year: '',
+    fuelType: tSelectFeulTypeCar,
+    regisNumber: '',
+  );
 
   void setStateCarType(int item) {
     setState(() {
@@ -50,6 +50,10 @@ class _SelectCarTypePageState extends State<SelectCarTypePage> {
         title: Text(
           tAddCar,
           style: TextStyle(color: textColorBlack),
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios, color: textColorBlack),
+          onPressed: () => navigatorToProfilePage(),
         ),
       ),
       body: Column(
@@ -174,5 +178,9 @@ class _SelectCarTypePageState extends State<SelectCarTypePage> {
         ),
       ],
     );
+  }
+
+  void navigatorToProfilePage() {
+    Navigator.pushNamed(context, PROFILE_ROUTE, arguments: widget.user);
   }
 }

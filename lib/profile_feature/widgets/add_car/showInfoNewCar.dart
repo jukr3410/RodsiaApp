@@ -27,6 +27,7 @@ class ShowInfoNewCar extends StatefulWidget {
 class _ShowInfoNewCarState extends State<ShowInfoNewCar> {
   late ProfileBloc _profileBloc;
   User _user = mockUpUser;
+  int numOfCar = 0;
 
   @override
   void initState() {
@@ -38,6 +39,7 @@ class _ShowInfoNewCarState extends State<ShowInfoNewCar> {
 
   @override
   Widget build(BuildContext context) {
+    numOfCar = _user.cars!.length + 1;
     return Container(
       decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -90,7 +92,7 @@ class _ShowInfoNewCarState extends State<ShowInfoNewCar> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                'รถคันที่: ${(_user.cars!.length + 1).toString()}',
+                                'รถคันที่: ${numOfCar.toString()}',
                                 style: TextStyle(fontSize: fontSizeXl),
                                 textAlign: TextAlign.right,
                               ),

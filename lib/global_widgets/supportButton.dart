@@ -15,7 +15,7 @@ class _SupportButtonState extends State<SupportButton> {
   Widget build(BuildContext context) {
     return GFButton(
       type: GFButtonType.transparent,
-      textStyle: TextStyle(fontSize: 14, color: textColorBlack),
+      textStyle: TextStyle(fontSize: 14, color: textColorBlack,fontFamily: 'Kanit'),
       child: Text(tSupportThai),
       onPressed: () {
         _navigateAndDisplaySelection(context);

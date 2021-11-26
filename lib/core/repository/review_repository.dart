@@ -8,6 +8,10 @@ class ReviewRepository {
 
   ReviewRepository._();
 
+  factory ReviewRepository() {
+    return _reviewRepository;
+  }
+
   Future<bool> createReview({required ReviewAdd reviewAdd}) async {
     return await reviewApi.createReview(reviewAdd: reviewAdd);
   }
