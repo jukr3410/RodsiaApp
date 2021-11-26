@@ -130,7 +130,7 @@ class _MapViewState extends State<MapView> {
                   myLocationButtonEnabled: false,
                   mapType: MapType.normal,
                   //myLocationButtonEnabled: false,
-                  zoomGesturesEnabled: true,
+                  zoomGesturesEnabled: false,
                   markers: Set<Marker>.of(markers),
                   onMapCreated: (GoogleMapController controller) {
                     _mapController = controller;
