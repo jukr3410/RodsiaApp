@@ -62,21 +62,6 @@ class GarageApi {
       //logger.d("garage: ${garage.services}");
     }
 
-    // for (var i = 0; i < garages.length; i++) {
-    //   List<Service> services = [];
-    //   final url = '$baseUrl/garage/${garages[i].id}/services';
-    //   final response = await http.get(Uri.parse(url), headers: headers);
-    //   if (response.statusCode != 200) {
-    //     logger.e(response);
-    //     throw new Exception('There was a problem ${response.statusCode}');
-    //   }
-    //   final decodedJson = jsonDecode(response.body) as List;
-    //   logger.d("services: $decodedJson");
-    //   services = decodedJson
-    //       .map((decodedJson) => Service.fromJson(decodedJson))
-    //       .toList();
-    //   garages[i].services = services;
-    // }
     logger.d(garages);
     return garages;
   }
