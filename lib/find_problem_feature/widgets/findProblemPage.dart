@@ -1,6 +1,5 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:rodsiaapp/assistant_mockup.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/main.dart';
 
@@ -87,7 +86,7 @@ class _FindProblemPageState extends State<FindProblemPage> {
             ),
             onPressed: () {
               setState(() {
-                typeForFindProblem = typeCar;
+                typeForFindProblem = typeCar + 1;
                 logger.d(typeForFindProblem);
                 logger.d(mockupFindProblem[typeCar]);
                 navigatorToFindProblemPage();

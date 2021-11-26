@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:rodsiaapp/assistant_mockup.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/find_problem_feature/widgets/AlertShowDetail.dart';
 import 'package:rodsiaapp/main.dart';
@@ -15,7 +15,8 @@ class FindProblemFormSelected extends StatefulWidget {
 }
 
 class _FindProblemFormSelectedState extends State<FindProblemFormSelected> {
-  List<FindProblem> listDetail = [];
+  FindProblem listDetail = FindProblem(id: 0, detail: []);
+  List<FindProblemWhereAndSolution> _detail = [];
 
   @override
   Widget build(BuildContext context) {
@@ -48,15 +49,15 @@ class _FindProblemFormSelectedState extends State<FindProblemFormSelected> {
 
   _makeCardWidget() {
     for (int i = 0; i < mockupChoiceFindProblem.length; i++) {
-      if (mockupChoiceFindProblem[i].id == widget.findProblem + 1) {
-        listDetail.add(mockupChoiceFindProblem[i]);
+      if (mockupChoiceFindProblem[i].id == widget.findProblem) {
+        listDetail = mockupChoiceFindProblem[i];
         print(listDetail);
       }
     }
     return ListView.builder(
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
-      itemCount: listDetail.length,
+      itemCount: listDetail.detail.length,
       itemBuilder: (context, index) {
         return Padding(
           padding: const EdgeInsets.only(top: 8),
@@ -80,7 +81,7 @@ class _FindProblemFormSelectedState extends State<FindProblemFormSelected> {
                     ),
                     Expanded(
                       child: Text(
-                        listDetail[index].datail.toString(),
+                        listDetail.detail[index].fect,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         softWrap: false,
@@ -94,7 +95,8 @@ class _FindProblemFormSelectedState extends State<FindProblemFormSelected> {
                 ),
               ),
               onTap: () {
-                _navigateAndDisplaySelection(context);
+                _detail = listDetail.detail[index].whereSolution;
+                _navigateAndDisplaySelection(context, _detail);
                 //Navigator.pushNamed(context, EDIT_SERVICE_ROUTE);
                 // navigateToServiceEdit(service);
               },
@@ -105,11 +107,12 @@ class _FindProblemFormSelectedState extends State<FindProblemFormSelected> {
     );
   }
 
-  void _navigateAndDisplaySelection(BuildContext context) async {
+  void _navigateAndDisplaySelection(
+      BuildContext context, List<FindProblemWhereAndSolution> detail) async {
     final result = await showDialog<String>(
         context: context,
         builder: (BuildContext context) =>
-            AlertShowDetailFindProblem(datail: mockupFindProblemDetail));
+            AlertShowDetailFindProblem(datail: detail));
     if (result == 'Ok') {
       Navigator.pop(context);
     }

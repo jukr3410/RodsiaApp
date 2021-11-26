@@ -10,11 +10,11 @@ import 'core/models/car_model.dart';
 
 //api base url
 //dev localhost api
-final baseUrlConstant = "http://localhost:3000/api";
+// final baseUrlConstant = "http://localhost:3000/api";
 // final baseUrlConstantSockertIO = "http://localhost:3000/";
 
 // production api
-//final baseUrlConstant = 'https://rodsia-api.herokuapp.com/api';
+final baseUrlConstant = 'https://rodsia-api.herokuapp.com/api';
 
 // router path
 const LOGIN_ROUTE = "/login";
@@ -335,105 +335,6 @@ List<String> serviceTypeName = [
   'ประตูกุญแจ',
   'รถยก',
   'น้ำมัน',
-];
-// Garage garageMockup = Garage(
-//     images: [],
-//     id: '1',
-//     name: 'Garage1892',
-//     phone: '0359887456',
-//     email: "email@mail.com",
-//     address: Address(
-//       addressDesc: '',
-//       geoLocation: GeoLocation(lat: 'asdf', long: 'asdfasdf'),
-//     ));
-List<String> mockupFindProblem = [
-  'คุณรู้สึกอะไร?',
-  'คุณได้ยินอะไร?',
-  'คุณเห็นอะไร?',
-  'คุณได้กลิ่นอะไร?',
-  'เกิดอะไรขึ้นเมื่อคุณติดรถ?'
-];
-List<String> mockupNameFindProblem = [
-  'hand',
-  'ear',
-  'eye',
-  'nose',
-  'startEngine'
-];
-
-class FindProblem {
-  final int id;
-  final String datail;
-  const FindProblem({required this.id, required this.datail});
-}
-
-List<FindProblem> mockupChoiceFindProblem = [
-  FindProblem(id: 1, datail: 'Drift -- Gruadual movement to one sides.'),
-  FindProblem(
-      id: 1,
-      datail:
-          'Excessive -- Looseness, lack of response in the steering wheel.'),
-  FindProblem(id: 1, datail: 'Pulls -- Sharp movement to one sides.'),
-  FindProblem(
-      id: 1,
-      datail:
-          'Pulsation -- Fluctuation of the brakw pedal when the brakes are appiled.'),
-  FindProblem(
-      id: 1,
-      datail: 'Shimmy -- Rapid side to side movement of the fronts wheels.'),
-  FindProblem(
-      id: 1, datail: 'Sways -- Gruadual movement to one sides to side.'),
-  FindProblem(
-      id: 1,
-      datail:
-          'Vibration -- Vehicle shakes. Usually felt in the steering wheel or the seat.'),
-  FindProblem(id: 2, datail: 'Squeal -- Continuous high pitched sound.'),
-  FindProblem(
-      id: 2,
-      datail: 'Knock -- Heavy loud repeating sound like a knock on the door.'),
-  FindProblem(
-      id: 2, datail: 'Tap -- Light repetitive sound, louder than a click.'),
-  FindProblem(
-      id: 2, datail: 'Rattle -- Marbles in a can like something loose.'),
-  FindProblem(
-      id: 2,
-      datail:
-          'Chrirp -- High-piched rapidly repeating sould, like birds chrping.'),
-  FindProblem(id: 2, datail: 'Clunk -- A random thumping sound.'),
-  FindProblem(id: 2, datail: 'Hiss -- Continuous sound like air eacaping.'),
-  FindProblem(id: 3, datail: 'Smoke.'),
-  FindProblem(id: 3, datail: 'Tire looks flat.'),
-  FindProblem(id: 3, datail: 'Warning light is on.'),
-  FindProblem(id: 3, datail: 'Puddle or leak.'),
-  FindProblem(id: 4, datail: 'Gasoline.'),
-  FindProblem(id: 4, datail: 'Rotten.'),
-  FindProblem(id: 4, datail: 'Mildew.'),
-  FindProblem(id: 4, datail: 'Antifreeze (sweet smell).'),
-  FindProblem(id: 4, datail: 'Burning oil.'),
-  FindProblem(id: 4, datail: 'Exhaust'),
-  FindProblem(id: 5, datail: 'The engine cranks normally but does not start'),
-  FindProblem(id: 5, datail: 'The engine cranks over slowly'),
-  FindProblem(id: 5, datail: 'The vehicle is backfiring when trying to start'),
-  FindProblem(id: 5, datail: 'Nothing'),
-  FindProblem(id: 5, datail: 'One strong click or knock'),
-  FindProblem(id: 5, datail: 'A spinning whirling, or gear grinding sound'),
-  FindProblem(
-      id: 5, datail: 'Repeating clicking sound: "click, click, click".'),
-];
-
-class FindProblemDetail {
-  final String title;
-  final String datail;
-  const FindProblemDetail({required this.title, required this.datail});
-}
-
-List<FindProblemDetail> mockupFindProblemDetail = [
-  FindProblemDetail(
-      title: 'Loose or Worn Front End Component.',
-      datail: 'Suspersion Inspection.'),
-  FindProblemDetail(title: 'Uneven Tire Presure.', datail: 'TPMS Repair.'),
-  FindProblemDetail(
-      title: 'Four-Wheel Alignment.', datail: 'Four-Wheel Alignment.'),
 ];
 
 List<NotifyInfo> mockupNotify = [
