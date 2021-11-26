@@ -16,54 +16,58 @@ class InfoProfile extends StatefulWidget {
 class _InfoProfileState extends State<InfoProfile> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: defualtPaddingMedium,
-        right: defualtPaddingMedium,
-      ),
-      child: Row(
-        children: [
-          Flexible(
-            flex: 4,
-            child: Column(
-              children: [
-                ClipOval(
-                    child: _proFileImage(widget.user.profileImage.toString())),
-              ],
+    return Container(
+      decoration: BoxDecoration(
+          boxShadow: [boxShadow],
+          borderRadius: borderRadiusMedium,
+          color: bgColor),
+      child: Padding(
+        padding: const EdgeInsets.all(defualtPaddingLow),
+        child: Row(
+          children: [
+            Flexible(
+              flex: 4,
+              child: Column(
+                children: [
+                  ClipOval(
+                      child:
+                          _proFileImage(widget.user.profileImage.toString())),
+                ],
+              ),
             ),
-          ),
-          SizedBox(
-            width: 20,
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                widget.user.name,
-                style: TextStyle(
-                    fontSize: fontSizeXl, fontWeight: FontWeight.w600),
-                softWrap: true,
-                maxLines: 1,
-              ),
-              Row(
-                children: [
-                  Text(tPhone + ': '),
-                  Text(
-                    widget.user.phone,
-                  )
-                ],
-              ),
-              Row(
-                children: [
-                  Text(tEmail + ': '),
-                  Text(
-                    widget.user.email,
-                  )
-                ],
-              )
-            ],
-          )
-        ],
+            SizedBox(
+              width: 20,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.user.name,
+                  style: TextStyle(
+                      fontSize: fontSizeXl, fontWeight: FontWeight.w600),
+                  softWrap: true,
+                  maxLines: 1,
+                ),
+                Row(
+                  children: [
+                    Text(tPhone + ': '),
+                    Text(
+                      widget.user.phone,
+                    )
+                  ],
+                ),
+                Row(
+                  children: [
+                    Text(tEmail + ': '),
+                    Text(
+                      widget.user.email,
+                    )
+                  ],
+                )
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
@@ -72,7 +76,7 @@ class _InfoProfileState extends State<InfoProfile> {
     if (profileImage == '') {
       return Image.asset(
         tImageAsset('profile'),
-        width: 120,
+        width: 100,
       );
     } else {
       return CachedNetworkImage(
@@ -82,8 +86,8 @@ class _InfoProfileState extends State<InfoProfile> {
         ),
         errorWidget: (context, url, error) => Icon(Icons.error),
         fit: BoxFit.cover,
-        height: 120,
-        width: 120,
+        height: 100,
+        width: 100,
       );
     }
   }

@@ -36,9 +36,10 @@ class UserUpdate extends ProfileEvent {
 }
 
 class UserUpdateNoPassword extends ProfileEvent {
+  final File? image;
   final User user;
 
-  const UserUpdateNoPassword(this.user);
+  const UserUpdateNoPassword({required this.user, this.image});
 
   @override
   List<Object> get props => [user];

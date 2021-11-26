@@ -44,6 +44,8 @@ class _SelectCarTypePageState extends State<SelectCarTypePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        iconTheme: IconThemeData(color: textColorBlack),
         backgroundColor: primaryColor,
         title: Text(
           tAddCar,

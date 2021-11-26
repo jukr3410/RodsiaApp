@@ -39,17 +39,16 @@ class _InfoCarCardState extends State<InfoCarCard> {
       },
       builder: (context, state) {
         return Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: defualtPaddingMedium,
-          ),
           height: 380,
           child: ListView.builder(
+              shrinkWrap: true,
               scrollDirection: Axis.horizontal,
               itemCount: widget.user.cars!.length,
               itemBuilder: (context, index) {
                 final _infoCar = widget.user.cars![index];
                 return Container(
                   width: 290,
+                  height: 380,
                   child: Card(
                     shape: RoundedRectangleBorder(
                         borderRadius: borderRadiusMedium),
@@ -71,24 +70,51 @@ class _InfoCarCardState extends State<InfoCarCard> {
                               width: 150,
                             ),
                             Row(
-                              children: [Text(tBrand), Text(_infoCar.brand)],
-                            ),
-                            Row(
                               children: [
-                                Text(tModel),
-                                Text(_infoCar.model + ' ' + _infoCar.year)
+                                Text(
+                                  tBrand,
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  _infoCar.brand,
+                                  style: TextStyle(color: Colors.grey.shade600),
+                                )
                               ],
                             ),
                             Row(
                               children: [
-                                Text(tFuelType),
-                                Text(_infoCar.fuelType)
+                                Text(
+                                  tModel,
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  _infoCar.model + ' ' + _infoCar.year,
+                                  style: TextStyle(color: Colors.grey.shade600),
+                                )
                               ],
                             ),
                             Row(
                               children: [
-                                Text('ป้ายทะเบียน: '),
-                                Text(_infoCar.regisNumber)
+                                Text(
+                                  tFuelType,
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  _infoCar.fuelType,
+                                  style: TextStyle(color: Colors.grey.shade600),
+                                )
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  'ป้ายทะเบียน: ',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  _infoCar.regisNumber,
+                                  style: TextStyle(color: Colors.grey.shade600),
+                                )
                               ],
                             ),
                             SizedBox(

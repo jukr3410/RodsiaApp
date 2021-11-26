@@ -41,6 +41,9 @@ class UserRepository {
   Future<bool> updateUserImage({required File image}) async {
     return await userApi.updateUserImage(image: image);
   }
+  Future<bool> updateUserImageProfile({required File image}) async {
+    return await userApi.updateUserProfile(image: image);
+  }
 
   Future<bool> addUser({required User user}) async {
     return await userApi.addUser(user: user);

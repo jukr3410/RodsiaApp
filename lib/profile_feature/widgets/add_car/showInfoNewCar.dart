@@ -26,7 +26,7 @@ class ShowInfoNewCar extends StatefulWidget {
 
 class _ShowInfoNewCarState extends State<ShowInfoNewCar> {
   late ProfileBloc _profileBloc;
-  late User _user;
+  User _user = mockUpUser;
 
   @override
   void initState() {
@@ -50,6 +50,7 @@ class _ShowInfoNewCarState extends State<ShowInfoNewCar> {
           ])),
       child: Scaffold(
         appBar: AppBar(
+          iconTheme: IconThemeData(color: textColorBlack),
           centerTitle: true,
           title: Text(
             tInfoNewcar,
@@ -89,7 +90,7 @@ class _ShowInfoNewCarState extends State<ShowInfoNewCar> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                'รถคันที่: ${widget.car.id}',
+                                'รถคันที่: ${(_user.cars!.length + 1).toString()}',
                                 style: TextStyle(fontSize: fontSizeXl),
                                 textAlign: TextAlign.right,
                               ),
@@ -207,10 +208,10 @@ class _ShowInfoNewCarState extends State<ShowInfoNewCar> {
             AlertPopupYesNo(title: tUpdateTrackingStatus));
     if (result == 'Ok') {
       _user.cars!.add(widget.car);
-      _user.cars!.forEach((element) {
-        logger.d(element.toJson());
-      });
-      _profileBloc.add(UserUpdateNoPassword(_user));
+      for (var item in _user.cars!) {
+        logger.d(item.toJson());
+      }
+      _profileBloc.add(UserUpdateNoPassword(user: _user));
     }
   }
 

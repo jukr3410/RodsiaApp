@@ -82,7 +82,8 @@ class _SelectServicePageState extends State<SelectServicePage> {
     addressUser: '',
   );
 
-  ComfirmReq cmReq = ComfirmReq(garageName: '', serviceName: '');
+  ComfirmReq cmReq =
+      ComfirmReq(garageName: '', serviceName: '', serviceType: '');
 
   @override
   void initState() {
@@ -127,48 +128,49 @@ class _SelectServicePageState extends State<SelectServicePage> {
                   SizedBox(
                     height: 5,
                   ),
-                  Container(
-                    height:
-                        widget.garage.serviceInGarages!.length < 6 ? null : 320,
-                    child: ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: widget.garage.serviceInGarages!.length,
-                        itemBuilder: (context, index) {
-                          return Card(
-                            elevation: 3,
-                            // margin: new EdgeInsets.symmetric(vertical: 4.0),
-                            color: cardColor,
-                            child: ListTile(
-                              title: _makeCardWidget(
-                                  widget.garage.serviceInGarages![index]),
-                              trailing: Radio(
-                                  value: index,
-                                  groupValue: val,
-                                  onChanged: (int? value) {
-                                    setState(() {
-                                      val = value!;
+                  ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemCount: widget.garage.serviceInGarages!.length,
+                      itemBuilder: (context, index) {
+                        return Card(
+                          elevation: 3,
+                          // margin: new EdgeInsets.symmetric(vertical: 4.0),
+                          color: cardColor,
+                          child: ListTile(
+                            title: _makeCardWidget(
+                                widget.garage.serviceInGarages![index]),
+                            trailing: Radio(
+                                value: index,
+                                groupValue: val,
+                                onChanged: (int? value) {
+                                  setState(() {
+                                    val = value!;
 
-                                      _requestServiceAdd.service = widget
-                                          .garage.serviceInGarages![val].id;
-                                      // _requestServiceAdd.garage =
-                                      //     widget.garage.id;
+                                    _requestServiceAdd.service =
+                                        widget.garage.serviceInGarages![val].id;
+                                    // _requestServiceAdd.garage =
+                                    //     widget.garage.id;
 
-                                      cmReq.garageName = widget.garage.name;
-                                      cmReq.serviceName = widget
-                                          .garage.serviceInGarages![val].name;
-                                      logger.d(widget.garage
-                                          .serviceInGarages![index].name);
-                                    });
-                                  }),
-                            ),
-                          );
-                        }),
-                  ),
+                                    cmReq.garageName = widget.garage.name;
+                                    cmReq.serviceType = widget
+                                        .garage
+                                        .serviceInGarages![val]
+                                        .serviceType
+                                        .name;
+                                    cmReq.serviceName = widget
+                                        .garage.serviceInGarages![val].name;
+                                    logger.d(widget
+                                        .garage.serviceInGarages![index].name);
+                                  });
+                                }),
+                          ),
+                        );
+                      }),
                   SizedBox(
                     height: 25,
                   ),
-                  addImageForReq(),
+                  _addImageForReq(),
                   SizedBox(
                     height: 15,
                   ),
@@ -345,22 +347,28 @@ class _SelectServicePageState extends State<SelectServicePage> {
     );
   }
 
-  Widget addImageForReq() {
-    return GridView.count(
-      crossAxisCount: 4,
-      mainAxisSpacing: 5,
-      crossAxisSpacing: 5,
-      shrinkWrap: true,
-      children: List.generate(images.length, (index) {
-        Asset asset = images[index];
-        print(asset);
-        return AssetThumb(
-          asset: asset,
-          width: 300,
-          height: 300,
-        );
-      }),
-    );
+  _addImageForReq() {
+    if (images.length > 0) {
+      return GridView.count(
+        crossAxisCount: 4,
+        mainAxisSpacing: 5,
+        crossAxisSpacing: 5,
+        shrinkWrap: true,
+        children: List.generate(images.length, (index) {
+          Asset asset = images[index];
+          print(asset);
+          return AssetThumb(
+            asset: asset,
+            width: 300,
+            height: 300,
+          );
+        }),
+      );
+    } else {
+      return SizedBox(
+        height: 10,
+      );
+    }
   }
 
   navigateToGarageList() {
@@ -418,6 +426,7 @@ class _SelectServicePageState extends State<SelectServicePage> {
 class ComfirmReq {
   String garageName;
   String serviceName;
+  String serviceType;
   RequestServiceAdd? req;
   List<Asset>? images;
 
@@ -425,5 +434,6 @@ class ComfirmReq {
       {required this.garageName,
       this.req,
       required this.serviceName,
+      required this.serviceType,
       this.images});
 }

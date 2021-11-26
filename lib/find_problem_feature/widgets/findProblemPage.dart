@@ -78,7 +78,10 @@ class _FindProblemPageState extends State<FindProblemPage> {
                       color: textColorBlack,
                     ),
                   ),
-                  Text(mockupFindProblem[typeCar].toString(),style: TextStyle(fontSize: fontSizeS+1),)
+                  Text(
+                    mockupFindProblem[typeCar].toString(),
+                    style: TextStyle(fontSize: fontSizeS + 1),
+                  )
                 ],
               ),
             ),
