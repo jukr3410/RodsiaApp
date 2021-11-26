@@ -74,9 +74,9 @@ class RequestServiceApi {
       throw new Exception('There was a problem ${response.statusCode}');
     }
     final decodedJson = jsonDecode(response.body);
-    logger.d(decodedJson);
+    //logger.d(decodedJson);
     RequestService requestService = RequestService.fromJson(decodedJson);
-    logger.d(requestService);
+    //logger.d(requestService);
     return requestService;
   }
 

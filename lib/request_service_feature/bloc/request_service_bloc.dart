@@ -90,19 +90,21 @@ class RequestServiceBloc
         final requestService = await this
             .requestServiceRepository
             .getRequestService(id: event.requestServiceId);
-        logger.d("GarageConfirm: ${requestService.confirmRequest}");
+        logger.d("GarageConfirm: ${requestService.status}");
         yield RequestServiceLoadSuccess(requestService: requestService);
-        if (requestService.status == waitingForConfirm) {
-          yield RequestServiceWaiting();
-        } else if (requestService.status == denyRequestService) {
+
+        if (requestService.status == denyRequestService) {
           _isNotConfirmed = false;
           yield RequestServiceGarageDeny();
         } else if (requestService.status == confirmedRequestService) {
           _isNotConfirmed = false;
           yield RequestServiceGarageConfirmed();
+        } else {
+          yield RequestServiceWaiting();
         }
       }
     } catch (e) {
+      logger.d("RequestServiceError: ${e}");
       yield RequestServiceError();
     }
   }
@@ -112,15 +114,18 @@ class RequestServiceBloc
     try {
       yield RequestServiceLoading();
       while (_isNotCompleted) {
-        await Future.delayed(Duration(milliseconds: 1000));
+        await Future.delayed(Duration(milliseconds: 3000));
+
         final requestService = await this
             .requestServiceRepository
             .getRequestService(id: event.requestServiceId);
+
         final distanceMatrix = await this.geoService.getDistanceMatrix(
             startLatitude: double.parse(requestService.geoLocationUser.lat),
             startLongitude: double.parse(requestService.geoLocationUser.long),
             endLatitude: double.parse(requestService.geoLocationGarage.lat),
             endLongitude: double.parse(requestService.geoLocationGarage.long));
+
         logger.d("GarageConfirm: ${requestService.confirmRequest}");
         yield RequestServiceLoadSuccess(
             requestService: requestService, distanceMatrix: distanceMatrix);

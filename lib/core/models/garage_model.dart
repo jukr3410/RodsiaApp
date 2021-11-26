@@ -58,8 +58,10 @@ class Garage {
       reviewStar: json["reviewStar"],
       typeCarRepairs: List<TypeCarRepairs>.from(
           json["typeCarRepairs"].map((x) => TypeCarRepairs.fromJson(x))),
-      serviceInGarages: List<ServiceInGarage>.from(
-          json["serviceInGarages"].map((x) => ServiceInGarage.fromJson(x))),
+      serviceInGarages: json["serviceInGarages"] != null
+          ? List<ServiceInGarage>.from(
+              json["serviceInGarages"].map((x) => ServiceInGarage.fromJson(x)))
+          : [],
       services: json["services"] != null
           ? List<Service>.from(json["services"].map((x) => Service.fromJson(x)))
           : []);
