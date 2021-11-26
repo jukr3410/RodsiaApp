@@ -19,10 +19,10 @@ class _AlertShowDetailFindProblemState
     extends State<AlertShowDetailFindProblem> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(defualtPaddingMedium),
-        child: Center(
+    return Center(
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(defualtPaddingMedium),
           child: Container(
             width: cardWidthLow,
             decoration: BoxDecoration(
@@ -66,7 +66,8 @@ class _AlertShowDetailFindProblemState
                             Navigator.pop(context);
                           },
                           child: Text(tOKThai),
-                          style: flatButtonStyle(primaryColor, textColorBlack),
+                          style:
+                              flatButtonStyle(primaryColor, textColorBlack),
                         )),
                   ),
                 ],

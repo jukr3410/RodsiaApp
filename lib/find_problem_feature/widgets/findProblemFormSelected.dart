@@ -20,6 +20,12 @@ class _FindProblemFormSelectedState extends State<FindProblemFormSelected> {
 
   @override
   Widget build(BuildContext context) {
+    for (int i = 0; i < mockupChoiceFindProblem.length; i++) {
+      if (mockupChoiceFindProblem[i].id == widget.findProblem) {
+        listDetail = mockupChoiceFindProblem[i];
+        print(listDetail);
+      }
+    }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primaryColor,
@@ -38,7 +44,7 @@ class _FindProblemFormSelectedState extends State<FindProblemFormSelected> {
               SizedBox(
                 height: 10,
               ),
-              Text(mockupFindProblem[widget.findProblem]),
+              Text(mockupFindProblem[listDetail.id - 1]),
               _makeCardWidget()
             ],
           ),
@@ -48,12 +54,6 @@ class _FindProblemFormSelectedState extends State<FindProblemFormSelected> {
   }
 
   _makeCardWidget() {
-    for (int i = 0; i < mockupChoiceFindProblem.length; i++) {
-      if (mockupChoiceFindProblem[i].id == widget.findProblem) {
-        listDetail = mockupChoiceFindProblem[i];
-        print(listDetail);
-      }
-    }
     return ListView.builder(
       scrollDirection: Axis.vertical,
       shrinkWrap: true,
