@@ -38,6 +38,9 @@ import 'package:rodsiaapp/profile_feature/widgets/edit_car/editCarModel.dart';
 import 'package:rodsiaapp/profile_feature/widgets/edit_car/editSelectCarTypePage.dart';
 import 'package:rodsiaapp/profile_feature/widgets/edit_car/editSelectMoreChoicePage.dart';
 import 'package:rodsiaapp/profile_feature/widgets/edit_car/editShowInfoNewCar.dart';
+import 'package:rodsiaapp/register_user_feature/widgets/resetCheckNumber.dart';
+import 'package:rodsiaapp/register_user_feature/widgets/resetOtp.dart';
+import 'package:rodsiaapp/register_user_feature/widgets/resetPassword.dart';
 import 'package:rodsiaapp/request_service_feature/bloc/garage_info_bloc.dart';
 import 'package:rodsiaapp/request_service_feature/bloc/request_service_bloc.dart';
 import 'package:rodsiaapp/request_service_feature/bloc/review_bloc.dart';
@@ -137,6 +140,33 @@ class AppRouter {
                 create: (BuildContext context) =>
                     RegisterBloc(userRepository: UserRepository()),
                 child: AddInfo(
+                  user: user,
+                )));
+
+      case FORGOT_PHONE_ROUTE:
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                create: (BuildContext context) =>
+                    RegisterBloc(userRepository: UserRepository()),
+                child: ResetCheckNumber()));
+
+      case FORGOT_OTP_ROUTE:
+        User user = settings.arguments as User;
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                create: (BuildContext context) =>
+                    RegisterBloc(userRepository: UserRepository()),
+                child: ResetOtp(
+                  user: user,
+                )));
+
+      case FORGOT_RESET_PASS_ROUTE:
+        User user = settings.arguments as User;
+        return MaterialPageRoute(
+            builder: (_) => BlocProvider(
+                create: (BuildContext context) =>
+                    RegisterBloc(userRepository: UserRepository()),
+                child: ResetPassword(
                   user: user,
                 )));
 

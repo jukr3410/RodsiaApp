@@ -144,12 +144,9 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     try {
       yield ResetLoading();
 
-      var isReseted = await this.userRepository.updateUser(user: event.user);
-      if (isReseted == true) {
-        yield ResetSuccess();
-      } else {
-        yield ResetError();
-      }
+      final res =
+          await this.userRepository.updateUserPassword(user: event.user);
+      yield ResetSuccess();
     } catch (e) {
       logger.e(e);
       yield ResetError();

@@ -52,7 +52,7 @@ const SUPPORT_CENTER_ROUTE = '/support_center';
 const NOTIFY_ROUTE = '/notify';
 const GARAGE_SEARCH_ROUTE = '/garage_search';
 const EDIT_PASSWOED_ROUTE = '/edit_password';
-const FORGOT_PASSWORD_ROUTE = '/forgot_password';
+const FORGOT_PHONE_ROUTE = '/forgot_password';
 const FORGOT_OTP_ROUTE = "/forgot_otp";
 const FORGOT_RESET_PASS_ROUTE = "/forgot_reset_password";
 
