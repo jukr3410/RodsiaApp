@@ -52,9 +52,9 @@ class _OtpState extends State<Otp> {
 
   @override
   void initState() {
-    _registerBloc = BlocProvider.of<RegisterBloc>(context);
     _user = widget.user;
-    _registerBloc.add(RegisterSendOtp(user: _user));
+    _registerBloc = BlocProvider.of<RegisterBloc>(context)
+      ..add(RegisterSendOtp(user: _user));
     errorController = StreamController<ErrorAnimationType>();
     super.initState();
   }
@@ -86,8 +86,8 @@ class _OtpState extends State<Otp> {
           child: BlocConsumer<RegisterBloc, RegisterState>(
             listener: (context, state) {
               if (state is RegisterSendVerifyOtpSuccess) {
-                showTopSnackBar(
-                    context, CustomSnackBar.info(message: "ส่งรหัสยืนยันแล้ว"));
+                showTopSnackBar(context,
+                    CustomSnackBar.success(message: "ส่งรหัสยืนยันแล้ว"));
               } else if (state is RegisterVerifySuccess) {
                 navigateToAddInfo(_user);
                 showTopSnackBar(
