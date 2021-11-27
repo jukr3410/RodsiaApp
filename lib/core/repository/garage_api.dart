@@ -47,7 +47,6 @@ class GarageApi {
         decodedJson.map((decodedJson) => Garage.fromJson(decodedJson)).toList();
 
     for (var garage in garages) {
-      final position = await geoService.getLocation();
       final distanceMatrix = await this.geoService.getDistanceMatrix(
           startLatitude: position.latitude,
           startLongitude: position.longitude,
@@ -68,6 +67,9 @@ class GarageApi {
 
   Future<List<Garage>> getByGaragesName({required String name}) async {
     List<Garage> garages = [];
+
+    final position = await geoService.getLocation();
+
     final url = '$baseUrl/garages-name/$name';
     final response = await http.get(Uri.parse(url));
     if (response.statusCode != 200) {
@@ -90,6 +92,15 @@ class GarageApi {
           .map((decodedJson) => Service.fromJson(decodedJson))
           .toList();
       garages[i].services = services;
+
+      // cal distance
+      final distanceMatrix = await this.geoService.getDistanceMatrix(
+          startLatitude: position.latitude,
+          startLongitude: position.longitude,
+          endLatitude: double.parse(garages[i].address.geoLocation.lat),
+          endLongitude: double.parse(garages[i].address.geoLocation.long));
+
+      garages[i].distance = distanceMatrix.rows[0].elements[0].distance.text;
     }
     return garages;
   }
