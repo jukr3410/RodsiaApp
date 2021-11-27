@@ -9,8 +9,9 @@ abstract class RequestServiceEvent extends Equatable {
 
 class CreateRequestService extends RequestServiceEvent {
   final RequestServiceAdd requestServiceAdd;
+  final List<File>? images;
 
-  const CreateRequestService({required this.requestServiceAdd});
+  const CreateRequestService({required this.requestServiceAdd, this.images});
 
   @override
   String toString() =>
@@ -56,4 +57,4 @@ class TrackingRequestService extends RequestServiceEvent {
 
 class GetCurrentLocationAndAddress extends RequestServiceEvent {}
 
-
+class UploadImageRequestService extends RequestServiceEvent {}

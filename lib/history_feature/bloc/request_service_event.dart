@@ -10,6 +10,10 @@ abstract class RequestServiceEvent extends Equatable {
 class RequestServiceInitializeEvent extends RequestServiceEvent {}
 
 class RequestServiceLoad extends RequestServiceEvent {}
+class RequestServiceWithStatus extends RequestServiceEvent {
+  final String status;
+  RequestServiceWithStatus({required this.status});
+}
 
 
 

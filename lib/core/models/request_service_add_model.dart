@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:rodsiaapp/core/models/garage_model.dart';
+
 import 'car_model.dart';
 import 'geo_location_model.dart';
 
@@ -17,7 +19,6 @@ class RequestServiceAdd {
     this.id,
     required this.user,
     required this.service,
-    //required this.garage,
     required this.addressUser,
     required this.geoLocationUser,
     required this.geoLocationGarage,

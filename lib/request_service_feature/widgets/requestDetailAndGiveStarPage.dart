@@ -217,18 +217,18 @@ class _DetailAndGiveStarPageState extends State<DetailAndGiveStarPage> {
   }
 
   _addImageForReq() {
-    if (widget.req.image != null) {
+    if (widget.req.images != null) {
       return GridView.count(
         crossAxisCount: 4,
         mainAxisSpacing: 5,
         crossAxisSpacing: 5,
         shrinkWrap: true,
-        children: List.generate(widget.req.image!.length, (index) {
+        children: List.generate(widget.req.images!.length, (index) {
           return CachedNetworkImage(
             width: 40,
             height: 40,
             fit: BoxFit.cover,
-            imageUrl: widget.req.image![index],
+            imageUrl: widget.req.images![index].image,
             placeholder: (context, url) => CircularProgressIndicator(
               color: textColorBlack,
             ),

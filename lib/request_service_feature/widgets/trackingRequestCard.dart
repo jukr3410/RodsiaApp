@@ -303,7 +303,7 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
                                   SizedBox(
                                     width: 10,
                                   ),
-                                  widget.req.image == null
+                                  widget.req.images == null
                                       ? Text('ไม่มีรูป')
                                       : Container(
                                           height: 40,
@@ -311,7 +311,7 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
                                               scrollDirection: Axis.horizontal,
                                               shrinkWrap: true,
                                               itemCount:
-                                                  widget.req.image!.length,
+                                                  widget.req.images!.length,
                                               itemBuilder: (context, index) {
                                                 return Row(
                                                   children: [
@@ -321,7 +321,9 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
                                                         height: 40,
                                                         fit: BoxFit.cover,
                                                         imageUrl: widget
-                                                            .req.image![index],
+                                                            .req
+                                                            .images![index]
+                                                            .image,
                                                         placeholder: (context,
                                                                 url) =>
                                                             CircularProgressIndicator(
@@ -334,8 +336,10 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
                                                       onTap: () {
                                                         _navigateAndDisplayImage(
                                                             context,
-                                                            widget.req
-                                                                .image![index]);
+                                                            widget
+                                                                .req
+                                                                .images![index]
+                                                                .image);
                                                       },
                                                     ),
                                                     SizedBox(

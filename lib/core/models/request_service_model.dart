@@ -28,7 +28,7 @@ class RequestService {
       required this.addressUser,
       required this.geoLocationUser,
       required this.geoLocationGarage,
-      this.image,
+      this.images,
       required this.createdAt});
 
   String id;
@@ -41,7 +41,7 @@ class RequestService {
   String addressUser;
   GeoLocation geoLocationUser;
   GeoLocation geoLocationGarage;
-  String? image;
+  List<ImageGarage>? images;
   DateTime createdAt;
 
   factory RequestService.fromJson(Map<String, dynamic> json) => RequestService(
@@ -55,7 +55,8 @@ class RequestService {
         addressUser: json['addressUser'],
         geoLocationUser: GeoLocation.fromJson(json["geoLocationUser"]),
         geoLocationGarage: GeoLocation.fromJson(json["geoLocationGarage"]),
-        image: json["image"],
+        images: List<ImageGarage>.from(
+            json["images"].map((x) => ImageGarage.fromJson(x))),
         createdAt: DateTime.parse(json["createdAt"]),
       );
 
@@ -70,7 +71,7 @@ class RequestService {
         "addressUser": addressUser,
         "geoLocationUser": geoLocationUser.toJson(),
         "geoLocationGarage": geoLocationGarage.toJson(),
-        "image": image,
+        "images": List<dynamic>.from(images!.map((x) => x)),
         "createdAt": createdAt
       };
 }
