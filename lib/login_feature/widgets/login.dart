@@ -250,9 +250,30 @@ class _LoginScreenState extends State<LoginScreen> {
                             )),
                           ),
                         ),
-                        // SizedBox(
-                        //   height: 40,
-                        // ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            navigateToResetPassword();
+                          },
+                          child: Text(
+                            tForgetPassword,
+                            style: GoogleFonts.alata(
+                                textStyle: TextStyle(
+                              color: textColorBlack,
+                              fontSize: fontSizeL,
+                              shadows: [
+                                Shadow(
+                                  blurRadius: 15.0,
+                                  color: Colors.blueGrey,
+                                  offset: Offset(2.0, 2.0),
+                                ),
+                              ],
+                              fontWeight: FontWeight.normal,
+                            )),
+                          ),
+                        ),
 
                         // Padding(
                         //   padding: const EdgeInsets.symmetric(
@@ -295,6 +316,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void navigateToMain() {
     Navigator.pushReplacementNamed(context, MAIN_ROUTE);
+  }
+
+  void navigateToResetPassword() {
+    logger.d("navigate reset password");
   }
 
   @override

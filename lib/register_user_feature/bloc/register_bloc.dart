@@ -115,6 +115,26 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     }
   }
 
+  Stream<RegisterState> _mapResetCheckPhoneNumberToState(
+      ResetCheckPhoneNumber event) async* {
+    try {
+      yield RegisterLoading();
+      logger.d("Phone: ${event.user.phone}");
+      var isPhoneNumberExist =
+          await this.userRepository.checkUsedNumberPhone(user: event.user);
+      logger.d("isPhoneNumberExist: $isPhoneNumberExist");
+
+      if (isPhoneNumberExist == false) {
+        yield ResetNumberNotExist();
+      } else if (isPhoneNumberExist == true) {
+        yield ResetNumberExist();
+      }
+    } catch (e) {
+      logger.e(e);
+      yield RegisterError();
+    }
+  }
+
   @override
   Future<void> close() {
     _usersSubscription?.cancel();
