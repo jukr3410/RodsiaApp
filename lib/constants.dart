@@ -266,7 +266,6 @@ const fuelTypeCar = ['Prtrol', 'Diesel', 'Gas', 'Electic'];
 
 List<Car> mockUpCar = [
   Car(
-      id: "1",
       brand: 'Honda',
       model: 'Civic',
       type: 'four-wheel',
@@ -274,7 +273,6 @@ List<Car> mockUpCar = [
       fuelType: 'Gas',
       regisNumber: 'กง1123'),
   Car(
-      id: "2",
       brand: 'Mazda',
       model: '2',
       type: 'four-wheel',
@@ -282,7 +280,6 @@ List<Car> mockUpCar = [
       fuelType: 'Desel',
       regisNumber: 'กง1123'),
   Car(
-      id: "3",
       brand: 'Yamaha',
       model: 'scoopy-i',
       type: 'two-wheel',
@@ -292,15 +289,15 @@ List<Car> mockUpCar = [
 ];
 DateTime mockupDateTime = DateTime(2017, 9, 7, 17, 30);
 User mockUpUser = User(
-    id: '1',
-    name: 'Jorge Dennel',
-    email: 'JorgeDennel@mail.com',
-    phone: '06155648451',
-    password: '1234',
-    otp: '1234',
+    id: '',
+    name: '',
+    email: '',
+    phone: '',
+    password: '',
+    otp: '',
     validatePhone: true,
-    cars: mockUpCar,
-    profileImage: 'https://files.gqthailand.com/uploads/Johnny-Depp.jpg');
+    cars: [],
+    profileImage: '');
 
 final brandCar = [
   'Mazda',

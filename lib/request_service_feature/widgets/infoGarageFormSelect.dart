@@ -65,12 +65,16 @@ class _InfoGarageFormSelectState extends State<InfoGarageFormSelect> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      widget.garage.name,
-                      style: TextStyle(
-                          fontSize: fontSizeL, fontWeight: FontWeight.w600),
-                      softWrap: true,
-                      maxLines: 1,
+                    Container(
+                      width: 200,
+                      child: Text(
+                        widget.garage.name,
+                        style: TextStyle(
+                            fontSize: fontSizeL, fontWeight: FontWeight.w600),
+                        softWrap: true,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
                     ),
                     Row(
                       children: [

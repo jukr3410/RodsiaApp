@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:direct_select/direct_select.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:getwidget/components/button/gf_button.dart';
+import 'package:getwidget/getwidget.dart';
 import 'package:multi_image_picker2/multi_image_picker2.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/car_model.dart';
@@ -8,8 +12,10 @@ import 'package:rodsiaapp/core/models/geo_location_model.dart';
 import 'package:rodsiaapp/core/models/request_service_add_model.dart';
 import 'package:rodsiaapp/core/models/request_service_model.dart';
 import 'package:rodsiaapp/core/models/service_model.dart';
+import 'package:rodsiaapp/core/models/user_model.dart';
 import 'package:rodsiaapp/global_widgets/alertPopupYesNo.dart';
 import 'package:rodsiaapp/main.dart';
+import 'package:rodsiaapp/profile_feature/bloc/profile_bloc.dart';
 import 'package:rodsiaapp/profile_feature/widgets/showInfoCarCard.dart';
 import 'package:rodsiaapp/request_service_feature/bloc/garage_info_bloc.dart';
 import 'package:rodsiaapp/request_service_feature/bloc/request_service_bloc.dart';
@@ -30,8 +36,11 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
   late RequestServiceBloc _requestServiceBloc;
   late ServiceBloc _serviceBloc;
   late GarageInfoBloc _garageInfoBloc;
+  late ProfileBloc _profileBloc;
 
   String _requestServiceId = '';
+
+  User _user = mockUpUser;
 
   int selectedIndex = 0;
 
@@ -39,24 +48,12 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
   late Widget _serviceName;
 
   List<Widget> _buildItems() {
-    return mockUpCar
+    return _user.cars!
         .map((val) => SelectionItem(
               car: val,
             ))
         .toList();
   }
-
-  List mockupImage = [
-    'https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dmlld3xlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80',
-    'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
-    'https://www.industrialempathy.com/img/remote/ZiClJf-1920w.jpg',
-    'https://images.unsplash.com/photo-1612151855475-877969f4a6cc?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGQlMjBpbWFnZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80',
-    'https://images.unsplash.com/photo-1453728013993-6d66e9c9123a?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dmlld3xlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80',
-    'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg',
-    'https://www.industrialempathy.com/img/remote/ZiClJf-1920w.jpg',
-    'https://www.industrialempathy.com/img/remote/ZiClJf-1920w.jpg',
-    'https://images.unsplash.com/photo-1612151855475-877969f4a6cc?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8aGQlMjBpbWFnZXxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80',
-  ];
 
   TextStyle _textTitle = TextStyle(
       color: textColorBlack, fontWeight: FontWeight.w600, fontFamily: 'Kanit');
@@ -69,6 +66,8 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
       ..add(ServiceFetchEvent(serviceId: widget.req.serviceName));
     _garageInfoBloc = BlocProvider.of<GarageInfoBloc>(context)
       ..add(GarageInfoLoad(garageId: widget.req.garageName));
+    _profileBloc = BlocProvider.of<ProfileBloc>(context)
+      ..add(ProfileLoadFormPhone());
     super.initState();
   }
 
@@ -94,22 +93,23 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
 
   setBody() {
     //_service!.serviceType = ServiceType(id: "1234", name: "134", description: "1234");
-    return Center(
-        child: BlocConsumer<RequestServiceBloc, RequestServiceState>(
-            listener: (context, state) {
+    return BlocConsumer<RequestServiceBloc, RequestServiceState>(
+        listener: (context, state) {
       if (state is CreatedRequestService) {
         _requestServiceId = state.requestServiceId;
         navigateToWaitingRequest(state.requestServiceId);
         // showTopSnackBar(
         //     context, CustomSnackBar.success(message: ""));
-      } else if (state is CreateRequestServiceError) {
+      }
+      if (state is CreateRequestServiceError) {
         showTopSnackBar(
           context,
           CustomSnackBar.error(
             message: mError,
           ),
         );
-      } else if (state is CurrentLocationAndAddressSuccess) {
+      }
+      if (state is CurrentLocationAndAddressSuccess) {
         logger.d(
             "current location: ${state.position.latitude.toString()}, ${state.position.longitude.toString()}");
         logger.d("current address: ${state.address}");
@@ -120,39 +120,64 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
         widget.req.req!.addressUser = state.address!;
       }
     }, builder: (context, state) {
-      return Container(
+      return BlocListener<ProfileBloc, ProfileState>(
+        listener: (context, state) {
+          if (state is UserLoadSuccess) {
+            setState(() {
+              _user = state.user;
+            });
+            if (_user.cars!.isEmpty) {
+              _navigateToAddCar(context);
+            }
+          }
+        },
         child: Padding(
           padding: const EdgeInsets.all(defualtPaddingMedium),
           child: SingleChildScrollView(
             child: Column(
-              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(tSelectCarForRequest + ':', style: _textTitle),
-                SizedBox(
-                  height: 5,
-                ),
-                ShowInfoCarCard(car: mockUpCar[selectedIndex]),
-                SizedBox(
-                  height: 5,
-                ),
-                DirectSelect(
-                    itemExtent: 40.0,
-                    backgroundColor: bgColor,
-                    selectedIndex: selectedIndex,
-                    mode: DirectSelectMode.drag,
-                    child: SelectionItem(
-                      isForList: false,
-                      car: mockUpCar[selectedIndex],
-                    ),
-                    onSelectedItemChanged: (int? index) {
-                      setState(() {
-                        selectedIndex = index!;
-                        widget.req.req!.car = mockUpCar[selectedIndex];
-                        print(widget.req.req!.car.toJson());
-                      });
-                    },
-                    items: _buildItems()),
+                _user.cars!.isEmpty
+                    ? Center(
+                        child: Padding(
+                        padding: const EdgeInsets.all(defualtPaddingHight),
+                        child: Text(
+                          'ไม่มีรถ!',
+                          style: TextStyle(fontSize: fontSizeXl),
+                        ),
+                      ))
+                    : Column(
+                        children: [
+                          Text(tSelectCarForRequest + ':', style: _textTitle),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          ShowInfoCarCard(car: _user.cars![selectedIndex]),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          DirectSelect(
+                              itemExtent: 40.0,
+                              backgroundColor: bgColor,
+                              selectedIndex: selectedIndex,
+                              mode: DirectSelectMode.drag,
+                              child: SelectionItem(
+                                isForList: false,
+                                car: _user.cars![selectedIndex],
+                              ),
+                              onSelectedItemChanged: (int? index) {
+                                setState(() {
+                                  selectedIndex = index!;
+                                  widget.req.req!.car =
+                                      _user.cars![selectedIndex];
+                                  print(widget.req.req!.car.toJson());
+                                });
+                              },
+                              items: _buildItems()),
+                        ],
+                      ),
                 SizedBox(
                   height: defualtPaddingLow,
                 ),
@@ -215,12 +240,14 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
                   'หมายเหตุ' + ':',
                   style: _textTitle,
                 ),
-                Text(
-                  widget.req.req!.problemDesc,
-                  maxLines: 2,
-                  softWrap: true,
-                  overflow: TextOverflow.fade,
-                ),
+                widget.req.req!.problemDesc.isEmpty
+                    ? Text('ไม่มีรายละเอียดเพิ่มเติม')
+                    : Text(
+                        widget.req.req!.problemDesc,
+                        maxLines: 2,
+                        softWrap: true,
+                        overflow: TextOverflow.fade,
+                      ),
                 SizedBox(
                   height: 20,
                 ),
@@ -241,7 +268,7 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
           ),
         ),
       );
-    }));
+    });
   }
 
   _addImageForReq() {
@@ -261,7 +288,7 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
           );
         }),
       );
-    }else{
+    } else {
       return Text('ไม่มีรูปภาพเพิ่มเติม');
     }
   }
@@ -288,10 +315,23 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
     if (result == 'Ok') {
       logger.d("Clicked Confirm Request Service");
       //widget.req.req!.createdAt = DateTime.now();
+      widget.req.req!.car = _user.cars![selectedIndex];
       logger.d(widget.req.req!.toJson());
       await createRequestService();
       //navigateToWaitingRequest(_requestServiceId);
     }
+  }
+
+  void _navigateToAddCar(BuildContext context) async {
+    final result = await showDialog<String>(
+        context: context, builder: (BuildContext context) => AlertToAddCar());
+    if (result == 'Ok') {
+      navigatorToAddCar();
+    }
+  }
+
+  void navigatorToAddCar() {
+    Navigator.pushNamed(context, ADDCAR_CARTYPE_ROUTE, arguments: _user);
   }
 }
 
@@ -350,6 +390,62 @@ class SelectionItem extends StatelessWidget {
           ),
           Text('(${car.fuelType})', style: _textStyle)
         ],
+      ),
+    );
+  }
+}
+
+class AlertToAddCar extends StatelessWidget {
+  const AlertToAddCar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: Center(
+        child: Container(
+          width: cardWidthLow,
+          decoration: BoxDecoration(
+            borderRadius: borderRadiusMedium,
+            boxShadow: [boxShadow],
+            color: bgColor,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(defualtPaddingLow),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'คุณต้องเพิ่มรถ!',
+                  style: TextStyle(
+                      fontSize: fontSizeL,
+                      color: textColorBlack,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'Kanit'),
+                ),
+                SizedBox(
+                  height: defualtPaddingLow,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                        height: buttonHeightSmall,
+                        width: buttonWidthSmall,
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.pop(context, 'Ok');
+                          },
+                          child: Text(tOKThai),
+                          style: flatButtonStyle(primaryColor, textColorBlack),
+                        )),
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

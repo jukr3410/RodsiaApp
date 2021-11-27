@@ -71,4 +71,4 @@ class CurrentLocationAndAddressSuccess extends RequestServiceState {
   String toString() => 'CurrentLocationSuccess {position: $position}';
 }
 
-class CreatedReview extends RequestServiceState {}
+

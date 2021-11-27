@@ -25,7 +25,6 @@ class _EditSelectCarTypePageState extends State<EditSelectCarTypePage> {
   String fuelType = tSelectFeulTypeCar;
 
   Car editCar = Car(
-      id: '',
       brand: tSelectBrandCar,
       model: tSelectModelCar,
       type: 'car-null',

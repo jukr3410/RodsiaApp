@@ -7,6 +7,7 @@ import 'package:rodsiaapp/core/models/garage_model.dart';
 import 'package:rodsiaapp/core/models/request_service_add_model.dart';
 import 'package:rodsiaapp/core/models/user_model.dart';
 import 'package:rodsiaapp/core/repository/garage_repository.dart';
+import 'package:rodsiaapp/core/repository/review_repository.dart';
 import 'package:rodsiaapp/core/repository/service_repository.dart';
 import 'package:rodsiaapp/core/repository/service_type_repository.dart';
 import 'package:rodsiaapp/find_garage_feature/bloc/service_type_bloc.dart';
@@ -39,6 +40,7 @@ import 'package:rodsiaapp/profile_feature/widgets/edit_car/editSelectMoreChoiceP
 import 'package:rodsiaapp/profile_feature/widgets/edit_car/editShowInfoNewCar.dart';
 import 'package:rodsiaapp/request_service_feature/bloc/garage_info_bloc.dart';
 import 'package:rodsiaapp/request_service_feature/bloc/request_service_bloc.dart';
+import 'package:rodsiaapp/request_service_feature/bloc/review_bloc.dart';
 import 'package:rodsiaapp/request_service_feature/bloc/service_bloc.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/ConfirmRequestService.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/infoGarageFormSelect.dart';
@@ -253,7 +255,10 @@ class AppRouter {
                               serviceRepository: ServiceRepository())),
                       BlocProvider(
                           create: (BuildContext context) => GarageInfoBloc(
-                              garageRepository: GarageRepository()))
+                              garageRepository: GarageRepository())),
+                      BlocProvider(
+                          create: (BuildContext context) =>
+                              ProfileBloc(userRepository: UserRepository())),
                     ],
                     child: ConfirmRequestService(
                       req: req,
@@ -285,10 +290,10 @@ class AppRouter {
             args['requestService'] as RequestService;
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
-                create: (BuildContext context) => RequestServiceBloc(
-                    requestServiceRepository: RequestServiceRepository()),
+                create: (BuildContext context) =>
+                    ReviewBloc(reviewRepository: ReviewRepository()),
                 child: DetailAndGiveStarPage(
-                  requestService: requestService,
+                  req: requestService,
                 )));
 
       case SHOWINFO_BEFOREREQ_ROUTE:

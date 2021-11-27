@@ -205,11 +205,6 @@ class _EditShowInfoNewCarState extends State<EditShowInfoNewCar> {
         builder: (BuildContext context) =>
             AlertPopupYesNo(title: tUpdateTrackingStatus));
     if (result == 'Ok') {
-      for (var i = 0; i < _user.cars!.length; i++) {
-        if (_user.cars![i].id == widget.car.carOld.id) {
-          _user.cars![i] = widget.car.carOld;
-        }
-      }
       _profileBloc.add(UserUpdateNoPassword(user: _user));
     }
   }

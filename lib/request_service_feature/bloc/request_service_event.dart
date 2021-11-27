@@ -56,11 +56,4 @@ class TrackingRequestService extends RequestServiceEvent {
 
 class GetCurrentLocationAndAddress extends RequestServiceEvent {}
 
-class CreateReview extends RequestServiceEvent {
-  final ReviewAdd reviewAdd;
 
-  const CreateReview({required this.reviewAdd});
-
-  @override
-  String toString() => 'CreateReview {reviewAdd: $reviewAdd}';
-}

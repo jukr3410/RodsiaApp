@@ -10,6 +10,7 @@ import 'package:rodsiaapp/core/models/distance_matrix.dart';
 import 'package:rodsiaapp/core/models/garage_model.dart';
 import 'package:rodsiaapp/core/models/request_service_add_model.dart';
 import 'package:rodsiaapp/core/models/request_service_model.dart';
+import 'package:rodsiaapp/global_widgets/supportButton.dart';
 import 'package:rodsiaapp/request_service_feature/bloc/request_service_bloc.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/trackingRequestCard.dart';
 
@@ -55,15 +56,8 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
         centerTitle: false,
         backgroundColor: primaryColor,
         automaticallyImplyLeading: false,
-        title: Container(
-          alignment: Alignment.centerRight,
-          child: GFButton(
-            type: GFButtonType.transparent,
-            textStyle: TextStyle(fontSize: 14, color: textColorBlack),
-            child: Text(tSupportThai),
-            onPressed: () {},
-          ),
-        ),
+        title:
+            Container(alignment: Alignment.centerRight, child: SupportButton()),
       ),
       // bottomNavigationBar: Container(
       //   width: double.infinity,
@@ -158,7 +152,7 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
                         child: Padding(
                             padding: const EdgeInsets.only(bottom: 10.0),
                             child: TrackingRequestCard(
-                              requestService: _requestService,
+                              req: _requestService,
                               duration: ((_distanceMatrix
                                           .rows[0].elements[0].duration.value /
                                       60))

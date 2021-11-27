@@ -1,14 +1,12 @@
 class Car {
   Car(
-      {required this.id,
-      required this.brand,
+      {required this.brand,
       required this.model,
       required this.type,
       required this.year,
       required this.fuelType,
       required this.regisNumber});
 
-  String id;
   String brand;
   String model;
   String type;
@@ -17,7 +15,6 @@ class Car {
   String regisNumber;
 
   factory Car.fromJson(Map<String, dynamic> json) => Car(
-      id: json["_id"],
       brand: json["brand"],
       model: json["model"],
       type: json["type"],
@@ -26,7 +23,6 @@ class Car {
       regisNumber: json['regisNumber']);
 
   Map<String, dynamic> toJson() => {
-        "_id": id,
         "brand": brand,
         "model": model,
         "type": type,
