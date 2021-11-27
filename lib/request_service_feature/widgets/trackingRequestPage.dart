@@ -5,6 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:locally/locally.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/distance_matrix.dart';
 import 'package:rodsiaapp/core/models/garage_model.dart';
@@ -46,6 +47,7 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
   void initState() {
     _requestServiceBloc = BlocProvider.of<RequestServiceBloc>(context)
       ..add(TrackingRequestService(requestServiceId: widget.requestServiceId));
+
     super.initState();
   }
 
@@ -72,6 +74,9 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
           if (state is RequestServiceLoading) {
             createMarker(context);
           } else if (state is RequestServiceLoadSuccess) {
+            if (_requestService.status != state.requestService.status) {
+              showMessage(state.requestService.status);
+            }
             _requestService = state.requestService;
             _distanceMatrix = state.distanceMatrix!;
             currentPosition = LatLng(
@@ -244,5 +249,19 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
   navigateToRequestComplated(RequestService? requestService) {
     Navigator.pushReplacementNamed(context, REQUEST_COMPLETE_ROUTE,
         arguments: {'requestService': requestService});
+  }
+
+  showMessage(String message) {
+    Locally locally;
+
+    locally = Locally(
+      context: context,
+      payload: 'test',
+      pageRoute: MaterialPageRoute(
+          builder: (context) =>
+              TrackingRequestPage(requestServiceId: _requestService.id)),
+      appIcon: 'mipmap/ic_launcher',
+    );
+    locally.show(title: "ติดตามสถานะบริการ", message: "สถานะ กำลังเดินทาง");
   }
 }
