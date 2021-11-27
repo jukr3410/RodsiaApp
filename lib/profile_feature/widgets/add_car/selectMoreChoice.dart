@@ -106,9 +106,6 @@ class _SelectMoreChoiceState extends State<SelectMoreChoice> {
                   car: widget.car,
                 ),
               ),
-              SizedBox(
-                height: 10,
-              ),
               _fromTextRegisNumber(),
               SizedBox(
                 height: 10,
@@ -197,7 +194,7 @@ class _SelectMoreChoiceState extends State<SelectMoreChoice> {
             Text(titleInfoText),
             Container(
               height: buttonHeightSmall,
-              width: buttonWidthMedium,
+              width: 245,
               margin: EdgeInsets.all(defualtPaddingLow - 5),
               child: DropdownButtonHideUnderline(
                 child: GFDropdown(
@@ -233,7 +230,7 @@ class _SelectMoreChoiceState extends State<SelectMoreChoice> {
             Text(titleInfoText),
             Container(
               height: buttonHeightSmall,
-              width: buttonWidthMedium,
+              width: 245,
               margin: EdgeInsets.all(defualtPaddingLow - 5),
               child: DropdownButtonHideUnderline(
                 child: GFDropdown(
@@ -266,7 +263,7 @@ class _SelectMoreChoiceState extends State<SelectMoreChoice> {
             Text(titleInfoText),
             Container(
               height: buttonHeightSmall,
-              width: buttonWidthMedium,
+              width: 245,
               margin: EdgeInsets.all(defualtPaddingLow - 5),
               child: DropdownButtonHideUnderline(
                 child: GFDropdown(
@@ -299,7 +296,7 @@ class _SelectMoreChoiceState extends State<SelectMoreChoice> {
             Text(titleInfoText),
             Container(
               height: buttonHeightSmall,
-              width: buttonWidthMedium,
+              width: 220,
               margin: EdgeInsets.all(defualtPaddingLow - 5),
               child: DropdownButtonHideUnderline(
                 child: GFDropdown(

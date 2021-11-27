@@ -96,8 +96,7 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
     return BlocConsumer<RequestServiceBloc, RequestServiceState>(
         listener: (context, state) {
       if (state is CreatedRequestService) {
-        _requestServiceId = state.requestServiceId;
-        navigateToWaitingRequest(state.requestServiceId);
+        navigateToWaitingRequest(state.requestService);
         // showTopSnackBar(
         //     context, CustomSnackBar.success(message: ""));
       }
@@ -297,9 +296,9 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
     Navigator.pop(context);
   }
 
-  navigateToWaitingRequest(requestServiceId) {
+  navigateToWaitingRequest(requestService) {
     Navigator.pushNamed(context, WAITING_REQUEST_ROUTE,
-        arguments: {'requestServiceId': requestServiceId});
+        arguments: requestService);
   }
 
   createRequestService() {

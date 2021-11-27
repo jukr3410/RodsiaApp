@@ -264,23 +264,21 @@ class AppRouter {
                     )));
 
       case WAITING_REQUEST_ROUTE:
-        Map args = settings.arguments as Map;
-        String requestServiceId = args['requestServiceId'] as String;
+        RequestService requestService = settings.arguments as RequestService;
+
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                 create: (BuildContext context) => RequestServiceBloc(
                     requestServiceRepository: RequestServiceRepository()),
-                child: WaitForGaragePage(requestServiceId: requestServiceId)));
+                child: WaitForGaragePage(requestService: requestService)));
 
       case TRACKING_REQUEST_ROUTE:
-        Map args = settings.arguments as Map;
-        String requestServiceId = args['requestServiceId'] as String;
+        RequestService requestService = settings.arguments as RequestService;
         return MaterialPageRoute(
             builder: (_) => BlocProvider(
                 create: (BuildContext context) => RequestServiceBloc(
                     requestServiceRepository: RequestServiceRepository()),
-                child:
-                    TrackingRequestPage(requestServiceId: requestServiceId)));
+                child: TrackingRequestPage(req: requestService)));
 
       case REQUEST_COMPLETE_ROUTE:
         Map args = settings.arguments as Map;

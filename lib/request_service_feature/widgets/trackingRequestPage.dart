@@ -15,9 +15,8 @@ import 'package:rodsiaapp/request_service_feature/widgets/trackingRequestCard.da
 import '../../main.dart';
 
 class TrackingRequestPage extends StatefulWidget {
-  String requestServiceId;
-  TrackingRequestPage({Key? key, required this.requestServiceId})
-      : super(key: key);
+  RequestService req;
+  TrackingRequestPage({Key? key, required this.req}) : super(key: key);
 
   @override
   _TrackingRequestPageState createState() => _TrackingRequestPageState();
@@ -37,14 +36,14 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
   PolylinePoints polylinePoints = PolylinePoints();
   List<Polyline> polyline = [];
 
-  late RequestService _requestService;
   late DistanceMatrix _distanceMatrix;
 
   @override
   void initState() {
     _requestServiceBloc = BlocProvider.of<RequestServiceBloc>(context)
-      ..add(TrackingRequestService(requestServiceId: widget.requestServiceId));
-
+      ..add(TrackingRequestService(requestServiceId: widget.req.id));
+    currentPosition = LatLng(double.parse(widget.req.geoLocationUser.lat),
+        double.parse(widget.req.geoLocationUser.long));
     super.initState();
   }
 
@@ -71,14 +70,12 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
           if (state is RequestServiceLoading) {
             createMarker(context);
           } else if (state is RequestServiceLoadSuccess) {
-            if (_requestService.status != state.requestService.status) {
+            if (widget.req.status != state.requestService.status) {
               showMessage(state.requestService.status);
             }
-            _requestService = state.requestService;
+            widget.req = state.requestService;
             _distanceMatrix = state.distanceMatrix!;
-            currentPosition = LatLng(
-                double.parse(state.requestService.geoLocationUser.lat),
-                double.parse(state.requestService.geoLocationUser.long));
+            setState(() {});
 
             destinationPosition = LatLng(
                 double.parse(state.requestService.geoLocationGarage.lat),
@@ -90,7 +87,7 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
             markers = getMarkers(latlongs, customIcon1!);
             getPolyline(latlongs);
           } else if (state is RequestServiceComleted) {
-            navigateToRequestComplated(_requestService);
+            navigateToRequestComplated(widget.req);
           }
         },
         builder: (context, state) {
@@ -154,7 +151,7 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
                         child: Padding(
                             padding: const EdgeInsets.only(bottom: 10.0),
                             child: TrackingRequestCard(
-                              req: _requestService,
+                              req: widget.req,
                               duration: ((_distanceMatrix
                                           .rows[0].elements[0].duration.value /
                                       60))
@@ -255,8 +252,7 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
       context: context,
       payload: 'test',
       pageRoute: MaterialPageRoute(
-          builder: (context) =>
-              TrackingRequestPage(requestServiceId: _requestService.id)),
+          builder: (context) => TrackingRequestPage(req: widget.req)),
       appIcon: 'mipmap/ic_launcher',
     );
     locally.show(title: "ติดตามสถานะบริการ", message: "สถานะ กำลังเดินทาง");

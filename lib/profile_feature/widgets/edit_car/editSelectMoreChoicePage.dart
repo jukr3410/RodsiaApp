@@ -208,7 +208,7 @@ class _EditSelectMoreChoiceState extends State<EditSelectMoreChoice> {
           Text(titleInfoText),
           Container(
             height: buttonHeightSmall,
-            width: buttonWidthMedium,
+            width: 245,
             margin: EdgeInsets.all(defualtPaddingLow - 5),
             child: DropdownButtonHideUnderline(
               child: GFDropdown(
@@ -239,7 +239,7 @@ class _EditSelectMoreChoiceState extends State<EditSelectMoreChoice> {
           Text(titleInfoText),
           Container(
             height: buttonHeightSmall,
-            width: buttonWidthMedium,
+            width: 245,
             margin: EdgeInsets.all(defualtPaddingLow - 5),
             child: DropdownButtonHideUnderline(
               child: GFDropdown(
@@ -270,7 +270,7 @@ class _EditSelectMoreChoiceState extends State<EditSelectMoreChoice> {
           Text(titleInfoText),
           Container(
             height: buttonHeightSmall,
-            width: buttonWidthMedium,
+            width: 245,
             margin: EdgeInsets.all(defualtPaddingLow - 5),
             child: DropdownButtonHideUnderline(
               child: GFDropdown(
@@ -301,7 +301,7 @@ class _EditSelectMoreChoiceState extends State<EditSelectMoreChoice> {
           Text(titleInfoText),
           Container(
             height: buttonHeightSmall,
-            width: buttonWidthMedium,
+            width: 220,
             margin: EdgeInsets.all(defualtPaddingLow - 5),
             child: DropdownButtonHideUnderline(
               child: GFDropdown(

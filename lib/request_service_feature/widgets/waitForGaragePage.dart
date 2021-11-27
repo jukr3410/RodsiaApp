@@ -13,9 +13,8 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 class WaitForGaragePage extends StatefulWidget {
-  String requestServiceId;
-  WaitForGaragePage({Key? key, required this.requestServiceId})
-      : super(key: key);
+  final RequestService requestService;
+  WaitForGaragePage({Key? key, required this.requestService}) : super(key: key);
 
   @override
   _WaitForGaragePageState createState() => _WaitForGaragePageState();
@@ -26,8 +25,8 @@ class _WaitForGaragePageState extends State<WaitForGaragePage> {
 
   @override
   void initState() {
-    _requestServiceBloc = BlocProvider.of<RequestServiceBloc>(context)
-      ..add(LoadRequestService(requestServiceId: widget.requestServiceId));
+    _requestServiceBloc = BlocProvider.of<RequestServiceBloc>(context);
+
     super.initState();
   }
 
@@ -38,7 +37,7 @@ class _WaitForGaragePageState extends State<WaitForGaragePage> {
         if (state is RequestServiceGarageConfirmed) {
           showTopSnackBar(
               context, CustomSnackBar.success(message: "ร้านยืนยันคำขอแล้ว"));
-          navigateToTrackingRequest(widget.requestServiceId);
+          navigateToTrackingRequest(widget.requestService);
         } else if (state is RequestServiceGarageDeny) {
           showTopSnackBar(
               context, CustomSnackBar.info(message: "คำขอถูกปฏิเสธ"));
@@ -54,9 +53,7 @@ class _WaitForGaragePageState extends State<WaitForGaragePage> {
             title: Container(
                 alignment: Alignment.centerRight, child: SupportButton()),
           ),
-          body: CardWaitForGarage(
-            requestServiceId: widget.requestServiceId,
-          ),
+          body: CardWaitForGarage(requestService: widget.requestService),
         );
         //}
         // return Center(
@@ -70,9 +67,9 @@ class _WaitForGaragePageState extends State<WaitForGaragePage> {
     );
   }
 
-  navigateToTrackingRequest(String requestServiceId) {
+  navigateToTrackingRequest(RequestService requestService) {
     Navigator.pushNamed(context, TRACKING_REQUEST_ROUTE,
-        arguments: {'requestServiceId': requestServiceId});
+        arguments: requestService);
   }
 
   navigateToConfirmRequest() {

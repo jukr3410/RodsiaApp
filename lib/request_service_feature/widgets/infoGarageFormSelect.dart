@@ -18,7 +18,7 @@ class _InfoGarageFormSelectState extends State<InfoGarageFormSelect> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        CarouselImageReqService(),
+        CarouselImageReqService(images: widget.garage.images),
         Container(
           height: 90,
           margin: EdgeInsets.only(
@@ -66,7 +66,7 @@ class _InfoGarageFormSelectState extends State<InfoGarageFormSelect> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      width: 200,
+                      width: 190,
                       child: Text(
                         widget.garage.name,
                         style: TextStyle(
@@ -84,13 +84,19 @@ class _InfoGarageFormSelectState extends State<InfoGarageFormSelect> {
                         )
                       ],
                     ),
-                    Row(
-                      children: [
-                        Text(tEmail + ': '),
-                        Text(
-                          widget.garage.email.toString(),
-                        )
-                      ],
+                    Container(
+                      width: 190,
+                      child: Row(
+                        children: [
+                          Text(tEmail + ': '),
+                          Text(
+                            widget.garage.email.toString(),
+                            softWrap: true,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1,
+                          )
+                        ],
+                      ),
                     ),
                   ],
                 )

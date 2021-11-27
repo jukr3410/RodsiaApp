@@ -145,15 +145,18 @@ class _GarageListState extends State<GarageList> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        garage.name,
-                        softWrap: true,
-                        maxLines: 1,
-                        overflow: TextOverflow.fade,
-                        style: new TextStyle(
-                            fontSize: fontSizeL,
-                            fontWeight: FontWeight.bold,
-                            color: textColorBlack),
+                      Container(
+                        width: 200,
+                        child: Text(
+                          garage.name,
+                          softWrap: true,
+                          maxLines: 1,
+                          overflow: TextOverflow.fade,
+                          style: new TextStyle(
+                              fontSize: fontSizeL,
+                              fontWeight: FontWeight.bold,
+                              color: textColorBlack),
+                        ),
                       ),
                       Row(children: [
                         Text(
@@ -185,6 +188,7 @@ class _GarageListState extends State<GarageList> {
                       ]),
 
                       Container(
+                        width: 200,
                         height: 25,
                         child: Row(
                           children: [

@@ -56,17 +56,17 @@ class RequestServiceBloc
       yield CreatingRequestService();
       logger.d("_mapCreateRequestServiceToState: ");
       logger.d(event.requestServiceAdd);
-      String requestServiceId = await this
+      RequestService requestService = await this
           .requestServiceRepository
           .createRequestService(requestServiceAdd: event.requestServiceAdd);
-      logger.d(requestServiceId);
+      logger.d(requestService.toJson());
       if (event.images != null) {
         for (var i = 0; i < event.images!.length; i++) {
           await this.requestServiceRepository.uploadRequestServiceImage(
-              id: requestServiceId, image: event.images![i]);
+              id: requestService.id, image: event.images![i]);
         }
       }
-      yield CreatedRequestService(requestServiceId: requestServiceId);
+      yield CreatedRequestService(requestService: requestService);
     } catch (e) {
       logger.e(e);
       yield CreateRequestServiceError();
@@ -106,7 +106,7 @@ class RequestServiceBloc
           yield RequestServiceGarageDeny();
         } else if (requestService.status == confirmedRequestService) {
           _isNotConfirmed = false;
-          yield RequestServiceGarageConfirmed();
+          yield RequestServiceGarageConfirmed(requestService: requestService);
         } else {
           yield RequestServiceWaiting();
         }

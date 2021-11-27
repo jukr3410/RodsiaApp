@@ -32,7 +32,7 @@ class RequestServiceRepository {
         status: status);
   }
 
-  Future<String> createRequestService(
+  Future<RequestService> createRequestService(
       {required RequestServiceAdd requestServiceAdd}) async {
     return await requestServiceApi.createRequestService(
         requestServiceAdd: requestServiceAdd);

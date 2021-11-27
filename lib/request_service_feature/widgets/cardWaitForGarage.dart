@@ -4,15 +4,15 @@ import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/getwidget.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:rodsiaapp/core/models/request_service_model.dart';
 import 'package:rodsiaapp/core/repository/request_service_repository.dart';
 import 'package:rodsiaapp/find_garage_feature/bloc/garage_bloc.dart';
 import 'package:rodsiaapp/request_service_feature/bloc/request_service_bloc.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/alertPopupCancleRequest.dart';
 
 class CardWaitForGarage extends StatefulWidget {
-  String requestServiceId;
-  CardWaitForGarage({Key? key, required this.requestServiceId})
-      : super(key: key);
+  RequestService requestService;
+  CardWaitForGarage({Key? key, required this.requestService}) : super(key: key);
 
   @override
   _CardWaitForGarageState createState() => _CardWaitForGarageState();
@@ -63,7 +63,7 @@ class _CardWaitForGarageState extends State<CardWaitForGarage> {
                                       requestServiceRepository:
                                           RequestServiceRepository()),
                                   child: AlertPopupCancleReq(
-                                    requestServiceId: widget.requestServiceId,
+                                    requestServiceId: widget.requestService.id,
                                   )));
                         },
                         child: Text(tCancleThai),
