@@ -122,6 +122,7 @@ class _AddInfoState extends State<AddInfo> {
                                 TextFormField(
                                     // maxLength: 25,
                                     onChanged: (value) => {_user.name = value},
+                                    textInputAction: TextInputAction.next,
                                     keyboardType: TextInputType.name,
                                     autofocus: true,
                                     textAlign: TextAlign.start,
@@ -163,6 +164,7 @@ class _AddInfoState extends State<AddInfo> {
                                               ? _user.email = ""
                                               : _user.email = value
                                         },
+                                    textInputAction: TextInputAction.next,
                                     keyboardType: TextInputType.text,
                                     autofocus: true,
                                     textAlign: TextAlign.start,
@@ -200,6 +202,7 @@ class _AddInfoState extends State<AddInfo> {
                                     // maxLength: 25,
                                     onChanged: (value) =>
                                         {_user.password = value},
+                                    textInputAction: TextInputAction.next,
                                     keyboardType: TextInputType.text,
                                     autofocus: true,
                                     obscureText: true,
@@ -238,7 +241,8 @@ class _AddInfoState extends State<AddInfo> {
                                 ),
                                 TextFormField(
                                     // maxLength: 25,
-                                    keyboardType: TextInputType.name,
+                                    textInputAction: TextInputAction.done,
+                                    keyboardType: TextInputType.text,
                                     autofocus: true,
                                     obscureText: true,
                                     textAlign: TextAlign.start,
