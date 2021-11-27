@@ -60,17 +60,18 @@ class _FindProblemPageState extends State<FindProblemPage> {
     return Column(
       children: [
         Container(
-          width: double.infinity,
+          margin: EdgeInsets.only(bottom: 0),
+          width: MediaQuery.of(context).size.width,
           child: FlatButton(
             color: Colors.grey.shade200,
             shape: new RoundedRectangleBorder(
                 borderRadius: new BorderRadius.circular(defualtPaddingLow)),
             child: Padding(
-              padding: const EdgeInsets.all(5),
+              padding: const EdgeInsets.symmetric(vertical: 8),
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(0),
                     child: Image.asset(
                       tImageAsset(mockupNameFindProblem[typeCar].toString()),
                       height: 50,

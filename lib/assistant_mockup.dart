@@ -3,7 +3,7 @@ List<String> mockupFindProblem = [
   'คุณได้ยินอะไร?',
   'คุณได้กลิ่นอะไร?',
   'คุณรู้สึกอะไร?',
-  'เกิดอะไรขึ้นเมื่อคุณติดรถ?'
+  'เกิดอะไรเมื่อคุณติดรถ?'
 ];
 List<String> mockupNameFindProblem = [
   'eye',
