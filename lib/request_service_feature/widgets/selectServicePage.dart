@@ -196,84 +196,99 @@ class _SelectServicePageState extends State<SelectServicePage> {
                   SizedBox(
                     height: 15,
                   ),
-                  Row(
-                    children: [
-                      TextButton(
-                          onPressed: () {
-                            getImage();
-                          },
-                          style: flatButtonStyle(primaryColor, textColorBlack),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(Icons.image, size: 20),
-                              SizedBox(
-                                width: 5,
+                  isGarageOpen(widget.garage) == 'ปิด'
+                      ? Column(
+                          children: [
+                            Row(
+                              children: [
+                                TextButton(
+                                    onPressed: () {
+                                      getImage();
+                                    },
+                                    style: flatButtonStyle(
+                                        primaryColor, textColorBlack),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Icon(Icons.image, size: 20),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Text('เพิ่มรูปภาพ'),
+                                      ],
+                                    )),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                TextButton(
+                                    onPressed: () {
+                                      getImageCamera();
+                                    },
+                                    style: flatButtonStyle(
+                                        primaryColor, textColorBlack),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Icon(Icons.camera_alt, size: 20),
+                                        SizedBox(
+                                          width: 5,
+                                        ),
+                                        Text('กล้อง'),
+                                      ],
+                                    )),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            TextField(
+                              style: TextStyle(fontSize: 12),
+                              controller: _controller,
+                              maxLines: 3,
+                              decoration: InputDecoration(
+                                contentPadding:
+                                    EdgeInsets.all(defualtPaddingLow),
+                                alignLabelWithHint: true,
+                                border: OutlineInputBorder(),
+                                helperText:
+                                    'เช่น ยางรั่ว, ยางระเบิด, เบรคไม่อยู่, สตาร์ทไม่ติด',
+                                helperStyle: TextStyle(fontSize: 10),
+                                labelText: 'รายละเอียดเพิ่มเติม',
                               ),
-                              Text('เพิ่มรูปภาพ'),
-                            ],
-                          )),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      TextButton(
-                          onPressed: () {
-                            getImageCamera();
-                          },
-                          style: flatButtonStyle(primaryColor, textColorBlack),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Icon(Icons.camera_alt, size: 20),
-                              SizedBox(
-                                width: 5,
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Container(
+                              // margin: EdgeInsets.only(bottom: defualtPaddingHight+20),
+                              width: double.infinity,
+                              height: buttonHeightSmall,
+                              child: TextButton(
+                                onPressed: () {
+                                  if (val == -1) {
+                                    _showDialog(context);
+                                  } else {
+                                    _requestServiceAdd.problemDesc =
+                                        _controller.text;
+                                    logger.d(_requestServiceAdd.toJson());
+                                    cmReq.req = _requestServiceAdd;
+                                    cmReq.images = _image;
+                                    logger.d(cmReq.toString());
+                                    navigateToConfirmRequest();
+                                  }
+                                },
+                                style: flatButtonStyle(
+                                    primaryColor, textColorBlack),
+                                child: Text(tNext),
                               ),
-                              Text('กล้อง'),
-                            ],
-                          )),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  TextField(
-                    style: TextStyle(fontSize: 12),
-                    controller: _controller,
-                    maxLines: 3,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.all(defualtPaddingLow),
-                      alignLabelWithHint: true,
-                      border: OutlineInputBorder(),
-                      helperText:
-                          'เช่น ยางรั่ว, ยางระเบิด, เบรคไม่อยู่, สตาร์ทไม่ติด',
-                      helperStyle: TextStyle(fontSize: 10),
-                      labelText: 'รายละเอียดเพิ่มเติม',
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    // margin: EdgeInsets.only(bottom: defualtPaddingHight+20),
-                    width: double.infinity,
-                    height: buttonHeightSmall,
-                    child: TextButton(
-                      onPressed: () {
-                        if (val == -1) {
-                          _showDialog(context);
-                        } else {
-                          _requestServiceAdd.problemDesc = _controller.text;
-                          logger.d(_requestServiceAdd.toJson());
-                          cmReq.req = _requestServiceAdd;
-                          cmReq.images = _image;
-                          logger.d(cmReq.toString());
-                          navigateToConfirmRequest();
-                        }
-                      },
-                      style: flatButtonStyle(primaryColor, textColorBlack),
-                      child: Text(tNext),
-                    ),
-                  )
+                            )
+                          ],
+                        )
+                      : Center(
+                          child: Text(
+                          'ร้านปิด...',
+                          style: TextStyle(fontSize: fontSizeXl),
+                        ))
                 ],
               ),
             ),
@@ -408,6 +423,109 @@ class _SelectServicePageState extends State<SelectServicePage> {
       ),
       onTap: () {},
     );
+  }
+
+  String isGarageOpen(Garage garage) {
+    DateTime now = DateTime.now();
+
+    // logger.d(now.hour.toString() +
+    //     ":" +
+    //     now.minute.toString() +
+    //     ":" +
+    //     now.second.toString() +
+    //     ", day: " +
+    //     now.weekday.toString());
+    var openGarage = garage.openingHour!.open.split(".");
+    var closeGarage = garage.openingHour!.close.split(".");
+    // logger.d(openGarage);
+    var openHour = int.parse(openGarage[0]);
+    var openMinute = int.parse(openGarage[1]);
+    var closeHour = int.parse(closeGarage[0]);
+    var closeMinute = int.parse(closeGarage[1]);
+
+    var status = "ปิด";
+    var textColor = textColorRed;
+
+    switch (now.weekday) {
+      case 1:
+        if ((garage.openingDayOfWeek!.mo == true) &&
+            (now.hour >= openHour && now.minute >= openMinute)) {
+          status = "เปิด";
+          textColor = textColorGreen;
+          if (now.hour > closeHour && now.minute > closeMinute) {
+            status = "ปิด";
+            textColor = textColorRed;
+          }
+        }
+        break;
+      case 2:
+        if ((garage.openingDayOfWeek!.tu == true) &&
+            (now.hour >= openHour && now.minute >= openMinute)) {
+          status = "เปิด";
+          textColor = textColorGreen;
+          if (now.hour > closeHour && now.minute > closeMinute) {
+            status = "ปิด";
+            textColor = textColorRed;
+          }
+        }
+        break;
+      case 3:
+        if ((garage.openingDayOfWeek!.we == true) &&
+            (now.hour >= openHour && now.minute >= openMinute)) {
+          status = "เปิด";
+          textColor = textColorGreen;
+          if (now.hour > closeHour && now.minute > closeMinute) {
+            status = "ปิด";
+            textColor = textColorRed;
+          }
+        }
+        break;
+      case 4:
+        if ((garage.openingDayOfWeek!.th == true) &&
+            (now.hour >= openHour && now.minute >= openMinute)) {
+          status = "เปิด";
+          textColor = textColorGreen;
+          if (now.hour > closeHour && now.minute > closeMinute) {
+            status = "ปิด";
+            textColor = textColorRed;
+          }
+        }
+        break;
+      case 5:
+        if ((garage.openingDayOfWeek!.fr == true) &&
+            (now.hour >= openHour && now.minute >= openMinute)) {
+          status = "เปิด";
+          textColor = textColorGreen;
+          if (now.hour > closeHour && now.minute > closeMinute) {
+            status = "ปิด";
+            textColor = textColorRed;
+          }
+        }
+        break;
+      case 6:
+        if ((garage.openingDayOfWeek!.sa == true) &&
+            (now.hour >= openHour && now.minute >= openMinute)) {
+          status = "เปิด";
+          textColor = textColorGreen;
+          if (now.hour > closeHour && now.minute > closeMinute) {
+            status = "ปิด";
+            textColor = textColorRed;
+          }
+        }
+        break;
+      case 7:
+        if ((garage.openingDayOfWeek!.su == true) &&
+            (now.hour >= openHour && now.minute >= openMinute)) {
+          status = "เปิด";
+          textColor = textColorGreen;
+          if (now.hour > closeHour && now.minute > closeMinute) {
+            status = "ปิด";
+            textColor = textColorRed;
+          }
+        }
+        break;
+    }
+    return status;
   }
 }
 

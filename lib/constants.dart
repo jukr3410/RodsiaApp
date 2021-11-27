@@ -209,7 +209,7 @@ const tGiveScore = 'ให้คะแนน';
 const tSend = 'ส่ง';
 const tNotAtMoment = 'ไม่ใช้ตอนนี้';
 const tSelectVehicleTypeCar = 'เลือกชนิดของรถยนตร์';
-const tSelectBrandCar = 'เลือกยี่ห้อของรถยนตร์';
+const tSelectBrandCar = 'เลือกยี่ห้อรถยนตร์';
 const tSelectModelCar = 'เลือกรุ่นของรถยนตร์';
 const tEditCar = 'แก้ไขรถยนตร์';
 const tDeleteThisCar = 'ลบรถคันนี้';
@@ -247,14 +247,15 @@ const trackingStatus = [
 const menusSetting = [
   'โปรไฟล์',
   'ศูยน์ช่วยเหลือ',
-  'chat test',
+  // 'chat test',
   'การตั้งค่า',
   'ออกจากระบบ'
 ];
 const menusSettingRoute = [
   PROFILE_ROUTE,
   SUPPORT_CENTER_ROUTE,
-  CHAT_ROUTE,
+  // CHAT_ROUTE,
+
   PROFILE_ROUTE,
 ];
 

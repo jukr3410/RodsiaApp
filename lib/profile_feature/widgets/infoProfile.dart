@@ -41,12 +41,16 @@ class _InfoProfileState extends State<InfoProfile> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  widget.user.name,
-                  style: TextStyle(
-                      fontSize: fontSizeXl, fontWeight: FontWeight.w600),
-                  softWrap: true,
-                  maxLines: 1,
+                Container(
+                  width: 150,
+                  child: Text(
+                    widget.user.name,
+                    style: TextStyle(
+                        fontSize: fontSizeXl, fontWeight: FontWeight.w600),
+                    softWrap: true,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
                 ),
                 Row(
                   children: [
@@ -56,13 +60,19 @@ class _InfoProfileState extends State<InfoProfile> {
                     )
                   ],
                 ),
-                Row(
-                  children: [
-                    Text(tEmail + ': '),
-                    Text(
-                      widget.user.email,
-                    )
-                  ],
+                Container(
+                  width: 150,
+                  child: Row(
+                    children: [
+                      Text(tEmail + ': '),
+                      Text(
+                        widget.user.email,
+                        softWrap: true,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      )
+                    ],
+                  ),
                 )
               ],
             )

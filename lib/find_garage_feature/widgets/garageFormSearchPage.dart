@@ -23,7 +23,7 @@ class _GarageFormSearchState extends State<GarageFormSearch> {
   ScrollController scrollController = ScrollController();
   late GarageListBloc _garageListBloc;
 
-  final List<Garage> _garages = [];
+  List<Garage> _garages = [];
 
   @override
   void initState() {
@@ -77,7 +77,7 @@ class _GarageFormSearchState extends State<GarageFormSearch> {
                 child: _shimmer(),
               ));
             } else if (garageState is GarageListSuccessState) {
-              _garages.addAll(garageState.garages);
+              _garages = garageState.garages;
               _garageListBloc.isFetching = false;
               ScaffoldMessenger.of(context).hideCurrentSnackBar();
             } else if (garageState is GarageListErrorState &&
@@ -158,15 +158,18 @@ class _GarageFormSearchState extends State<GarageFormSearch> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        garage.name,
-                        softWrap: true,
-                        maxLines: 1,
-                        overflow: TextOverflow.fade,
-                        style: new TextStyle(
-                            fontSize: fontSizeL,
-                            fontWeight: FontWeight.bold,
-                            color: textColorBlack),
+                      Container(
+                        width: 200,
+                        child: Text(
+                          garage.name,
+                          softWrap: true,
+                          maxLines: 1,
+                          overflow: TextOverflow.fade,
+                          style: new TextStyle(
+                              fontSize: fontSizeL,
+                              fontWeight: FontWeight.bold,
+                              color: textColorBlack),
+                        ),
                       ),
                       Row(children: [
                         Text(
@@ -196,38 +199,56 @@ class _GarageFormSearchState extends State<GarageFormSearch> {
                               color: textColorBlack),
                         ),
                       ]),
-                      Row(
-                        children: [
-                          Text(
-                            tServiceThai + ': ',
-                          ),
-                          // ListView.builder(
-                          //     shrinkWrap: true,
-                          //     scrollDirection: Axis.horizontal,
-                          //     itemCount: garage.services!.length,
-                          //     itemBuilder: (context, index) {
-                          //       return Image.asset(
-                          //         tImageAsset(
-                          //             garage.services![index].serviceType.name),
-                          //         width: 18,
-                          //       );
-                          //     }),
-                        ],
+                      Container(
+                        width: 200,
+                        height: 25,
+                        child: Row(
+                          children: [
+                            Text(
+                              tServiceThai + ': ',
+                            ),
+                            ListView.builder(
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                itemCount: garage.typeCarRepairs.length,
+                                itemBuilder: (context, index) {
+                                  return Row(
+                                    children: [
+                                      Image.asset(
+                                        tImageAsset(
+                                            garage.typeCarRepairs[index].type),
+                                        width: 18,
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      )
+                                    ],
+                                  );
+                                }),
+                            Text('  |  '),
+                            ListView.builder(
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                itemCount: garage.serviceInGarages!.length,
+                                itemBuilder: (context, index) {
+                                  return Row(
+                                    children: [
+                                      Image.asset(
+                                        tImageAsset(garage
+                                            .serviceInGarages![index]
+                                            .serviceType
+                                            .name),
+                                        width: 18,
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      )
+                                    ],
+                                  );
+                                }),
+                          ],
+                        ),
                       ),
-                      // Container(
-                      //   height: 20,
-                      //   child: ListView.builder(
-                      //       shrinkWrap: true,
-                      //       scrollDirection: Axis.horizontal,
-                      //       itemCount: garage.services!.length,
-                      //       itemBuilder: (context, index) {
-                      //         return Image.asset(
-                      //           tImageAsset(
-                      //               garage.services![index].serviceType.name),
-                      //           width: 18,
-                      //         );
-                      //       }),
-                      // ),
                       Row(
                         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [

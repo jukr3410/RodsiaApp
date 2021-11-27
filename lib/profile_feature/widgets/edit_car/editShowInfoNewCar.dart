@@ -180,16 +180,16 @@ class _EditShowInfoNewCarState extends State<EditShowInfoNewCar> {
                   SizedBox(
                     width: 5,
                   ),
-                  GFButton(
-                      onPressed: () {
-                        navigatorToBlack();
-                      },
-                      type: GFButtonType.transparent,
-                      child: Text(
-                        tEdit,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, color: textColorRed),
-                      )),
+                  // GFButton(
+                  //     onPressed: () {
+                  //       navigatorToBlack();
+                  //     },
+                  //     type: GFButtonType.transparent,
+                  //     child: Text(
+                  //       tEdit,
+                  //       style: TextStyle(
+                  //           fontWeight: FontWeight.bold, color: textColorRed),
+                  //     )),
                 ],
               ),
             );

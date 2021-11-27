@@ -52,7 +52,7 @@ class _FilterGarageState extends State<FilterGarage>
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       SizedBox(
-                        height: 30,
+                        height: 20,
                       ),
                       Container(
                         height: 6,
@@ -62,7 +62,7 @@ class _FilterGarageState extends State<FilterGarage>
                             borderRadius: borderRadiusLow),
                       ),
                       SizedBox(
-                        height: 30,
+                        height: 20,
                       ),
                       Row(
                         children: [
@@ -136,6 +136,7 @@ class _FilterGarageState extends State<FilterGarage>
                                           child: Padding(
                                             padding: const EdgeInsets.all(5),
                                             child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
                                               children: [
                                                 Image.asset(
                                                   tImageAsset(
@@ -143,8 +144,16 @@ class _FilterGarageState extends State<FilterGarage>
                                                           .toString()),
                                                   width: 40,
                                                 ),
-                                                Text(serviceTypeName[index]
-                                                    .toString())
+                                                Container(
+                                                  width: 50,
+                                                  child: Text(
+                                                    serviceTypeName[index]
+                                                        .toString(),
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -161,9 +170,7 @@ class _FilterGarageState extends State<FilterGarage>
                                     );
                                   }),
                                 ),
-                                SizedBox(
-                                  height: 10,
-                                ),
+
                                 buttonSelect()
                               ],
                             )),
@@ -171,7 +178,7 @@ class _FilterGarageState extends State<FilterGarage>
                               child: Column(
                                 children: [
                                   SizedBox(
-                                    height: 30,
+                                    height: 20,
                                   ),
                                   GridView.count(
                                     childAspectRatio: (2 / 0.9),
@@ -219,7 +226,7 @@ class _FilterGarageState extends State<FilterGarage>
                                     }),
                                   ),
                                   SizedBox(
-                                    height: 20,
+                                    height: 10,
                                   ),
                                   buttonSelect(),
                                 ],

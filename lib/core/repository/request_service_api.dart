@@ -21,7 +21,7 @@ class RequestServiceApi {
 
   final userDao = UserDao();
 
-  Future<String> createRequestService(
+  Future<RequestService> createRequestService(
       {required RequestServiceAdd requestServiceAdd}) async {
     UserDB userToken = await userDao.getUserToken();
     logger.d('userToken phone: ${userToken.phone}');
@@ -37,19 +37,18 @@ class RequestServiceApi {
         await http.post(Uri.parse(url), body: msg, headers: headers);
     if (response.statusCode != 200) {
       logger.e(response.body);
-      return response.body;
-      //throw new Exception('There was a problem ${response.statusCode}');
+      throw new Exception('There was a problem ${response.statusCode}');
     }
     // แนบ file รูปมาด้วย
     // post เสร็จก็เรียกอัพรูปต่อ
     // uploadRequestServiceImage(id: '', image: null);
 
-    logger.d('createRequestService api: ${response.body}');
     final decodedJson = jsonDecode(response.body);
+    logger.d(decodedJson);
+    RequestService req = RequestService.fromJson(decodedJson['requestService']);
 
-    String requestServiceId = decodedJson['requestServiceId'];
-    logger.d('createRequestService api requestServiceId: ${requestServiceId}');
-    return requestServiceId;
+    logger.d(req.toJson());
+    return req;
   }
 
   Future<bool> removeRequestService({required String id}) async {

@@ -238,7 +238,7 @@ class _MapViewState extends State<MapView> {
                                           children: [
                                             Flexible(
                                               child: Container(
-                                                width: width * 0.58,
+                                                width: 200,
                                                 padding: new EdgeInsets.only(
                                                     right: 13.0),
                                                 child: Text(
@@ -291,6 +291,7 @@ class _MapViewState extends State<MapView> {
                                               ),
                                             ]),
                                             Container(
+                                              width: 200,
                                               height: 25,
                                               child: Row(
                                                 children: [
@@ -416,7 +417,7 @@ class _MapViewState extends State<MapView> {
                   child: Align(
                     alignment: Alignment.bottomRight,
                     child: Padding(
-                      padding: const EdgeInsets.only(right: 8.0, bottom: 180.0),
+                      padding: const EdgeInsets.only(right: 8.0, bottom: 120.0),
                       child: ClipOval(
                         child: Material(
                           color: primaryColor,

@@ -31,16 +31,16 @@ class RequestServiceError extends RequestServiceState {}
 class CreatingRequestService extends RequestServiceState {}
 
 class CreatedRequestService extends RequestServiceState {
-  final String requestServiceId;
+  final RequestService requestService;
 
-  const CreatedRequestService({required this.requestServiceId});
+  const CreatedRequestService({required this.requestService});
 
   @override
-  List<Object> get props => [requestServiceId];
+  List<Object> get props => [requestService];
 
   @override
   String toString() =>
-      'CreatedRequestService { requestServiceId: $requestServiceId }';
+      'CreatedRequestService { requestServiceId: $requestService }';
 }
 
 class CanceledRequestService extends RequestServiceState {}
@@ -49,7 +49,10 @@ class CreateRequestServiceError extends RequestServiceState {}
 
 class RequestServiceWaiting extends RequestServiceState {}
 
-class RequestServiceGarageConfirmed extends RequestServiceState {}
+class RequestServiceGarageConfirmed extends RequestServiceState {
+  final RequestService requestService;
+  RequestServiceGarageConfirmed({required this.requestService});
+}
 
 class RequestServiceGarageDeny extends RequestServiceState {}
 
@@ -70,4 +73,3 @@ class CurrentLocationAndAddressSuccess extends RequestServiceState {
   @override
   String toString() => 'CurrentLocationSuccess {position: $position}';
 }
-
