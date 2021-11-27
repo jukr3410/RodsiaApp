@@ -30,6 +30,10 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       yield* _mapRegisterSendOtpToState(event);
     } else if (event is RegisterButtonPressed) {
       yield* _mapRegisterButtonPressedToState(event);
+    } else if (event is ResetButtonPressed) {
+      yield* _mapResetButtonPressedToState(event);
+    } else if (event is ResetCheckPhoneNumber) {
+      yield* _mapResetCheckPhoneNumberToState(event);
     } else {
       yield RegisterInitial();
     }
@@ -136,19 +140,19 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   }
 
   Stream<RegisterState> _mapResetButtonPressedToState(
-      RegisterButtonPressed event) async* {
+      ResetButtonPressed event) async* {
     try {
       yield ResetLoading();
 
-      var isRegisted = await this.userRepository.updateUser(user: event.user);
-      if (isRegisted == true) {
-        yield RegisterSuccess();
+      var isReseted = await this.userRepository.updateUser(user: event.user);
+      if (isReseted == true) {
+        yield ResetSuccess();
       } else {
-        yield RegisterError();
+        yield ResetError();
       }
     } catch (e) {
       logger.e(e);
-      yield RegisterError();
+      yield ResetError();
     }
   }
 
