@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/dropdown/gf_dropdown.dart';
+import 'package:rodsiaapp/car_mockup.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/user_model.dart';
 import 'package:rodsiaapp/global_widgets/alertPleaseInputInfo.dart';
@@ -28,14 +29,27 @@ class _EditSelectMoreChoiceState extends State<EditSelectMoreChoice> {
   String? valueYear;
   String? valueFuelType;
 
+  List<String> carBrands = ['sdfa', 'asdfasd', 'asdf'];
+  List<String> carBrandsT = [];
+  List<String> carModels = ['asdf', 'asdf', 'asdfasdf'];
+  List<String> carModelsT = [];
+  List<CarBrandModel> carDetail = [];
+
   TextEditingController _controller = TextEditingController();
 
   FocusNode myFocusNode = new FocusNode();
 
   void setStateBrand(Object? item) {
-    setState(() {
+   setState(() {
       valueBrand = item.toString();
       widget.car.carOld.brand = item.toString();
+      for (var i = 0; i < carDetail.length; i++) {
+        if (carDetail[i].brand == valueBrand) {
+          carModelsT = carDetail[i].model;
+        }
+      }
+      carModels = carModelsT;
+      logger.d(carModels);
     });
   }
 
@@ -68,6 +82,23 @@ class _EditSelectMoreChoiceState extends State<EditSelectMoreChoice> {
   }
 
   @override
+  void initState() {
+    for (var i = 0; i < carMockup.length; i++) {
+      if (carMockup[i].carType == widget.car.carOld.type) {
+        logger.d(carMockup[i].carType);
+        logger.d(widget.car.carOld.type);
+        carDetail = carMockup[i].datail;
+        for (var j = 0; j < carDetail.length; j++) {
+          carBrandsT.add(carDetail[j].brand);
+        }
+      }
+      carBrands = carBrandsT;
+      logger.d(carBrands);
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -97,10 +128,16 @@ class _EditSelectMoreChoiceState extends State<EditSelectMoreChoice> {
               SizedBox(
                 height: 10,
               ),
-              _selectDropdownBrand(tBrand, brandCar),
-              _selectDropdownModel(tModel, modelCar),
-              _selectDropdownYear(tYearModel, yearModelCar),
-              _selectDropdownFuelType(tFuelType, fuelTypeCar),
+              _selectDropdownBrand(tBrand, carBrands),
+              valueBrand == null
+                  ? Text('')
+                  : _selectDropdownModel(tModel, carModels),
+              valueModel == null
+                  ? Text('')
+                  : _selectDropdownYear(tYearModel, yearModelCar),
+              valueYear == null
+                  ? Text('')
+                  : _selectDropdownFuelType(tFuelType, fuelTypeCar),
               SizedBox(
                 height: 20,
               ),

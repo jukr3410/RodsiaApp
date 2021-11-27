@@ -27,19 +27,17 @@ class ShowInfoNewCar extends StatefulWidget {
 class _ShowInfoNewCarState extends State<ShowInfoNewCar> {
   late ProfileBloc _profileBloc;
   User _user = mockUpUser;
-  int numOfCar = 0;
+  int? numOfCar;
 
   @override
   void initState() {
     _profileBloc = BlocProvider.of<ProfileBloc>(context)
       ..add(ProfileLoadFormPhone());
-
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    numOfCar = _user.cars!.length + 1;
     return Container(
       decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -52,7 +50,7 @@ class _ShowInfoNewCarState extends State<ShowInfoNewCar> {
           ])),
       child: Scaffold(
         appBar: AppBar(
-          iconTheme: IconThemeData(color: textColorBlack),
+          iconTheme: IconThemeData(color: bgColor),
           centerTitle: true,
           title: Text(
             tInfoNewcar,
@@ -65,6 +63,9 @@ class _ShowInfoNewCarState extends State<ShowInfoNewCar> {
           listener: (context, state) {
             if (state is UserLoadSuccess) {
               _user = state.user;
+              setState(() {
+                numOfCar = _user.cars!.length + 1;
+              });
               print(_user.toString());
             }
             if (state is ProfileUpdated) {

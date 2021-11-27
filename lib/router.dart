@@ -46,7 +46,6 @@ import 'package:rodsiaapp/request_service_feature/widgets/ConfirmRequestService.
 import 'package:rodsiaapp/request_service_feature/widgets/infoGarageFormSelect.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/moreInfoGarage.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/requestDetailAndGiveStarPage.dart';
-import 'package:rodsiaapp/request_service_feature/widgets/selectCarAndRecapBeforeReq.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/trackingRequestPage.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/waitForGaragePage.dart';
 import 'core/models/car_model.dart';
@@ -295,9 +294,6 @@ class AppRouter {
                 child: DetailAndGiveStarPage(
                   req: requestService,
                 )));
-
-      case SHOWINFO_BEFOREREQ_ROUTE:
-        return MaterialPageRoute(builder: (_) => SelectCarAndRecapBeforeReq());
 
       case EDITPROFILE_ROUTE:
         User user = settings.arguments as User;

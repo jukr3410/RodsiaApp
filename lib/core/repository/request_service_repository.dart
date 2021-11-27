@@ -22,9 +22,14 @@ class RequestServiceRepository {
     return await requestServiceApi.getRequestService(id: id);
   }
 
-  Future<List<RequestService>> getRequestServiceByUserId(
-      {required String id}) async {
-    return await requestServiceApi.getRequestServiceByUserId(id: id);
+  Future<List<RequestService>> getRequestServiceByUserId() async {
+    return await requestServiceApi.getRequestServiceByUserId();
+  }
+
+  Future<List<RequestService>> getRequestServiceListWithStatus(
+      {required String status}) async {
+    return await requestServiceApi.getRequestServiceListWithStatus(
+        status: status);
   }
 
   Future<String> createRequestService(

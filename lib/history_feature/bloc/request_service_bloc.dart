@@ -11,15 +11,15 @@ import 'package:rodsiaapp/request_service_feature/bloc/request_service_bloc.dart
 part 'request_service_event.dart';
 part 'request_service_state.dart';
 
-class RequestServiceBloc extends Bloc<RequestServiceEvent, RequestServiceState> {
+class RequestServiceBloc
+    extends Bloc<RequestServiceEvent, RequestServiceState> {
   final RequestServiceRepository requestServiceRepository;
   StreamSubscription? _servicesSubscription;
 
   RequestServiceApi serviceApi = RequestServiceApi();
 
-  RequestServiceBloc({required this.requestServiceRepository}) : super(RequestServiceInitial());
-
-  String mockUserId = "613e165e9f55a3526c9b829e";
+  RequestServiceBloc({required this.requestServiceRepository})
+      : super(RequestServiceInitial());
 
   @override
   Stream<RequestServiceState> mapEventToState(
@@ -27,6 +27,8 @@ class RequestServiceBloc extends Bloc<RequestServiceEvent, RequestServiceState> 
   ) async* {
     if (event is RequestServiceLoad) {
       yield* _mapRequestServiceLoadToState();
+    } else if (event is RequestServiceWithStatus) {
+      yield* _mapRequestServiceLoadWithStatusToState(event.status);
     } else if (event is RequestServiceInitializeEvent) {
       yield RequestServiceInitial();
     }
@@ -34,9 +36,21 @@ class RequestServiceBloc extends Bloc<RequestServiceEvent, RequestServiceState> 
 
   Stream<RequestServiceState> _mapRequestServiceLoadToState() async* {
     try {
+      final requestServices =
+          await this.requestServiceRepository.getRequestServiceByUserId();
+      yield RequestServicesLoadSuccess(requestServices: requestServices);
+    } catch (e) {
+      logger.e(e);
+      yield RequestServicesError();
+    }
+  }
+
+  Stream<RequestServiceState> _mapRequestServiceLoadWithStatusToState(
+      String status) async* {
+    try {
       final requestServices = await this
           .requestServiceRepository
-          .getRequestServiceByUserId(id: mockUserId);
+          .getRequestServiceListWithStatus(status: status);
       yield RequestServicesLoadSuccess(requestServices: requestServices);
     } catch (e) {
       logger.e(e);

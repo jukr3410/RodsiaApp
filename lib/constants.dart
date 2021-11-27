@@ -296,7 +296,15 @@ User mockUpUser = User(
     password: '',
     otp: '',
     validatePhone: true,
-    cars: [],
+    cars: [
+      Car(
+          brand: 'Honda',
+          model: 'Civic',
+          type: 'four-wheel',
+          year: '2010',
+          fuelType: 'Gas',
+          regisNumber: 'กง1123'),
+    ],
     profileImage: '');
 
 final brandCar = [

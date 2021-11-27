@@ -80,10 +80,10 @@ class RequestServiceApi {
     return requestService;
   }
 
-  Future<List<RequestService>> getRequestServiceByUserId(
-      {required String id}) async {
+  Future<List<RequestService>> getRequestServiceByUserId() async {
+    UserDB userToken = await userDao.getUserToken();
     List<RequestService> requestServices = [];
-    final url = '$baseUrl/request-services/user/$id';
+    final url = '$baseUrl/request-services/user/${userToken.user_id}';
     final response = await http.get(Uri.parse(url), headers: headers);
     if (response.statusCode != 200) {
       logger.e(response);
@@ -116,9 +116,31 @@ class RequestServiceApi {
     return requestServices;
   }
 
+  Future<List<RequestService>> getRequestServiceListWithStatus(
+      {required String status}) async {
+    UserDB userToken = await userDao.getUserToken();
+    List<RequestService> requestServices = [];
+    logger.d(userToken.user_id);
+    final url =
+        '$baseUrl/request-services/user/${userToken.user_id}?status=$status';
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode != 200) {
+      logger.e(response);
+      throw new Exception('There was a problem ${response.statusCode}');
+    }
+
+    final decodedJson = jsonDecode(response.body) as List;
+    requestServices = decodedJson
+        .map((decodedJson) => RequestService.fromJson(decodedJson))
+        .toList();
+
+    logger.d(requestServices);
+    return requestServices;
+  }
+
   Future<bool> uploadRequestServiceImage(
       {required String id, required File image}) async {
-    final url = '$baseUrl/image-uploads/request-service/${id}';
+    final url = '$baseUrl/image-uploads-multi/request-service/$id/1';
 
     var request = http.MultipartRequest(
       'POST',

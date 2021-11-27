@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -58,6 +59,13 @@ class RequestServiceBloc
       String requestServiceId = await this
           .requestServiceRepository
           .createRequestService(requestServiceAdd: event.requestServiceAdd);
+      logger.d(requestServiceId);
+      if (event.images != null) {
+        for (var i = 0; i < event.images!.length; i++) {
+          await this.requestServiceRepository.uploadRequestServiceImage(
+              id: requestServiceId, image: event.images![i]);
+        }
+      }
       yield CreatedRequestService(requestServiceId: requestServiceId);
     } catch (e) {
       logger.e(e);

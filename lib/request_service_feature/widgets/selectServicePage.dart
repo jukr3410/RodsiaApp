@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -59,9 +61,6 @@ class _SelectServicePageState extends State<SelectServicePage> {
     holder_1.clear();
   }
 
-  List<Asset> images = <Asset>[];
-  String _error = 'No Error Dectected';
-
   RequestServiceAdd _requestServiceAdd = RequestServiceAdd(
     user: '',
     service: '',
@@ -92,6 +91,30 @@ class _SelectServicePageState extends State<SelectServicePage> {
     _requestServiceAdd.geoLocationGarage.long =
         widget.garage.address.geoLocation.long;
     super.initState();
+  }
+
+  final ImagePicker _picker = ImagePicker();
+  List<File> _image = [];
+  Future getImage() async {
+    final List<XFile>? images = await _picker.pickMultiImage();
+
+    setState(() {
+      if (images != null) {
+        for (var i = 0; i < images.length; i++) {
+          _image.add(File(images[i].path));
+        }
+      }
+    });
+  }
+
+  Future getImageCamera() async {
+    final XFile? image = await _picker.pickImage(source: ImageSource.camera);
+
+    setState(() {
+      if (image != null) {
+        _image.add(File(image.path));
+      }
+    });
   }
 
   @override
@@ -177,7 +200,7 @@ class _SelectServicePageState extends State<SelectServicePage> {
                     children: [
                       TextButton(
                           onPressed: () {
-                            loadAssets();
+                            getImage();
                           },
                           style: flatButtonStyle(primaryColor, textColorBlack),
                           child: Row(
@@ -193,19 +216,21 @@ class _SelectServicePageState extends State<SelectServicePage> {
                       SizedBox(
                         width: 10,
                       ),
-                      // TextButton(
-                      //     onPressed: () {},
-                      //     style: flatButtonStyle(primaryColor, textColorBlack),
-                      //     child: Row(
-                      //       mainAxisSize: MainAxisSize.min,
-                      //       children: [
-                      //         Icon(Icons.camera_alt, size: 20),
-                      //         SizedBox(
-                      //           width: 5,
-                      //         ),
-                      //         Text('กล้อง'),
-                      //       ],
-                      //     )),
+                      TextButton(
+                          onPressed: () {
+                            getImageCamera();
+                          },
+                          style: flatButtonStyle(primaryColor, textColorBlack),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(Icons.camera_alt, size: 20),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text('กล้อง'),
+                            ],
+                          )),
                     ],
                   ),
                   SizedBox(
@@ -240,7 +265,7 @@ class _SelectServicePageState extends State<SelectServicePage> {
                           _requestServiceAdd.problemDesc = _controller.text;
                           logger.d(_requestServiceAdd.toJson());
                           cmReq.req = _requestServiceAdd;
-                          cmReq.images = images;
+                          cmReq.images = _image;
                           logger.d(cmReq.toString());
                           navigateToConfirmRequest();
                         }
@@ -254,43 +279,6 @@ class _SelectServicePageState extends State<SelectServicePage> {
             ),
           ]),
         ));
-  }
-
-  Future<void> loadAssets() async {
-    List<Asset> resultList = <Asset>[];
-    String error = 'No Error Detected';
-
-    try {
-      resultList = await MultiImagePicker.pickImages(
-        maxImages: 10,
-        enableCamera: true,
-        selectedAssets: images,
-        cupertinoOptions: CupertinoOptions(
-          takePhotoIcon: "chat",
-          doneButtonTitle: "Fatto",
-        ),
-        materialOptions: MaterialOptions(
-          statusBarColor: '#808080',
-          actionBarColor: '#38454C',
-          actionBarTitle: "เลือกรูปภาพ",
-          allViewTitle: "รูปทั้งหมด",
-          useDetailsView: false,
-          selectCircleStrokeColor: "#FECE2F",
-        ),
-      );
-    } on Exception catch (e) {
-      error = e.toString();
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      images = resultList;
-      _error = error;
-    });
   }
 
   void _showDialog(BuildContext context) {
@@ -350,26 +338,24 @@ class _SelectServicePageState extends State<SelectServicePage> {
   }
 
   _addImageForReq() {
-    if (images.length > 0) {
+    if (_image.length > 0) {
       return GridView.count(
         crossAxisCount: 4,
         mainAxisSpacing: 5,
         crossAxisSpacing: 5,
         shrinkWrap: true,
-        children: List.generate(images.length, (index) {
-          Asset asset = images[index];
-          print(asset);
-          return AssetThumb(
-            asset: asset,
+        children: List.generate(_image.length, (index) {
+          File image = _image[index];
+          return Image.file(
+            image,
             width: 300,
             height: 300,
+            fit: BoxFit.cover,
           );
         }),
       );
     } else {
-      return SizedBox(
-        height: 10,
-      );
+      return SizedBox();
     }
   }
 
@@ -430,7 +416,7 @@ class ComfirmReq {
   String serviceName;
   String serviceType;
   RequestServiceAdd? req;
-  List<Asset>? images;
+  List<File>? images;
 
   ComfirmReq(
       {required this.garageName,

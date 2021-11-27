@@ -279,12 +279,12 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
         crossAxisSpacing: 5,
         shrinkWrap: true,
         children: List.generate(widget.req.images!.length, (index) {
-          Asset asset = widget.req.images![index];
-          print(asset);
-          return AssetThumb(
-            asset: asset,
+          File image = widget.req.images![index];
+          return Image.file(
+            image,
             width: 300,
             height: 300,
+            fit: BoxFit.cover,
           );
         }),
       );
@@ -304,7 +304,9 @@ class _ConfirmRequestServiceState extends State<ConfirmRequestService> {
 
   createRequestService() {
     _requestServiceBloc
-      ..add(CreateRequestService(requestServiceAdd: widget.req.req!));
+      ..add(CreateRequestService(
+          requestServiceAdd: widget.req.req!,
+          images: widget.req.images!.isEmpty ? null : widget.req.images));
   }
 
   void _navigateAndDisplaySelection(BuildContext context) async {

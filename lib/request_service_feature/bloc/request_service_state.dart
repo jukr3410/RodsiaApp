@@ -71,4 +71,3 @@ class CurrentLocationAndAddressSuccess extends RequestServiceState {
   String toString() => 'CurrentLocationSuccess {position: $position}';
 }
 
-

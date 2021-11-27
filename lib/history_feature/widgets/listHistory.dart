@@ -24,7 +24,7 @@ class _ListhistoryState extends State<Listhistory> {
   @override
   void initState() {
     _requestServiceBloc = BlocProvider.of<RequestServiceBloc>(context)
-      ..add(RequestServiceLoad());
+      ..add(RequestServiceWithStatus(status: 'งานเสร็จแล้ว'));
     super.initState();
   }
 
@@ -44,7 +44,7 @@ class _ListhistoryState extends State<Listhistory> {
           builder: (context, state) {
             print(state.toString());
             if (state is RequestServicesLoadSuccess) {
-              _reqServices.addAll(state.requestServices);
+              _reqServices = state.requestServices;
               _widget = ListView.builder(
                   shrinkWrap: true,
                   scrollDirection: Axis.vertical,
@@ -52,6 +52,9 @@ class _ListhistoryState extends State<Listhistory> {
                   itemBuilder: (context, index) {
                     return cardNotify(_reqServices[index]);
                   });
+              if (state.requestServices.isEmpty) {
+                _widget = Center(child: Text('ไม่มีประวัติการใข้งาน!'));
+              }
             } else if (state is RequestServicesError) {
               _widget = Center(child: Text('ไม่มีประวัติการใข้งาน!'));
             }
@@ -63,7 +66,6 @@ class _ListhistoryState extends State<Listhistory> {
   Widget cardNotify(RequestService requestService) {
     return GestureDetector(
       child: Card(
-        // shape: RoundedRectangleBorder(borderRadius: borderRadiusMedium),
         elevation: 2,
         margin: new EdgeInsets.symmetric(
             horizontal: defualtPaddingLow - 2, vertical: defualtPaddingLow - 7),
@@ -71,7 +73,6 @@ class _ListhistoryState extends State<Listhistory> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
                 width: 10,
@@ -85,39 +86,53 @@ class _ListhistoryState extends State<Listhistory> {
               SizedBox(
                 width: 20,
               ),
-              Flexible(
-                  child: Column(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    requestService.service.garage!.name,
-                    softWrap: true,
-                    maxLines: 1,
-                    overflow: TextOverflow.fade,
-                    style: new TextStyle(
-                        fontSize: fontSizeL - 1,
-                        fontWeight: FontWeight.bold,
-                        color: textColorBlack),
-                  ),
                   Text(
                     requestService.service.name,
                     softWrap: true,
                     maxLines: 1,
                     overflow: TextOverflow.fade,
                     style: new TextStyle(
-                        fontSize: fontSizeS - 1,
+                        fontSize: fontSizeXl - 1,
                         fontWeight: FontWeight.bold,
-                        color: Colors.grey),
+                        color: textColorBlack),
                   ),
                   Text(
-                    DateFormat('yyyy-MMM-dd  HH:MM น.').format(
-                        DateTime.parse(requestService.createdAt.toString())),
-                    style:
-                        TextStyle(color: Colors.grey, fontSize: fontSizeS - 2),
+                    requestService.user.name,
+                    softWrap: true,
+                    maxLines: 1,
+                    overflow: TextOverflow.fade,
+                    style: new TextStyle(
+                        fontSize: fontSizeM - 1,
+                        fontWeight: FontWeight.bold,
+                        color: textColorBlack),
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        DateFormat('dd-MMM-yyyy | HH:MM น.').format(
+                            DateTime.parse(
+                                requestService.createdAt.toString())),
+                        style: TextStyle(
+                            color: textColorBlack, fontSize: fontSizeM - 2),
+                      ),
+                      Text(" ~ "),
+                      Text(
+                        "12 กก.",
+                        style: TextStyle(
+                          color: textColorBlack,
+                          fontSize: fontSizeM - 2,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
-              )),
+              ),
+
+              // )
             ],
           ),
         ),

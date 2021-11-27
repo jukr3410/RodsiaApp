@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:getwidget/components/dropdown/gf_dropdown.dart';
+import 'package:rodsiaapp/car_mockup.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/car_model.dart';
 import 'package:rodsiaapp/global_widgets/alertPleaseInputInfo.dart';
@@ -22,12 +23,25 @@ class _SelectMoreChoiceState extends State<SelectMoreChoice> {
   String? valueFuelType;
   TextEditingController _controller = TextEditingController();
 
+  List<String> carBrands = ['sdfa', 'asdfasd', 'asdf'];
+  List<String> carBrandsT = [];
+  List<String> carModels = ['asdf', 'asdf', 'asdfasdf'];
+  List<String> carModelsT = [];
+  List<CarBrandModel> carDetail = [];
+
   FocusNode myFocusNode = new FocusNode();
 
   void setStateBrand(Object? item) {
     setState(() {
       valueBrand = item.toString();
       widget.car.brand = item.toString();
+      for (var i = 0; i < carDetail.length; i++) {
+        if (carDetail[i].brand == valueBrand) {
+          carModelsT = carDetail[i].model;
+        }
+      }
+      carModels = carModelsT;
+      logger.d(carModels);
     });
   }
 
@@ -50,6 +64,23 @@ class _SelectMoreChoiceState extends State<SelectMoreChoice> {
       valueFuelType = item.toString();
       widget.car.fuelType = item.toString();
     });
+  }
+
+  @override
+  void initState() {
+    for (var i = 0; i < carMockup.length; i++) {
+      if (carMockup[i].carType == widget.car.type) {
+        logger.d(carMockup[i].carType);
+        logger.d(widget.car.type);
+        carDetail = carMockup[i].datail;
+        for (var j = 0; j < carDetail.length; j++) {
+          carBrandsT.add(carDetail[j].brand);
+        }
+      }
+      carBrands = carBrandsT;
+      logger.d(carBrands);
+    }
+    super.initState();
   }
 
   @override
@@ -82,10 +113,16 @@ class _SelectMoreChoiceState extends State<SelectMoreChoice> {
               SizedBox(
                 height: 10,
               ),
-              _selectDropdownBrand(tBrand, brandCar),
-              _selectDropdownModel(tModel, modelCar),
-              _selectDropdownYear(tYearModel, yearModelCar),
-              _selectDropdownFuelType(tFuelType, fuelTypeCar),
+              _selectDropdownBrand(tBrand, carBrands),
+              valueBrand == null
+                  ? Text('')
+                  : _selectDropdownModel(tModel, carModels),
+              valueModel == null
+                  ? Text('')
+                  : _selectDropdownYear(tYearModel, yearModelCar),
+              valueYear == null
+                  ? Text('')
+                  : _selectDropdownFuelType(tFuelType, fuelTypeCar),
               SizedBox(
                 height: 30,
               ),
@@ -150,125 +187,136 @@ class _SelectMoreChoiceState extends State<SelectMoreChoice> {
 
 // select dropdown
   Widget _selectDropdownBrand(String titleInfoText, List<String> list) {
-    return Padding(
-      padding: const EdgeInsets.only(
-          right: defualtPaddingHight + 5, left: defualtPaddingHight + 5),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Text(titleInfoText),
-          Container(
-            height: buttonHeightSmall,
-            width: buttonWidthMedium,
-            margin: EdgeInsets.all(defualtPaddingLow - 5),
-            child: DropdownButtonHideUnderline(
-              child: GFDropdown(
-                value: valueBrand,
-                padding: const EdgeInsets.all(defualtPaddingLow),
-                borderRadius: borderRadiusLow,
-                border: const BorderSide(color: Colors.black12, width: 1),
-                dropdownButtonColor: bgColor,
-                onChanged: (value) {
-                  setStateBrand(value);
-                },
-                items: list.map(buildMenuItem).toList(),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.only(
+            right: defualtPaddingHight + 5, left: defualtPaddingHight + 5),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(titleInfoText),
+            Container(
+              height: buttonHeightSmall,
+              width: buttonWidthMedium,
+              margin: EdgeInsets.all(defualtPaddingLow - 5),
+              child: DropdownButtonHideUnderline(
+                child: GFDropdown(
+                  value: valueBrand,
+                  padding: const EdgeInsets.all(defualtPaddingLow),
+                  borderRadius: borderRadiusLow,
+                  border: const BorderSide(color: Colors.black12, width: 1),
+                  dropdownButtonColor: bgColor,
+                  onChanged: (value) {
+                    setStateBrand(value);
+                  },
+                  items: list
+                      .map((String item) => DropdownMenuItem<String>(
+                          child: Text(item), value: item))
+                      .toList(),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
   Widget _selectDropdownModel(String titleInfoText, List<String> list) {
-    return Padding(
-      padding: const EdgeInsets.only(
-          right: defualtPaddingHight + 5, left: defualtPaddingHight + 5),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Text(titleInfoText),
-          Container(
-            height: buttonHeightSmall,
-            width: buttonWidthMedium,
-            margin: EdgeInsets.all(defualtPaddingLow - 5),
-            child: DropdownButtonHideUnderline(
-              child: GFDropdown(
-                value: valueModel,
-                padding: const EdgeInsets.all(defualtPaddingLow),
-                borderRadius: borderRadiusLow,
-                border: const BorderSide(color: Colors.black12, width: 1),
-                dropdownButtonColor: bgColor,
-                onChanged: (value) {
-                  setStateModel(value);
-                },
-                items: list.map(buildMenuItem).toList(),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.only(
+            right: defualtPaddingHight + 5, left: defualtPaddingHight + 5),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(titleInfoText),
+            Container(
+              height: buttonHeightSmall,
+              width: buttonWidthMedium,
+              margin: EdgeInsets.all(defualtPaddingLow - 5),
+              child: DropdownButtonHideUnderline(
+                child: GFDropdown(
+                  value: valueModel,
+                  padding: const EdgeInsets.all(defualtPaddingLow),
+                  borderRadius: borderRadiusLow,
+                  border: const BorderSide(color: Colors.black12, width: 1),
+                  dropdownButtonColor: bgColor,
+                  onChanged: (value) {
+                    setStateModel(value);
+                  },
+                  items: list.map(buildMenuItem).toList(),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
   Widget _selectDropdownYear(String titleInfoText, List<String> list) {
-    return Padding(
-      padding: const EdgeInsets.only(
-          right: defualtPaddingHight + 5, left: defualtPaddingHight + 5),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Text(titleInfoText),
-          Container(
-            height: buttonHeightSmall,
-            width: buttonWidthMedium,
-            margin: EdgeInsets.all(defualtPaddingLow - 5),
-            child: DropdownButtonHideUnderline(
-              child: GFDropdown(
-                value: valueYear,
-                padding: const EdgeInsets.all(defualtPaddingLow),
-                borderRadius: borderRadiusLow,
-                border: const BorderSide(color: Colors.black12, width: 1),
-                dropdownButtonColor: bgColor,
-                onChanged: (value) {
-                  setStateYear(value);
-                },
-                items: list.map(buildMenuItem).toList(),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.only(
+            right: defualtPaddingHight + 5, left: defualtPaddingHight + 5),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(titleInfoText),
+            Container(
+              height: buttonHeightSmall,
+              width: buttonWidthMedium,
+              margin: EdgeInsets.all(defualtPaddingLow - 5),
+              child: DropdownButtonHideUnderline(
+                child: GFDropdown(
+                  value: valueYear,
+                  padding: const EdgeInsets.all(defualtPaddingLow),
+                  borderRadius: borderRadiusLow,
+                  border: const BorderSide(color: Colors.black12, width: 1),
+                  dropdownButtonColor: bgColor,
+                  onChanged: (value) {
+                    setStateYear(value);
+                  },
+                  items: list.map(buildMenuItem).toList(),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
   Widget _selectDropdownFuelType(String titleInfoText, List<String> list) {
-    return Padding(
-      padding: const EdgeInsets.only(
-          right: defualtPaddingHight + 5, left: defualtPaddingHight + 5),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Text(titleInfoText),
-          Container(
-            height: buttonHeightSmall,
-            width: buttonWidthMedium,
-            margin: EdgeInsets.all(defualtPaddingLow - 5),
-            child: DropdownButtonHideUnderline(
-              child: GFDropdown(
-                value: valueFuelType,
-                padding: const EdgeInsets.all(defualtPaddingLow),
-                borderRadius: borderRadiusLow,
-                border: const BorderSide(color: Colors.black12, width: 1),
-                dropdownButtonColor: bgColor,
-                onChanged: (value) {
-                  setStateFuelType(value);
-                },
-                items: list.map(buildMenuItem).toList(),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.only(
+            right: defualtPaddingHight + 5, left: defualtPaddingHight + 5),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Text(titleInfoText),
+            Container(
+              height: buttonHeightSmall,
+              width: buttonWidthMedium,
+              margin: EdgeInsets.all(defualtPaddingLow - 5),
+              child: DropdownButtonHideUnderline(
+                child: GFDropdown(
+                  value: valueFuelType,
+                  padding: const EdgeInsets.all(defualtPaddingLow),
+                  borderRadius: borderRadiusLow,
+                  border: const BorderSide(color: Colors.black12, width: 1),
+                  dropdownButtonColor: bgColor,
+                  onChanged: (value) {
+                    setStateFuelType(value);
+                  },
+                  items: list.map(buildMenuItem).toList(),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
