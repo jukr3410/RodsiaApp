@@ -79,6 +79,9 @@ dependencies:
   multi_image_picker2: ^5.0.02
   image_picker: ^0.8.4+4
 
+  # notify
+  flutter_local_notifications: ^9.1.4
+
 
 dev_dependencies:
   flutter_test:
