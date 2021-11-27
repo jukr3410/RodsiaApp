@@ -88,7 +88,9 @@ class _MapViewState extends State<MapView> {
             return Center(
                 child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(primaryColor),
+              ),
             ));
           } else if (state is MapError || state is GarageListErrorState) {
             return Center(
@@ -450,7 +452,9 @@ class _MapViewState extends State<MapView> {
           return Center(
               child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-            child: CircularProgressIndicator(),
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(primaryColor),
+            ),
           ));
         },
       ),

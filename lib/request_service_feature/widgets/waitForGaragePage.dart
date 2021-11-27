@@ -62,7 +62,9 @@ class _WaitForGaragePageState extends State<WaitForGaragePage> {
         // return Center(
         //     child: Padding(
         //   padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-        //   child: CircularProgressIndicator(),
+        //   child: CircularProgressIndicator(
+        //   valueColor: AlwaysStoppedAnimation<Color>(primaryColor),
+        // ),
         // ));
       },
     );

@@ -133,7 +133,9 @@ class _MenusSettingState extends State<MenusSetting> {
               );
             }
             return Center(
-              child: CircularProgressIndicator(),
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(primaryColor),
+              ),
             );
           },
         );

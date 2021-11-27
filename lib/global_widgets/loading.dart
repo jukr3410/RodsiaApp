@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rodsiaapp/constants.dart';
 
 class LoadingProgress extends StatelessWidget {
   final double width;
@@ -13,7 +14,9 @@ class LoadingProgress extends StatelessWidget {
       alignment: Alignment.center,
       height: height,
       width: width,
-      child: CircularProgressIndicator(),
+      child: CircularProgressIndicator(
+        valueColor: AlwaysStoppedAnimation<Color>(primaryColor),
+      ),
     );
   }
 }
