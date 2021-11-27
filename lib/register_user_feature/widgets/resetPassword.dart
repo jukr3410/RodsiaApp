@@ -1,24 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:rodsiaapp/constants.dart';
-import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/user_model.dart';
 import 'package:rodsiaapp/register_user_feature/bloc/register_bloc.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
-import 'otp.dart';
-
-class AddInfo extends StatefulWidget {
+class ResetPassword extends StatefulWidget {
   User user;
-  AddInfo({Key? key, required this.user}) : super(key: key);
+  ResetPassword({Key? key, required this.user}) : super(key: key);
   @override
   _AddInfoState createState() => _AddInfoState();
 }
 
-class _AddInfoState extends State<AddInfo> {
+class _AddInfoState extends State<ResetPassword> {
   final _controller = TextEditingController();
   GlobalKey<FormState> _form = GlobalKey<FormState>();
   final phoneConTroller = TextEditingController();
@@ -48,11 +44,11 @@ class _AddInfoState extends State<AddInfo> {
     return Center(
         child: BlocConsumer<RegisterBloc, RegisterState>(
             listener: (context, state) {
-      if (state is RegisterSuccess) {
+      if (state is ResetSuccess) {
         navigateToLogin();
         showTopSnackBar(
-            context, CustomSnackBar.success(message: "สมัครสมาชิกสำเร็จ"));
-      } else if (state is RegisterError) {
+            context, CustomSnackBar.success(message: "รีเว็ตรหัสผ่านสำเร็จ"));
+      } else if (state is ResetError) {
         showTopSnackBar(
           context,
           CustomSnackBar.error(
@@ -113,88 +109,12 @@ class _AddInfoState extends State<AddInfo> {
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 10, horizontal: 0),
                                   child: Text(
-                                    "ระบุข้อมูล",
+                                    "ระบุรหัสผ่านใหม่",
                                     style: TextStyle(
                                         color: textColorBlack,
                                         fontSize: fontSizeL),
                                   ),
                                 ),
-                                TextFormField(
-                                    // maxLength: 25,
-                                    onChanged: (value) => {_user.name = value},
-                                    textInputAction: TextInputAction.next,
-                                    keyboardType: TextInputType.name,
-                                    autofocus: true,
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                        color: textColorBlack, fontSize: 15),
-                                    inputFormatters: [
-                                      //MaskedInputFormatter('(###)-###-####')
-                                    ],
-                                    decoration: InputDecoration(
-                                      // icon: Icon(Icons.phone_android),
-                                      filled: true,
-                                      fillColor: Colors.white,
-                                      alignLabelWithHint: true,
-                                      prefixIcon: Icon(
-                                        Icons.person,
-                                        color: textColorBlack,
-                                      ),
-
-                                      border: OutlineInputBorder(
-                                          borderRadius: borderRadiusMedium,
-                                          borderSide: BorderSide.none),
-                                      hintText: "ชื่อ",
-                                      hintStyle: TextStyle(
-                                          color: textColorBlack, fontSize: 15),
-                                    ),
-                                    validator: MultiValidator([
-                                      RequiredValidator(
-                                          errorText: "โปรระบุชื่อ"),
-                                      MinLengthValidator(1,
-                                          errorText: "โปรระบุชื่อ"),
-                                    ])),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                TextFormField(
-                                    // maxLength: 25,
-                                    onChanged: (value) => {
-                                          value.isEmpty
-                                              ? _user.email = ""
-                                              : _user.email = value
-                                        },
-                                    textInputAction: TextInputAction.next,
-                                    keyboardType: TextInputType.text,
-                                    autofocus: true,
-                                    textAlign: TextAlign.start,
-                                    style: TextStyle(
-                                        color: textColorBlack, fontSize: 15),
-                                    inputFormatters: [
-                                      //MaskedInputFormatter('(###)-###-####')
-                                    ],
-                                    decoration: InputDecoration(
-                                      // icon: Icon(Icons.phone_android),
-                                      filled: true,
-                                      prefixIcon: Icon(Icons.email,
-                                          color: textColorBlack),
-                                      fillColor: Colors.white,
-                                      alignLabelWithHint: true,
-                                      border: OutlineInputBorder(
-                                          borderRadius: borderRadiusMedium,
-                                          borderSide: BorderSide.none),
-                                      hintText: tEmail + " (ไม่จำเป็น)",
-                                      hintStyle: TextStyle(
-                                          color: textColorBlack, fontSize: 15),
-                                    ),
-                                    validator: MultiValidator([
-                                      EmailValidator(
-                                          errorText: 'โปรดระบุอีเมลให้ถูกต้อง')
-                                      // RequiredValidator(errorText: ""),
-                                      // MinLengthValidator(14,
-                                      //     errorText:
-                                      //         "Phone should be atleast 10 number."),
-                                    ])),
                                 SizedBox(
                                   height: 10,
                                 ),
@@ -292,7 +212,7 @@ class _AddInfoState extends State<AddInfo> {
                         child: TextButton(
                           onPressed: () {
                             if (_form.currentState!.validate()) {
-                              register();
+                              resetPassword();
                             }
                           },
                           style: TextButton.styleFrom(
@@ -307,7 +227,7 @@ class _AddInfoState extends State<AddInfo> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 Text(
-                                  tRegistration,
+                                  tNext,
                                   style: TextStyle(
                                       color: textColorWhite,
                                       fontSize: 15,
@@ -335,8 +255,8 @@ class _AddInfoState extends State<AddInfo> {
     Navigator.pushReplacementNamed(context, LOGIN_ROUTE);
   }
 
-  void register() {
-    _registerBloc.add(RegisterButtonPressed(user: _user));
+  void resetPassword() {
+    _registerBloc.add(ResetButtonPressed(user: _user));
   }
 
   @override

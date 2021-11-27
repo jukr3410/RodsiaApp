@@ -63,3 +63,24 @@ class RegisterSendOtp extends RegisterEvent {
   @override
   String toString() => 'RegisterSendOtpAgian user: ${user}';
 }
+
+class ResetCheckPhoneNumber extends RegisterEvent {
+  final User user;
+
+  const ResetCheckPhoneNumber({required this.user});
+
+  @override
+  List<Object> get props => [user];
+
+  @override
+  String toString() => 'RegisterAddNumber user: ${user.toJson()}';
+}
+
+class ResetButtonPressed extends RegisterEvent {
+  final User user;
+
+  const ResetButtonPressed({required this.user});
+
+  @override
+  String toString() => 'Register {user: $user}';
+}

@@ -2,26 +2,23 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:getwidget/getwidget.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/user_model.dart';
 import 'package:rodsiaapp/main.dart';
 import 'package:rodsiaapp/register_user_feature/bloc/register_bloc.dart';
-import 'package:sms_otp_auto_verify/sms_otp_auto_verify.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
-class Otp extends StatefulWidget {
+class ResetOtp extends StatefulWidget {
   User user;
-  Otp({Key? key, required this.user}) : super(key: key);
+  ResetOtp({Key? key, required this.user}) : super(key: key);
 
   @override
-  _OtpState createState() => _OtpState();
+  _ResetOtpState createState() => _ResetOtpState();
 }
 
-class _OtpState extends State<Otp> {
+class _ResetOtpState extends State<ResetOtp> {
   Color hexToColor(String code) {
     return new Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
   }
@@ -78,7 +75,7 @@ class _OtpState extends State<Otp> {
           elevation: 0,
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios, color: textColorBlack),
-            onPressed: () => navigateBackToAddPhone(),
+            onPressed: () => navigateBackToPhoneNumber(),
           ),
         ),
         backgroundColor: primaryColor,
@@ -87,11 +84,11 @@ class _OtpState extends State<Otp> {
             listener: (context, state) {
               if (state is RegisterSendVerifyOtpSuccess) {
                 showTopSnackBar(context,
-                    CustomSnackBar.success(message: "ส่งรหัสยืนยันแล้ว"));
+                    CustomSnackBar.success(message: "ส่งรหัสรีเซ็ตแล้ว"));
               } else if (state is RegisterVerifySuccess) {
                 navigateToAddInfo(_user);
-                showTopSnackBar(
-                    context, CustomSnackBar.success(message: "ยืนยันสำเร็จ"));
+                showTopSnackBar(context,
+                    CustomSnackBar.success(message: "ยืนยันรหัสสำเร็จ"));
               } else if (state is RegisterError) {
                 showTopSnackBar(
                   context,
@@ -280,10 +277,10 @@ class _OtpState extends State<Otp> {
 
   void navigateToAddInfo(User user) {
     //Navigator.pushNamed(context, REGISTER_ROUTE);
-    Navigator.pushNamed(context, REGISTER_ROUTE, arguments: user);
+    Navigator.pushNamed(context, FORGOT_RESET_PASS_ROUTE, arguments: user);
   }
 
-  void navigateBackToAddPhone() {
+  void navigateBackToPhoneNumber() {
     Navigator.of(context).pop();
   }
 

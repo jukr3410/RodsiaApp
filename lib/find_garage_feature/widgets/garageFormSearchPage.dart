@@ -139,7 +139,7 @@ class _GarageFormSearchState extends State<GarageFormSearch> {
                 radius: 40,
                 child: ClipOval(
                   child: Image.network(
-                    'https://bestkru-thumbs.s3-ap-southeast-1.amazonaws.com/127401',
+                    garage.logoImage,
                     width: 110,
                     height: 150,
                     fit: BoxFit.cover,
@@ -173,7 +173,7 @@ class _GarageFormSearchState extends State<GarageFormSearch> {
                       ),
                       Row(children: [
                         Text(
-                          "distance: " + "12 km",
+                          "ระยะทาง: " + garage.distance.toString(),
                           style: new TextStyle(
                               fontSize: fontSizeM,
                               fontWeight: FontWeight.normal,
@@ -192,7 +192,7 @@ class _GarageFormSearchState extends State<GarageFormSearch> {
                           size: 20,
                         ),
                         Text(
-                          " " + "3.9",
+                          " " + garage.reviewStar.toString(),
                           style: new TextStyle(
                               fontSize: fontSizeM,
                               fontWeight: FontWeight.normal,
@@ -252,13 +252,14 @@ class _GarageFormSearchState extends State<GarageFormSearch> {
                       Row(
                         // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            'close',
-                            style: TextStyle(
-                                fontSize: fontSizeM,
-                                fontWeight: FontWeight.normal,
-                                color: textColorRed),
-                          ),
+                          isGarageOpen(garage)
+                          // Text(
+                          //   'close',
+                          //   style: TextStyle(
+                          //       fontSize: fontSizeM,
+                          //       fontWeight: FontWeight.normal,
+                          //       color: textColorRed),
+                          // ),
                           // Padding(
                           //   padding: const EdgeInsets.symmetric(horizontal: 0.0),
                           //   child: Icon(Icons.data_usage),
@@ -346,6 +347,114 @@ class _GarageFormSearchState extends State<GarageFormSearch> {
 
   void navigateToGarageInfo(Garage garage) {
     Navigator.pushNamed(context, GARAGE_INFO_ROUTE, arguments: garage);
+  }
+
+  isGarageOpen(Garage garage) {
+    DateTime now = DateTime.now();
+
+    // logger.d(now.hour.toString() +
+    //     ":" +
+    //     now.minute.toString() +
+    //     ":" +
+    //     now.second.toString() +
+    //     ", day: " +
+    //     now.weekday.toString());
+    var openGarage = garage.openingHour!.open.split(".");
+    var closeGarage = garage.openingHour!.close.split(".");
+    // logger.d(openGarage);
+    var openHour = int.parse(openGarage[0]);
+    var openMinute = int.parse(openGarage[1]);
+    var closeHour = int.parse(closeGarage[0]);
+    var closeMinute = int.parse(closeGarage[1]);
+
+    var status = "ปิด";
+    var textColor = textColorRed;
+
+    switch (now.weekday) {
+      case 1:
+        if ((garage.openingDayOfWeek!.mo == true) &&
+            (now.hour >= openHour && now.minute >= openMinute)) {
+          status = "เปิด";
+          textColor = textColorGreen;
+          if (now.hour > closeHour && now.minute > closeMinute) {
+            status = "ปิด";
+            textColor = textColorRed;
+          }
+        }
+        break;
+      case 2:
+        if ((garage.openingDayOfWeek!.tu == true) &&
+            (now.hour >= openHour && now.minute >= openMinute)) {
+          status = "เปิด";
+          textColor = textColorGreen;
+          if (now.hour > closeHour && now.minute > closeMinute) {
+            status = "ปิด";
+            textColor = textColorRed;
+          }
+        }
+        break;
+      case 3:
+        if ((garage.openingDayOfWeek!.we == true) &&
+            (now.hour >= openHour && now.minute >= openMinute)) {
+          status = "เปิด";
+          textColor = textColorGreen;
+          if (now.hour > closeHour && now.minute > closeMinute) {
+            status = "ปิด";
+            textColor = textColorRed;
+          }
+        }
+        break;
+      case 4:
+        if ((garage.openingDayOfWeek!.th == true) &&
+            (now.hour >= openHour && now.minute >= openMinute)) {
+          status = "เปิด";
+          textColor = textColorGreen;
+          if (now.hour > closeHour && now.minute > closeMinute) {
+            status = "ปิด";
+            textColor = textColorRed;
+          }
+        }
+        break;
+      case 5:
+        if ((garage.openingDayOfWeek!.fr == true) &&
+            (now.hour >= openHour && now.minute >= openMinute)) {
+          status = "เปิด";
+          textColor = textColorGreen;
+          if (now.hour > closeHour && now.minute > closeMinute) {
+            status = "ปิด";
+            textColor = textColorRed;
+          }
+        }
+        break;
+      case 6:
+        if ((garage.openingDayOfWeek!.sa == true) &&
+            (now.hour >= openHour && now.minute >= openMinute)) {
+          status = "เปิด";
+          textColor = textColorGreen;
+          if (now.hour > closeHour && now.minute > closeMinute) {
+            status = "ปิด";
+            textColor = textColorRed;
+          }
+        }
+        break;
+      case 7:
+        if ((garage.openingDayOfWeek!.su == true) &&
+            (now.hour >= openHour && now.minute >= openMinute)) {
+          status = "เปิด";
+          textColor = textColorGreen;
+          if (now.hour > closeHour && now.minute > closeMinute) {
+            status = "ปิด";
+            textColor = textColorRed;
+          }
+        }
+        break;
+    }
+
+    return Text(
+      status,
+      style: TextStyle(
+          fontSize: fontSizeM, fontWeight: FontWeight.normal, color: textColor),
+    );
   }
 
   @override

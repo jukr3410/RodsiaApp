@@ -52,6 +52,9 @@ const SUPPORT_CENTER_ROUTE = '/support_center';
 const NOTIFY_ROUTE = '/notify';
 const GARAGE_SEARCH_ROUTE = '/garage_search';
 const EDIT_PASSWOED_ROUTE = '/edit_password';
+const FORGOT_PASSWORD_ROUTE = '/forgot_password';
+const FORGOT_OTP_ROUTE = "/forgot_otp";
+const FORGOT_RESET_PASS_ROUTE = "/forgot_reset_password";
 
 // font size
 const fontSizeXl = 18.0;
@@ -217,6 +220,7 @@ const tSelectFeulTypeCar = 'เลือกชนิดเชื้อเพล�
 const tInfoNewcar = 'ข้อมูลรถคันใหม่ของคุณ';
 const tInfoEditcar = 'ข้อมูลรถใหม่ของรถคุณ';
 const tRegistration = 'สร้างบัญชี';
+const tForgetPassword = 'ลืมรหัสผ่าน';
 const tAppName = 'รถเสีย';
 const tLogin = 'เข้าสู่ระบบ';
 const tRecapOrder = 'สรุปรายการ';

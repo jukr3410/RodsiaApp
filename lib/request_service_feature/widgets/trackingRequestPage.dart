@@ -255,6 +255,6 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
           builder: (context) => TrackingRequestPage(req: widget.req)),
       appIcon: 'mipmap/ic_launcher',
     );
-    locally.show(title: "ติดตามสถานะบริการ", message: "สถานะ กำลังเดินทาง");
+    locally.show(title: "ติดตามสถานะบริการ", message: "สถานะ $message");
   }
 }
