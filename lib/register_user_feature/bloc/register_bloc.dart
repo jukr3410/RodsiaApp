@@ -118,7 +118,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   Stream<RegisterState> _mapResetCheckPhoneNumberToState(
       ResetCheckPhoneNumber event) async* {
     try {
-      yield RegisterLoading();
+      yield ResetLoading();
       logger.d("Phone: ${event.user.phone}");
       var isPhoneNumberExist =
           await this.userRepository.checkUsedNumberPhone(user: event.user);
@@ -128,6 +128,23 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         yield ResetNumberNotExist();
       } else if (isPhoneNumberExist == true) {
         yield ResetNumberExist();
+      }
+    } catch (e) {
+      logger.e(e);
+      yield RegisterError();
+    }
+  }
+
+  Stream<RegisterState> _mapResetButtonPressedToState(
+      RegisterButtonPressed event) async* {
+    try {
+      yield ResetLoading();
+
+      var isRegisted = await this.userRepository.updateUser(user: event.user);
+      if (isRegisted == true) {
+        yield RegisterSuccess();
+      } else {
+        yield RegisterError();
       }
     } catch (e) {
       logger.e(e);

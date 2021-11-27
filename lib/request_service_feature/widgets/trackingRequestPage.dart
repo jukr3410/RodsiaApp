@@ -8,6 +8,7 @@ import 'package:rodsiaapp/core/models/distance_matrix.dart';
 import 'package:rodsiaapp/core/models/garage_model.dart';
 import 'package:rodsiaapp/core/models/request_service_add_model.dart';
 import 'package:rodsiaapp/core/models/request_service_model.dart';
+import 'package:rodsiaapp/core/repository/request_service_repository.dart';
 import 'package:rodsiaapp/global_widgets/supportButton.dart';
 import 'package:rodsiaapp/request_service_feature/bloc/request_service_bloc.dart';
 import 'package:rodsiaapp/request_service_feature/widgets/trackingRequestCard.dart';
@@ -255,8 +256,10 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
       context: context,
       payload: 'test',
       pageRoute: MaterialPageRoute(
-          builder: (context) =>
-              TrackingRequestPage(requestServiceId: _requestService.id)),
+          builder: (_) => BlocProvider(
+              create: (BuildContext context) => RequestServiceBloc(
+                  requestServiceRepository: RequestServiceRepository()),
+              child: TrackingRequestPage(requestService: requestService))),
       appIcon: 'mipmap/ic_launcher',
     );
     locally.show(title: "ติดตามสถานะบริการ", message: "สถานะ $message");
