@@ -163,7 +163,7 @@ class _AddInfoState extends State<AddInfo> {
                                               ? _user.email = ""
                                               : _user.email = value
                                         },
-                                    keyboardType: TextInputType.name,
+                                    keyboardType: TextInputType.text,
                                     autofocus: true,
                                     textAlign: TextAlign.start,
                                     style: TextStyle(
@@ -200,7 +200,7 @@ class _AddInfoState extends State<AddInfo> {
                                     // maxLength: 25,
                                     onChanged: (value) =>
                                         {_user.password = value},
-                                    keyboardType: TextInputType.name,
+                                    keyboardType: TextInputType.text,
                                     autofocus: true,
                                     obscureText: true,
                                     textAlign: TextAlign.start,
@@ -231,8 +231,6 @@ class _AddInfoState extends State<AddInfo> {
                                         return "โปรดระบุรหัสผ่าน";
                                       } else if (value.length < 8) {
                                         return "โปรดระบุรหัส 8 ตัวขึ้นไป";
-                                      } else {
-                                        return null;
                                       }
                                     }),
                                 SizedBox(
