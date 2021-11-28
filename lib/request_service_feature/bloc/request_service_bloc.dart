@@ -89,7 +89,7 @@ class RequestServiceBloc
     }
   }
 
-  Stream<RequestServiceState> _mapLoadRequestServiceToState(
+  Stream<RequestServiceState>  _mapLoadRequestServiceToState(
       LoadRequestService event) async* {
     try {
       yield RequestServiceLoading();

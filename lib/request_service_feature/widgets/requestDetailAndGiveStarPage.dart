@@ -217,7 +217,7 @@ class _DetailAndGiveStarPageState extends State<DetailAndGiveStarPage> {
   }
 
   _addImageForReq() {
-    if (widget.req.images != null) {
+    if (widget.req.images!.isNotEmpty) {
       return GridView.count(
         crossAxisCount: 4,
         mainAxisSpacing: 5,

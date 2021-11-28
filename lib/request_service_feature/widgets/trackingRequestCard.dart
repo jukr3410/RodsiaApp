@@ -303,7 +303,7 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
                                   SizedBox(
                                     width: 10,
                                   ),
-                                  widget.req.images == null
+                                  widget.req.images!.isEmpty
                                       ? Text('ไม่มีรูป')
                                       : Container(
                                           height: 40,
@@ -351,7 +351,8 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
                                 ],
                               ),
                               SizedBox(
-                                height: 5,
+                                height
+                                : 5,
                               ),
                             ],
                           ),

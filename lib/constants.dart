@@ -204,7 +204,7 @@ const tLocationThai = 'ตำแหน่ง:';
 const tLocationCurrent = 'ตำแหน่งปัจจุบัน';
 const tProblemThai = 'ปัญหา:';
 const tPlearInputInfo = 'คุณเพิ่มข้อมูลไม่ครบ!';
-const tEstimateDuration = 'ระยะเวลาประมาณ:';
+const tEstimateDuration = 'ระยะเวลา:';
 const tGiveScore = 'ให้คะแนน';
 const tSend = 'ส่ง';
 const tNotAtMoment = 'ไม่ใช้ตอนนี้';
@@ -303,12 +303,12 @@ User mockUpUser = User(
     validatePhone: true,
     cars: [
       Car(
-          brand: 'Honda',
-          model: 'Civic',
-          type: 'four-wheel',
-          year: '2010',
-          fuelType: 'Gas',
-          regisNumber: 'กง1123'),
+          brand: '?',
+          model: '?',
+          type: 'car-null',
+          year: '?',
+          fuelType: '?',
+          regisNumber: '?'),
     ],
     profileImage: '');
 

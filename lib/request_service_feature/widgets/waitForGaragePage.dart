@@ -25,7 +25,8 @@ class _WaitForGaragePageState extends State<WaitForGaragePage> {
 
   @override
   void initState() {
-    _requestServiceBloc = BlocProvider.of<RequestServiceBloc>(context);
+    _requestServiceBloc = BlocProvider.of<RequestServiceBloc>(context)
+      ..add(LoadRequestService(requestServiceId: widget.requestService.id));
 
     super.initState();
   }
@@ -37,7 +38,7 @@ class _WaitForGaragePageState extends State<WaitForGaragePage> {
         if (state is RequestServiceGarageConfirmed) {
           showTopSnackBar(
               context, CustomSnackBar.success(message: "ร้านยืนยันคำขอแล้ว"));
-          navigateToTrackingRequest(widget.requestService);
+          navigateToTrackingRequest(state.requestService);
         } else if (state is RequestServiceGarageDeny) {
           showTopSnackBar(
               context, CustomSnackBar.info(message: "คำขอถูกปฏิเสธ"));
