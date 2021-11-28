@@ -9,7 +9,6 @@ import 'package:rodsiaapp/constants.dart';
 import 'package:rodsiaapp/core/models/user_model.dart';
 import 'package:rodsiaapp/main.dart';
 import 'package:rodsiaapp/register_user_feature/bloc/register_bloc.dart';
-import 'package:sms_otp_auto_verify/sms_otp_auto_verify.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 

@@ -109,20 +109,6 @@ class _MapViewState extends State<MapView> {
           } else if (state is! GarageListErrorState) {
             return Stack(
               children: <Widget>[
-                // Map View
-                // GoogleMap(
-                //   markers: Set<Marker>.from(markers),
-                //   initialCameraPosition: _initialLocation,
-                //   myLocationEnabled: true,
-                //   myLocationButtonEnabled: false,
-                //   mapType: MapType.normal,
-                //   zoomGesturesEnabled: true,
-                //   zoomControlsEnabled: false,
-                //   onMapCreated: (GoogleMapController controller) {
-                //     _mapController = controller;
-                //   },
-                // ),
-
                 GoogleMap(
                   initialCameraPosition: CameraPosition(
                       target: LatLng(
@@ -133,6 +119,8 @@ class _MapViewState extends State<MapView> {
                   mapType: MapType.normal,
                   //myLocationButtonEnabled: false,
                   zoomGesturesEnabled: false,
+                  zoomControlsEnabled: false,
+                  mapToolbarEnabled: false,
                   markers: Set<Marker>.of(markers),
                   onMapCreated: (GoogleMapController controller) {
                     _mapController = controller;
