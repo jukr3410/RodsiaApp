@@ -75,7 +75,7 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
                       child: Row(
                         children: [
                           Expanded(
-                            flex: 8,
+                            flex: 5,
                             child: Row(
                               children: [
                                 Padding(
@@ -104,7 +104,6 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
                             ),
                           ),
                           Expanded(
-                            flex: 2,
                             child: Align(
                               alignment: Alignment.centerRight,
                               child: Row(
