@@ -31,6 +31,8 @@ class _AddInfoState extends State<ResetPassword> {
       cars: [],
       profileImage: "");
 
+  bool _passwordVisible = false;
+
   late RegisterBloc _registerBloc;
   @override
   void initState() {
@@ -125,7 +127,7 @@ class _AddInfoState extends State<ResetPassword> {
                                     textInputAction: TextInputAction.next,
                                     keyboardType: TextInputType.text,
                                     autofocus: true,
-                                    obscureText: true,
+                                    obscureText: !_passwordVisible,
                                     textAlign: TextAlign.start,
                                     style: TextStyle(
                                         color: textColorBlack, fontSize: 15),
@@ -138,6 +140,22 @@ class _AddInfoState extends State<ResetPassword> {
                                       prefixIcon: Icon(
                                         Icons.security_rounded,
                                         color: textColorBlack,
+                                      ),
+                                      suffixIcon: IconButton(
+                                        icon: Icon(
+                                          // Based on passwordVisible state choose the icon
+                                          _passwordVisible
+                                              ? Icons.visibility
+                                              : Icons.visibility_off,
+                                          color: textColorBlack,
+                                        ),
+                                        onPressed: () {
+                                          // Update the state i.e. toogle the state of passwordVisible variable
+                                          setState(() {
+                                            _passwordVisible =
+                                                !_passwordVisible;
+                                          });
+                                        },
                                       ),
                                       fillColor: Colors.white,
                                       alignLabelWithHint: true,
@@ -164,7 +182,7 @@ class _AddInfoState extends State<ResetPassword> {
                                     textInputAction: TextInputAction.done,
                                     keyboardType: TextInputType.text,
                                     autofocus: true,
-                                    obscureText: true,
+                                    obscureText: !_passwordVisible,
                                     textAlign: TextAlign.start,
                                     style: TextStyle(
                                         color: textColorBlack, fontSize: 15),
