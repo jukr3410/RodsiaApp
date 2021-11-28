@@ -194,7 +194,7 @@ class _ResetCheckNumberState extends State<ResetCheckNumber> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
                                     Text(
-                                      "ยืนยัน",
+                                      tNext,
                                       style: TextStyle(
                                           color: textColorWhite,
                                           fontSize: 15,
