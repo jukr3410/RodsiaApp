@@ -47,7 +47,7 @@ class _AddInfoState extends State<ResetPassword> {
       if (state is ResetSuccess) {
         navigateToLogin();
         showTopSnackBar(
-            context, CustomSnackBar.success(message: "รีเว็ตรหัสผ่านสำเร็จ"));
+            context, CustomSnackBar.success(message: "รีเซ็ตรหัสผ่านสำเร็จ"));
       } else if (state is ResetError) {
         showTopSnackBar(
           context,
@@ -112,7 +112,7 @@ class _AddInfoState extends State<ResetPassword> {
                                     "ระบุรหัสผ่านใหม่",
                                     style: TextStyle(
                                         color: textColorBlack,
-                                        fontSize: fontSizeL),
+                                        fontSize: fontSizeL + 8),
                                   ),
                                 ),
                                 SizedBox(

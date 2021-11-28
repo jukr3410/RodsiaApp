@@ -55,7 +55,7 @@ class _ResetCheckNumberState extends State<ResetCheckNumber> {
       } else if (state is ResetNumberExist) {
         navigateToOtp(_user);
         // showTopSnackBar(
-        //     context, CustomSnackBar.success(message: "เพิ่มหมายเลขแล้ว"));
+        //     context, CustomSnackBar.success(message: "หมายเลขถูกต้อง"));
       } else if (state is ResetError) {
         showTopSnackBar(
           context,
