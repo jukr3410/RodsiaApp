@@ -111,6 +111,9 @@ class _TrackingRequestPageState extends State<TrackingRequestPage> {
                     _mapController = controller;
                   },
                 ),
+                SizedBox(
+                  height: 20,
+                ),
                 // Show current location button
                 SafeArea(
                   child: Align(

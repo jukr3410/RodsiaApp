@@ -195,8 +195,8 @@ class _HistoryInfoPageState extends State<HistoryInfoPage> {
                                           children: [
                                             GestureDetector(
                                               child: CachedNetworkImage(
-                                                width: 40,
-                                                height: 40,
+                                                width: 80,
+                                                height: 80,
                                                 fit: BoxFit.cover,
                                                 imageUrl: widget.requestService
                                                     .images![index].image,

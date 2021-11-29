@@ -3,7 +3,7 @@ List<String> mockupFindProblem = [
   'คุณได้ยินอะไร?',
   'คุณได้กลิ่นอะไร?',
   'คุณรู้สึกอะไร?',
-  'เกิดอะไรเมื่อคุณติดรถ?'
+  'เกิดอะไรเมื่อคุณสตาร์ทรถ?'
 ];
 List<String> mockupNameFindProblem = [
   'eye',
@@ -356,7 +356,7 @@ List<FindProblem> mockupChoiceFindProblem = [
   ]),
   FindProblem(id: 5, detail: [
     FindProblemDetail(
-        fect: 'เครื่องบนต์หมุนปกติแต่สตาร์ทไม่ติด',
+        fect: 'เครื่องยนต์หมุนปกติแต่สตาร์ทไม่ติด',
         whereSolution: [
           FindProblemWhereAndSolution(solution: [
             'ไม่มีแรงดันน้ำมันเชื้อเพลิง >> เติมน้ำมันเชื้อเพลิง',
@@ -364,7 +364,7 @@ List<FindProblem> mockupChoiceFindProblem = [
             'ไม่มีประกายไฟ >> ปรับแต่งเครื่องยนต์'
           ])
         ]),
-    FindProblemDetail(fect: 'เครื่องบนต์หมุนช้า', whereSolution: [
+    FindProblemDetail(fect: 'เครื่องยนต์หมุนช้า', whereSolution: [
       FindProblemWhereAndSolution(solution: [
         'แบตเตอรี่อ่อน >> เปลี่ยนแบตเตอรี่',
         'ขั้วแบตเตอรี่สึกกร่อน >> เปลี่ยนแบตเตอรี่',
@@ -397,7 +397,7 @@ List<FindProblem> mockupChoiceFindProblem = [
         'ตัวสตาร์ทไม่ดี >> เปลี่ยน starter ',
       ])
     ]),
-    FindProblemDetail(fect: 'เสียงลิกซ้ำ : คลิก คลิก คลิก', whereSolution: [
+    FindProblemDetail(fect: 'เสียงคลิกซ้ำ : คลิก คลิก คลิก', whereSolution: [
       FindProblemWhereAndSolution(solution: [
         'แบตเตอรี่อ่อน >> เปลี่ยนแบตเตอรี่',
         'ขั้วแบตเตอรี่สึกกร่อน >> เปลี่ยนแบตเตอรี่',

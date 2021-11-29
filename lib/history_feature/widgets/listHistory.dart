@@ -119,14 +119,6 @@ class _ListhistoryState extends State<Listhistory> {
                         style: TextStyle(
                             color: textColorBlack, fontSize: fontSizeM - 2),
                       ),
-                      Text(" ~ "),
-                      Text(
-                        "12 กก.",
-                        style: TextStyle(
-                          color: textColorBlack,
-                          fontSize: fontSizeM - 2,
-                        ),
-                      ),
                     ],
                   ),
                 ],

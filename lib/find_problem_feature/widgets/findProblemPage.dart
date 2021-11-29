@@ -32,7 +32,7 @@ class _FindProblemPageState extends State<FindProblemPage> {
               height: 10,
             ),
             Text(
-              "เลือกถึงปัญหาที่สังเกตุได้",
+              "เลือกถึงปัญหาที่สังเกตได้",
             ),
             SizedBox(
               height: 5,

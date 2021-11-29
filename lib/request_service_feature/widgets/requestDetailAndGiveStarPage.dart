@@ -95,6 +95,7 @@ class _DetailAndGiveStarPageState extends State<DetailAndGiveStarPage> {
                     Padding(
                       padding: const EdgeInsets.all(defualtPaddingMedium),
                       child: TextFormField(
+                        textInputAction: TextInputAction.done,
                         onChanged: (value) => {_reviewAdd.text = value},
                         cursorColor: primaryColor,
                         scrollPadding: EdgeInsets.only(top: 10),
@@ -225,8 +226,8 @@ class _DetailAndGiveStarPageState extends State<DetailAndGiveStarPage> {
         shrinkWrap: true,
         children: List.generate(widget.req.images!.length, (index) {
           return CachedNetworkImage(
-            width: 40,
-            height: 40,
+            width: 80,
+            height: 80,
             fit: BoxFit.cover,
             imageUrl: widget.req.images![index].image,
             placeholder: (context, url) => CircularProgressIndicator(

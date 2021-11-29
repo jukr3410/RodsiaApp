@@ -234,7 +234,7 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
                                     width: 10,
                                   ),
                                   Text(
-                                    widget.distance,
+                                    widget.distance + ' กม',
                                     softWrap: true,
                                     style: _textStyleSmall,
                                   ),
@@ -351,8 +351,7 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
                                 ],
                               ),
                               SizedBox(
-                                height
-                                : 5,
+                                height: 5,
                               ),
                             ],
                           ),

@@ -196,7 +196,7 @@ class _SelectServicePageState extends State<SelectServicePage> {
                   SizedBox(
                     height: 15,
                   ),
-                  isGarageOpen(widget.garage) == 'ปิด'
+                  isGarageOpen(widget.garage) == 'เปิด'
                       ? Column(
                           children: [
                             Row(

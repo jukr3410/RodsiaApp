@@ -29,7 +29,7 @@ class _GarageListState extends State<GarageList> {
   late GarageListBloc _garageListBloc;
   final geoService = GeoLocatorService();
 
-  final List<Garage> _garages = [];
+  List<Garage> _garages = [];
 
   @override
   void initState() {
@@ -74,7 +74,7 @@ class _GarageListState extends State<GarageList> {
               child: _shimmer(),
             ));
           } else if (garageState is GarageListSuccessState) {
-            _garages.addAll(garageState.garages);
+            _garages = garageState.garages;
 
             _garageListBloc.isFetching = false;
             ScaffoldMessenger.of(context).hideCurrentSnackBar();

@@ -42,7 +42,7 @@ class _InfoProfileState extends State<InfoProfile> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  width: 150,
+                  width: 180,
                   child: Text(
                     widget.user.name,
                     style: TextStyle(
@@ -60,19 +60,19 @@ class _InfoProfileState extends State<InfoProfile> {
                     )
                   ],
                 ),
-                Container(
-                  width: 150,
-                  child: Row(
-                    children: [
-                      Text(tEmail + ': '),
-                      Text(
+                Row(
+                  children: [
+                    Text(tEmail + ': '),
+                    Container(
+                      width: 180,
+                      child: Text(
                         widget.user.email,
                         softWrap: true,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
-                      )
-                    ],
-                  ),
+                      ),
+                    )
+                  ],
                 )
               ],
             )

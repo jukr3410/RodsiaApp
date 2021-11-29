@@ -248,15 +248,12 @@ const menusSetting = [
   'โปรไฟล์',
   'ศูยน์ช่วยเหลือ',
   // 'chat test',
-  'การตั้งค่า',
   'ออกจากระบบ'
 ];
 const menusSettingRoute = [
   PROFILE_ROUTE,
   SUPPORT_CENTER_ROUTE,
   // CHAT_ROUTE,
-
-  PROFILE_ROUTE,
 ];
 
 //vehicle type
