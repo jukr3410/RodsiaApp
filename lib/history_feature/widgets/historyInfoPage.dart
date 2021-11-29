@@ -152,24 +152,11 @@ class _HistoryInfoPageState extends State<HistoryInfoPage> {
                             height: 5,
                           ),
                           Text(
-                            'ระยะทาง: ',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            '12 กิโลเมตร',
-                            softWrap: true,
-                            maxLines: 3,
-                            style: TextStyle(color: Colors.grey.shade600),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
                             'สถานที่: ',
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            '23456 แขวงนู่น เขตนี่',
+                            widget.requestService.addressUser,
                             softWrap: true,
                             maxLines: 3,
                             style: TextStyle(color: Colors.grey.shade600),
@@ -184,7 +171,7 @@ class _HistoryInfoPageState extends State<HistoryInfoPage> {
                           widget.requestService.images == null
                               ? Text('ไม่มีรูปภาพ')
                               : Container(
-                                  height: 40,
+                                  height: 80,
                                   child: ListView.builder(
                                       scrollDirection: Axis.horizontal,
                                       shrinkWrap: true,

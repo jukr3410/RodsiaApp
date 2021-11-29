@@ -74,54 +74,47 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
                       padding: const EdgeInsets.all(defualtPaddingLow),
                       child: Row(
                         children: [
-                          Expanded(
-                            flex: 5,
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: defualtPaddingLow),
-                                  child: Image.asset(
-                                    tImageAsset(
-                                        widget.req.service.serviceType.name),
-                                    width: 27,
-                                  ),
+                          Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: defualtPaddingLow),
+                                child: Image.asset(
+                                  tImageAsset(
+                                      widget.req.service.serviceType.name),
+                                  width: 27,
                                 ),
-                                RichText(
-                                    overflow: TextOverflow.ellipsis,
-                                    strutStyle: StrutStyle(
-                                      fontSize: 5,
-                                    ),
-                                    text: TextSpan(
-                                      text: widget.req.service.name,
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: fontSizeXl,
-                                          fontWeight: FontWeight.w500,
-                                          fontFamily: 'Kanit'),
-                                    )),
-                              ],
-                            ),
-                          ),
-                          Expanded(
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: Row(
-                                children: [
-                                  CircleAvatar(
-                                    backgroundColor: greenStatus,
-                                    maxRadius: 5,
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(
-                                    widget.req.status,
-                                    style: TextStyle(fontSize: 12),
-                                  )
-                                ],
                               ),
-                            ),
+                              RichText(
+                                  overflow: TextOverflow.ellipsis,
+                                  strutStyle: StrutStyle(
+                                    fontSize: 5,
+                                  ),
+                                  text: TextSpan(
+                                    text: widget.req.service.name,
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: fontSizeXl,
+                                        fontWeight: FontWeight.w500,
+                                        fontFamily: 'Kanit'),
+                                  )),
+                            ],
+                          ),
+                          SizedBox(width: 20),
+                          Row(
+                            children: [
+                              CircleAvatar(
+                                backgroundColor: greenStatus,
+                                maxRadius: 5,
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                widget.req.status,
+                                style: TextStyle(fontSize: 12),
+                              )
+                            ],
                           ),
                         ],
                       ),
@@ -233,7 +226,7 @@ class _TrackingRequestCardState extends State<TrackingRequestCard> {
                                     width: 10,
                                   ),
                                   Text(
-                                    widget.distance + ' กม',
+                                    widget.distance + 'กม',
                                     softWrap: true,
                                     style: _textStyleSmall,
                                   ),
